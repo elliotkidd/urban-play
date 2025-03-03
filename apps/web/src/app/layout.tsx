@@ -1,78 +1,90 @@
-import "@workspace/ui/globals.css";
-
-import { revalidatePath, revalidateTag } from "next/cache";
-import { Geist, Geist_Mono } from "next/font/google";
-import { draftMode } from "next/headers";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { Metadata, Viewport } from "next";
 import { VisualEditing } from "next-sanity";
+import { draftMode } from "next/headers";
+import Script from "next/script";
 import { Suspense } from "react";
-import { preconnect, prefetchDNS } from "react-dom";
 
-import { FooterServer, FooterSkeleton } from "@/components/footer";
-import { NavbarServer, NavbarSkeleton } from "@/components/navbar";
-import { PreviewBar } from "@/components/preview-bar";
-import { SanityLive } from "@/lib/sanity/live";
-import { Providers } from "../components/providers";
+import DisableDraftMode from "@/components/DisableDraftMode";
+import { Footer } from "@/components/global/Footer";
+import { Navbar } from "@/components/global/Navbar";
+import { loadHomePage } from "@/sanity/loader/loadQuery";
+import "@/styles/index.scss";
 
-const fontGeist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
+const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || false;
+const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || false;
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
-  display: "swap",
-});
+export const generateMetadata = async (): Promise<Metadata> => {
+  const [{ data: homePage }] = await Promise.all([loadHomePage()]);
 
-export default async function RootLayout({
+  const homeData = homePage?.home;
+
+  const rootDomain = process.env.NEXT_PUBLIC_BASE_URL || "localhost:3000";
+  const siteTitle = process.env.NEXT_PUBLIC_SITE_TITLE || "";
+
+  const ogImage = homeData?.seo?.ogImage;
+
+  return {
+    metadataBase: new URL(rootDomain || "localhost:3000"),
+    alternates: {
+      canonical: "/",
+    },
+    title: {
+      template: "%s | " + (siteTitle || ""),
+      default:
+        (homeData?.seo?.metaTitle || homeData?.title || "") +
+        " | " +
+        (siteTitle || ""),
+    },
+    description: homeData?.seo?.metaDesc || "",
+    openGraph: {
+      url: "/",
+      siteName: siteTitle,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  };
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000",
+};
+
+export default async function IndexRoute({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  preconnect("https://cdn.sanity.io");
-  prefetchDNS("https://cdn.sanity.io");
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontGeist.variable} ${fontMono.variable} font-geist antialiased`}
-      >
-        <Providers>
-          <Suspense fallback={<NavbarSkeleton />}>
-            <NavbarServer />
-          </Suspense>
-          {(await draftMode()).isEnabled ? (
-            <>
-              {children}
-              <VisualEditing
-                refresh={async (payload) => {
-                  "use server";
-                  if (payload.source === "manual") {
-                    revalidatePath("/", "layout");
-                    return;
-                  }
-                  const id = payload?.document?._id?.startsWith("drafts.")
-                    ? payload?.document?._id.slice(7)
-                    : payload?.document?._id;
-                  const slug = payload?.document?.slug?.current;
-                  const type = payload?.document?._type;
-                  for (const tag of [slug, id, type]) {
-                    if (tag) revalidateTag(tag);
-                  }
-                }}
-              />
-              <PreviewBar />
-            </>
-          ) : (
-            children
-          )}
-          <Suspense fallback={<FooterSkeleton />}>
-            <FooterServer />
-          </Suspense>
-          <SanityLive />
-        </Providers>
+    <html lang="en" dir="ltr">
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/mrz5rpz.css" />
+        <Script
+          type="text/javascript"
+          id="hs-script-loader"
+          async
+          defer
+          src="//js.hs-scripts.com/47759019.js"
+        />
+      </head>
+      <body className="bg-primary text-contrast transition-colors duration-1000 antialiased">
+        {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
+        {/* <Lenis root options={{ lerp: 0.15 }} /> */}
+        {/* <Suspense>
+          <Navbar />
+        </Suspense> */}
+        <main role="main">
+          <Suspense>{children}</Suspense>
+        </main>
+        {/* <Suspense>
+          <Footer />
+        </Suspense> */}
+        {(await draftMode()).isEnabled && (
+          <>
+            <VisualEditing zIndex={1000} />
+            <DisableDraftMode />
+          </>
+        )}
       </body>
     </html>
   );

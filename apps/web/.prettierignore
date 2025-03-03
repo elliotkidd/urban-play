@@ -1,0 +1,27 @@
+# Build output
+.next/
+dist/
+build/
+out/
+
+# Dependencies
+node_modules/
+
+# Cache
+.cache/
+.turbo/
+
+# Coverage reports
+coverage/
+
+# Misc
+.DS_Store
+.env*
+.idea/
+*.log
+*.tsbuildinfo
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml 

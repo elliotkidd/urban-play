@@ -1,31 +1,25 @@
-import type { MetadataRoute } from "next";
+import { loadSitemap } from "@/sanity/loader/loadQuery";
+import processUrl from "@/utils/processUrl";
 
-import { getBaseUrl } from "@/config";
-import { client } from "@/lib/sanity/client";
-import { querySitemapData } from "@/lib/sanity/query";
+// Add URL from environment variable
+const URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
-const baseUrl = getBaseUrl();
+export default async function sitemap() {
+  const data = await loadSitemap();
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { slugPages, blogPages } = await client.fetch(querySitemapData);
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    ...slugPages.map((page) => ({
-      url: `${baseUrl}${page.slug}`,
-      lastModified: new Date(page.lastModified ?? new Date()),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    })),
-    ...blogPages.map((page) => ({
-      url: `${baseUrl}${page.slug}`,
-      lastModified: new Date(page.lastModified ?? new Date()),
-      changeFrequency: "weekly" as const,
-      priority: 0.5,
-    })),
-  ];
+  const staticRoutes = ["/", "/posts"].map((route) => ({
+    url: `${URL}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "daily",
+    priority: 1.0,
+  }));
+
+  const dynamicRoutes = data.data.map((route) => ({
+    url: processUrl(route, { base: true }),
+    lastModified: route.updatedAt,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...dynamicRoutes];
 }

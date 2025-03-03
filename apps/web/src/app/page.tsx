@@ -1,30 +1,26 @@
-import { PageBuilder } from "@/components/pagebuilder";
-import { sanityFetch } from "@/lib/sanity/live";
-import { queryHomePageData } from "@/lib/sanity/query";
-import { getMetaData } from "@/lib/seo";
+import dynamic from "next/dynamic";
+import { draftMode } from "next/headers";
 
-async function fetchHomePageData() {
-  return await sanityFetch({
-    query: queryHomePageData,
-  });
-}
+import Home from "@/components/layouts/home/Home";
+import { loadHomePage } from "@/sanity/loader/loadQuery";
 
-export async function generateMetadata() {
-  const homePageData = await fetchHomePageData();
-  if (!homePageData.data) {
-    return getMetaData({});
-  }
-  return getMetaData(homePageData.data);
-}
+// type Props = {
+//   params: Promise<{ id: string }>;
+//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+// };
 
-export default async function Page() {
-  const { data: homePageData } = await fetchHomePageData();
+const HomePreview = dynamic(
+  () => import("@/components/layouts/home/HomePreview"),
+);
 
-  if (!homePageData) {
-    return <div>No home page data</div>;
+export default async function IndexRoute() {
+  const initial = await loadHomePage();
+
+  const { isEnabled } = await draftMode();
+
+  if (isEnabled) {
+    return <HomePreview initial={initial} />;
   }
 
-  const { _id, _type, pageBuilder } = homePageData ?? {};
-
-  return <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />;
+  return <Home data={initial.data} />;
 }

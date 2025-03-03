@@ -4,6 +4,7 @@ import {
   InlineElementIcon,
   InsertAboveIcon,
   SearchIcon,
+  CogIcon,
 } from "@sanity/icons";
 import type { FieldGroupDefinition } from "sanity";
 
@@ -13,6 +14,7 @@ export const GROUP = {
   CARD: "card",
   RELATED: "related",
   OG: "og",
+  SETTINGS: "settings",
 };
 
 export const GROUPS: FieldGroupDefinition[] = [
@@ -38,5 +40,19 @@ export const GROUPS: FieldGroupDefinition[] = [
     name: GROUP.RELATED,
     icon: InlineElementIcon,
     title: "Related",
+  },
+];
+
+export const SECTION_GROUPS = [
+  {
+    name: GROUP.MAIN_CONTENT,
+    icon: ComposeIcon,
+    title: "Content",
+    default: true,
+  },
+  {
+    name: GROUP.SETTINGS,
+    icon: CogIcon,
+    title: "Settings",
   },
 ];

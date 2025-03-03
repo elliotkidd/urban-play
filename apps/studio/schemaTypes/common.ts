@@ -15,8 +15,21 @@ export const buttonsField = defineField({
 
 export const pageBuilderField = defineField({
   name: "pageBuilder",
-  group: GROUP.MAIN_CONTENT,
   type: "pageBuilder",
+  group: GROUP.MAIN_CONTENT,
+});
+
+export const sectionHeaderField = defineField({
+  name: "sectionHeader",
+  type: "object",
+  fields: [
+    defineField({
+      name: "title",
+      type: "string",
+      title: "Title",
+    }),
+    buttonsField,
+  ],
 });
 
 export const iconField = defineField({

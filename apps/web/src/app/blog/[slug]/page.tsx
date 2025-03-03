@@ -1,86 +1,61 @@
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { Article, WithContext } from "schema-dts";
 
-import { RichText } from "@/components/richtext";
-import { SanityImage } from "@/components/sanity-image";
-import { TableOfContent } from "@/components/table-of-content";
-import { client } from "@/lib/sanity/client";
-import { sanityFetch } from "@/lib/sanity/live";
-import { queryBlogPaths, queryBlogSlugPageData } from "@/lib/sanity/query";
-import { getMetaData } from "@/lib/seo";
+import Blog from "@/components/layouts/blog/Blog";
+import { loadPost } from "@/sanity/loader/loadQuery";
+import { generateStaticSlugs } from "@/sanity/loader/generateStaticSlugs";
+import processMetadata from "@/utils/generateMetadata";
 
-async function fetchBlogSlugPageData(slug: string) {
-  return await sanityFetch({
-    query: queryBlogSlugPageData,
-    params: { slug: `/blog/${slug}` },
-  });
-}
+const BlogPreview = dynamic(
+  () => import("@/components/layouts/blog/BlogPreview"),
+);
 
-async function fetchBlogPaths() {
-  const slugs = await client.fetch(queryBlogPaths);
-  const paths: { slug: string }[] = [];
-  for (const slug of slugs) {
-    if (!slug) continue;
-    const [, , path] = slug.split("/");
-    if (path) paths.push({ slug: path });
-  }
-  return paths;
-}
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const { data } = await fetchBlogSlugPageData(slug);
-  if (!data) return getMetaData({});
-  return getMetaData(data);
+}: Props): Promise<Metadata | undefined> {
+  const slug = (await params).slug;
+  const { data: page } = await loadPost(slug);
+  return processMetadata(page);
 }
 
-export async function generateStaticParams() {
-  return await fetchBlogPaths();
+export function generateStaticParams() {
+  return generateStaticSlugs("post");
 }
 
-export default async function BlogSlugPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const { data } = await fetchBlogSlugPageData(slug);
-  if (!data) return notFound();
-  const { title, description, image, richText } = data ?? {};
+export default async function BlogSlugRoute({ params }: Props) {
+  const slug = (await params).slug;
+
+  const initial = await loadPost(slug);
+
+  const isDraftMode = await draftMode();
+  if (isDraftMode.isEnabled) {
+    return <BlogPreview params={params} initial={initial} />;
+  }
+
+  const page = initial.data;
+
+  const jsonLd: WithContext<Article> = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    name: page.seo?.metaTitle || page.title || undefined,
+    image: page.seo?.ogImage || undefined,
+    description: page.seo?.metaDesc || undefined,
+  };
 
   return (
-    <div className="container my-16 mx-auto px-4 md:px-6">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
-        <main>
-          <header className="mb-8">
-            <h1 className="mt-2 text-4xl font-bold">{title}</h1>
-            <p className="mt-4 text-lg text-muted-foreground">{description}</p>
-          </header>
-          {image && (
-            <div className="mb-12">
-              <SanityImage
-                asset={image}
-                alt={title}
-                width={1600}
-                loading="eager"
-                priority
-                height={900}
-                className="rounded-lg h-auto w-full"
-              />
-            </div>
-          )}
-          <RichText richText={richText ?? []} />
-        </main>
-
-        <aside className="hidden lg:block">
-          <div className="sticky top-4 rounded-lg ">
-            <TableOfContent richText={richText} />
-          </div>
-        </aside>
-      </div>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Blog data={page} />
+    </>
   );
 }

@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+  --height-nav: 3.2rem;
+  --screen-height: 100vh;
+  --screen-height-dynamic: 100dvh;
+
+  @media (min-width: 48em) {
+    --height-nav: 4rem;
+  }
+  @supports (height: 100svh) {
+    --screen-height: 100svh;
+  }
+  @supports (height: 100dvh) {
+    --screen-height-dynamic: 100dvh;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    @apply mx-auto w-full max-w-[1440px] px-fluid-xs;
+  }
+}
+
+@tailwind utilities;

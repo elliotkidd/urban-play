@@ -26,10 +26,10 @@ export default [
     ignores: ["dist", "node_modules", ".sanity"],
     rules: {
       "prettier/prettier": "error",
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
+      //"simple-import-sort/imports": "error",
+      //"simple-import-sort/exports": "error",
       "@typescript-eslint/consistent-type-imports": "error",
-      "import/no-default-export": "warn",
+      //"import/no-default-export": "warn",
     },
   },
 ];
