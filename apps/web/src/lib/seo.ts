@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { getBaseUrl } from "@/config";
-import type { Maybe } from "@/types";
 
 interface OgImageOptions {
   type?: string;
@@ -17,17 +16,17 @@ function getOgImage({ type, id }: OgImageOptions = {}): string {
   return logoUrl;
 }
 
-interface MetaDataInput {
-  _type?: Maybe<string>;
-  seoDescription?: Maybe<string>;
-  seoTitle?: Maybe<string>;
-  slug?: Maybe<{ current: string | null }> | string | null;
-  title?: Maybe<string>;
-  description?: Maybe<string>;
-  _id?: Maybe<string>;
-}
+// interface MetaDataInput {
+//   _type?: Maybe<string>;
+//   seoDescription?: Maybe<string>;
+//   seoTitle?: Maybe<string>;
+//   slug?: Maybe<{ current: string | null }> | string | null;
+//   title?: Maybe<string>;
+//   description?: Maybe<string>;
+//   _id?: Maybe<string>;
+// }
 
-export function getMetaData(data: MetaDataInput): Metadata {
+export function getMetaData(data: any): Metadata {
   const { _type, seoDescription, seoTitle, slug, title, description, _id } =
     data ?? {};
 

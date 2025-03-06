@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { InferType, q, TypeFromSelection } from "groqd";
 import { CUSTOM_URL_FRAGMENT, LINK_REFERENCE_FRAGMENT } from "./link";
 

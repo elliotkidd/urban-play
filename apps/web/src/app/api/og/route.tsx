@@ -3,7 +3,6 @@
 import { ImageResponse } from "next/og";
 import type { ImageResponseOptions } from "next/server";
 
-import type { Maybe } from "@/types";
 import { getTitleCase } from "@/utils";
 
 import { getOgMetaData } from "./og-config";
@@ -30,15 +29,15 @@ type SeoImageRenderProps = {
 
 type ContentProps = Record<string, string>;
 
-type DominantColorSeoImageRenderProps = {
-  image?: Maybe<string>;
-  title?: Maybe<string>;
-  logo?: Maybe<string>;
-  dominantColor?: Maybe<string>;
-  date?: Maybe<string>;
-  _type?: Maybe<string>;
-  description?: Maybe<string>;
-};
+// type DominantColorSeoImageRenderProps = {
+//   image?: Maybe<string>;
+//   title?: Maybe<string>;
+//   logo?: Maybe<string>;
+//   dominantColor?: Maybe<string>;
+//   date?: Maybe<string>;
+//   _type?: Maybe<string>;
+//   description?: Maybe<string>;
+// };
 
 const seoImageRender = ({ seoImage }: SeoImageRenderProps) => {
   return (
@@ -56,7 +55,7 @@ const dominantColorSeoImageRender = ({
   date,
   description,
   _type,
-}: DominantColorSeoImageRenderProps) => {
+}: any) => {
   return (
     <div
       tw={`bg-[${

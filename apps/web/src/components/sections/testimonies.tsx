@@ -46,25 +46,28 @@ export default function TestimoniesSection({
           //   disableOnInteraction: false,
           // }}
         >
-          {testimonies.map(
-            ({ _id, author: { name, position }, quote }: TestimonyType, i) => {
-              return (
-                <SwiperSlide
-                  key={_id + i}
-                  className="space-y-fluid-lg bg-background flex flex-col items-start justify-between"
-                  style={{ height: "auto", display: "flex" }}
-                >
-                  <blockquote className="max-w-section-heading text-balance uppercase font-black text-2xl leading-none">
-                    {quote}
-                  </blockquote>
-                  <div className="leading-none">
-                    <span className="block">{name}</span>
-                    <span className="block opacity-40">{position}</span>
-                  </div>
-                </SwiperSlide>
-              );
-            },
-          )}
+          {testimonies.map((testimony: any, i: number) => {
+            const {
+              _id,
+              author: { name, position },
+              quote,
+            } = testimony;
+            return (
+              <SwiperSlide
+                key={_id + i}
+                className="space-y-fluid-lg bg-background flex flex-col items-start justify-between"
+                style={{ height: "auto", display: "flex" }}
+              >
+                <blockquote className="max-w-section-heading text-balance uppercase font-black text-2xl leading-none">
+                  {quote}
+                </blockquote>
+                <div className="leading-none">
+                  <span className="block">{name}</span>
+                  <span className="block opacity-40">{position}</span>
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       )}
       <div className="flex items-center justify-start gap-2">

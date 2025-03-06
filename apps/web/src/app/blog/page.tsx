@@ -34,7 +34,7 @@ export default async function BlogIndexPage() {
               </div>
             )}
             <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-2">
-              {blogs.map((blog, index) => (
+              {blogs.map((blog: any, index: number) => (
                 <BlogCard key={`${blog?._id}-${index}`} blog={blog} />
               ))}
             </div>

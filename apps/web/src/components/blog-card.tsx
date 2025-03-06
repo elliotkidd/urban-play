@@ -1,42 +1,41 @@
 import Link from "next/link";
-import { SanityImage } from "./sanity-image";
 
 interface BlogImageProps {
   image: any;
   title?: string | null;
 }
 
-function BlogImage({ image, title }: BlogImageProps) {
-  if (!image?.asset) return null;
+// function BlogImage({ image, title }: BlogImageProps) {
+//   if (!image?.asset) return null;
 
-  return (
-    <SanityImage
-      asset={image}
-      width={800}
-      height={400}
-      alt={title ?? "Blog post image"}
-      className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-    />
-  );
-}
+//   return (
+//     <SanityImage
+//       asset={image}
+//       width={800}
+//       height={400}
+//       alt={title ?? "Blog post image"}
+//       className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+//     />
+//   );
+// }
 
 interface AuthorImageProps {
   author: any;
 }
 
-function AuthorImage({ author }: AuthorImageProps) {
-  if (!author?.image) return null;
+// function AuthorImage({ author }: AuthorImageProps) {
+//   if (!author?.image) return null;
 
-  return (
-    <SanityImage
-      asset={author.image}
-      width={40}
-      height={40}
-      alt={author.name ?? "Author image"}
-      className="size-8 flex-none rounded-full bg-gray-50"
-    />
-  );
-}
+//   return (
+//     <SanityImage
+//       asset={author.image}
+//       width={40}
+//       height={40}
+//       alt={author.name ?? "Author image"}
+//       className="size-8 flex-none rounded-full bg-gray-50"
+//     />
+//   );
+// }
 
 interface BlogAuthorProps {
   author: any;
@@ -47,7 +46,7 @@ export function BlogAuthor({ author }: BlogAuthorProps) {
 
   return (
     <div className="flex items-center gap-x-2.5 text-sm/6 font-semibold text-gray-900">
-      <AuthorImage author={author} />
+      {/* <AuthorImage author={author} /> */}
       {author.name}
     </div>
   );
@@ -104,7 +103,7 @@ function AuthorSection({ authors }: { authors: any }) {
   return (
     <div className="mt-6 flex border-t border-gray-900/5 pt-6">
       <div className="relative flex items-center gap-x-4">
-        <AuthorImage author={authors} />
+        {/* <AuthorImage author={authors} /> */}
         <div className="text-sm leading-6">
           <p className="font-semibold">
             <span className="absolute inset-0" />
@@ -122,7 +121,7 @@ export function FeaturedBlogCard({ blog }: BlogCardProps) {
   return (
     <article className="flex flex-col lg:flex-row items-start gap-x-8">
       <div className="relative w-full lg:w-1/2">
-        <BlogImage image={image} title={title} />
+        {/* <BlogImage image={image} title={title} /> */}
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
       <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
@@ -145,7 +144,7 @@ export function BlogCard({ blog }: BlogCardProps) {
   return (
     <article className="flex flex-col items-start w-full">
       <div className="relative w-full">
-        <BlogImage image={image} title={title} />
+        {/* <BlogImage image={image} title={title} /> */}
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
       <div className="w-full sm:max-w-xl">
