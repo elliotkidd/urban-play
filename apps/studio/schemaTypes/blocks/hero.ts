@@ -1,25 +1,30 @@
 import { Star } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-import { buttonsField, richTextField } from "../common";
+import { GROUP, SECTION_GROUPS } from "../../utils/constant";
+import {
+  colorPickerField,
+  marginSettingsFields,
+  richTextField,
+} from "../common";
 
 export const hero = defineType({
   name: "hero",
   title: "Hero",
   icon: Star,
   type: "object",
+  groups: SECTION_GROUPS,
   fields: [
-    defineField({
-      name: "badge",
-      type: "string",
-      title: "Badge",
-    }),
     defineField({
       name: "title",
       type: "string",
       title: "Title",
+      group: GROUP.MAIN_CONTENT,
     }),
-    richTextField,
+    defineField({
+      ...richTextField,
+      group: GROUP.MAIN_CONTENT,
+    }),
     defineField({
       name: "image",
       type: "image",
@@ -27,8 +32,10 @@ export const hero = defineType({
       options: {
         hotspot: true,
       },
+      group: GROUP.MAIN_CONTENT,
     }),
-    buttonsField,
+    colorPickerField,
+    ...marginSettingsFields,
   ],
   preview: {
     select: {

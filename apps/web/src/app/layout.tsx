@@ -1,4 +1,4 @@
-import "@workspace/ui/globals.css";
+import "@/styles/index.scss";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -12,6 +12,7 @@ import { NavbarServer, NavbarSkeleton } from "@/components/navbar";
 import { PreviewBar } from "@/components/preview-bar";
 import { SanityLive } from "@/lib/sanity/live";
 import { Providers } from "../components/providers";
+import { Lenis } from "@/lib/lenis";
 
 const fontGeist = Geist({
   subsets: ["latin"],
@@ -37,8 +38,9 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontGeist.variable} ${fontMono.variable} font-geist antialiased`}
+        className={`${fontGeist.variable} ${fontMono.variable} font-geist antialiased bg-background text-text`}
       >
+        <Lenis root />
         <Providers>
           <Suspense fallback={<NavbarSkeleton />}>
             <NavbarServer />

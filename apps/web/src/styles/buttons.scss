@@ -1,0 +1,15 @@
+.btn {
+  @apply p-4 inline-flex cursor-pointer items-center justify-center gap-2 text-center duration-500 text-xs font-medium rounded-lg text-nowrap;
+
+  &--default {
+    @apply bg-primary-button text-white;
+  }
+
+  &--secondary {
+    @apply bg-secondary-button text-text;
+  }
+
+  &--outline {
+    @apply border border-primary-button text-primary-button;
+  }
+}

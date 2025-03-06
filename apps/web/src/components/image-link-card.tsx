@@ -1,12 +1,8 @@
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
-
-import type { PagebuilderType } from "@/types";
-
-import { SanityImage } from "./sanity-image";
-
+import SanityImage from "./sanity-image";
 export type CTACardProps = {
-  card: NonNullable<PagebuilderType<"imageLinkCards">["cards"]>[number];
+  card: any;
   className?: string;
 };
 
@@ -22,14 +18,14 @@ export function CTACard({ card, className }: CTACardProps) {
     >
       {image?.asset && (
         <div className="absolute inset-0 z-[1] mix-blend-multiply">
-          <SanityImage
+          {/* <SanityImage
             asset={image}
             loading="eager"
             priority
             quality={100}
             fill
             className="object-cover grayscale pointer-events-none group-hover:opacity-100 group-hover:transition-opacity duration-1000 opacity-40 dark:opacity-60 dark:hover:opacity-[2] dark:saturate-200"
-          />
+          /> */}
         </div>
       )}
       <div className="z-[2] pt-64 flex flex-col space-y-2 mb-4 duration-500 xl:absolute xl:top-24 group-hover:top-8 xl:inset-x-8">

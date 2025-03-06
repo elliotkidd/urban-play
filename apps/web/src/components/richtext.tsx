@@ -1,4 +1,3 @@
-import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 import {
   PortableText,
@@ -7,12 +6,13 @@ import {
 } from "next-sanity";
 
 import { parseChildrenToSlug } from "@/utils";
-
-import { SanityImage } from "./sanity-image";
+import SanityImage from "./sanity-image";
+import { twMerge } from "tailwind-merge";
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
     normal: ({ children }) => <p>{children}</p>,
+    lead: ({ children }: any) => <p className="lead">{children}</p>,
     h2: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
@@ -97,15 +97,7 @@ const components: Partial<PortableTextReactComponents> = {
   types: {
     image: ({ value }) => {
       return (
-        <div className="my-4">
-          <SanityImage
-            asset={value}
-            className="w-full h-auto rounded-lg"
-            width={1600}
-            height={900}
-            // priority
-          />
-        </div>
+        <SanityImage src={value} className="my-4 w-full overflow-hidden" />
       );
     },
   },
@@ -122,12 +114,7 @@ export function RichText<T>({
   if (!richText) return null;
 
   return (
-    <div
-      className={cn(
-        "prose prose-slate prose-headings:scroll-m-24 prose-headings:font-bold prose-headings:text-opacity-90 prose-p:text-opacity-80 prose-a:underline prose-a:decoration-dotted prose-ol:list-decimal prose-ol:text-opacity-80 prose-ul:list-disc prose-ul:text-opacity-80 prose-h2:border-b prose-h2:pb-2 prose-h2:text-3xl prose-h2:font-semibold prose-h2:prose-h2:first:mt-0 max-w-none dark:prose-invert",
-        className,
-      )}
-    >
+    <div className={twMerge("prose prose-headings:scroll-m-24", className)}>
       <PortableText
         value={richText as unknown as PortableTextBlock[]}
         components={components}

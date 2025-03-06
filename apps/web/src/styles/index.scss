@@ -1,0 +1,13 @@
+@use "buttons";
+@use "navbar";
+@use "projects-swiper";
+@use "themes";
+@use "typography";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.wrapper {
+  @apply mx-auto w-full px-fluid-xs;
+}

@@ -1,7 +1,13 @@
 import { ImageIcon, ImagesIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-import { buttonsField, richTextField } from "../common";
+import { GROUP, SECTION_GROUPS } from "../../utils/constant";
+import {
+  buttonsField,
+  colorPickerField,
+  marginSettingsFields,
+  richTextField,
+} from "../common";
 
 const imageLinkCard = defineField({
   name: "imageLinkCard",
@@ -75,12 +81,14 @@ export const imageLinkCards = defineType({
   type: "object",
   icon: ImagesIcon,
   title: "Image Link Cards",
+  groups: SECTION_GROUPS,
   fields: [
     defineField({
       name: "eyebrow",
       title: "Eyebrow Text",
       type: "string",
       description: "Optional text displayed above the title",
+      group: GROUP.MAIN_CONTENT,
     }),
     defineField({
       name: "title",
@@ -88,15 +96,18 @@ export const imageLinkCards = defineType({
       type: "string",
       description: "The main heading for this cards section",
       validation: (Rule) => Rule.required(),
+      group: GROUP.MAIN_CONTENT,
     }),
-    richTextField,
-    buttonsField,
+    defineField({ ...richTextField, group: GROUP.MAIN_CONTENT }),
     defineField({
       name: "cards",
       title: "Cards",
       type: "array",
       of: [imageLinkCard],
+      group: GROUP.MAIN_CONTENT,
     }),
+    colorPickerField,
+    ...marginSettingsFields,
   ],
   preview: {
     select: {

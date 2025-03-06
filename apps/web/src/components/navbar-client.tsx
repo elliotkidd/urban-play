@@ -30,18 +30,27 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useIsMobile } from "@/hooks/use-is-mobile";
-import type { QueryNavbarDataResult } from "@/lib/sanity/sanity.types";
 
 import { Logo } from "./logo";
-import { ModeToggle } from "./mode-toggle";
 import { SanityButtons } from "./sanity-buttons";
 import { SanityIcon } from "./sanity-icon";
+import SanityLink from "./sanity-link";
+import { TypeFromSelection } from "groqd";
+import {
+  NAVBAR_COLUMN_FRAGMENT,
+  NAVBAR_LINK_FRAGMENT,
+} from "@/lib/sanity/queries/link";
+
 interface MenuItem {
   title: string;
   description: string;
   icon: JSX.Element;
   href?: string;
 }
+
+type ColumnProps = TypeFromSelection<
+  typeof NAVBAR_LINK_FRAGMENT | typeof NAVBAR_COLUMN_FRAGMENT
+>;
 
 function MenuItemLink({
   item,
@@ -74,7 +83,7 @@ function MobileNavbarAccordionColumn({
   column,
   setIsOpen,
 }: {
-  column: NonNullable<NonNullable<QueryNavbarDataResult>["columns"]>[number];
+  column: any;
   setIsOpen: (isOpen: boolean) => void;
 }) {
   if (column.type !== "column") return null;
@@ -88,7 +97,7 @@ function MobileNavbarAccordionColumn({
         </div>
       </AccordionTrigger>
       <AccordionContent className="mt-2">
-        {column.links?.map((item) => (
+        {column.links?.map((item: any) => (
           <MenuItemLink
             key={item._key}
             setIsOpen={setIsOpen}
@@ -105,7 +114,7 @@ function MobileNavbarAccordionColumn({
   );
 }
 
-function MobileNavbar({ navbarData }: { navbarData: QueryNavbarDataResult }) {
+function MobileNavbar({ navbarData }: { navbarData: any }) {
   const { logo, siteTitle, columns, buttons } = navbarData ?? {};
   const [isOpen, setIsOpen] = useState(false);
 
@@ -128,12 +137,12 @@ function MobileNavbar({ navbarData }: { navbarData: QueryNavbarDataResult }) {
       <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle>
-            <Logo src={logo} alt={siteTitle} priority />
+            <Logo />
           </SheetTitle>
         </SheetHeader>
 
         <div className="mb-8 mt-8 flex flex-col gap-4">
-          {columns?.map((column) => {
+          {columns?.map((column: any) => {
             if (column.type === "link") {
               return (
                 <Link
@@ -177,36 +186,13 @@ function MobileNavbar({ navbarData }: { navbarData: QueryNavbarDataResult }) {
   );
 }
 
-function NavbarColumnLink({
-  column,
-}: {
-  column: NonNullable<NonNullable<QueryNavbarDataResult>["columns"]>[number];
-}) {
-  if (column.type !== "link") return null;
-  return (
-    <Link
-      aria-label={`Link to ${column.name ?? column.href}`}
-      href={column.href ?? ""}
-      legacyBehavior
-      passHref
-    >
-      <NavigationMenuLink
-        className={cn(
-          navigationMenuTriggerStyle(),
-          "text-muted-foreground dark:text-neutral-300",
-        )}
-      >
-        {column.name}
-      </NavigationMenuLink>
-    </Link>
-  );
+function NavbarColumnLink({ column: { url, _type, name } }: { column: any }) {
+  if (_type !== "navbarLink") return null;
+
+  return <SanityLink url={url}>{name}</SanityLink>;
 }
 
-function NavbarColumn({
-  column,
-}: {
-  column: NonNullable<NonNullable<QueryNavbarDataResult>["columns"]>[number];
-}) {
+function NavbarColumn({ column }: { column: any }) {
   if (column.type !== "column") return null;
   return (
     <NavigationMenuList>
@@ -214,7 +200,7 @@ function NavbarColumn({
         <NavigationMenuTrigger>{column.title}</NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul className="w-80 p-3">
-            {column.links?.map((item) => (
+            {column.links?.map((item: any) => (
               <li key={item._key}>
                 <MenuItemLink
                   item={{
@@ -238,42 +224,33 @@ function NavbarColumn({
   );
 }
 
-export function DesktopNavbar({
-  navbarData,
-}: {
-  navbarData: QueryNavbarDataResult;
-}) {
+export function DesktopNavbar({ navbarData }: { navbarData: any }) {
   const { columns, buttons } = navbarData ?? {};
 
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-8">
-      <NavigationMenu className="">
-        {columns?.map((column) =>
-          column.type === "column" ? (
+      <NavigationMenu className="space-x-4">
+        {columns?.map((column: ColumnProps) => {
+          return column.type === "column" ? (
             <NavbarColumn key={`nav-${column._key}`} column={column} />
           ) : (
             <NavbarColumnLink key={`nav-${column._key}`} column={column} />
-          ),
-        )}
+          );
+        })}
       </NavigationMenu>
-
-      <div className="justify-self-end flex items-center gap-4">
-        <ModeToggle />
-        <SanityButtons
-          buttons={buttons ?? []}
-          className="flex items-center gap-4"
-          buttonClassName="rounded-[10px]"
-        />
-      </div>
+      {buttons && buttons.length > 0 && (
+        <div className="justify-self-end flex items-center gap-4">
+          <SanityButtons
+            buttons={buttons}
+            className="flex items-center gap-4"
+          />
+        </div>
+      )}
     </div>
   );
 }
 
-const ClientSideNavbar = ({
-  navbarData,
-}: {
-  navbarData: QueryNavbarDataResult;
-}) => {
+const ClientSideNavbar = ({ navbarData }: { navbarData: any }) => {
   const isMobile = useIsMobile();
 
   if (isMobile === undefined) {

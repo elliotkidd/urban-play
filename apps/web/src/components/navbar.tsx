@@ -1,28 +1,25 @@
 import { sanityFetch } from "@/lib/sanity/live";
-import { queryNavbarData } from "@/lib/sanity/query";
-import type { QueryNavbarDataResult } from "@/lib/sanity/sanity.types";
 
 import { Logo } from "./logo";
 import { NavbarClient, NavbarSkeletonResponsive } from "./navbar-client";
+import { navBarQuery } from "@/lib/sanity/queries/link";
 
 export async function NavbarServer() {
-  const navbarData = await sanityFetch({ query: queryNavbarData });
+  const navbarData = await sanityFetch({ query: navBarQuery.query });
+
   return <Navbar navbarData={navbarData.data} />;
 }
 
-export function Navbar({ navbarData }: { navbarData: QueryNavbarDataResult }) {
+export function Navbar({ navbarData }: { navbarData: any }) {
   const { logo, siteTitle } = navbarData ?? {};
 
   return (
-    <section className="py-3 md:border-b">
-      <div className="container mx-auto px-4 md:px-6">
-        <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
-          <Logo src={logo} alt={siteTitle} priority />
-
-          <NavbarClient navbarData={navbarData} />
-        </nav>
-      </div>
-    </section>
+    <header id="navbar">
+      <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
+        <Logo />
+        <NavbarClient navbarData={navbarData} />
+      </nav>
+    </header>
   );
 }
 

@@ -1,12 +1,9 @@
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
-
-import type { PagebuilderType } from "@/types";
-
 import { SanityImage } from "./sanity-image";
 
 export type CTACardProps = {
-  card: NonNullable<PagebuilderType<"imageLinkCards">["cards"]>[number];
+  card: any;
   className?: string;
 };
 

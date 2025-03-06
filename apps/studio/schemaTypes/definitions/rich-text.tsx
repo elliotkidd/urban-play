@@ -1,12 +1,17 @@
 import { ImageIcon, LinkIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+const leadRender = ({ children }: { children: React.ReactNode }) => {
+  return <p style={{ fontSize: "1.25rem", fontWeight: "700" }}>{children}</p>;
+};
+
 const richTextMembers = [
   defineArrayMember({
     name: "block",
     type: "block",
     styles: [
       { title: "Normal", value: "normal" },
+      { title: "Lead", value: "lead", component: leadRender },
       { title: "H2", value: "h2" },
       { title: "H3", value: "h3" },
       { title: "H4", value: "h4" },

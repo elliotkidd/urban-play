@@ -13,7 +13,7 @@ export const customUrl = defineType({
   type: "object",
   fields: [
     defineField({
-      name: "type",
+      name: "linkType",
       type: "string",
       options: createRadioListLayout(["internal", "external"]),
       initialValue: () => "external",
@@ -30,10 +30,10 @@ export const customUrl = defineType({
       name: "external",
       type: "string",
       title: "URL",
-      hidden: ({ parent }) => parent?.type !== "external",
+      hidden: ({ parent }) => parent?.linkType !== "external",
       validation: (Rule) => [
         Rule.custom((value, { parent }) => {
-          const type = (parent as { type?: string })?.type;
+          const type = (parent as { linkType?: string })?.linkType;
           if (type === "external") {
             if (!value) return "Url can't be empty";
             const isValid = isValidUrl(value);
@@ -54,12 +54,12 @@ export const customUrl = defineType({
       name: "internal",
       type: "reference",
       options: { disableNew: true },
-      hidden: ({ parent }) => parent?.type !== "internal",
+      hidden: ({ parent }) => parent?.linkType !== "internal",
       to: allLinkableTypes,
       validation: (rule) => [
         rule.custom((value, { parent }) => {
-          const type = (parent as { type?: string })?.type;
-          if (type === "internal" && !value?._ref)
+          const linkType = (parent as { linkType?: string })?.linkType;
+          if (linkType === "internal" && !value?._ref)
             return "internal can't be empty";
           return true;
         }),
@@ -69,18 +69,18 @@ export const customUrl = defineType({
   preview: {
     select: {
       externalUrl: "external",
-      urlType: "type",
+      linkType: "linkType",
       internalUrl: "internal.slug.current",
       openInNewTab: "openInNewTab",
     },
-    prepare({ externalUrl, urlType, internalUrl, openInNewTab }) {
-      const url = urlType === "external" ? externalUrl : `/${internalUrl}`;
+    prepare({ externalUrl, linkType, internalUrl, openInNewTab }) {
+      const url = linkType === "external" ? externalUrl : `/${internalUrl}`;
       const newTabIndicator = openInNewTab ? " ↗" : "";
       const truncatedUrl =
         url?.length > 30 ? `${url.substring(0, 30)}...` : url;
 
       return {
-        title: `${urlType === "external" ? "External" : "Internal"} Link`,
+        title: `${linkType === "external" ? "External" : "Internal"} Link`,
         subtitle: `${truncatedUrl}${newTabIndicator}`,
       };
     },

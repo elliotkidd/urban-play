@@ -1,56 +1,32 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import type { Maybe, SanityImageProps } from "@/types";
-
-import { SanityImage } from "./sanity-image";
-
-const LOGO_URL =
-  "https://cdn.sanity.io/images/s6kuy1ts/production/68c438f68264717e93c7ba1e85f1d0c4b58b33c2-1200x621.svg";
-
-interface LogoProps {
-  src?: Maybe<string>;
-  image?: Maybe<SanityImageProps>;
-  alt?: Maybe<string>;
-  width?: number;
-  height?: number;
-  priority?: boolean;
-}
-
-export function Logo({
-  src,
-  alt = "logo",
-  image,
-  width = 170,
-  height = 40,
-  priority = true,
-}: LogoProps) {
+export function Logo() {
   return (
     <Link href="/" className="">
-      {image ? (
-        <SanityImage
-          asset={image}
-          alt={alt ?? "logo"}
-          width={width}
-          className="w-[170px] h-[40px] dark:invert"
-          height={height}
-          priority={priority}
-          loading="eager"
-          decoding="sync"
-          quality={100}
-        />
-      ) : (
-        <Image
-          src={src ?? LOGO_URL}
-          alt={alt ?? "logo"}
-          width={width}
-          className="w-[170px] h-[40px] dark:invert"
-          height={height}
-          loading="eager"
-          priority={priority}
-          decoding="sync"
-        />
-      )}
+      <svg
+        width="31"
+        height="21"
+        viewBox="0 0 31 21"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clipPath="url(#clip0_4527_2)">
+          <path
+            d="M29.979 4.90002C29.366 3.31404 28.1401 2.04156 26.5984 1.3039C25.7533 0.898181 24.7967 0.639998 23.8123 0.547789C21.2212 0.289606 18.435 1.1287 16.9212 3.22183C16.4754 3.83963 16.1411 4.52197 15.9182 5.24119L13.3828 1.01805H9.99298V8.93875C9.99298 10.0637 9.6958 10.9028 9.10142 11.4745C8.50704 12.0462 7.70834 12.332 6.70533 12.332C5.75804 12.332 4.99649 12.0462 4.4114 11.4745C3.82631 10.9028 3.53841 10.0637 3.53841 8.93875V1.01805H0V8.93875C0 11.0964 0.594378 12.747 1.79242 13.8903C2.99047 15.0429 4.62501 15.6146 6.69604 15.6146C8.76708 15.6146 10.4202 15.0429 11.5997 13.8996C12.7884 12.7562 13.3735 11.1056 13.3735 8.93875V6.63354L15.5096 10.1743V20.5017H19.0387V13.5307V8.14576C19.0387 6.82718 19.4009 5.79445 20.116 5.04756C20.8311 4.30067 21.7784 3.92262 22.9579 3.92262C24.1373 3.92262 25.0846 4.30067 25.7997 5.04756C26.5148 5.79445 26.877 6.8364 26.877 8.15498C26.877 9.47356 26.5148 10.4971 25.7997 11.2347C25.0753 11.9724 24.128 12.3505 22.9579 12.3505C22.122 12.3505 21.4069 12.1568 20.8032 11.788V14.9876C21.6577 15.421 22.6607 15.6331 23.803 15.6331C24.676 15.6331 25.5118 15.4671 26.3105 15.1444C27.1092 14.8216 27.8243 14.3514 28.4559 13.7428C29.0874 13.1342 29.5982 12.3412 29.9697 11.3823C30.3504 10.4233 30.5362 9.34447 30.5362 8.1642C30.5362 6.98393 30.3504 5.9051 29.9697 4.92769L29.979 4.90002Z"
+            fill="currentColor"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_4527_2">
+            <rect
+              width="30.5455"
+              height="20"
+              fill="currentColor"
+              transform="translate(0 0.5)"
+            />
+          </clipPath>
+        </defs>
+      </svg>
     </Link>
   );
 }

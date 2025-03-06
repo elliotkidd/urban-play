@@ -1,10 +1,14 @@
 import { MessageCircleQuestion } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
+import { GROUP, SECTION_GROUPS } from "../../utils/constant";
+import { colorPickerField } from "../common";
+
 export const faqAccordion = defineType({
   name: "faqAccordion",
   type: "object",
   icon: MessageCircleQuestion,
+  groups: SECTION_GROUPS,
   fields: [
     defineField({
       name: "eyebrow",
@@ -12,6 +16,7 @@ export const faqAccordion = defineType({
       title: "Eyebrow",
       description:
         "The smaller text that sits above the title to provide context",
+      group: GROUP.MAIN_CONTENT,
     }),
     defineField({
       name: "title",
@@ -19,18 +24,21 @@ export const faqAccordion = defineType({
       title: "Title",
       description: "The large text that is the primary focus of the block",
       validation: (Rule) => Rule.required(),
+      group: GROUP.MAIN_CONTENT,
     }),
     defineField({
       name: "subtitle",
       type: "string",
       title: "Subtitle",
       description: "Additional context below the main title",
+      group: GROUP.MAIN_CONTENT,
     }),
     defineField({
       name: "link",
       title: "Link",
       type: "object",
       description: "Optional link for additional content or actions",
+      group: GROUP.MAIN_CONTENT,
       fields: [
         defineField({
           name: "title",
@@ -57,6 +65,7 @@ export const faqAccordion = defineType({
       type: "array",
       title: "FAQs",
       description: "Select the FAQ items to display in this accordion",
+      group: GROUP.MAIN_CONTENT,
       of: [
         {
           type: "reference",
@@ -66,6 +75,7 @@ export const faqAccordion = defineType({
       ],
       validation: (Rule) => [Rule.required(), Rule.unique()],
     }),
+    colorPickerField,
   ],
   preview: {
     select: {

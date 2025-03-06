@@ -1,0 +1,15 @@
+#navbar {
+  @apply bg-[#b8b8b8]/20 text-xs backdrop-blur-sm;
+
+  position: fixed;
+  z-index: 9999;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: 5px 5px 5px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+}

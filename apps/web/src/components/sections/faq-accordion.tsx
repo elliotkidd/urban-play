@@ -8,19 +8,9 @@ import { Badge } from "@workspace/ui/components/badge";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import type { PagebuilderType } from "@/types";
-
 import { RichText } from "../richtext";
 
-type FaqAccordionProps = PagebuilderType<"faqAccordion">;
-
-export function FaqAccordion({
-  eyebrow,
-  title,
-  subtitle,
-  faqs,
-  link,
-}: FaqAccordionProps) {
+export function FaqAccordion({ eyebrow, title, subtitle, faqs, link }: any) {
   return (
     <section id="faq" className="my-8">
       <div className="container mx-auto px-4 md:px-6">
@@ -40,7 +30,7 @@ export function FaqAccordion({
             className="w-full"
             defaultValue="3"
           >
-            {faqs?.map((faq, index) => (
+            {faqs?.map((faq: any, index: number) => (
               <AccordionItem
                 value={faq?._id}
                 key={`AccordionItem-${faq?._id}-${index}`}
@@ -71,7 +61,10 @@ export function FaqAccordion({
                   {link?.description}
                 </p>
                 <span className="rounded-full border p-1">
-                  <ArrowUpRight size={16} className="text-[#374151] dark:text-neutral-300" />
+                  <ArrowUpRight
+                    size={16}
+                    className="text-[#374151] dark:text-neutral-300"
+                  />
                 </span>
               </Link>
             </div>

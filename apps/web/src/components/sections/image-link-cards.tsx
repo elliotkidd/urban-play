@@ -1,19 +1,10 @@
 import { Badge } from "@workspace/ui/components/badge";
 import { cn } from "@workspace/ui/lib/utils";
 
-import type { PagebuilderType } from "@/types";
-
 import { CTACard } from "../image-link-card";
 import { RichText } from "../richtext";
 
-export type ImageLinkCardsProps = PagebuilderType<"imageLinkCards">;
-
-export function ImageLinkCards({
-  richText,
-  title,
-  eyebrow,
-  cards,
-}: ImageLinkCardsProps) {
+export function ImageLinkCards({ richText, title, eyebrow, cards }: any) {
   return (
     <section id="image-link-cards" className="my-16">
       <div className="container mx-auto px-4 md:px-6">

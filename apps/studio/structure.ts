@@ -3,11 +3,16 @@ import {
   CogIcon,
   File,
   FileText,
+  Grid2X2,
+  Hammer,
   HomeIcon,
+  Lightbulb,
   type LucideIcon,
   MessageCircleQuestion,
+  PaletteIcon,
   PanelBottomIcon,
   PanelTopDashedIcon,
+  Quote,
   Settings2,
   User,
 } from "lucide-react";
@@ -109,6 +114,28 @@ export const structure = (
         title: "FAQs",
         icon: MessageCircleQuestion,
       }),
+      S.listItem()
+        .title("Projects")
+        .icon(Hammer)
+        .child(
+          S.list()
+            .title("Projects")
+            .items([
+              createList({
+                S,
+                type: "project",
+                title: "Projects",
+                icon: Hammer,
+              }),
+              createList({
+                S,
+                type: "solution",
+                title: "Solutions",
+                icon: Lightbulb,
+              }),
+            ]),
+        ),
+      createList({ S, type: "testimony", title: "Testimonies", icon: Quote }),
       createList({ S, type: "author", title: "Authors", icon: User }),
       S.divider(),
       S.listItem()
@@ -135,6 +162,12 @@ export const structure = (
                 type: "settings",
                 title: "Global Settings",
                 icon: CogIcon,
+              }),
+              createList({
+                S,
+                type: "colorScheme",
+                title: "Color Schemes",
+                icon: PaletteIcon,
               }),
             ]),
         ),

@@ -1,3 +1,4 @@
+import { colorPicker } from "@frontvibe/sanity-color-picker";
 import { assist } from "@sanity/assist";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
@@ -49,6 +50,7 @@ export default defineConfig({
     media(),
     presentationUrl(),
     unsplashImageAsset(),
+    colorPicker(),
   ],
 
   form: {

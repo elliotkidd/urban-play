@@ -1,0 +1,233 @@
+.max-w-p {
+  max-width: 500px !important;
+}
+
+.max-w-p-lg {
+  max-width: 562px !important;
+}
+
+.max-w-section-heading {
+  max-width: 870px !important;
+}
+
+:root {
+  --fluid-min-width: 640;
+  --fluid-max-width: 1280;
+
+  --fluid-screen: 100vw;
+  --fluid-bp: calc(
+    (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+      (var(--fluid-max-width) - var(--fluid-min-width))
+  );
+}
+
+@media screen and (min-width: 1240px) {
+  :root {
+    --fluid-screen: calc(var(--fluid-max-width) * 1px);
+  }
+}
+
+:root {
+  --text-xs-min: 10;
+  --text-xs-max: 12;
+  --text-xs: clamp(
+    calc(var(--text-xs-min) / 16) * 1rem,
+    calc(
+      ((var(--text-xs-min) / 16) * 1rem) +
+        (var(--text-xs-max) - var(--text-xs-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-xs-max) / 16) * 1rem
+  );
+
+  --text-sm-min: 14;
+  --text-sm-max: 16;
+  --text-sm: clamp(
+    calc(var(--text-sm-min) / 16) * 1rem,
+    calc(
+      ((var(--text-sm-min) / 16) * 1rem) +
+        (var(--text-sm-max) - var(--text-sm-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-sm-max) / 16) * 1rem
+  );
+
+  --text-base-min: 14;
+  --text-base-max: 16;
+  --text-base: clamp(
+    calc(var(--text-base-min) / 16) * 1rem,
+    calc(
+      ((var(--text-base-min) / 16) * 1rem) +
+        (var(--text-base-max) - var(--text-base-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-base-max) / 16) * 1rem
+  );
+
+  --text-md-min: 18;
+  --text-md-max: 20;
+  --text-md: clamp(
+    calc(var(--text-md-min) / 16) * 1rem,
+    calc(
+      ((var(--text-md-min) / 16) * 1rem) +
+        (var(--text-md-max) - var(--text-md-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-md-max) / 16) * 1rem
+  );
+
+  --text-lg-min: 20;
+  --text-lg-max: 24;
+  --text-lg: clamp(
+    calc(var(--text-lg-min) / 16) * 1rem,
+    calc(
+      ((var(--text-lg-min) / 16) * 1rem) +
+        (var(--text-lg-max) - var(--text-lg-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-lg-max) / 16) * 1rem
+  );
+
+  --text-xl-min: 24;
+  --text-xl-max: 32;
+  --text-xl: clamp(
+    calc(var(--text-xl-min) / 16) * 1rem,
+    calc(
+      ((var(--text-xl-min) / 16) * 1rem) +
+        (var(--text-xl-max) - var(--text-xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-xl-max) / 16) * 1rem
+  );
+
+  --text-2xl-min: 28;
+  --text-2xl-max: 40;
+  --text-2xl: clamp(
+    calc(var(--text-2xl-min) / 16) * 1rem,
+    calc(
+      ((var(--text-2xl-min) / 16) * 1rem) +
+        (var(--text-2xl-max) - var(--text-2xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-2xl-max) / 16) * 1rem
+  );
+
+  --text-3xl-min: 32;
+  --text-3xl-max: 60;
+  --text-3xl: clamp(
+    calc(var(--text-3xl-min) / 16) * 1rem,
+    calc(
+      ((var(--text-3xl-min) / 16) * 1rem) +
+        (var(--text-3xl-max) - var(--text-3xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-3xl-max) / 16) * 1rem
+  );
+
+  --text-4xl-min: 40;
+  --text-4xl-max: 64;
+  --text-4xl: clamp(
+    calc(var(--text-4xl-min) / 16) * 1rem,
+    calc(
+      ((var(--text-4xl-min) / 16) * 1rem) +
+        (var(--text-4xl-max) - var(--text-4xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-4xl-max) / 16) * 1rem
+  );
+
+  --text-5xl-min: 64;
+  --text-5xl-max: 140;
+  --text-5xl: clamp(
+    calc(var(--text-5xl-min) / 16) * 1rem,
+    calc(
+      ((var(--text-5xl-min) / 16) * 1rem) +
+        (var(--text-5xl-max) - var(--text-5xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--text-5xl-max) / 16) * 1rem
+  );
+
+  --space-xs-min: 16;
+  --space-xs-max: 24;
+  --space-xs: clamp(
+    calc(var(--space-xs-min) / 16) * 1rem,
+    calc(
+      ((var(--space-xs-min) / 16) * 1rem) +
+        (var(--space-xs-max) - var(--space-xs-min)) * var(--fluid-bp)
+    ),
+    calc(var(--space-xs-max) / 16) * 1rem
+  );
+
+  --space-sm-min: 24;
+  --space-sm-max: 40;
+  --space-sm: clamp(
+    calc(var(--space-sm-min) / 16) * 1rem,
+    calc(
+      ((var(--space-sm-min) / 16) * 1rem) +
+        (var(--space-sm-max) - var(--space-sm-min)) * var(--fluid-bp)
+    ),
+    calc(var(--space-sm-max) / 16) * 1rem
+  );
+
+  --space-min: 40;
+  --space-max: 64;
+  --space: clamp(
+    calc(var(--space-min) / 16) * 1rem,
+    calc(
+      ((var(--space-min) / 16) * 1rem) + (var(--space-max) - var(--space-min)) *
+        var(--fluid-bp)
+    ),
+    calc(var(--space-max) / 16) * 1rem
+  );
+
+  --space-md-min: 64;
+  --space-md-max: 96;
+  --space-md: clamp(
+    calc(var(--space-md-min) / 16) * 1rem,
+    calc(
+      ((var(--space-md-min) / 16) * 1rem) +
+        (var(--space-md-max) - var(--space-md-min)) * var(--fluid-bp)
+    ),
+    calc(var(--space-md-max) / 16) * 1rem
+  );
+
+  --space-lg-min: 96;
+  --space-lg-max: 128;
+  --space-lg: clamp(
+    calc(var(--space-lg-min) / 16) * 1rem,
+    calc(
+      ((var(--space-lg-min) / 16) * 1rem) +
+        (var(--space-lg-max) - var(--space-lg-min)) * var(--fluid-bp)
+    ),
+    calc(var(--space-lg-max) / 16) * 1rem
+  );
+
+  --space-xl-min: 128;
+  --space-xl-max: 180;
+  --space-xl: clamp(
+    calc(var(--space-xl-min) / 16) * 1rem,
+    calc(
+      ((var(--space-xl-min) / 16) * 1rem) +
+        (var(--space-xl-max) - var(--space-xl-min)) * var(--fluid-bp)
+    ),
+    calc(var(--space-xl-max) / 16) * 1rem
+  );
+}
+
+h2 {
+  @apply uppercase;
+}
+
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  @apply text-lg underline font-bold;
+}
+
+.text-md {
+  @apply leading-tight;
+}
+
+.text-label {
+  @apply font-mono text-xs uppercase;
+}
+
+*:nth-last-child(1) {
+  margin-bottom: 0 !important;
+}

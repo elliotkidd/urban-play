@@ -1,78 +1,54 @@
-import { getImageDimensions } from "@sanity/asset-utils";
-import { cn } from "@workspace/ui/lib/utils";
-import Image, { type ImageProps as NextImageProps } from "next/image";
+"use client";
 
-import { urlFor } from "@/lib/sanity/client";
-import type { SanityImageProps } from "@/types";
+import { client } from "@/lib/sanity/client";
+import { ImageType } from "@/lib/sanity/queries/fragments";
+import { useNextSanityImage } from "next-sanity-image";
+import Image from "next/image";
 
-type ImageProps = {
-  asset: SanityImageProps;
+type Props = {
+  src: ImageType;
+  className?: string;
   alt?: string;
-} & Omit<NextImageProps, "alt" | "src">;
+  sizes?: string;
+  height?: number;
+  width?: number;
+};
 
-function getBlurDataURL(asset: SanityImageProps) {
-  if (asset?.blurData) {
-    return {
-      blurDataURL: asset.blurData,
-      placeholder: "blur" as const,
-    };
-  }
-  return {};
-}
-
-export function SanityImage({
-  asset,
-  alt,
-  width,
-  height,
+export default function SanityImage({
+  src,
   className,
-  quality = 75,
-  fill,
-  ...props
-}: ImageProps) {
-  if (!asset?.asset) return null;
-  const dimensions = getImageDimensions(asset.asset);
+  alt,
+  sizes,
+  height,
+  width,
+}: Props) {
+  const imageProps: any = useNextSanityImage(client, src, {
+    imageBuilder: (imageUrlBuilder, options) => {
+      return imageUrlBuilder
+        .width(width || options.originalImageDimensions.width)
+        .height(height || options.originalImageDimensions.height)
+        .quality(80);
+    },
+  });
 
-  const url = urlFor({ ...asset, _id: asset?.asset?._ref })
-    .size(
-      Number(width ?? dimensions.width),
-      Number(height ?? dimensions.height),
-    )
-    .dpr(2)
-    .auto("format")
-    .quality(Number(quality))
-    .url();
+  if (!imageProps) return null;
 
-  // Base image props
-  const imageProps = {
-    alt: alt ?? asset.alt ?? "Image",
-    "aria-label": alt ?? asset.alt ?? "Image",
-    src: url,
-    className: cn(className),
-    // Optimize image sizes for performance and LCP
-    // Use smaller percentages to reduce initial load size while maintaining quality
-    // Order from smallest to largest breakpoint for better browser parsing
-    // Define responsive image sizes for optimal loading:
-    // - Mobile (<640px): Image takes up 80% of viewport width
-    // - Tablet (<768px): Image takes up 50% of viewport width
-    // - Small desktop (<1200px): Image takes up 33% of viewport width
-    // - Large desktop (>1200px): Image takes up 25% of viewport width
-    sizes:
-      "(max-width: 640px) 75vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw",
-    ...getBlurDataURL(asset),
-    ...props,
+  const loader = ({ src, width }: { src: string; width: number }) => {
+    return `${src}&w=${width}`;
   };
 
-  // Add width and height only if fill is not true
-  if (!fill) {
-    return (
-      <Image
-        {...imageProps}
-        width={width ?? dimensions.width}
-        height={height ?? dimensions.height}
-      />
-    );
-  }
-
-  return <Image {...imageProps} fill={fill} />;
+  return (
+    <Image
+      {...imageProps}
+      loader={loader}
+      alt={alt ? alt : ""}
+      placeholder="blur"
+      style={{ maxWidth: "100%" }}
+      height={height ? height : src?.height || undefined}
+      width={width ? width : src?.width || undefined}
+      className={className}
+      blurDataURL={src?.lqip || undefined}
+      sizes={sizes}
+    />
+  );
 }
