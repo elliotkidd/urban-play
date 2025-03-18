@@ -1,6 +1,5 @@
 import { TestimoniesProps } from "@/lib/sanity/queries/sections";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { TestimonyType } from "@/lib/sanity/queries/fragments";
 import { SanityButtons } from "../sanity-buttons";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { useRef } from "react";
@@ -8,17 +7,24 @@ import { Swiper as SwiperType } from "swiper";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import { twMerge } from "tailwind-merge";
 
 export default function TestimoniesSection({
   sectionHeader,
   testimonies,
+  smallWrapper,
 }: TestimoniesProps) {
   const { title, buttons } = sectionHeader;
 
   const swiperRef = useRef<SwiperType>();
 
   return (
-    <div className="wrapper py-fluid-xs space-y-fluid-lg overflow-hidden">
+    <div
+      className={twMerge(
+        "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
+        smallWrapper && "wrapper--small",
+      )}
+    >
       <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start prose mb-12">
         {title && (
           <h2 className="max-w-section-heading text-balance">{title}</h2>
@@ -41,10 +47,6 @@ export default function TestimoniesSection({
           modules={[EffectFade, Autoplay]}
           className="overflow-visible featured-projects-swiper mb-fluid-lg"
           loop
-          // autoplay={{
-          //   delay: 2500,
-          //   disableOnInteraction: false,
-          // }}
         >
           {testimonies.map((testimony: any, i: number) => {
             const {

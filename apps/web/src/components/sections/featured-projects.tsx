@@ -6,48 +6,31 @@ import Link from "../link";
 import processUrl from "@/utils/processUrl";
 import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
+import { twMerge } from "tailwind-merge";
 
 export default function FeaturedProjectsSection({
   sectionHeader,
   projects,
+  smallWrapper,
 }: FeaturedProjectsProps) {
   return (
-    <div className="wrapper py-fluid-xs space-y-fluid-lg overflow-hidden">
+    <div
+      className={twMerge(
+        "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
+        smallWrapper && "wrapper--small",
+      )}
+    >
       <SectionHeader {...sectionHeader} />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {projects[0] && (
-          <Link href={processUrl(projects[0])} className="col-span-1">
-            <div className="relative mb-2 aspect-square rounded-xl overflow-hidden">
-              <span className="absolute bg-nav-bar-background/20 backdrop-blur text-nav-bar-text top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
-                {projects[0].solutions
-                  .map(({ title }: { title: string }) => title)
-                  .join(", ")}
-              </span>
-              <SanityImage
-                src={projects[0].image}
-                className="object-cover inset-0 w-full h-full"
-              />
-            </div>
-            <h3 className="h3 mb-4">{projects[0].title}</h3>
-            <p className="max-w-p text-balance">{projects[0].description}</p>
-          </Link>
+          <ProjectTile project={projects[0]} imageAspectRatio="square" />
         )}
         {projects[1] && (
-          <Link href={processUrl(projects[1])} className="col-span-2">
-            <div className="relative mb-2 aspect-landscape rounded-xl overflow-hidden">
-              <span className="absolute bg-nav-bar-background/20 backdrop-blur text-nav-bar-text top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
-                {projects[1].solutions
-                  .map(({ title }: { title: string }) => title)
-                  .join(", ")}
-              </span>
-              <SanityImage
-                src={projects[1].image}
-                className="object-cover inset-0 w-full h-full"
-              />
-            </div>
-            <h3 className="h3 mb-4">{projects[1].title}</h3>
-            <p className="max-w-p text-balance">{projects[1].description}</p>
-          </Link>
+          <ProjectTile
+            project={projects[1]}
+            imageAspectRatio="landscape"
+            className="lg:col-span-2"
+          />
         )}
       </div>
       {projects && projects.length > 2 && (

@@ -5,10 +5,11 @@ import { client } from "@/lib/sanity/client";
 import { sanityFetch } from "@/lib/sanity/live";
 import { querySlugPageData, querySlugPagePaths } from "@/lib/sanity/query";
 import { getMetaData } from "@/lib/seo";
+import { pageQuery } from "@/lib/sanity/queries/documents";
 
 async function fetchSlugPageData(slug: string) {
   return await sanityFetch({
-    query: querySlugPageData,
+    query: pageQuery.query,
     params: { slug: `/${slug}` },
   });
 }

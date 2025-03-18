@@ -1,7 +1,9 @@
 import { defineField, defineType } from "sanity";
 
 import { GROUP, GROUPS } from "../../utils/constant";
-import { slugField } from "../common";
+import { richTextField, slugField } from "../common";
+import { seoFields } from "../../utils/seo-fields";
+import { ogFields } from "../../utils/og-fields";
 
 export const project = defineType({
   name: "project",
@@ -17,10 +19,20 @@ export const project = defineType({
     }),
     slugField,
     defineField({
-      name: "image",
-      type: "image",
-      title: "Image",
+      name: "solutions",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "solution" }] }],
+      title: "Solutions",
       group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "hero",
+      title: "Hero",
+      type: "hero",
+      group: GROUP.MAIN_CONTENT,
+      options: {
+        collapsible: true,
+      },
     }),
     defineField({
       name: "description",
@@ -29,21 +41,47 @@ export const project = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
-      name: "solutions",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "solution" }] }],
-      title: "Solutions",
+      name: "client",
+      type: "string",
+      title: "Client",
       group: GROUP.MAIN_CONTENT,
     }),
+    defineField({
+      name: "construction",
+      type: "string",
+      title: "Construction",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "status",
+      type: "string",
+      title: "Status",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      ...richTextField,
+      title: "Content",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "pageBuilder",
+      type: "pageBuilder",
+      title: "Page Builder",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    ...seoFields,
+    ...ogFields,
   ],
   preview: {
     select: {
       title: "title",
-      media: "image",
+      media: "hero.image",
     },
-    prepare: ({ title, media }) => ({
-      title,
-      media,
-    }),
+    prepare: ({ title, media }) => {
+      return {
+        title,
+        media,
+      };
+    },
   },
 });

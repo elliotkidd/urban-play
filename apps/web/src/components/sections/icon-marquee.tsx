@@ -7,9 +7,15 @@ import Marquee from "react-fast-marquee";
 export default function IconMarqueeSection({
   sectionHeader,
   icons,
+  smallWrapper,
 }: IconMarqueeProps) {
   return (
-    <div className="wrapper py-fluid-xs">
+    <div
+      className={twMerge(
+        "wrapper py-fluid-xs",
+        smallWrapper && "wrapper--small",
+      )}
+    >
       {sectionHeader && <SectionHeader {...sectionHeader} />}
       <Marquee autoFill className="!overflow-visible">
         {icons &&

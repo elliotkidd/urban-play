@@ -1,11 +1,12 @@
 import {
+  Award,
+  BookA,
   BookMarked,
   CogIcon,
   File,
   FileText,
-  Grid2X2,
+  Grid2x2,
   Hammer,
-  HomeIcon,
   Lightbulb,
   type LucideIcon,
   MessageCircleQuestion,
@@ -100,20 +101,15 @@ export const structure = (
   return S.list()
     .title("Content")
     .items([
-      createSingleTon({ S, type: "homePage", icon: HomeIcon }),
-      S.divider(),
-      createList({ S, type: "page", title: "Pages" }),
+      //createSingleTon({ S, type: "homePage", icon: HomeIcon }),
       createIndexList({
         S,
-        index: { type: "blogIndex", icon: BookMarked },
-        list: { type: "blog", title: "Blogs", icon: FileText },
+        index: { type: "homePage", icon: BookA },
+        list: { type: "page", title: "Pages" },
       }),
-      createList({
-        S,
-        type: "faq",
-        title: "FAQs",
-        icon: MessageCircleQuestion,
-      }),
+      // S.divider(),
+      // createList({ S, type: "page", title: "Pages" }),
+      S.divider(),
       S.listItem()
         .title("Projects")
         .icon(Hammer)
@@ -121,12 +117,19 @@ export const structure = (
           S.list()
             .title("Projects")
             .items([
+              createSingleTon({
+                S,
+                type: "projectIndex",
+                title: "Projects Index",
+                icon: Grid2x2,
+              }),
               createList({
                 S,
                 type: "project",
                 title: "Projects",
                 icon: Hammer,
               }),
+              S.divider(),
               createList({
                 S,
                 type: "solution",
@@ -135,7 +138,27 @@ export const structure = (
               }),
             ]),
         ),
+      createList({ S, type: "solution", title: "Solutions", icon: Lightbulb }),
+      S.divider(),
+      createList({
+        S,
+        type: "award",
+        title: "Awards",
+        icon: Award,
+      }),
+      createList({
+        S,
+        type: "faq",
+        title: "FAQs",
+        icon: MessageCircleQuestion,
+      }),
       createList({ S, type: "testimony", title: "Testimonies", icon: Quote }),
+      S.divider(),
+      createIndexList({
+        S,
+        index: { type: "blogIndex", icon: BookMarked },
+        list: { type: "blog", title: "Blogs", icon: FileText },
+      }),
       createList({ S, type: "author", title: "Authors", icon: User }),
       S.divider(),
       S.listItem()

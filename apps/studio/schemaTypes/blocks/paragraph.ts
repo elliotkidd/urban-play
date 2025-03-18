@@ -4,10 +4,9 @@ import { defineField, defineType } from "sanity";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
   annotationField,
-  colorPickerField,
-  marginSettingsFields,
   richTextField,
   sectionHeaderField,
+  sectionSettings,
 } from "../common";
 
 export const paragraph = defineType({
@@ -23,8 +22,7 @@ export const paragraph = defineType({
       ...richTextField,
       group: GROUP.MAIN_CONTENT,
     }),
-    colorPickerField,
-    ...marginSettingsFields,
+    ...sectionSettings,
   ],
   preview: {
     select: {

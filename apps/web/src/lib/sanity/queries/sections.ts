@@ -1,7 +1,12 @@
 import { q, Selection, TypeFromSelection } from "groqd";
 import { RICHTEXT_BLOCKS } from "./richText";
-import { IMAGE_FRAGMENT, TESTIMONY_FRAGMENT, TILE_FRAGMENT } from "./fragments";
-import { BUTTON_FRAGMENT } from "./link";
+import {
+  COLOR_SCHEME_FRAGMENT,
+  IMAGE_FRAGMENT,
+  TESTIMONY_FRAGMENT,
+  TILE_FRAGMENT,
+} from "./fragments";
+import { BUTTON_FRAGMENT, CUSTOM_URL_FRAGMENT } from "./link";
 
 const REMOVE_MARGIN_FRAGMENTS = {
   removeMarginTop: q.boolean(),
@@ -18,29 +23,13 @@ export type SectionHeaderProps = TypeFromSelection<
   typeof SECTION_HEADER_FRAGMENT
 >;
 
-const COLOR_FRAGMENT: Selection = {
-  rgb: q("rgb").grab({
-    b: q.number(),
-    g: q.number(),
-    r: q.number(),
-  }),
+const SECTION_SETTINGS_FRAGMENT = {
+  ...REMOVE_MARGIN_FRAGMENTS,
+  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+  smallWrapper: q.boolean(),
 } satisfies Selection;
 
-const COLOR_SCHEME_FRAGMENT: Selection = {
-  name: q.string(),
-  background: q("background").grab(COLOR_FRAGMENT).nullable(),
-  text: q("text").grab(COLOR_FRAGMENT).nullable(),
-  primaryButton: q("primaryButton").grab(COLOR_FRAGMENT).nullable(),
-  secondaryButton: q("secondaryButton").grab(COLOR_FRAGMENT).nullable(),
-  navBarBackground: q("navBarBackground").grab(COLOR_FRAGMENT).nullable(),
-  navBarText: q("navBarText").grab(COLOR_FRAGMENT).nullable(),
-} satisfies Selection;
-
-export type ColorSchemeFragment = TypeFromSelection<
-  typeof COLOR_SCHEME_FRAGMENT
->;
-
-const HERO_FRAGMENT = {
+export const HERO_FRAGMENT = {
   _type: q.literal("heroSection"),
   _key: q.string(),
   title: q.string(),
@@ -48,8 +37,7 @@ const HERO_FRAGMENT = {
     .select(RICHTEXT_BLOCKS)
     .nullable(),
   image: q("image").grab(IMAGE_FRAGMENT),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type HeroProps = TypeFromSelection<typeof HERO_FRAGMENT>;
@@ -68,32 +56,29 @@ const PARAGRAPH_FRAGMENT = {
   richText: q(`richText[]`, { isArray: true })
     .select(RICHTEXT_BLOCKS)
     .nullable(),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type ParagraphProps = TypeFromSelection<typeof PARAGRAPH_FRAGMENT>;
 
-const SOLUTIONS_CAROUSEL_FRAGMENT = {
-  _type: q.literal("solutionsCarousel"),
+const SOLUTIONS_SECTION_FRAGMENT = {
+  _type: q.literal("solutionsCarousel").or(q.literal("solutionsGrid")),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
   solutions: q("*", { isArray: true })
     .filterByType("solution")
-    .slice(0, 5)
     .grab({
       _id: q.string(),
-      _key: q.string(),
       title: q.string(),
+      slug: q.slug("slug"),
       image: q("image").grab(IMAGE_FRAGMENT),
       description: q.string(),
     }),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
-export type SolutionsCarouselProps = TypeFromSelection<
-  typeof SOLUTIONS_CAROUSEL_FRAGMENT
+export type SolutionsSectionProps = TypeFromSelection<
+  typeof SOLUTIONS_SECTION_FRAGMENT
 >;
 
 const FEATURED_PROJECTS_FRAGMENT = {
@@ -104,8 +89,7 @@ const FEATURED_PROJECTS_FRAGMENT = {
     .filterByType("project")
     .slice(0, 5)
     .grab(TILE_FRAGMENT),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type FeaturedProjectsProps = TypeFromSelection<
@@ -116,9 +100,8 @@ const ICON_MARQUEE_FRAGMENT = {
   _type: q.literal("iconMarquee"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   icons: q("icons[]", { isArray: true }).grab(IMAGE_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type IconMarqueeProps = TypeFromSelection<typeof ICON_MARQUEE_FRAGMENT>;
@@ -127,11 +110,10 @@ const TESTIMONIES_FRAGMENT = {
   _type: q.literal("testimonies"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   testimonies: q("*", { isArray: true })
     .filterByType("testimony")
     .grab(TESTIMONY_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type TestimoniesProps = TypeFromSelection<typeof TESTIMONIES_FRAGMENT>;
@@ -140,12 +122,11 @@ const FEATURED_POSTS_FRAGMENT = {
   _type: q.literal("featuredPost"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   posts: q("*", { isArray: true })
     .filterByType("blog")
     .slice(0, 2)
     .grab({ ...TILE_FRAGMENT, description: q.string() }),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type FeaturedPostsProps = TypeFromSelection<
@@ -160,25 +141,253 @@ const CTA_FRAGMENT = {
     .nullable(),
   title: q.string(),
   buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
-  colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  ...REMOVE_MARGIN_FRAGMENTS,
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type CTAProps = TypeFromSelection<typeof CTA_FRAGMENT>;
 
+export const IMAGE_BANNER_FRAGMENT = {
+  _type: q.literal("imageBanner"),
+  _key: q.string(),
+  title: q.string(),
+  richText: q(`richText[]`, { isArray: true })
+    .select(RICHTEXT_BLOCKS)
+    .nullable(),
+  containImage: q.boolean(),
+  image: q("image").grab(IMAGE_FRAGMENT),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type ImageBannerProps = TypeFromSelection<typeof IMAGE_BANNER_FRAGMENT>;
+
+const AWARDS_ACCORDION_FRAGMENT = {
+  _type: q.literal("awardsAccordion"),
+  _key: q.string(),
+  title: q.string(),
+  awards: q("*", { isArray: true }).filterByType("award").grab({
+    _id: q.string(),
+    _key: q.string(),
+    title: q.string(),
+    awardType: q.string(),
+    year: q.string(),
+  }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type AwardsAccordionProps = TypeFromSelection<
+  typeof AWARDS_ACCORDION_FRAGMENT
+>;
+
+const TEAM_FRAGMENT = {
+  _type: q.literal("team"),
+  _key: q.string(),
+  title: q.string(),
+  teamMembers: q("teamMembers[]", { isArray: true })
+    .deref()
+    .grab({
+      _id: q.string(),
+      _key: q.string(),
+      name: q.string(),
+      image: q("image").grab(IMAGE_FRAGMENT),
+      position: q.string(),
+      startingYear: q.string(),
+    }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type TeamProps = TypeFromSelection<typeof TEAM_FRAGMENT>;
+
+const IMAGE_BLOCK_FRAGMENT = {
+  _type: q.literal("imageBlock"),
+  _key: q.string(),
+  image: q("source").grab(IMAGE_FRAGMENT),
+  aspectRatio: q
+    .literal("portrait")
+    .or(q.literal("landscape"))
+    .or(q.literal("square")),
+} satisfies Selection;
+
+export type ImageBlockProps = TypeFromSelection<typeof IMAGE_BLOCK_FRAGMENT>;
+
+const RICH_TEXT_CONTENT_FRAGMENT = {
+  _type: q.literal("richTextBlock"),
+  _key: q.string(),
+  richText: q(`richText[]`, { isArray: true })
+    .select(RICHTEXT_BLOCKS)
+    .nullable(),
+} satisfies Selection;
+
+export type RichTextContentProps = TypeFromSelection<
+  typeof RICH_TEXT_CONTENT_FRAGMENT
+>;
+
+const ACCORDION_BLOCK_FRAGMENT = {
+  _type: q.literal("accordion"),
+  _key: q.string(),
+  title: q(`title[]`, { isArray: true }).select(RICHTEXT_BLOCKS).nullable(),
+  items: q("items[]", { isArray: true }).grab({
+    _key: q.string(),
+    heading: q.string(),
+    content: q(`content[]`, { isArray: true })
+      .select(RICHTEXT_BLOCKS)
+      .nullable(),
+  }),
+} satisfies Selection;
+
+export type AccordionBlockProps = TypeFromSelection<
+  typeof ACCORDION_BLOCK_FRAGMENT
+>;
+
+const TEXT_BETWEEN_BLOCK_FRAGMENT = {
+  _type: q.literal("textBetweenBlock"),
+  _key: q.string(),
+  title: q(`title[]`, { isArray: true }).select(RICHTEXT_BLOCKS).nullable(),
+  text: q(`text[]`, { isArray: true }).select(RICHTEXT_BLOCKS).nullable(),
+} satisfies Selection;
+
+export type TextBetweenBlockProps = TypeFromSelection<
+  typeof TEXT_BETWEEN_BLOCK_FRAGMENT
+>;
+
+const CONTENT_BLOCK_SELECTION = {
+  "_type == 'imageBlock'": IMAGE_BLOCK_FRAGMENT,
+  "_type == 'richTextBlock'": RICH_TEXT_CONTENT_FRAGMENT,
+  "_type == 'accordion'": ACCORDION_BLOCK_FRAGMENT,
+  "_type == 'textBetweenBlock'": TEXT_BETWEEN_BLOCK_FRAGMENT,
+};
+
+const TWO_COLUMN_CONTENT_FRAGMENT = {
+  _type: q.literal("twoColumnContent"),
+  _key: q.string(),
+  left: q("left[]", { isArray: true }).select({
+    ...CONTENT_BLOCK_SELECTION,
+    default: {
+      _key: q.string(),
+      _type: q.string(),
+    },
+  }),
+  right: q("right[]", { isArray: true }).select({
+    ...CONTENT_BLOCK_SELECTION,
+    default: {
+      _key: q.string(),
+      _type: q.string(),
+    },
+  }),
+  columnRatio: q.literal("5050").or(q.literal("2575")).or(q.literal("7525")),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type TwoColumnContentProps = TypeFromSelection<
+  typeof TWO_COLUMN_CONTENT_FRAGMENT
+>;
+
+const IMAGE_LINK_CARD_FRAGMENT = {
+  _id: q.string(),
+  _key: q.string(),
+  title: q.string(),
+  image: q("image").grab(IMAGE_FRAGMENT),
+  url: q("url").grab(CUSTOM_URL_FRAGMENT),
+} satisfies Selection;
+
+export type ImageLinkCardProps = TypeFromSelection<
+  typeof IMAGE_LINK_CARD_FRAGMENT
+>;
+
+const IMAGE_LINK_CARDS = {
+  _type: q.literal("imageLinkCards"),
+  _key: q.string(),
+  cards: q("cards[]", { isArray: true }).grab(IMAGE_LINK_CARD_FRAGMENT),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+const IMAGE_MARQUEE_FRAGMENT = {
+  _type: q.literal("imageMarquee"),
+  _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  images: q("images[]", { isArray: true }).grab(IMAGE_FRAGMENT),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type ImageMarqueeProps = TypeFromSelection<
+  typeof IMAGE_MARQUEE_FRAGMENT
+>;
+
+const PROCESS_FRAGMENT = {
+  _type: q.literal("process").or(q.literal("verticalProcess")),
+  _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  steps: q("steps[]", { isArray: true }).grab({
+    _key: q.string(),
+    heading: q.string(),
+    description: q.string(),
+    image: q("image").grab(IMAGE_FRAGMENT),
+  }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type ProcessProps = TypeFromSelection<typeof PROCESS_FRAGMENT>;
+
+const FAQ_ACCORDION_FRAGMENT = {
+  _type: q.literal("faqAccordion"),
+  _key: q.string(),
+  title: q.string(),
+  faqs: q("*", { isArray: true })
+    .filterByType("faq")
+    .grab({
+      _id: q.string(),
+      title: q.string(),
+      answer: q(`richText[]`, { isArray: true })
+        .select(RICHTEXT_BLOCKS)
+        .nullable(),
+    }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type FAQAccordionProps = TypeFromSelection<
+  typeof FAQ_ACCORDION_FRAGMENT
+>;
+
+const QUOTE_FRAGMENT = {
+  _type: q.literal("quote"),
+  _key: q.string(),
+  quote: q.string(),
+  author: q("author").deref().grab({
+    _id: q.string(),
+    name: q.string(),
+    position: q.string(),
+  }),
+} satisfies Selection;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
-  "_type == 'solutionsCarousel'": SOLUTIONS_CAROUSEL_FRAGMENT,
+  "_type == 'solutionsCarousel' || _type == 'solutionsGrid'":
+    SOLUTIONS_SECTION_FRAGMENT,
   "_type == 'featuredProjects'": FEATURED_PROJECTS_FRAGMENT,
   "_type == 'iconMarquee'": ICON_MARQUEE_FRAGMENT,
   "_type == 'testimonies'": TESTIMONIES_FRAGMENT,
   "_type == 'featuredPosts'": FEATURED_POSTS_FRAGMENT,
   "_type == 'cta'": CTA_FRAGMENT,
+  "_type == 'imageBanner'": IMAGE_BANNER_FRAGMENT,
+  "_type == 'awardsAccordion'": AWARDS_ACCORDION_FRAGMENT,
+  "_type == 'team'": TEAM_FRAGMENT,
+  "_type == 'twoColumnContent'": TWO_COLUMN_CONTENT_FRAGMENT,
+  "_type == 'imageLinkCards'": IMAGE_LINK_CARDS,
+  "_type == 'imageMarquee'": IMAGE_MARQUEE_FRAGMENT,
+  "_type == 'process' || _type == 'verticalProcess'": PROCESS_FRAGMENT,
+  "_type == 'faqsAccordion'": FAQ_ACCORDION_FRAGMENT,
+  "_type == 'quote'": QUOTE_FRAGMENT,
 };
 
-export const SECTIONS_FRAGMENT: any = q("pageBuilder[]", {
+export const SECTIONS_FRAGMENT = q("pageBuilder[]", {
   isArray: true,
 })
-  .select(SECTIONS_LIST_SELECTION)
+  .select({
+    ...SECTIONS_LIST_SELECTION,
+    default: {
+      _key: q.string(),
+      _type: q.string(),
+      ...SECTION_SETTINGS_FRAGMENT,
+    },
+  })
   .nullable();

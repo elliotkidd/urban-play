@@ -1,41 +1,25 @@
-import { cn } from "@workspace/ui/lib/utils";
-import Link from "next/link";
 import SanityImage from "./sanity-image";
-export type CTACardProps = {
+import { twMerge } from "tailwind-merge";
+import SanityLink from "./sanity-link";
+
+export type ImageLinkCardProps = {
   card: any;
   className?: string;
 };
 
-export function CTACard({ card, className }: CTACardProps) {
-  const { image, description, title, href } = card ?? {};
+export function ImageLinkCard({ card, className }: ImageLinkCardProps) {
+  const { image, title, url } = card ?? {};
   return (
-    <Link
-      href={href ?? "#"}
-      className={cn(
-        "rounded-3xl p-4 md:p-8 transition-colors relative overflow-hidden group flex flex-col justify-end xl:h-[400px]",
-        className,
-      )}
-    >
-      {image?.asset && (
-        <div className="absolute inset-0 z-[1] mix-blend-multiply">
-          {/* <SanityImage
-            asset={image}
-            loading="eager"
-            priority
-            quality={100}
-            fill
-            className="object-cover grayscale pointer-events-none group-hover:opacity-100 group-hover:transition-opacity duration-1000 opacity-40 dark:opacity-60 dark:hover:opacity-[2] dark:saturate-200"
-          /> */}
-        </div>
-      )}
-      <div className="z-[2] pt-64 flex flex-col space-y-2 mb-4 duration-500 xl:absolute xl:top-24 group-hover:top-8 xl:inset-x-8">
-        <h3 className="text-xl font-[500] text-[#111827] dark:text-neutral-300">
-          {title}
-        </h3>
-        <p className="text-sm text-[#374151] xl:opacity-0 xl:group-hover:opacity-100 transition-opacity duration-300 delay-150 dark:text-neutral-300">
-          {description}
-        </p>
+    <SanityLink url={url} className={twMerge("group", className)}>
+      <div className="relative aspect-landscape inset-0 overflow-hidden rounded-xl bg-nav-bar-background">
+        {image && (
+          <SanityImage
+            src={image}
+            className="object-cover pointer-events-none group-hover:scale-105 duration-500"
+          />
+        )}
       </div>
-    </Link>
+      <h3 className="mt-4 font-black text-2xl no-underline">{title}</h3>
+    </SanityLink>
   );
 }

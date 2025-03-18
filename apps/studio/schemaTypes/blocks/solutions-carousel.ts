@@ -2,11 +2,7 @@ import { Images as icon } from "lucide-react";
 import { defineType } from "sanity";
 
 import { SECTION_GROUPS } from "../../utils/constant";
-import {
-  colorPickerField,
-  marginSettingsFields,
-  sectionHeaderField,
-} from "../common";
+import { sectionHeaderField, sectionSettings } from "../common";
 
 export const solutionsCarousel = defineType({
   name: "solutionsCarousel",
@@ -14,7 +10,7 @@ export const solutionsCarousel = defineType({
   icon,
   type: "object",
   groups: SECTION_GROUPS,
-  fields: [sectionHeaderField, colorPickerField, ...marginSettingsFields],
+  fields: [sectionHeaderField, ...sectionSettings],
   preview: {
     select: {
       title: "sectionHeader.title",

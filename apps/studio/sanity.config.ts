@@ -17,6 +17,7 @@ import { presentationUrl } from "./plugins/presentation-url";
 import { schemaTypes } from "./schemaTypes";
 import { structure } from "./structure";
 import { createPageTemplate } from "./utils/helper";
+import { groqdPlaygroundTool } from "groqd-playground";
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? "";
 const dataset = process.env.SANITY_STUDIO_DATASET;
@@ -51,6 +52,7 @@ export default defineConfig({
     presentationUrl(),
     unsplashImageAsset(),
     colorPicker(),
+    groqdPlaygroundTool(),
   ],
 
   form: {

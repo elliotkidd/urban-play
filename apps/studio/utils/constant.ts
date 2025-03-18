@@ -41,6 +41,11 @@ export const GROUPS: FieldGroupDefinition[] = [
     icon: InlineElementIcon,
     title: "Related",
   },
+  {
+    name: GROUP.SETTINGS,
+    icon: CogIcon,
+    title: "Settings",
+  },
 ];
 
 export const SECTION_GROUPS = [

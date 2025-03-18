@@ -4,3 +4,12 @@
     overflow: visible;
   }
 }
+
+.splide {
+  .splide__track {
+    overflow: visible;
+    .splide__list {
+      overflow: visible;
+    }
+  }
+}

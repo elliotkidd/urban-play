@@ -1,13 +1,17 @@
+.max-w-p-sm {
+  max-width: 450px;
+}
+
 .max-w-p {
-  max-width: 500px !important;
+  max-width: 500px;
 }
 
 .max-w-p-lg {
-  max-width: 562px !important;
+  max-width: 562px;
 }
 
 .max-w-section-heading {
-  max-width: 870px !important;
+  max-width: 870px;
 }
 
 :root {
@@ -217,7 +221,7 @@ h5,
 .h5,
 h6,
 .h6 {
-  @apply text-lg underline font-bold;
+  @apply text-lg font-bold leading-none;
 }
 
 .text-md {
@@ -230,4 +234,8 @@ h6,
 
 *:nth-last-child(1) {
   margin-bottom: 0 !important;
+}
+
+.prose-white {
+  color: white !important;
 }

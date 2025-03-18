@@ -21,6 +21,11 @@ export const author = defineType({
       title: "Image",
     }),
     defineField({
+      name: "startingYear",
+      type: "number",
+      title: "Starting Year",
+    }),
+    defineField({
       name: "bio",
       type: "text",
       title: "Bio",

@@ -2,11 +2,7 @@ import { MoveHorizontal as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import {
-  colorPickerField,
-  marginSettingsFields,
-  sectionHeaderField,
-} from "../common";
+import { sectionHeaderField, sectionSettings } from "../common";
 
 export const iconMarquee = defineType({
   name: "iconMarquee",
@@ -16,7 +12,6 @@ export const iconMarquee = defineType({
   groups: SECTION_GROUPS,
   fields: [
     sectionHeaderField,
-    colorPickerField,
     defineField({
       name: "icons",
       type: "array",
@@ -25,7 +20,7 @@ export const iconMarquee = defineType({
       title: "Icons",
       group: GROUP.MAIN_CONTENT,
     }),
-    ...marginSettingsFields,
+    ...sectionSettings,
   ],
   preview: {
     select: {

@@ -18,7 +18,7 @@ const components: Partial<PortableTextReactComponents> = {
       return (
         <h2
           id={slug}
-          className="scroll-m-20 border-b pb-2 text-3xl font-semibold first:mt-0"
+          className="scroll-m-20 pb-2 text-3xl font-semibold first:mt-0"
         >
           {children}
         </h2>

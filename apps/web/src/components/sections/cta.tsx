@@ -9,6 +9,8 @@ import {
   Composite,
   Mouse,
   MouseConstraint,
+  Body,
+  Vector,
 } from "matter-js";
 import { useEffect } from "react";
 
@@ -42,10 +44,10 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
 
       // create two boxes and a ground
       var boxA = Bodies.rectangle(
-        container.clientWidth / 2,
+        container.clientWidth * 0.25,
         container.clientHeight / 2,
-        container.clientWidth / 10,
-        container.clientWidth / 10,
+        container.clientWidth * 0.15,
+        container.clientWidth * 0.15,
         {
           render: {
             fillStyle: "#12BF65",
@@ -55,25 +57,30 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
       var boxB = Bodies.rectangle(
         container.clientWidth / 2,
         container.clientHeight / 2,
-        container.clientWidth / 5,
-        container.clientWidth / 5,
+        container.clientWidth * 0.4,
+        container.clientWidth * 0.4,
         {
           render: {
             fillStyle: "#008EDA",
           },
         },
       );
-      var ball = Bodies.circle(600, 200, (container.clientWidth / 25) * 2, {
-        restitution: 0.9,
-        render: {
-          fillStyle: "#ED3E61",
+      var ball = Bodies.circle(
+        container.clientWidth * 0.6,
+        container.clientHeight * 0.75,
+        container.clientWidth * 0.1,
+        {
+          restitution: 0.9,
+          render: {
+            fillStyle: "#ED3E61",
+          },
         },
-      });
+      );
       var triangle = Bodies.polygon(
-        400,
-        200,
+        container.clientWidth * 0.75,
+        container.clientHeight * 0.75,
         3,
-        (container.clientWidth / 25) * 2,
+        container.clientWidth * 0.2,
         {
           restitution: 0.6,
           render: {
@@ -129,7 +136,7 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
         constraint: {
           stiffness: 1.5,
           render: {
-            visible: true,
+            visible: false,
           },
         },
       });
@@ -142,8 +149,38 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
       // create runner
       var runner = Runner.create();
 
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              Runner.run(runner, engine);
+            }
+          });
+        },
+        {
+          threshold: 0.5,
+        },
+      );
+
+      observer.observe(container);
       // run the engine
-      Runner.run(runner, engine);
+
+      window.addEventListener("resize", () => {
+        render.canvas.width = container.clientWidth;
+        render.canvas.height = container.clientHeight;
+
+        Body.setPosition(
+          wallLeft,
+          Vector.create(-THICCNESS / 2, container.clientHeight / 2),
+        );
+        Body.setPosition(
+          wallRight,
+          Vector.create(
+            container.clientWidth + THICCNESS / 2,
+            container.clientHeight / 2,
+          ),
+        );
+      });
 
       // Cleanup function
       return () => {
@@ -156,7 +193,7 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
 
   return (
     <>
-      {/* <div className="wrapper grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
+      <div className="wrapper absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
         <h2 className="max-w-p">{title}</h2>
         <div className="text-lg text-muted-foreground">
           <RichText
@@ -169,7 +206,7 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
             className="w-full sm:w-fit grid gap-2 sm:grid-flow-col lg:justify-start mb-8"
           />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

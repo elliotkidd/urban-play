@@ -3,27 +3,21 @@ import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
-  buttonsField,
   colorPickerField,
   marginSettingsFields,
-  richTextField,
+  sectionSettings,
 } from "../common";
 
 const imageLinkCard = defineField({
   name: "imageLinkCard",
   type: "object",
   icon: ImageIcon,
+  groups: SECTION_GROUPS,
   fields: [
     defineField({
       name: "title",
       title: "Card Title",
       type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "description",
-      title: "Card Description",
-      type: "text",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -37,11 +31,11 @@ const imageLinkCard = defineField({
       title: "Link URL",
       type: "customUrl",
     }),
+    ...sectionSettings,
   ],
   preview: {
     select: {
       title: "title",
-      description: "description",
       media: "image",
       externalUrl: "url.external",
       urlType: "url.type",
@@ -50,7 +44,6 @@ const imageLinkCard = defineField({
     },
     prepare: ({
       title,
-      description,
       media,
       externalUrl,
       urlType,
@@ -61,15 +54,10 @@ const imageLinkCard = defineField({
       const newTabIndicator = openInNewTab ? " ↗" : "";
       const truncatedUrl =
         url?.length > 30 ? `${url.substring(0, 30)}...` : url;
-      const truncatedDesc =
-        description?.length > 50
-          ? `${description.substring(0, 50)}...`
-          : description;
 
       return {
         title: title || "Untitled Card",
-        subtitle:
-          truncatedDesc + (url ? ` • ${truncatedUrl}${newTabIndicator}` : ""),
+        subtitle: url ? ` • ${truncatedUrl}${newTabIndicator}` : "",
         media,
       };
     },
@@ -84,22 +72,6 @@ export const imageLinkCards = defineType({
   groups: SECTION_GROUPS,
   fields: [
     defineField({
-      name: "eyebrow",
-      title: "Eyebrow Text",
-      type: "string",
-      description: "Optional text displayed above the title",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
-      name: "title",
-      title: "Section Title",
-      type: "string",
-      description: "The main heading for this cards section",
-      validation: (Rule) => Rule.required(),
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({ ...richTextField, group: GROUP.MAIN_CONTENT }),
-    defineField({
       name: "cards",
       title: "Cards",
       type: "array",
@@ -112,12 +84,11 @@ export const imageLinkCards = defineType({
   preview: {
     select: {
       title: "title",
-      eyebrow: "eyebrow",
       cards: "cards",
     },
-    prepare: ({ title, eyebrow, cards = [] }) => ({
+    prepare: ({ title, cards = [] }) => ({
       title: title || "Image Link Cards",
-      subtitle: `${eyebrow ? `${eyebrow} • ` : ""}${cards.length} card${cards.length === 1 ? "" : "s"}`,
+      subtitle: `${cards.length} card${cards.length === 1 ? "" : "s"}`,
     }),
   },
 });

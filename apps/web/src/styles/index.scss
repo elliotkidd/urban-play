@@ -11,3 +11,11 @@
 .wrapper {
   @apply mx-auto w-full px-fluid-xs;
 }
+
+.min-h-p-section {
+  min-height: 512px;
+}
+
+.wrapper--small {
+  max-width: 1165px;
+}

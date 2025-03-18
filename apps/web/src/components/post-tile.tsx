@@ -18,7 +18,7 @@ function PostTile({
     <Link href={processUrl(post)} className={twMerge("block", className)}>
       <div
         className={twMerge(
-          "relative mb-2 aspect-square rounded-xl overflow-hidden",
+          "relative mb-2 rounded-xl overflow-hidden",
           image_aspect === "square" && "aspect-square",
           image_aspect === "portrait" && "aspect-portrait",
         )}

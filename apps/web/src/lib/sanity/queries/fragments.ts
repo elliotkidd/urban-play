@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { InferType, q, TypeFromSelection } from "groqd";
 import { CUSTOM_URL_FRAGMENT, LINK_REFERENCE_FRAGMENT } from "./link";
 
@@ -65,7 +64,7 @@ export const SEO_FRAGMENT: any = {
 export const TILE_FRAGMENT = {
   _id: q.string(),
   ...LINK_REFERENCE_FRAGMENT,
-  image: q("image").grab(IMAGE_FRAGMENT),
+  image: q("hero.image").grab(IMAGE_FRAGMENT),
   description: q.string(),
   solutions: q("solutions[]", { isArray: true }).deref().grab({
     _id: q.string(),
@@ -92,3 +91,25 @@ export const TESTIMONY_FRAGMENT = {
 };
 
 export type TestimonyType = InferType<typeof TESTIMONY_FRAGMENT>;
+
+const COLOR_FRAGMENT = {
+  rgb: q("rgb").grab({
+    b: q.number(),
+    g: q.number(),
+    r: q.number(),
+  }),
+};
+
+export const COLOR_SCHEME_FRAGMENT = {
+  name: q.string(),
+  background: q("background").grab(COLOR_FRAGMENT).nullable(),
+  text: q("text").grab(COLOR_FRAGMENT).nullable(),
+  primaryButton: q("primaryButton").grab(COLOR_FRAGMENT).nullable(),
+  secondaryButton: q("secondaryButton").grab(COLOR_FRAGMENT).nullable(),
+  navBarBackground: q("navBarBackground").grab(COLOR_FRAGMENT).nullable(),
+  navBarText: q("navBarText").grab(COLOR_FRAGMENT).nullable(),
+};
+
+export type ColorSchemeFragment = TypeFromSelection<
+  typeof COLOR_SCHEME_FRAGMENT
+>;

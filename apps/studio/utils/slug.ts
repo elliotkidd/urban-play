@@ -44,7 +44,6 @@ export async function isUnique(
   };
   const query = "*[!(_id in [$draft, $published]) && slug.current == $slug]";
   const result = await client.fetch(query, params);
-  console.log("🚀 ~ isUnique:", result);
   return result.length === 0;
 }
 

@@ -1,7 +1,12 @@
 import { PhoneIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-import { buttonsField, colorPickerField, richTextField } from "../common";
+import {
+  buttonsField,
+  colorPickerField,
+  richTextField,
+  sectionSettings,
+} from "../common";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 
 export const cta = defineType({
@@ -19,7 +24,7 @@ export const cta = defineType({
     }),
     defineField({ ...richTextField, group: GROUP.MAIN_CONTENT }),
     defineField({ ...buttonsField, group: GROUP.MAIN_CONTENT }),
-    colorPickerField,
+    ...sectionSettings,
   ],
   preview: {
     select: {

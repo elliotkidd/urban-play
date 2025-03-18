@@ -2,12 +2,45 @@ import { TileType } from "@/lib/sanity/queries/fragments";
 import Link from "./link";
 import SanityImage from "./sanity-image";
 import processUrl from "@/utils/processUrl";
-
-export default function ProjectTile({ project }: { project: TileType }) {
+import { twMerge } from "tailwind-merge";
+export default function ProjectTile({
+  project,
+  imageAspectRatio = "square",
+  className,
+}: {
+  project: TileType;
+  imageAspectRatio?: "square" | "landscape" | "portrait" | "video";
+  className?: string;
+}) {
   const { image, solutions, title } = project;
+
+  var imageAspectRatioClass: string;
+
+  switch (imageAspectRatio) {
+    case "square":
+      imageAspectRatioClass = "aspect-square";
+      break;
+    case "landscape":
+      imageAspectRatioClass = "aspect-landscape";
+      break;
+    case "portrait":
+      imageAspectRatioClass = "aspect-portrait";
+      break;
+    case "video":
+      imageAspectRatioClass = "aspect-video";
+      break;
+    default:
+      imageAspectRatioClass = "aspect-square";
+      break;
+  }
   return (
-    <Link href={processUrl(project)} className="block">
-      <div className="relative mb-2 aspect-square rounded-xl overflow-hidden">
+    <Link href={processUrl(project)} className={twMerge("block", className)}>
+      <div
+        className={twMerge(
+          "relative mb-2 rounded-xl overflow-hidden",
+          imageAspectRatioClass,
+        )}
+      >
         <SanityImage
           src={image}
           className="object-cover inset-0 w-full h-full"

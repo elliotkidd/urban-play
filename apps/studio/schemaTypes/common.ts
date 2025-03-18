@@ -114,3 +114,15 @@ export const marginSettingsFields = [
     group: GROUP.SETTINGS,
   }),
 ];
+
+export const sectionSettings = [
+  ...marginSettingsFields,
+  colorPickerField,
+  defineField({
+    name: "smallWrapper",
+    title: "Small Wrapper?",
+    type: "boolean",
+    initialValue: false,
+    group: GROUP.SETTINGS,
+  }),
+];

@@ -2,7 +2,9 @@
 
 import SectionHeader from "../section-header";
 import { SolutionsCarouselProps } from "@/lib/sanity/queries/sections";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useRef, useState } from "react";
+import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
+
 import { Swiper as SwiperType } from "swiper/types";
 import { EffectFade, Controller, Autoplay } from "swiper/modules";
 
@@ -10,13 +12,13 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 
 import SanityImage from "../sanity-image";
-import { use, useEffect, useRef, useState } from "react";
-import { ArrowRightIcon } from "lucide-react";
-import { ArrowLeftIcon } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { twMerge } from "tailwind-merge";
 
 export default function SolutionsCarouselSection({
   sectionHeader,
   solutions,
+  smallWrapper,
 }: SolutionsCarouselProps) {
   const mainSwiperRef = useRef<SwiperType>();
   const textSwiperRef = useRef<SwiperType>();
@@ -25,7 +27,12 @@ export default function SolutionsCarouselSection({
   const [mainSwiper, setMainSwiper] = useState<SwiperType>();
 
   return (
-    <div className="wrapper py-fluid-xs">
+    <div
+      className={twMerge(
+        "wrapper py-fluid-xs",
+        smallWrapper && "wrapper--small",
+      )}
+    >
       <SectionHeader {...sectionHeader} />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 items-stretch">
         <div className="flex flex-col w-full justify-between">

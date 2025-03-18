@@ -2,6 +2,9 @@ import type { Config } from "tailwindcss";
 
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
+import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindcssTypography from "@tailwindcss/typography";
+
 function withOpacityValue(variable: string) {
   return ({ opacityValue }: { opacityValue: string | undefined }) => {
     if (opacityValue === undefined) {
@@ -55,9 +58,9 @@ const config: Config = {
         "screen-dynamic": "var(--screen-height-dynamic, 100vh)",
       },
       fontFamily: {
-        sans: ["halyard-display", ...fontFamily.sans],
+        body: ["var(--font-body)", ...fontFamily.sans],
         mono: [...fontFamily.mono],
-        heading: ["adelle-sans-condensed", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       colors: {
         //@ts-expect-error
@@ -72,6 +75,11 @@ const config: Config = {
         "nav-bar-background": withOpacityValue("--colour-nav-bar-background"),
         //@ts-expect-error
         "nav-bar-text": withOpacityValue("--colour-nav-bar-text"),
+
+        "theme-green": "#12BF65",
+        "theme-blue": "#008EDA",
+        "theme-yellow": "#F2BD06",
+        "theme-red": "#ED3E61",
       },
       fontSize: {
         "5xl": "var(--text-5xl)",
@@ -85,12 +93,33 @@ const config: Config = {
         sm: "var(--text-sm)",
         xs: "var(--text-xs)",
       },
-
+      keyframes: {
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
       typography: (theme: any) => ({
         DEFAULT: {
           css: {
             maxWidth: "auto",
-            "--tw-prose-body": theme("colors.text/0.7"),
+            "--tw-prose-body": theme("colors.text/60"),
             "--tw-prose-headings": theme("colors.text"),
             "--tw-prose-lead": theme("colors.text"),
             "--tw-prose-links": theme("colors.text"),
@@ -198,7 +227,7 @@ const config: Config = {
       }),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [tailwindcssAnimate, tailwindcssTypography],
 };
 
 export default config;
