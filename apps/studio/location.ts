@@ -17,6 +17,10 @@ export const locations = {
             title: "Blog",
             href: "/blog",
           },
+          {
+            title: "Project",
+            href: "/project",
+          },
         ],
       };
     },
@@ -48,6 +52,26 @@ export const locations = {
           {
             title: doc?.title || "Untitled",
             href: `${doc?.slug}`,
+          },
+        ],
+      };
+    },
+  }),
+  project: defineLocations({
+    select: {
+      title: "title",
+      slug: "slug.current",
+    },
+    resolve: (doc) => {
+      return {
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `${doc?.slug}`,
+          },
+          {
+            title: "Project",
+            href: "/project",
           },
         ],
       };

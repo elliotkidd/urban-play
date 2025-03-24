@@ -1,4 +1,4 @@
-import { ColorSchemeFragment } from "@/lib/sanity/queries/sections";
+import { ColorSchemeFragment } from "@/lib/sanity/queries/fragments";
 
 export function missingClass(string?: string, prefix?: string) {
   if (!string) {

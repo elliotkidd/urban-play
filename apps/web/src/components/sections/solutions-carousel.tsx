@@ -1,30 +1,101 @@
 "use client";
 
 import SectionHeader from "../section-header";
-import { SolutionsCarouselProps } from "@/lib/sanity/queries/sections";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 
-import { Swiper as SwiperType } from "swiper/types";
-import { EffectFade, Controller, Autoplay } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/effect-fade";
-
 import SanityImage from "../sanity-image";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { twMerge } from "tailwind-merge";
+import { AnimatePresence, motion } from "motion/react";
+
+const imageVariants = {
+  prev: {
+    initial: { x: "-100%" },
+    animate: { x: "0%" },
+    exit: { opacity: 0 },
+  },
+  next: {
+    initial: { x: "100%" },
+    animate: { x: "0%" },
+    exit: { opacity: 0 },
+  },
+};
 
 export default function SolutionsCarouselSection({
   sectionHeader,
   solutions,
   smallWrapper,
-}: SolutionsCarouselProps) {
-  const mainSwiperRef = useRef<SwiperType>();
-  const textSwiperRef = useRef<SwiperType>();
-  const nextTextRef = useRef<SwiperType>();
-  const nextImageRef = useRef<SwiperType>();
-  const [mainSwiper, setMainSwiper] = useState<SwiperType>();
+}) {
+  const [step, setStep] = useState(0);
+  const [animationDirection, setAnimationDirection] = useState(
+    imageVariants.next,
+  );
+  const [timerProgress, setTimerProgress] = useState(0);
+
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  const getDescriptionHeight = () => {
+    var height = 0;
+
+    if (descriptionRef && descriptionRef.current) {
+      descriptionRef.current.childNodes.forEach((element) => {
+        const htmlElement = element as HTMLElement;
+        if (htmlElement.scrollHeight > height) {
+          height = htmlElement.scrollHeight;
+        }
+      });
+
+      descriptionRef.current.style.height = `${height}px`;
+    }
+  };
+
+  useLayoutEffect(() => {
+    getDescriptionHeight();
+
+    window.addEventListener("resize", getDescriptionHeight);
+
+    return () => {
+      window.removeEventListener("resize", getDescriptionHeight);
+    };
+  }, []);
+
+  useEffect(() => {
+    const intervalDuration = 5000;
+    const updateInterval = 50; // Update progress every 50ms for smooth animation
+    let timer;
+    let progressTimer;
+
+    // Reset progress to 0 when step changes
+    setTimerProgress(0);
+
+    // Update progress animation
+    progressTimer = setInterval(() => {
+      setTimerProgress((prev) =>
+        Math.min(prev + (updateInterval / intervalDuration) * 100, 100),
+      );
+    }, updateInterval);
+
+    // Main timer for changing slides
+    timer = setTimeout(() => {
+      setAnimationDirection(imageVariants.next);
+      setStep((prevStep) => (prevStep + 1) % solutions.length);
+    }, intervalDuration);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressTimer);
+    };
+  }, [step, solutions.length]);
+
+  const goNext = () => {
+    setAnimationDirection(imageVariants.next);
+    setStep((prevStep) => (prevStep + 1) % solutions.length);
+  };
+
+  const goPrev = () => {
+    setAnimationDirection(imageVariants.prev);
+    setStep((prevStep) => (prevStep - 1 + solutions.length) % solutions.length);
+  };
 
   return (
     <div
@@ -33,137 +104,136 @@ export default function SolutionsCarouselSection({
         smallWrapper && "wrapper--small",
       )}
     >
-      <SectionHeader {...sectionHeader} />
+      <SectionHeader {...sectionHeader} className="mb-fluid" />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 items-stretch">
         <div className="flex flex-col w-full justify-between">
-          <Swiper
-            modules={[EffectFade, Controller]}
-            onBeforeInit={(swiper) => {
-              textSwiperRef.current = swiper;
-            }}
-            effect="fade"
-            slidesPerView={1}
-            spaceBetween={0}
-            speed={1000}
-            loop
-            style={{ width: "100%" }}
-            allowTouchMove={false}
-          >
-            {solutions.map(({ _id, title, description }) => (
-              <SwiperSlide key={_id} className="bg-background">
+          <div className="relative" ref={descriptionRef}>
+            {solutions.map(({ _id, title, description }, index) => (
+              <div
+                key={_id}
+                className={twMerge(
+                  "bg-background absolute transition-opacity duration-1000",
+                  step === index ? "opacity-100" : "opacity-0",
+                )}
+              >
                 <h3 className="h3">{title}</h3>
                 <p className="max-w-p text-balance">{description}</p>
-              </SwiperSlide>
+              </div>
             ))}
-          </Swiper>
-          <div className="flex flex-col w-full gap-2 items-start">
-            <div className="w-48 flex ">
+          </div>
+          <div className="hidden lg:flex flex-col w-full gap-2 items-start">
+            <div className="w-48 flex justify-between items-center">
               <div className="w-full">
                 <span className="text-xs normal-case font-bold mb-0 block leading-none opacity-40">
                   Next
                 </span>
-                <Swiper
-                  effect="fade"
-                  modules={[EffectFade, Controller]}
-                  onBeforeInit={(swiper) => {
-                    nextTextRef.current = swiper;
-                  }}
-                  initialSlide={1}
-                  slidesPerView={1}
-                  spaceBetween={0}
-                  loop
-                  speed={1000}
-                  allowTouchMove={false}
-                  style={{ width: "100%" }}
-                >
-                  {solutions.map(({ _id, title }) => (
-                    <SwiperSlide key={_id} className="bg-background">
-                      <h4 className="text-xs normal-case font-bold leading-none">
-                        {title}
-                      </h4>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                <div className="relative" style={{ height: "var(--text-xs)" }}>
+                  <AnimatePresence>
+                    {solutions.map(
+                      ({ _id, title }, index) =>
+                        (step + 1) % solutions.length === index && (
+                          <motion.h4
+                            key={_id}
+                            className="text-xs normal-case font-bold leading-none absolute"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1 }}
+                          >
+                            {title}
+                          </motion.h4>
+                        ),
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="flex-0 flex">
-                <button onClick={() => mainSwiperRef.current?.slidePrev()}>
+              <div className="flex-0 flex items-center gap-2">
+                <div className="relative w-5 h-5">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24">
+                    {/* Background circle */}
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeOpacity="0.2"
+                      strokeWidth="2"
+                    />
+                    {/* Progress circle */}
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeDasharray="62.83"
+                      strokeDashoffset={62.83 - (timerProgress / 100) * 62.83}
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+                <button onClick={goPrev}>
                   <ArrowLeftIcon className="w-4 h-4" />
                 </button>
-                <button onClick={() => mainSwiperRef.current?.slideNext()}>
+                <button onClick={goNext}>
                   <ArrowRightIcon className="w-4 h-4" />
                 </button>
               </div>
             </div>
-            <Swiper
-              className="w-48 aspect-square rounded-lg overflow-hidden"
-              modules={[Controller]}
-              onBeforeInit={(swiper) => {
-                nextImageRef.current = swiper;
-              }}
-              slidesPerView={1}
-              spaceBetween={0}
-              loop
-              initialSlide={1}
-              speed={1000}
-              allowTouchMove={false}
-              style={{ marginLeft: "0" }}
-            >
-              {solutions.map((solution: any) => (
-                <SwiperSlide
-                  key={`thumb-${solution._id}`}
-                  className="relative aspect-landscape"
-                >
-                  <SanityImage
-                    src={solution.image}
-                    className="w-full h-full object-cover absolute inset-0"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <div className="w-48  relative aspect-square rounded-lg overflow-hidden">
+              <AnimatePresence>
+                {solutions.map(
+                  (solution: any, index) =>
+                    (step + 1) % solutions.length === index && (
+                      <motion.div
+                        key={solution._id}
+                        initial={animationDirection.initial}
+                        animate={animationDirection.animate}
+                        exit={{
+                          ...animationDirection.exit,
+                          transition: { delay: 1 },
+                        }}
+                        transition={{ duration: 1 }}
+                        className="w-full h-full object-cover absolute inset-0"
+                      >
+                        <SanityImage
+                          src={solution.image}
+                          className="w-full h-full object-cover absolute inset-0"
+                        />
+                      </motion.div>
+                    ),
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-        <Swiper
-          className="aspect-landscape rounded-xl overflow-hidden"
-          modules={[Autoplay, Controller]}
-          slidesPerView={1}
-          spaceBetween={0}
-          loop
-          onSwiper={(swiper) => {
-            setMainSwiper(swiper);
-            if (
-              textSwiperRef.current &&
-              nextTextRef.current &&
-              nextImageRef.current
-            ) {
-              swiper.controller.control = [
-                textSwiperRef.current,
-                nextTextRef.current,
-                nextImageRef.current,
-              ];
-            }
-          }}
-          onBeforeInit={(swiper) => {
-            mainSwiperRef.current = swiper;
-          }}
-          speed={1000}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          style={{ width: "100%" }}
-        >
-          {solutions.map((solution: any) => (
-            <SwiperSlide
-              key={solution._id}
-              className="relative aspect-landscape"
-            >
-              <SanityImage
-                src={solution.image}
-                className="w-full h-full object-cover absolute inset-0"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="aspect-landscape rounded-xl overflow-hidden relative">
+          <AnimatePresence>
+            {solutions.map(
+              (solution: any, index) =>
+                step === index && (
+                  <motion.div
+                    key={solution._id}
+                    initial={animationDirection.initial}
+                    animate={animationDirection.animate}
+                    exit={{
+                      ...animationDirection.exit,
+                      transition: { delay: 1 },
+                    }}
+                    transition={{ duration: 1 }}
+                    className="w-full h-full object-cover absolute inset-0"
+                  >
+                    <SanityImage
+                      src={solution.image}
+                      className="w-full h-full object-cover absolute inset-0"
+                    />
+                  </motion.div>
+                ),
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,11 @@ import {
   TILE_FRAGMENT,
 } from "./fragments";
 import { RICHTEXT_BLOCKS } from "./richText";
+import {
+  BUTTON_FRAGMENT,
+  CUSTOM_URL_FRAGMENT,
+  NAVBAR_COLUMNS_SELECTION,
+} from "./link";
 
 export const homePageQuery = q("*")
   .filterByType("homePage")
@@ -83,3 +88,61 @@ export const projectPageQuery = q("*")
   });
 
 export type ProjectPage = InferType<typeof projectPageQuery>;
+
+export const footerQuery = q("*")
+  .filterByType("footer")
+  .slice(0)
+  .grab({
+    _id: q.string(),
+    _type: q.literal("footer"),
+    subtitle: q.string(),
+    columns: q("columns[]", { isArray: true })
+      .filterByType("footerColumn")
+      .grab({
+        _key: q.string(),
+        title: q.string(),
+        links: q("links[]", { isArray: true }).grab({
+          _key: q.string(),
+          name: q.string(),
+          url: q("url").grab(CUSTOM_URL_FRAGMENT),
+        }),
+      }),
+    colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+    pageBuilder: SECTIONS_FRAGMENT,
+    settings: q("*")
+      .filterByType("settings")
+      .slice(0)
+      .grab({
+        siteTitle: q.string(),
+        contactDetails: q("contactDetails").grab({
+          _key: q.string(),
+          name: q.string(),
+          phone: q.string(),
+          address: q.string(),
+        }),
+        socialLinks: q("socialLinks").grab({
+          linkedin: q.string(),
+          facebook: q.string(),
+          instagram: q.string(),
+          twitter: q.string(),
+          youtube: q.string(),
+        }),
+      }),
+  });
+
+export type FooterType = InferType<typeof footerQuery>;
+
+export const navBarQuery = q("*")
+  .filterByType("navbar")
+  .filter("_id =='navbar'")
+  .slice(0)
+  .grab({
+    _id: q.string(),
+    columns: q("columns[]", { isArray: true }).select(NAVBAR_COLUMNS_SELECTION),
+    buttons: q("buttons[]", { isArray: true }).grab(BUTTON_FRAGMENT),
+    defaultColorScheme: q("defaultColorScheme")
+      .deref()
+      .grab(COLOR_SCHEME_FRAGMENT),
+  });
+
+export type NavBarType = InferType<typeof navBarQuery>;

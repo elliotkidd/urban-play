@@ -49,7 +49,7 @@ const footerColumn = defineField({
       name: "title",
       type: "string",
       title: "Title",
-      description: "Title for the column",
+      description: "Title for the column - Sanity Preview Only",
     }),
     defineField({
       name: "links",
@@ -80,6 +80,12 @@ export const footer = defineType({
   description: "Footer content for your website",
   fields: [
     defineField({
+      name: "pageBuilder",
+      type: "pageBuilder",
+      title: "Sections",
+      description: "Sections for the footer",
+    }),
+    defineField({
       name: "label",
       type: "string",
       initialValue: "Footer",
@@ -100,6 +106,13 @@ export const footer = defineType({
       title: "Columns",
       description: "Columns for the footer",
       of: [footerColumn],
+    }),
+    defineField({
+      name: "colorScheme",
+      type: "reference",
+      title: "Color Scheme",
+      description: "Color scheme for the footer",
+      to: [{ type: "colorScheme" }],
     }),
   ],
   preview: {

@@ -114,9 +114,11 @@ function RichTextBlock({
 
 function TextBetweenBlock({ title, text }: TextBetweenBlockProps) {
   return (
-    <div className="prose flex flex-col gap-4 justify-between relative py-fluid">
-      <h2 className="sticky top-24">{title}</h2>
-      <p className="max-w-p-sm">{text}</p>
+    <div className="prose flex flex-col gap-4 justify-between py-fluid">
+      <div className="flex-1 relative">
+        <RichText richText={title} className="sticky top-24" />
+      </div>
+      <RichText richText={text} />
     </div>
   );
 }

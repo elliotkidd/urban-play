@@ -1,4 +1,5 @@
 import { PageBuilder } from "@/components/pagebuilder";
+import ProjectsSwiper from "@/components/ProjectsSwiper";
 import { RichText } from "@/components/richtext";
 import { HeroBlock } from "@/components/sections/hero";
 import { sanityFetch } from "@/lib/sanity/live";
@@ -6,6 +7,7 @@ import {
   type ProjectPage,
   projectPageQuery,
 } from "@/lib/sanity/queries/documents";
+import { TileType } from "@/lib/sanity/queries/fragments";
 import { getColorSchemeStyle } from "@/utils/utils";
 import { notFound } from "next/navigation";
 
@@ -36,8 +38,6 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
     _type,
   } = data ?? {};
 
-  console.log(relatedProjects);
-
   return (
     <main className="bg-background text-text">
       {hero && (
@@ -49,15 +49,29 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
       <div className="wrapper py-fluid-xs">
         <div className="flex w-full flex-col gap-2 lg:flex-row justify-between prose mb-fluid-lg">
           <p className="lead max-w-section-heading">{description}</p>
-          <div className="">
-            <span>{client}</span>
-            <span>{construction}</span>
-            <span>{status}</span>
+          <div className="not-prose grid grid-cols-2 mr-fluid text-xs leading-none">
+            <span className="opacity-50 block">Client</span>
+            <span className="block">{client}</span>
+            <span className="opacity-50 block">Construction</span>
+            <span className="block">{construction}</span>
+            <span className="opacity-50 block">Status</span>
+            <span className="block">{status}</span>
           </div>
         </div>
         {richText && <RichText richText={richText} className="max-w-p-lg" />}
       </div>
       <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
+
+      {relatedProjects && (
+        <section className="overflow-hidden mt-fluid-lg">
+          <div className="wrapper py-fluid-xs">
+            <div className="prose mb-fluid-sm">
+              <h2 className="">More Projects</h2>
+            </div>
+            <ProjectsSwiper projects={relatedProjects} />
+          </div>
+        </section>
+      )}
     </main>
   );
 }

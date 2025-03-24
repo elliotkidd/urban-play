@@ -3,10 +3,15 @@ import { RICHTEXT_BLOCKS } from "./richText";
 import {
   COLOR_SCHEME_FRAGMENT,
   IMAGE_FRAGMENT,
+  POST_TILE_FRAGMENT,
   TESTIMONY_FRAGMENT,
   TILE_FRAGMENT,
 } from "./fragments";
-import { BUTTON_FRAGMENT, CUSTOM_URL_FRAGMENT } from "./link";
+import {
+  BUTTON_FRAGMENT,
+  CUSTOM_URL_FRAGMENT,
+  LINK_REFERENCE_FRAGMENT,
+} from "./link";
 
 const REMOVE_MARGIN_FRAGMENTS = {
   removeMarginTop: q.boolean(),
@@ -27,6 +32,10 @@ const SECTION_SETTINGS_FRAGMENT = {
   ...REMOVE_MARGIN_FRAGMENTS,
   colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   smallWrapper: q.boolean(),
+  hideOn: q("hideOn[]", { isArray: true })
+    .deref()
+    .grab(LINK_REFERENCE_FRAGMENT)
+    .nullable(),
 } satisfies Selection;
 
 export const HERO_FRAGMENT = {
@@ -125,7 +134,7 @@ const FEATURED_POSTS_FRAGMENT = {
   posts: q("*", { isArray: true })
     .filterByType("blog")
     .slice(0, 2)
-    .grab({ ...TILE_FRAGMENT, description: q.string() }),
+    .grab(POST_TILE_FRAGMENT),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

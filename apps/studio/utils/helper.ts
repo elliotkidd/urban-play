@@ -299,6 +299,10 @@ export function createPageTemplate() {
       title: "Blog",
       type: "blog",
     },
+    {
+      title: "Project",
+      type: "project",
+    },
   ];
   return pages.map((page) => {
     return {

@@ -6,7 +6,6 @@ import {
 } from "sanity";
 import slugify from "slugify";
 
-import { PathnameFieldComponent } from "../components/slug-field-component";
 import type { PathnameParams } from "./types";
 
 export function defineSlug(
@@ -55,6 +54,7 @@ export const getDocTypePrefix = (type: string) => {
 const slugMapper = {
   homePage: "/",
   blogIndex: "/blog",
+  projectIndex: "/projects",
 } as Record<string, string>;
 
 export const createSlug: SlugifierFn = (input, _, { parent }) => {

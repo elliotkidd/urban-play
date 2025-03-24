@@ -1,4 +1,4 @@
-import { LayoutPanelLeft, Link, Navigation, PanelTop } from "lucide-react";
+import { LayoutPanelLeft, Link, PanelTop } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { buttonsField, iconField } from "../common";
@@ -21,6 +21,14 @@ const navbarLink = defineField({
       type: "customUrl",
       title: "Link URL",
       description: "The URL that this link will navigate to when clicked",
+    }),
+    defineField({
+      name: "colorScheme",
+      type: "reference",
+      title: "Default Color Scheme",
+      description:
+        "Color scheme for the navbar when no effected by section colour scheme",
+      to: [{ type: "colorScheme" }],
     }),
   ],
   preview: {
@@ -158,6 +166,14 @@ export const navbar = defineType({
       of: [navbarColumn, navbarLink],
     }),
     buttonsField,
+    defineField({
+      name: "defaultColorScheme",
+      type: "reference",
+      title: "Default Color Scheme",
+      description:
+        "The color scheme to use for the navbar when no effected by section colour scheme",
+      to: [{ type: "colorScheme" }],
+    }),
   ],
   preview: {
     select: {

@@ -1,5 +1,6 @@
-#navbar {
-  @apply bg-[#b8b8b8]/20 text-xs backdrop-blur-sm;
+#navbar,
+.header-skeleton {
+  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-sm;
 
   position: fixed;
   z-index: 9999;
@@ -12,4 +13,6 @@
   padding: 5px 5px 5px 20px;
   border-radius: 10px;
   font-weight: 500;
+
+  transition: all 0.5s ease-in-out;
 }

@@ -35,12 +35,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
+    "react-intersection-observer": "^9.16.0",
     "sass": "^1.85.1",
     "server-only": "^0.0.1",
     "slugify": "^1.6.6",
     "swiper": "^11.2.5",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/matter-js": "^0.19.8",

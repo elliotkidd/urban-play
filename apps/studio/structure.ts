@@ -110,34 +110,11 @@ export const structure = (
       // S.divider(),
       // createList({ S, type: "page", title: "Pages" }),
       S.divider(),
-      S.listItem()
-        .title("Projects")
-        .icon(Hammer)
-        .child(
-          S.list()
-            .title("Projects")
-            .items([
-              createSingleTon({
-                S,
-                type: "projectIndex",
-                title: "Projects Index",
-                icon: Grid2x2,
-              }),
-              createList({
-                S,
-                type: "project",
-                title: "Projects",
-                icon: Hammer,
-              }),
-              S.divider(),
-              createList({
-                S,
-                type: "solution",
-                title: "Solutions",
-                icon: Lightbulb,
-              }),
-            ]),
-        ),
+      createIndexList({
+        S,
+        index: { type: "projectIndex", icon: Grid2x2 },
+        list: { type: "project", title: "Projects", icon: Hammer },
+      }),
       createList({ S, type: "solution", title: "Solutions", icon: Lightbulb }),
       S.divider(),
       createList({

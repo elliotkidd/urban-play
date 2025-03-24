@@ -115,6 +115,14 @@ export const marginSettingsFields = [
   }),
 ];
 
+export const hideOnField = defineField({
+  name: "hideOn",
+  title: "Hide On",
+  type: "array",
+  of: [{ type: "reference", to: [{ type: "page" }] }],
+  group: GROUP.SETTINGS,
+});
+
 export const sectionSettings = [
   ...marginSettingsFields,
   colorPickerField,
@@ -125,4 +133,5 @@ export const sectionSettings = [
     initialValue: false,
     group: GROUP.SETTINGS,
   }),
+  hideOnField,
 ];

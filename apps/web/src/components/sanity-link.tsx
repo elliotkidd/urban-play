@@ -5,10 +5,15 @@ import { stegaClean } from "@sanity/client/stega";
 import Link from "./link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { TypeFromSelection } from "groqd";
-import { CUSTOM_URL_FRAGMENT } from "@/lib/sanity/queries/link";
+import { CustomUrlType } from "@/lib/sanity/queries/link";
 
-type Props = TypeFromSelection<typeof CUSTOM_URL_FRAGMENT>;
+type Props = {
+  children: React.ReactNode;
+  url: CustomUrlType;
+  scroll?: boolean;
+  className?: string;
+  activeClassName?: string;
+};
 
 const SanityLink = ({
   children,
@@ -36,7 +41,7 @@ const SanityLink = ({
   } else {
     return (
       <a
-        href={external || null}
+        href={external || undefined}
         target={openInNewTab ? `_blank` : ""}
         className={className}
         {...props}

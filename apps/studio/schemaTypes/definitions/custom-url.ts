@@ -6,6 +6,9 @@ const allLinkableTypes = [
   { type: "blog" },
   { type: "blogIndex" },
   { type: "page" },
+  { type: "project" },
+  { type: "projectIndex" },
+  { type: "solution" },
 ];
 
 export const customUrl = defineType({

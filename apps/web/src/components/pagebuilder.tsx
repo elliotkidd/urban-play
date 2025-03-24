@@ -14,7 +14,6 @@ import ParagraphSection from "./sections/paragraph";
 import SolutionsCarouselSection from "./sections/solutions-carousel";
 import FeaturedProjectsSection from "./sections/featured-projects";
 import IconMarqueeSection from "./sections/icon-marquee";
-import { twMerge } from "tailwind-merge";
 import TestimoniesSection from "./sections/testimonies";
 import FeaturedPostsSection from "./sections/featured-posts";
 import { ImageBannerSection } from "./sections/image-banner";
@@ -25,8 +24,8 @@ import Process from "./sections/process";
 import SolutionsGridSection from "./sections/solutions-grid";
 import VerticalProcess from "./sections/VerticalProcess";
 import { FAQsAccordion } from "./sections/FaqsAccordion";
-import { getColorSchemeStyle } from "@/utils/utils";
 import Quote from "./sections/Quote";
+import SectionWrapper from "./sections/SectionWrapper";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
@@ -101,22 +100,17 @@ export function PageBuilder({
         }
 
         return (
-          <section
+          <SectionWrapper
             key={`${block._type}-${block._key}`}
-            id={`${block._type}-${block._key}`}
-            style={getColorSchemeStyle(block.colorScheme)}
-            className={twMerge(
-              "relative bg-background text-text",
-              !block.removeMarginTop && "mt-fluid",
-              !block.removeMarginBottom && "mb-fluid",
-              block._type === "cta" && "h-screen",
-              (block._type === "iconMarquee" ||
-                block._type === "imageMarquee") &&
-                "overflow-hidden",
-            )}
+            type={block._type}
+            _key={block._key}
+            removeMarginTop={block.removeMarginTop}
+            removeMarginBottom={block.removeMarginBottom}
+            colorScheme={block.colorScheme}
+            hideOn={block.hideOn}
           >
             <Component {...block} />
-          </section>
+          </SectionWrapper>
         );
       })}
     </main>

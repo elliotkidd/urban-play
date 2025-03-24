@@ -1,11 +1,10 @@
-import { LINK_REFERENCE_FRAGMENT } from "@/lib/sanity/queries/link";
+import { LinkReferenceType } from "@/lib/sanity/queries/link";
 import { stegaClean } from "@sanity/client/stega";
-import { InferType } from "groqd";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export default function (
-  page: InferType<typeof LINK_REFERENCE_FRAGMENT>,
+  page: LinkReferenceType,
   {
     base = false,
     params,

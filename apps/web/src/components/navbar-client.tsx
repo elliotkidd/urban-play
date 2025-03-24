@@ -36,10 +36,10 @@ import { SanityButtons } from "./sanity-buttons";
 import { SanityIcon } from "./sanity-icon";
 import SanityLink from "./sanity-link";
 import { TypeFromSelection } from "groqd";
-import {
-  NAVBAR_COLUMN_FRAGMENT,
-  NAVBAR_LINK_FRAGMENT,
-} from "@/lib/sanity/queries/link";
+import { NavBarColumnType, NavBarLinkType } from "@/lib/sanity/queries/link";
+import { NavBarType } from "@/lib/sanity/queries/documents";
+import useStore from "@/store/header";
+import { getColorSchemeStyle } from "@/utils/utils";
 
 interface MenuItem {
   title: string;
@@ -47,10 +47,6 @@ interface MenuItem {
   icon: JSX.Element;
   href?: string;
 }
-
-type ColumnProps = TypeFromSelection<
-  typeof NAVBAR_LINK_FRAGMENT | typeof NAVBAR_COLUMN_FRAGMENT
->;
 
 function MenuItemLink({
   item,
@@ -186,21 +182,33 @@ function MobileNavbar({ navbarData }: { navbarData: any }) {
   );
 }
 
-function NavbarColumnLink({ column: { url, _type, name } }: { column: any }) {
-  if (_type !== "navbarLink") return null;
+function NavbarColumnLink({
+  column,
+}: {
+  column: NavBarLinkType | NavBarColumnType;
+}) {
+  if (column._type !== "navbarLink") return null;
+
+  const { url, name } = column as NavBarLinkType;
 
   return <SanityLink url={url}>{name}</SanityLink>;
 }
 
-function NavbarColumn({ column }: { column: any }) {
-  if (column.type !== "column") return null;
+function NavbarColumn({
+  column,
+}: {
+  column: NavBarColumnType | NavBarLinkType;
+}) {
+  if (column._type !== "column") return null;
+
+  const { title, links } = column as NavBarColumnType;
   return (
     <NavigationMenuList>
       <NavigationMenuItem className="text-muted-foreground dark:text-neutral-300">
-        <NavigationMenuTrigger>{column.title}</NavigationMenuTrigger>
+        <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul className="w-80 p-3">
-            {column.links?.map((item: any) => (
+            {links?.map((item: any) => (
               <li key={item._key}>
                 <MenuItemLink
                   item={{
@@ -224,14 +232,16 @@ function NavbarColumn({ column }: { column: any }) {
   );
 }
 
-export function DesktopNavbar({ navbarData }: { navbarData: any }) {
+export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
   const { columns, buttons } = navbarData ?? {};
+
+  const colourScheme = useStore((state) => state.colorScheme);
 
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-8">
       <NavigationMenu className="space-x-4">
-        {columns?.map((column: ColumnProps) => {
-          return column.type === "column" ? (
+        {columns?.map((column: NavBarColumnType | NavBarLinkType) => {
+          return column._type === "column" ? (
             <NavbarColumn key={`nav-${column._key}`} column={column} />
           ) : (
             <NavbarColumnLink key={`nav-${column._key}`} column={column} />
@@ -250,17 +260,30 @@ export function DesktopNavbar({ navbarData }: { navbarData: any }) {
   );
 }
 
-const ClientSideNavbar = ({ navbarData }: { navbarData: any }) => {
+const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
   const isMobile = useIsMobile();
+  const colorScheme = useStore((state) => state.colorScheme);
+
+  // Use the color scheme from global state, falling back to the default from navbarData
+  const headerStyle = colorScheme
+    ? getColorSchemeStyle(colorScheme)
+    : getColorSchemeStyle(navbarData.defaultColorScheme);
 
   if (isMobile === undefined) {
     return null; // Return null on initial render to avoid hydration mismatch
   }
 
-  return isMobile ? (
-    <MobileNavbar navbarData={navbarData} />
-  ) : (
-    <DesktopNavbar navbarData={navbarData} />
+  return (
+    <header id="navbar" style={headerStyle}>
+      <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
+        <Logo />
+        {isMobile ? (
+          <MobileNavbar navbarData={navbarData} />
+        ) : (
+          <DesktopNavbar navbarData={navbarData} />
+        )}
+      </nav>
+    </header>
   );
 };
 
@@ -268,7 +291,7 @@ function SkeletonMobileNavbar() {
   return (
     <div className="md:hidden">
       <div className="flex justify-end">
-        <div className="h-12 w-12 rounded-md bg-muted animate-pulse" />
+        <div className="h-12 w-12 rounded-md bg-text/20 animate-pulse" />
       </div>
     </div>
   );
@@ -281,7 +304,7 @@ function SkeletonDesktopNavbar() {
         {Array.from({ length: 2 }).map((_, index) => (
           <div
             key={`nav-item-skeleton-${index.toString()}`}
-            className="h-12 w-32 rounded bg-muted animate-pulse"
+            className="h-10 w-32 rounded bg-text/20 animate-pulse"
           />
         ))}
       </div>
@@ -291,7 +314,7 @@ function SkeletonDesktopNavbar() {
           {Array.from({ length: 2 }).map((_, index) => (
             <div
               key={`nav-button-skeleton-${index.toString()}`}
-              className="h-12 w-32 rounded-[10px] bg-muted animate-pulse"
+              className="h-10 w-32 rounded-[10px] bg-text/20 animate-pulse"
             />
           ))}
         </div>
@@ -302,10 +325,15 @@ function SkeletonDesktopNavbar() {
 
 export function NavbarSkeletonResponsive() {
   return (
-    <>
-      <SkeletonMobileNavbar />
-      <SkeletonDesktopNavbar />
-    </>
+    <header className="header-skeleton py-4">
+      <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
+        <Logo />
+        <>
+          <SkeletonMobileNavbar />
+          <SkeletonDesktopNavbar />
+        </>
+      </nav>
+    </header>
   );
 }
 

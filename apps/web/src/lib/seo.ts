@@ -30,8 +30,6 @@ export function getMetaData(data: any): Metadata {
   const { _type, seoDescription, seoTitle, slug, title, description, _id } =
     data ?? {};
 
-  console.log(data);
-
   const baseUrl = getBaseUrl();
   const pageSlug = typeof slug === "string" ? slug : (slug?.current ?? "");
   const pageUrl = `${baseUrl}${pageSlug}`;

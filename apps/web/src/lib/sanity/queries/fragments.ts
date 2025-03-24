@@ -72,11 +72,13 @@ export const TILE_FRAGMENT = {
   }),
 };
 
-export type TileType = InferType<typeof TILE_FRAGMENT>;
+export type TileType = TypeFromSelection<typeof TILE_FRAGMENT>;
 
 export const POST_TILE_FRAGMENT = {
-  ...TILE_FRAGMENT,
-  excerpt: q.string(),
+  _id: q.string(),
+  ...LINK_REFERENCE_FRAGMENT,
+  image: q("image").grab(IMAGE_FRAGMENT),
+  description: q.string(),
 };
 
 export type PostTileType = TypeFromSelection<typeof POST_TILE_FRAGMENT>;

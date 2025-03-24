@@ -3,16 +3,17 @@ import "@/styles/index.scss";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity";
-import { Suspense } from "react";
 import { preconnect, prefetchDNS } from "react-dom";
 
-import { FooterServer, FooterSkeleton } from "@/components/footer";
-import { NavbarServer, NavbarSkeleton } from "@/components/navbar";
+import { FooterServer } from "@/components/footer";
 import { PreviewBar } from "@/components/preview-bar";
 import { SanityLive } from "@/lib/sanity/live";
 import { Providers } from "../components/providers";
 import { Lenis } from "@/lib/lenis";
 import { fonts } from "./fonts";
+import { NavbarServer } from "@/components/navbar";
+import { NavbarSkeletonResponsive } from "@/components/navbar-client";
+import { Suspense } from "react";
 
 export default async function RootLayout({
   children,
@@ -23,10 +24,12 @@ export default async function RootLayout({
   prefetchDNS("https://cdn.sanity.io");
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${fonts} font-body bg-background text-text`}>
+      <body
+        className={`${fonts} font-body bg-background text-text transition-colors duration-500`}
+      >
         <Lenis root />
         <Providers>
-          <Suspense fallback={<NavbarSkeleton />}>
+          <Suspense fallback={<NavbarSkeletonResponsive />}>
             <NavbarServer />
           </Suspense>
           {(await draftMode()).isEnabled ? (
@@ -54,9 +57,7 @@ export default async function RootLayout({
           ) : (
             children
           )}
-          <Suspense fallback={<FooterSkeleton />}>
-            <FooterServer />
-          </Suspense>
+          <FooterServer />
           <SanityLive />
         </Providers>
       </body>

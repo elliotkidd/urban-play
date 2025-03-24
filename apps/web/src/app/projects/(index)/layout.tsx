@@ -20,10 +20,10 @@ export default async function ProjectsIndexLayout({
   const { data } = await fetchProjectsIndexPageData();
 
   if (!data) return null;
-  console.log(data);
 
   const { hero, pageBuilder, description, solutions, colorScheme, _id, _type } =
     data ?? {};
+
   return (
     <main
       className="bg-background text-text"

@@ -14,7 +14,6 @@ export function FAQsAccordion({
   faqs,
   smallWrapper,
 }: FAQAccordionProps) {
-  console.log(faqs);
   return (
     <div
       className={twMerge(

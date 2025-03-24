@@ -78,6 +78,7 @@ export function PathnameFieldComponent(props: ObjectFieldProps<SlugValue>) {
       ),
     [validation.validation],
   );
+
   const {
     inputProps: { onChange, value, readOnly },
     title,

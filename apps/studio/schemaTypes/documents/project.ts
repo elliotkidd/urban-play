@@ -1,9 +1,11 @@
 import { defineField, defineType } from "sanity";
 
 import { GROUP, GROUPS } from "../../utils/constant";
-import { richTextField, slugField } from "../common";
+import { richTextField } from "../common";
 import { seoFields } from "../../utils/seo-fields";
 import { ogFields } from "../../utils/og-fields";
+import { PathnameFieldComponent } from "../../components/slug-field-component";
+import { createSlug, isUnique } from "../../utils/slug";
 
 export const project = defineType({
   name: "project",
@@ -17,7 +19,21 @@ export const project = defineType({
       title: "Title",
       group: GROUP.MAIN_CONTENT,
     }),
-    slugField,
+    defineField({
+      name: "slug",
+      type: "slug",
+      title: "URL",
+      group: GROUP.MAIN_CONTENT,
+      components: {
+        field: PathnameFieldComponent,
+      },
+      options: {
+        source: "title",
+        slugify: createSlug,
+        isUnique,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "solutions",
       type: "array",
