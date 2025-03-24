@@ -53,7 +53,6 @@ export const BASE_BLOCK_FRAGMENT: any = {
 } satisfies Selection;
 
 export const BUTTON_BLOCK_FRAGMENT: any = {
-  _key: q.string(),
   ...BUTTON_FRAGMENT,
 } satisfies Selection;
 
