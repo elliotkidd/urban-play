@@ -59,7 +59,6 @@ const config: Config = {
       },
       fontFamily: {
         body: ["var(--font-body)", ...fontFamily.sans],
-        mono: [...fontFamily.mono],
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       colors: {

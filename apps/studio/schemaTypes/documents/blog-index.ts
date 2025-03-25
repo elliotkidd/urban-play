@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
 import { GROUP, GROUPS } from "../../utils/constant";
 import { ogFields } from "../../utils/og-fields";
@@ -35,22 +35,13 @@ export const blogIndex = defineType({
     defineField({
       name: "featured",
       title: "Featured Blogs",
-      description:
-        "Select up to 3 blogs to feature on this page. These blogs will be displayed prominently on the page.",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [
-            {
-              type: "blog",
-              options: { disableNew: true },
-            },
-          ],
-          validation: (rule) => [rule.required()],
-        }),
+      type: "reference",
+      to: [
+        {
+          type: "blog",
+          options: { disableNew: true },
+        },
       ],
-      validation: (rule) => [rule.max(1), rule.unique()],
       group: GROUP.MAIN_CONTENT,
     }),
     pageBuilderField,
@@ -58,6 +49,12 @@ export const blogIndex = defineType({
       (field) => !["seoNoIndex", "seoHideFromLists"].includes(field.name),
     ),
     ...ogFields,
+    defineField({
+      name: "colorScheme",
+      type: "reference",
+      to: [{ type: "colorScheme" }],
+      group: GROUP.SETTINGS,
+    }),
   ],
   preview: {
     select: {

@@ -3,12 +3,14 @@ import { HERO_FRAGMENT, SECTIONS_FRAGMENT } from "./sections";
 import {
   COLOR_SCHEME_FRAGMENT,
   IMAGE_FRAGMENT,
+  POST_TILE_FRAGMENT,
   TILE_FRAGMENT,
 } from "./fragments";
 import { RICHTEXT_BLOCKS } from "./richText";
 import {
   BUTTON_FRAGMENT,
   CUSTOM_URL_FRAGMENT,
+  LINK_REFERENCE_FRAGMENT,
   NAVBAR_COLUMNS_SELECTION,
 } from "./link";
 
@@ -146,3 +148,121 @@ export const navBarQuery = q("*")
   });
 
 export type NavBarType = InferType<typeof navBarQuery>;
+
+export const blogIndexPageQuery = q("*")
+  .filterByType("blogIndex")
+  .slice(0)
+  .grab({
+    _id: q.string(),
+    _type: q.literal("blogIndex"),
+    title: q.string(),
+    solutions: q("*", { isArray: true })
+      .filterByType("solution")
+      .grab(LINK_REFERENCE_FRAGMENT),
+    featuredBlog: q("featured").deref().grab(POST_TILE_FRAGMENT),
+    pageBuilder: SECTIONS_FRAGMENT,
+    colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+  });
+
+export type BlogIndexPage = InferType<typeof blogIndexPageQuery>;
+
+export const blogsQuery = `{
+  "blogs": *[_type == "blog"][$indexFrom...$indexTo] {
+    _id,
+    title,
+    "slug": slug.current,
+    image {
+      "_ref": image.asset._ref,
+      "_type": "image",
+      "alt": asset->altText,
+      asset-> {
+        _id,
+        url,
+      },
+      crop {
+        bottom,
+        left,
+        right,
+        top,
+      },
+      hotspot {
+        height,
+        width,
+        x,
+        y
+      },
+      "height": asset->metadata.dimensions.height,
+      "width": asset->metadata.dimensions.width,
+      "id": asset->assetId,
+      "type": asset->mimeType,
+      "aspectRatio": asset->metadata.dimensions.aspectRatio,
+      "lqip": asset->metadata.lqip
+    },
+    description,
+    "publishedAt": publishedAt
+  },
+  "total": count(*[_type == "blog"])
+}`;
+
+export const blogBySolutionQuery = `{
+  "blogs": *[_type == "blog" && solutions[]->slug.current == $slug][$indexFrom...$indexTo] {
+   _id,
+    title,
+    "slug": slug.current,
+    image {
+      "_ref": image.asset._ref,
+      "_type": "image",
+      "alt": asset->altText,
+      asset-> {
+        _id,
+        url,
+      },
+      crop {
+        bottom,
+        left,
+        right,
+        top,
+      },
+      hotspot {
+        height,
+        width,
+        x,
+        y
+      },
+      "height": asset->metadata.dimensions.height,
+      "width": asset->metadata.dimensions.width,
+      "id": asset->assetId,
+      "type": asset->mimeType,
+      "aspectRatio": asset->metadata.dimensions.aspectRatio,
+      "lqip": asset->metadata.lqip
+    },
+    description,
+    "publishedAt": publishedAt
+  },
+  "total": count(*[_type == "blog" && solutions[]->slug.current == $slug])
+}`;
+
+export const blogSlugPageQuery = q("*")
+  .filterByType("blog")
+  .filter(`slug.current == $slug`)
+  .slice(0)
+  .grab({
+    _type: q.literal("blog"),
+    _id: q.string(),
+    title: q.string(),
+    slug: q.slug("slug"),
+    image: q("image").grab(IMAGE_FRAGMENT),
+    richText: q("richText[]").select(RICHTEXT_BLOCKS),
+    description: q.string(),
+    publishedAt: q.string(),
+    authors: q("authors[]", { isArray: true })
+      .deref()
+      .grab({
+        _id: q.string(),
+        name: q.string(),
+        image: q("image").grab(IMAGE_FRAGMENT),
+      }),
+    pageBuilder: SECTIONS_FRAGMENT,
+  });
+
+export type BlogSlugPageType = InferType<typeof blogSlugPageQuery>;

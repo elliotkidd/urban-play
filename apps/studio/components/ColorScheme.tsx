@@ -1,35 +1,39 @@
 import { Flex, Text } from "@sanity/ui";
 
 export function ColorSchemeMedia({
-  primary,
-  contrast,
+  background,
+  text,
+  primaryButton,
+  secondaryButton,
 }: {
-  primary?: { hex: string };
-  contrast?: { hex: string };
+  background: { hex: string };
+  text: { hex: string };
+  primaryButton: { hex: string };
+  secondaryButton: { hex: string };
 }) {
-  return contrast?.hex && primary?.hex ? (
+  return background?.hex && text?.hex ? (
     <Flex
       align={"center"}
       justify={"center"}
       style={{
         width: "3rem",
         height: "3rem",
-        backgroundColor: primary?.hex,
+        background: background?.hex,
       }}
     >
       <Flex direction="column" gap={2}>
         <Text
           align={"center"}
           style={{
-            color: contrast?.hex,
+            color: text?.hex,
           }}
           weight="bold"
         >
           Aa
         </Text>
         <Flex gap={1} align="center">
-          <Pill hex={contrast?.hex} full={true} />
-          <Pill hex={contrast?.hex} full={false} />
+          <Pill hex={primaryButton?.hex} full={true} />
+          <Pill hex={secondaryButton?.hex} full={false} />
         </Flex>
       </Flex>
     </Flex>

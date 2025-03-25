@@ -210,7 +210,7 @@
 }
 
 h2 {
-  @apply uppercase;
+  @apply uppercase tracking-tight;
 }
 
 h3,
@@ -222,6 +222,14 @@ h5,
 h6,
 .h6 {
   @apply text-lg font-bold leading-none;
+}
+
+.font-body {
+  @apply tracking-wide;
+}
+
+.font-heading {
+  @apply tracking-tight;
 }
 
 .text-md {

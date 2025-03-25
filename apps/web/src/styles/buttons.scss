@@ -12,10 +12,26 @@
   &--outline {
     @apply border border-primary-button text-primary-button;
   }
+
+  &--inline {
+    @apply bg-transparent text-primary-button underline font-bold;
+  }
 }
 
 .link {
   @apply text-lg font-bold underline;
+}
+
+button[type="submit"] {
+  @apply bg-primary-button text-white font-medium justify-start p-4 rounded-lg duration-500 cursor-pointer;
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  span {
+    @apply w-full text-left;
+  }
 }
 
 .accordion-item {

@@ -62,7 +62,6 @@ export const SEO_FRAGMENT: any = {
 };
 
 export const TILE_FRAGMENT = {
-  _id: q.string(),
   ...LINK_REFERENCE_FRAGMENT,
   image: q("hero.image").grab(IMAGE_FRAGMENT),
   description: q.string(),
@@ -75,7 +74,6 @@ export const TILE_FRAGMENT = {
 export type TileType = TypeFromSelection<typeof TILE_FRAGMENT>;
 
 export const POST_TILE_FRAGMENT = {
-  _id: q.string(),
   ...LINK_REFERENCE_FRAGMENT,
   image: q("image").grab(IMAGE_FRAGMENT),
   description: q.string(),

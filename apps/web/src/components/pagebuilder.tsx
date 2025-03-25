@@ -26,6 +26,8 @@ import VerticalProcess from "./sections/VerticalProcess";
 import { FAQsAccordion } from "./sections/FaqsAccordion";
 import Quote from "./sections/Quote";
 import SectionWrapper from "./sections/SectionWrapper";
+import SocialMedia from "./sections/SocialMedia";
+import Contact from "./sections/Contact";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
@@ -47,6 +49,8 @@ const SECTION_COMPONENTS: Record<string, FC<any>> = {
   verticalProcess: VerticalProcess,
   faqsAccordion: FAQsAccordion,
   quote: Quote,
+  socialMedia: SocialMedia,
+  contact: Contact,
 } as const;
 
 type SectionType = keyof typeof SECTION_COMPONENTS;

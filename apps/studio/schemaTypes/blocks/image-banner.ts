@@ -2,11 +2,7 @@ import { BookImage } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import {
-  colorPickerField,
-  marginSettingsFields,
-  richTextField,
-} from "../common";
+import { richTextField, sectionSettings } from "../common";
 
 export const imageBanner = defineType({
   name: "imageBanner",
@@ -40,15 +36,16 @@ export const imageBanner = defineType({
       type: "boolean",
       group: GROUP.SETTINGS,
     }),
-    colorPickerField,
-    ...marginSettingsFields,
+    ...sectionSettings,
   ],
   preview: {
     select: {
       title: "title",
+      media: "image",
     },
-    prepare: ({ title }) => ({
+    prepare: ({ title, media }) => ({
       title,
+      media,
       subtitle: "Image Banner",
     }),
   },

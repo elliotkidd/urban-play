@@ -17,6 +17,8 @@ import { solutionsGrid } from "./solutions-grid";
 import { verticalProcess } from "./vertical-process";
 import { faqsAccordion } from "./faqs-accordion";
 import { quote } from "./quote";
+import { socialMedia } from "./socialMedia";
+import { contact } from "./contact";
 export const pageBuilderBlocks = [
   hero,
   cta,
@@ -37,4 +39,6 @@ export const pageBuilderBlocks = [
   verticalProcess,
   faqsAccordion,
   quote,
+  socialMedia,
+  contact,
 ];

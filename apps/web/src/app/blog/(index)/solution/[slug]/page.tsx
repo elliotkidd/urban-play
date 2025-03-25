@@ -1,8 +1,7 @@
 import Pagination from "@/components/Pagination";
 import PostTile from "@/components/post-tile";
-import { Button } from "@/components/ui/Button";
 import { sanityFetch } from "@/lib/sanity/live";
-import { blogsQuery } from "@/lib/sanity/queries/documents";
+import { blogBySolutionQuery } from "@/lib/sanity/queries/documents";
 import { PostTileType } from "@/lib/sanity/queries/fragments";
 
 const COL_SPANS = [
@@ -30,21 +29,26 @@ const IMAGE_ASPECTS: ("portrait" | "square" | "landscape")[] = [
 async function fetchBlogPosts(
   indexFrom: number,
   indexTo: number,
+  slug: string,
 ): Promise<{ data: { blogs: PostTileType[]; total: number } }> {
   return await sanityFetch({
-    query: blogsQuery,
+    query: blogBySolutionQuery,
     params: {
       indexFrom,
       indexTo,
+      slug,
     },
   });
 }
 
 export default async function BlogIndexPage({
   searchParams,
+  params,
 }: {
   searchParams: Promise<{ page: string }>;
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { page } = await searchParams;
   const currentPage = parseInt(page, 10) || 1;
 
@@ -53,7 +57,7 @@ export default async function BlogIndexPage({
   const indexFrom = (currentPage - 1) * POSTS_PER_PAGE;
   const indexTo = indexFrom + POSTS_PER_PAGE;
 
-  const { data } = await fetchBlogPosts(indexFrom, indexTo);
+  const { data } = await fetchBlogPosts(indexFrom, indexTo, slug);
   if (!data) return null;
 
   const { blogs, total } = data;

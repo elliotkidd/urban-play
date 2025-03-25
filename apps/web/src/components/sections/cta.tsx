@@ -193,7 +193,7 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
 
   return (
     <>
-      <div className="wrapper absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
+      <div className="wrapper pointer-events-none absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
         <h2 className="max-w-p">{title}</h2>
         <div className="text-lg text-muted-foreground">
           <RichText
@@ -203,7 +203,7 @@ export function CTABlock({ richText, title, buttons, _type, _key }: CTAProps) {
           <SanityButtons
             buttons={buttons}
             buttonClassName="w-full sm:w-auto"
-            className="w-full sm:w-fit grid gap-2 sm:grid-flow-col lg:justify-start mb-8"
+            className="w-full sm:w-fit grid gap-2 sm:grid-flow-col lg:justify-start mb-8 pointer-events-auto"
           />
         </div>
       </div>

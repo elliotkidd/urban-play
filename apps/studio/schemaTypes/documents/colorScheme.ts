@@ -12,14 +12,21 @@ export default defineType({
   preview: {
     select: {
       title: "name",
-      primary: "primary",
-      contrast: "contrast",
+      background: "background",
+      text: "text",
+      primaryButton: "primaryButton",
+      secondaryButton: "secondaryButton",
     },
-    prepare({ title, primary, contrast }: any) {
+    prepare({ title, background, text, primaryButton, secondaryButton }: any) {
       return {
         title,
         subtitle: "Color scheme",
-        media: ColorSchemeMedia({ primary, contrast }),
+        media: ColorSchemeMedia({
+          background,
+          text,
+          primaryButton,
+          secondaryButton,
+        }),
       };
     },
   },

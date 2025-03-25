@@ -367,6 +367,44 @@ const QUOTE_FRAGMENT = {
   }),
 } satisfies Selection;
 
+export type QuoteProps = TypeFromSelection<typeof QUOTE_FRAGMENT>;
+
+const SOCIAL_MEDIA_FRAGMENT = {
+  _type: q.literal("socialMedia"),
+  _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type SocialMediaProps = TypeFromSelection<typeof SOCIAL_MEDIA_FRAGMENT>;
+
+const CONTACT_FRAGMENT = {
+  _type: q.literal("contact"),
+  _key: q.string(),
+  title: q.string(),
+  globalSettings: q("*")
+    .filterByType("settings")
+    .slice(0)
+    .grab({
+      socialLinks: q("socialLinks").grab({
+        linkedin: q.string(),
+        facebook: q.string(),
+        instagram: q.string(),
+        twitter: q.string(),
+        youtube: q.string(),
+      }),
+      contactDetails: q("contactDetails").grab({
+        _key: q.string(),
+        name: q.string(),
+        phone: q.string(),
+        address: q.string(),
+      }),
+    }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type ContactProps = TypeFromSelection<typeof CONTACT_FRAGMENT>;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
@@ -386,6 +424,8 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'process' || _type == 'verticalProcess'": PROCESS_FRAGMENT,
   "_type == 'faqsAccordion'": FAQ_ACCORDION_FRAGMENT,
   "_type == 'quote'": QUOTE_FRAGMENT,
+  "_type == 'socialMedia'": SOCIAL_MEDIA_FRAGMENT,
+  "_type == 'contact'": CONTACT_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

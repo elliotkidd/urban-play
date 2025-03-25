@@ -29,14 +29,16 @@ function SectionWrapper({
   const { setColorScheme } = useStore();
   const path = usePathname();
 
-  console.log(hideOn);
+  // const hideOnPath =
+  //   (hideOn &&
+  //     hideOn.length > 0 &&
+  //     hideOn.some((item) => path.includes(item.slug))) ||
+  //   path.startsWith("/blog/");
 
   const hideOnPath =
     hideOn &&
     hideOn.length > 0 &&
     hideOn.some((item) => path.includes(item.slug));
-
-  console.log(hideOnPath);
 
   const { ref, inView } = useInView({
     rootMargin: "-10% 0px -90% 0px",

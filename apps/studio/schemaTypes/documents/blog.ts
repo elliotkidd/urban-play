@@ -102,6 +102,12 @@ export const blog = defineType({
       type: "richText",
       group: GROUP.MAIN_CONTENT,
     }),
+    defineField({
+      name: "pageBuilder",
+      type: "pageBuilder",
+      title: "Page Builder",
+      group: GROUP.MAIN_CONTENT,
+    }),
     ...seoFields,
     ...ogFields,
   ],

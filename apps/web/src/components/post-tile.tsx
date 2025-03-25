@@ -10,7 +10,7 @@ function PostTile({
   className,
 }: {
   post: PostTileType;
-  image_aspect: "square" | "portrait";
+  image_aspect: "square" | "portrait" | "landscape";
   className?: string;
 }) {
   const { image, title, description } = post;
@@ -22,6 +22,7 @@ function PostTile({
           "relative mb-2 rounded-xl overflow-hidden",
           image_aspect === "square" && "aspect-square",
           image_aspect === "portrait" && "aspect-portrait",
+          image_aspect === "landscape" && "aspect-landscape",
         )}
       >
         <SanityImage

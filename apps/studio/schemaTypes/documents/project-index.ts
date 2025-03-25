@@ -3,6 +3,8 @@ import { defineField, defineType } from "sanity";
 import { GROUP, GROUPS } from "../../utils/constant";
 import { seoFields } from "../../utils/seo-fields";
 import { ogFields } from "../../utils/og-fields";
+import { createSlug } from "../../utils/slug";
+import { isUnique } from "../../utils/slug";
 
 export const projectIndex = defineType({
   name: "projectIndex",
@@ -15,6 +17,17 @@ export const projectIndex = defineType({
       title: "Title",
       type: "string",
       group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "slug",
+      type: "slug",
+      group: GROUP.MAIN_CONTENT,
+      options: {
+        source: "title",
+        slugify: createSlug,
+        isUnique: isUnique,
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "hero",

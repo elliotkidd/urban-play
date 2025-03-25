@@ -9,6 +9,8 @@ import { COLOR_SCHEME_FRAGMENT } from "./fragments";
 */
 export const LINK_REFERENCE_FRAGMENT = {
   _type: ["_type", q.string()],
+  _id: q.string(),
+  _key: q.string(),
   slug: q.slug("slug"),
   title: q.string(),
 } satisfies Selection;

@@ -25,7 +25,7 @@ const presentationOriginUrl = process.env.SANITY_STUDIO_PRESENTATION_URL;
 
 export default defineConfig({
   name: "default",
-  title: title ?? "Turbo Studio",
+  title: title ?? "Urban Play Studio",
   projectId: projectId,
   icon: Logo,
   dataset: dataset ?? "production",
