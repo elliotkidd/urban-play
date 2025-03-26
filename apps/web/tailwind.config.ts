@@ -15,6 +15,7 @@ function withOpacityValue(variable: string) {
 }
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -62,19 +63,18 @@ const config: Config = {
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       colors: {
-        //@ts-expect-error
+        //@ts-ignore
         background: withOpacityValue("--colour-background"),
-        //@ts-expect-error
+        //@ts-ignore
         text: withOpacityValue("--colour-text"),
-        //@ts-expect-error
+        //@ts-ignore
         "primary-button": withOpacityValue("--colour-primary-button"),
-        //@ts-expect-error
+        //@ts-ignore
         "secondary-button": withOpacityValue("--colour-secondary-button"),
-        //@ts-expect-error
+        //@ts-ignore
         "nav-bar-background": withOpacityValue("--colour-nav-bar-background"),
-        //@ts-expect-error
+        //@ts-ignore
         "nav-bar-text": withOpacityValue("--colour-nav-bar-text"),
-
         "theme-green": "#12BF65",
         "theme-blue": "#008EDA",
         "theme-yellow": "#F2BD06",

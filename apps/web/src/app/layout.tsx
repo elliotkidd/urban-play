@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fonts} font-body bg-background text-text transition-colors duration-500`}
+        className={`${fonts} font-body bg-background text-text transition-colors duration-500 relative`}
       >
         <Lenis root />
         <Providers>

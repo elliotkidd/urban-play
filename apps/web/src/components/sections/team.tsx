@@ -5,10 +5,13 @@ import SanityImage from "../sanity-image";
 function Team({ title, teamMembers, smallWrapper }: TeamProps) {
   return (
     <div
-      className={twMerge("wrapper py-fluid", smallWrapper && "wrapper--small")}
+      className={twMerge(
+        "wrapper py-fluid prose",
+        smallWrapper && "wrapper--small",
+      )}
     >
-      <h2 className="h2 prose">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8">
+      <h2 className="h2">{title}</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8 not-prose">
         {teamMembers.map(
           ({ _id, _key, image, name, position, startingYear }, i) => (
             <div

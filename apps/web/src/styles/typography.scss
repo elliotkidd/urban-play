@@ -14,6 +14,10 @@
   max-width: 870px;
 }
 
+.jumbo {
+  font-size: clamp(60px, 10vw, 140px);
+}
+
 :root {
   --fluid-min-width: 640;
   --fluid-max-width: 1280;

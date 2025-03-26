@@ -6,24 +6,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@workspace/ui/components/accordion";
-import { Button, buttonVariants } from "@workspace/ui/components/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@workspace/ui/components/navigation-menu";
-import {
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@workspace/ui/components/sheet";
-import { Sheet, SheetTrigger } from "@workspace/ui/components/sheet";
-import { cn } from "@workspace/ui/lib/utils";
-import { Menu } from "lucide-react";
+import { buttonVariants } from "@workspace/ui/components/button";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,11 +25,21 @@ import { Logo } from "./logo";
 import { SanityButtons } from "./sanity-buttons";
 import { SanityIcon } from "./sanity-icon";
 import SanityLink from "./sanity-link";
-import { TypeFromSelection } from "groqd";
 import { NavBarColumnType, NavBarLinkType } from "@/lib/sanity/queries/link";
 import { NavBarType } from "@/lib/sanity/queries/documents";
 import useStore from "@/store/header";
 import { getColorSchemeStyle } from "@/utils/utils";
+import { Button } from "./ui/Button";
+import { twMerge } from "tailwind-merge";
+import { Menu } from "lucide-react";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 
 interface MenuItem {
   title: string;
@@ -57,7 +57,7 @@ function MenuItemLink({
 }) {
   return (
     <Link
-      className={cn(
+      className={twMerge(
         "flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-accent hover:text-accent-foreground items-center focus:bg-accent focus:text-accent-foreground",
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
@@ -87,7 +87,10 @@ function MobileNavbarAccordionColumn({
     <AccordionItem value={column.title ?? column._key} className="border-b-0">
       <AccordionTrigger className="mb-4 py-0 font-semibold hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
         <div
-          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
+          className={twMerge(
+            buttonVariants({ variant: "ghost" }),
+            "justify-start",
+          )}
         >
           {column.title}
         </div>
@@ -111,7 +114,7 @@ function MobileNavbarAccordionColumn({
 }
 
 function MobileNavbar({ navbarData }: { navbarData: any }) {
-  const { logo, siteTitle, columns, buttons } = navbarData ?? {};
+  const { columns, buttons } = navbarData ?? {};
   const [isOpen, setIsOpen] = useState(false);
 
   const path = usePathname();
@@ -120,11 +123,16 @@ function MobileNavbar({ navbarData }: { navbarData: any }) {
   useEffect(() => {
     setIsOpen(false);
   }, [path]);
+
+  useEffect(() => {
+    console.log(isOpen);
+  }, [isOpen]);
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex justify-end">
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button variant="default" size="icon">
             <Menu className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
@@ -145,7 +153,7 @@ function MobileNavbar({ navbarData }: { navbarData: any }) {
                   key={`column-link-${column.name}-${column._key}`}
                   href={column.href ?? ""}
                   onClick={() => setIsOpen(false)}
-                  className={cn(
+                  className={twMerge(
                     buttonVariants({ variant: "ghost" }),
                     "justify-start",
                   )}
@@ -234,8 +242,6 @@ function NavbarColumn({
 
 export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
   const { columns, buttons } = navbarData ?? {};
-
-  const colourScheme = useStore((state) => state.colorScheme);
 
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-8">
