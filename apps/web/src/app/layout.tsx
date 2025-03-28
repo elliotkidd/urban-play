@@ -14,6 +14,7 @@ import { fonts } from "./fonts";
 import { NavbarServer } from "@/components/navbar";
 import { NavbarSkeletonResponsive } from "@/components/navbar-client";
 import { Suspense } from "react";
+import LoadInScreen from "@/components/LoadInScreen";
 
 export default async function RootLayout({
   children,
@@ -25,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fonts} font-body bg-background text-text transition-colors duration-500 relative`}
+        className={`${fonts} font-body bg-background text-text transition-colors duration-500`}
       >
         <Lenis root />
         <Providers>
@@ -59,6 +60,7 @@ export default async function RootLayout({
           )}
           <FooterServer />
           <SanityLive />
+          <LoadInScreen />
         </Providers>
       </body>
     </html>

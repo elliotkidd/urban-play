@@ -10,7 +10,7 @@ function SolutionsGridSection({
 }: SolutionsSectionProps) {
   return (
     <div className="wrapper">
-      <SectionHeader {...sectionHeader} />
+      <SectionHeader {...sectionHeader} className="mb-fluid-lg" />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-fluid-lg">
         {solutions.map((solution, i) => (
           <div

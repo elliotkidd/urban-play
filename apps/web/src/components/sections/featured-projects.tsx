@@ -1,9 +1,6 @@
 import { FeaturedProjectsProps } from "@/lib/sanity/queries/sections";
 import SectionHeader from "../section-header";
-import SanityImage from "../sanity-image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Link from "../link";
-import processUrl from "@/utils/processUrl";
 import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
 import { twMerge } from "tailwind-merge";
@@ -16,7 +13,7 @@ export default function FeaturedProjectsSection({
   return (
     <div
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
+        "wrapper py-fluid-xs space-y-fluid-sm lg:space-y-fluid-lg overflow-hidden",
         smallWrapper && "wrapper--small",
       )}
     >

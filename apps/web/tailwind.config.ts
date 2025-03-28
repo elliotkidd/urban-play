@@ -79,6 +79,8 @@ const config: Config = {
         "theme-blue": "#008EDA",
         "theme-yellow": "#F2BD06",
         "theme-red": "#ED3E61",
+        //@ts-ignore
+        "bottle-green": withOpacityValue("--bottle-green"),
       },
       fontSize: {
         "5xl": "var(--text-5xl)",

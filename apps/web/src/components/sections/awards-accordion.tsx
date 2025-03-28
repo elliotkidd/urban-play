@@ -22,10 +22,10 @@ export function AwardsAccordion({
         smallWrapper && "wrapper--small",
       )}
     >
-      <div className="flex justify-between prose mb-fluid-sm">
+      <div className="flex flex-col lg:flex-row justify-between prose mb-fluid-sm">
         <h2 className="">{title}</h2>
         {awards && awards.length > 0 && (
-          <ul className="flex gap-8 list-none mr-8">
+          <ul className="flex gap-8 list-none lg:mr-8 not-prose">
             <li className="leading-none">
               <span className="block opacity-40">Total Awards</span>
               <span className="block ">{awards.length} Awards Across</span>

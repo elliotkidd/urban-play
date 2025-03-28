@@ -9,9 +9,9 @@ export function BlogHeader({
   solutions: LinkReferenceType[];
 }) {
   return (
-    <div className="wrapper flex justify-between items-start prose mb-fluid-lg">
+    <div className="wrapper flex flex-col lg:flex-row justify-between items-start prose mb-fluid-lg">
       <h2 className="h2">{title}</h2>
-      <div className="flex gap-2 not-prose items-start flex-wrap justify-end max-w-p">
+      <div className="flex gap-2 not-prose items-start flex-wrap lg:justify-end max-w-p">
         {solutions.map((solution: LinkReferenceType) => (
           <Link
             key={solution._id}

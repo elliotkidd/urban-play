@@ -22,14 +22,6 @@ const navbarLink = defineField({
       title: "Link URL",
       description: "The URL that this link will navigate to when clicked",
     }),
-    defineField({
-      name: "colorScheme",
-      type: "reference",
-      title: "Default Color Scheme",
-      description:
-        "Color scheme for the navbar when no effected by section colour scheme",
-      to: [{ type: "colorScheme" }],
-    }),
   ],
   preview: {
     select: {

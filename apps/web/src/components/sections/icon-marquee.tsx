@@ -16,7 +16,9 @@ export default function IconMarqueeSection({
         smallWrapper && "wrapper--small",
       )}
     >
-      {sectionHeader && <SectionHeader {...sectionHeader} />}
+      {sectionHeader && (
+        <SectionHeader {...sectionHeader} className="mb-fluid" />
+      )}
       <Marquee autoFill className="!overflow-visible">
         {icons &&
           icons.length > 0 &&

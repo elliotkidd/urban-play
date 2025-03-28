@@ -1,6 +1,5 @@
 import Pagination from "@/components/Pagination";
 import PostTile from "@/components/post-tile";
-import { Button } from "@/components/ui/Button";
 import { sanityFetch } from "@/lib/sanity/live";
 import { blogsQuery } from "@/lib/sanity/queries/documents";
 import { PostTileType } from "@/lib/sanity/queries/fragments";
@@ -62,7 +61,7 @@ export default async function BlogIndexPage({
     <>
       {blogs && blogs.length ? (
         <>
-          <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid-lg mb-fluid">
+          <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid">
             {blogs &&
               blogs.length > 0 &&
               blogs.map((post: PostTileType, index: number) => (
@@ -79,7 +78,7 @@ export default async function BlogIndexPage({
         </>
       ) : (
         <div className="wrapper prose text-center">
-          <h1 className="h3 font-heading uppercase">No posts!</h1>
+          <h3 className="h3 font-heading uppercase">No posts!</h3>
         </div>
       )}
     </>

@@ -1,13 +1,6 @@
 import Link from "next/link";
 
 import { sanityFetch } from "@/lib/sanity/live";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  LinkedinIcon,
-  XIcon,
-  YoutubeIcon,
-} from "./social-icons";
 import FooterLogo from "./FooterLogo";
 import { footerQuery, FooterType } from "@/lib/sanity/queries/documents";
 import SanityLink from "./sanity-link";
@@ -41,15 +34,13 @@ function SocialLinks({ data }: SocialLinksProps) {
   const socialLinks = [
     {
       url: instagram,
-      Icon: InstagramIcon,
       label: "Instagram",
     },
-    { url: facebook, Icon: FacebookIcon, label: "Facebook" },
-    { url: twitter, Icon: XIcon, label: "Twitter" },
-    { url: linkedin, Icon: LinkedinIcon, label: "LinkedIn" },
+    { url: facebook, label: "Facebook" },
+    { url: twitter, label: "Twitter" },
+    { url: linkedin, label: "LinkedIn" },
     {
       url: youtube,
-      Icon: YoutubeIcon,
       label: "YouTube",
     },
   ].filter((link) => link.url);
@@ -83,10 +74,10 @@ function FooterSection({ data }: { data: FooterType }) {
   return (
     <footer
       style={getColorSchemeStyle(colorScheme)}
-      className="h-screen py-fluid-xs bg-background text-text"
+      className="flex w-full py-fluid-xs bg-background text-text overflow-hidden"
     >
-      <div className="wrapper w-full flex flex-col justify-between h-full">
-        <div className="grid lg:grid-cols-6 gap-fluid">
+      <div className="wrapper flex-grow w-full flex flex-col justify-between h-full">
+        <div className="grid lg:grid-cols-6 gap-fluid-sm lg:gap-fluid">
           {Array.isArray(columns) &&
             columns?.length > 0 &&
             columns.map(
@@ -109,12 +100,12 @@ function FooterSection({ data }: { data: FooterType }) {
             )}
           {socialLinks && <SocialLinks data={socialLinks} />}
         </div>
-        <div className="mt-20 pt-8">
-          <div className="grid lg:grid-cols-6 mb-fluid-sm">
+        <div className="mt-fluid-lg pt-8">
+          <div className="grid lg:grid-cols-6 mb-fluid-sm gap-fluid-sm">
             <div className="lg:col-span-3 prose">
-              <p className="lead max-w-p-lg">{subtitle}</p>
+              <p className="lead max-w-p-lg text-balance">{subtitle}</p>
             </div>
-            <div className="col-start-6 space-y-8">
+            <div className="grid sm:grid-cols-2 lg:block lg:col-start-6 space-y-4 sm:space-y-0 lg:space-y-8">
               <p>
                 {contactDetails?.address?.split(",").slice(0, 1)}
                 <br />

@@ -40,6 +40,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { ColorSchemeFragment } from "@/lib/sanity/queries/fragments";
 
 interface MenuItem {
   title: string;
@@ -113,20 +114,24 @@ function MobileNavbarAccordionColumn({
   );
 }
 
-function MobileNavbar({ navbarData }: { navbarData: any }) {
+function MobileNavbar({
+  navbarData,
+  colorScheme,
+}: {
+  navbarData: any;
+  colorScheme: ColorSchemeFragment;
+}) {
   const { columns, buttons } = navbarData ?? {};
   const [isOpen, setIsOpen] = useState(false);
 
   const path = usePathname();
 
+  console.log(colorScheme);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: This is intentional
   useEffect(() => {
     setIsOpen(false);
   }, [path]);
-
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -138,7 +143,10 @@ function MobileNavbar({ navbarData }: { navbarData: any }) {
           </Button>
         </SheetTrigger>
       </div>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent
+        className="overflow-y-auto"
+        style={getColorSchemeStyle(colorScheme)}
+      >
         <SheetHeader>
           <SheetTitle>
             <Logo />
@@ -146,45 +154,40 @@ function MobileNavbar({ navbarData }: { navbarData: any }) {
         </SheetHeader>
 
         <div className="mb-8 mt-8 flex flex-col gap-4">
-          {columns?.map((column: any) => {
-            if (column.type === "link") {
+          {Array.isArray(columns) &&
+            columns?.map((column: NavBarLinkType | NavBarColumnType) => {
+              if (column._type === "navbarLink") {
+                const { name, _key, url } = column as NavBarLinkType;
+                return (
+                  <SanityLink key={`column-link-${name}-${_key}`} url={url}>
+                    {name}
+                  </SanityLink>
+                );
+              }
               return (
-                <Link
-                  key={`column-link-${column.name}-${column._key}`}
-                  href={column.href ?? ""}
-                  onClick={() => setIsOpen(false)}
-                  className={twMerge(
-                    buttonVariants({ variant: "ghost" }),
-                    "justify-start",
-                  )}
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="w-full"
+                  key={column._key}
                 >
-                  {column.name}
-                </Link>
+                  <MobileNavbarAccordionColumn
+                    column={column}
+                    setIsOpen={setIsOpen}
+                  />
+                </Accordion>
               );
-            }
-            return (
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-                key={column._key}
-              >
-                <MobileNavbarAccordionColumn
-                  column={column}
-                  setIsOpen={setIsOpen}
-                />
-              </Accordion>
-            );
-          })}
+            })}
         </div>
-
-        <div className="border-t pt-4">
-          <SanityButtons
-            buttons={buttons ?? []}
-            buttonClassName="w-full"
-            className="flex mt-2 flex-col gap-3"
-          />
-        </div>
+        {Array.isArray(buttons) && buttons.length > 0 && (
+          <div className="border-t pt-4">
+            <SanityButtons
+              buttons={buttons ?? []}
+              buttonClassName="w-full"
+              className="flex mt-2 flex-col gap-3"
+            />
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );
@@ -270,6 +273,8 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
   const isMobile = useIsMobile();
   const colorScheme = useStore((state) => state.colorScheme);
 
+  console.log("navbarData.defaultColorScheme", navbarData.defaultColorScheme);
+
   // Use the color scheme from global state, falling back to the default from navbarData
   const headerStyle = colorScheme
     ? getColorSchemeStyle(colorScheme)
@@ -284,7 +289,10 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
       <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
         <Logo />
         {isMobile ? (
-          <MobileNavbar navbarData={navbarData} />
+          <MobileNavbar
+            navbarData={navbarData}
+            colorScheme={navbarData.defaultColorScheme}
+          />
         ) : (
           <DesktopNavbar navbarData={navbarData} />
         )}
@@ -297,7 +305,7 @@ function SkeletonMobileNavbar() {
   return (
     <div className="md:hidden">
       <div className="flex justify-end">
-        <div className="h-12 w-12 rounded-md bg-text/20 animate-pulse" />
+        <div className="h-12 w-12 rounded-md bg-text animate-pulse" />
       </div>
     </div>
   );
@@ -331,7 +339,7 @@ function SkeletonDesktopNavbar() {
 
 export function NavbarSkeletonResponsive() {
   return (
-    <header className="header-skeleton py-4">
+    <header className="header-skeleton">
       <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
         <Logo />
         <>

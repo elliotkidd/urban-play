@@ -35,10 +35,10 @@ export default async function ProjectsIndexLayout({
       >
         <HeroBlock {...hero} />
       </section>
-      <section className="min-h-p-section">
-        <div className="wrapper flex justify-between py-fluid-xs">
+      <section className="lg:min-h-p-section">
+        <div className="wrapper flex flex-col lg:flex-row gap-fluid-sm justify-between py-fluid-xs">
           <RichText richText={description} className="max-w-p" />
-          <div className="flex gap-2 max-w-xl flex-wrap justify-end">
+          <div className="flex gap-2 max-w-xl flex-wrap lg:justify-end">
             <Link
               href="/projects"
               className="block px-4 py-2 bg-nav-bar-background/20 rounded-lg transition-colors"
