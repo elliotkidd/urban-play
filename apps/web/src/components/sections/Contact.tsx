@@ -57,12 +57,8 @@ function Contact({ title, globalSettings }: ContactProps) {
   //   methods.reset();
   // };
 
-  useEffect(() => console.log(errors), [errors]);
-
   const onValid = async (data) => {
-    console.log(data);
     const response = await submit(data);
-    console.log(response);
     alert("Thank you!");
   };
 

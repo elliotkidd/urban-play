@@ -30,8 +30,6 @@ export default function (
     case "project":
       directory = "projects";
       break;
-    case "project":
-      directory = "projects";
   }
 
   const slug = page.slug?.replace(/^\/+/, "");

@@ -126,8 +126,6 @@ function MobileNavbar({
 
   const path = usePathname();
 
-  console.log(colorScheme);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: This is intentional
   useEffect(() => {
     setIsOpen(false);
@@ -272,8 +270,6 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
 const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
   const isMobile = useIsMobile();
   const colorScheme = useStore((state) => state.colorScheme);
-
-  console.log("navbarData.defaultColorScheme", navbarData.defaultColorScheme);
 
   // Use the color scheme from global state, falling back to the default from navbarData
   const headerStyle = colorScheme

@@ -13,12 +13,12 @@ export default function FeaturedProjectsSection({
   return (
     <div
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid-sm lg:space-y-fluid-lg overflow-hidden",
+        "wrapper py-fluid-xs space-y-fluid lg:space-y-fluid-lg overflow-hidden",
         smallWrapper && "wrapper--small",
       )}
     >
       <SectionHeader {...sectionHeader} />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-fluid lg:grid-cols-3">
         {projects[0] && (
           <ProjectTile project={projects[0]} imageAspectRatio="square" />
         )}

@@ -12,7 +12,7 @@ export default function ProjectTile({
   imageAspectRatio?: "square" | "landscape" | "portrait" | "video";
   className?: string;
 }) {
-  const { image, solutions, title } = project;
+  const { image, solutions, title, description } = project;
 
   var imageAspectRatioClass: string;
 
@@ -47,11 +47,12 @@ export default function ProjectTile({
         />
         {solutions && solutions.length > 0 && (
           <span className="absolute bg-nav-bar-background/20 backdrop-blur text-nav-bar-text top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
-            {solutions.map(({ title }: { title: string }) => title).join(", ")}
+            {solutions[0].title}
           </span>
         )}
       </div>
-      <h3 className="text-base font-bold mb-4">{title}</h3>
+      <h3 className="text-lg underline font-bold mb-4">{title}</h3>
+      <p className="text-sm line-clamp-2 max-w-[390px]">{description}</p>
     </Link>
   );
 }

@@ -107,7 +107,7 @@ function RichTextBlock({
   return (
     <RichText
       richText={richText}
-      className={twMerge("prose prose-headings:scroll-m-24", className)}
+      className={twMerge("prose-headings:scroll-m-24 max-w-p", className)}
     />
   );
 }

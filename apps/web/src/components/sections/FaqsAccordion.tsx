@@ -44,7 +44,9 @@ export function FAQsAccordion({
                 {faq.title}
               </AccordionTrigger>
               <AccordionContent className="pb-2">
-                {faq.answer && <RichText richText={faq.answer} />}
+                {faq.answer && (
+                  <RichText richText={faq.answer} className="prose-white" />
+                )}
               </AccordionContent>
             </AccordionItem>
           );

@@ -11,7 +11,7 @@ export function ImageLinkCards({ cards, smallWrapper }: any) {
     >
       {Array.isArray(cards) && cards.length > 0 && (
         <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
-          {cards?.map((card, idx) => (
+          {cards?.map((card) => (
             <ImageLinkCard key={card._key} card={card} className={twMerge()} />
           ))}
         </div>

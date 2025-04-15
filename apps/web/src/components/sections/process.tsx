@@ -13,44 +13,45 @@ function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
     offset: ["start start", "end end"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-100%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
 
   return (
-    <div
-      className={twMerge(
-        "wrapper relative overflow-visible",
-        smallWrapper && "wrapper--small",
-      )}
-      style={{ height: steps.length * 66 + "vh" }}
-      ref={scrollRef}
-    >
-      <div className="sticky top-0 h-screen flex flex-col w-full">
+    <>
+      <div className={twMerge("wrapper", smallWrapper && "wrapper--small")}>
         <SectionHeader {...sectionHeader} />
-        <motion.div
-          className="flex flex-nowrap gap-4 flex-1 items-center overflow-hidden"
-          style={{ x }}
-        >
-          {steps.map((step) => (
-            <motion.div
-              key={step._key}
-              className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-landscape"
-              style={{ height: "437px" }}
-            >
-              <div className="relative aspect-portrait rounded-lg overflow-hidden flex-none">
-                <SanityImage
-                  src={step.image}
-                  className="w-full h-full absolute inset-0 object-cover"
-                />
-              </div>
-              <div className="text-sm flex-none flex flex-col h-full justify-between max-w-xs">
-                <h3 className="text-lg font-bold">{step.heading}</h3>
-                <div className="text-sm">{step.description}</div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
-    </div>
+      <div
+        className={twMerge("relative overflow-visible")}
+        style={{ height: steps.length * 100 + "vh" }}
+        ref={scrollRef}
+      >
+        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+          <motion.div
+            className="flex gap-4 items-center px-fluid-xs"
+            style={{ x }}
+          >
+            {steps.map((step) => (
+              <motion.div
+                key={step._key}
+                className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-landscape"
+                style={{ height: "437px" }}
+              >
+                <div className="relative aspect-portrait rounded-lg overflow-hidden flex-none">
+                  <SanityImage
+                    src={step.image}
+                    className="w-full h-full absolute inset-0 object-cover"
+                  />
+                </div>
+                <div className="text-sm flex-none flex flex-col h-full justify-between max-w-xs">
+                  <h3 className="text-lg font-bold">{step.heading}</h3>
+                  <div className="text-sm">{step.description}</div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </>
   );
 }
 export default Process;

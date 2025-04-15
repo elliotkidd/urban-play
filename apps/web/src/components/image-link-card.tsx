@@ -1,6 +1,7 @@
 import SanityImage from "./sanity-image";
 import { twMerge } from "tailwind-merge";
 import SanityLink from "./sanity-link";
+import Link from "next/link";
 
 export type ImageLinkCardProps = {
   card: any;
@@ -9,8 +10,11 @@ export type ImageLinkCardProps = {
 
 export function ImageLinkCard({ card, className }: ImageLinkCardProps) {
   const { image, title, url } = card ?? {};
+
+  console.log(url);
+
   return (
-    <SanityLink url={url} className={twMerge("group", className)}>
+    <div className={twMerge("group", className)}>
       <div className="relative aspect-landscape inset-0 overflow-hidden rounded-xl bg-nav-bar-background">
         {image && (
           <SanityImage
@@ -20,6 +24,12 @@ export function ImageLinkCard({ card, className }: ImageLinkCardProps) {
         )}
       </div>
       <h3 className="mt-4 font-black text-2xl no-underline">{title}</h3>
-    </SanityLink>
+      <SanityLink
+        url={url}
+        className="underline block text-lg font-bold leading-none mt-2.5 hover:opacity-70 duration-500 transition-opacity"
+      >
+        Learn More
+      </SanityLink>
+    </div>
   );
 }

@@ -68,8 +68,6 @@ export default async function BlogSlugPage({
     pageBuilder,
   } = data ?? {};
 
-  console.log(authors);
-
   return (
     <div className="">
       <article>

@@ -21,7 +21,7 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                 i % 6 === 3 ? "lg:col-start-2" : "",
               )}
             >
-              <div className="relative aspect-portrait overflow-hidden rounded-lg mb-4">
+              <div className="relative aspect-portrait overflow-hidden mb-4">
                 <SanityImage
                   src={image}
                   className="object-cover absolute inset-0 h-full w-full"
