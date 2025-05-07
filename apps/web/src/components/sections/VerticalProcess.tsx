@@ -1,10 +1,14 @@
 import { ProcessProps } from "@/lib/sanity/queries/sections";
 import SectionHeader from "../section-header";
 import SanityImage from "../sanity-image";
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useScroll } from "motion/react";
-import { sectionAnimationConfig } from "@/lib/motion";
+import {
+  descriptionVariants,
+  sectionAnimationConfig,
+  titleVariants,
+} from "@/lib/motion";
 
 function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
   const [activeStep, setActiveStep] = useState(0);
@@ -27,27 +31,39 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
   });
 
   return (
-    <motion.div {...sectionAnimationConfig} className="wrapper">
+    <div className="wrapper">
       {sectionHeader && <SectionHeader {...sectionHeader} />}
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
         <div ref={containerRef} className="space-y-fluid-sm">
           {steps.map((step) => (
-            <div
-              key={step._key}
-              className="lg:h-[66dvh] prose flex flex-col justify-center"
-            >
-              <div className="relative aspect-landscape lg:hidden rounded-lg overflow-hidden">
-                <SanityImage
-                  src={step.image}
-                  alt={step.heading}
-                  className="object-cover absolute inset-0 mt-0 w-full h-full"
-                />
-              </div>
-              <h3 className="text-lg font-bold font-body mb-4 lg:mb-8">
-                {step.heading}
-              </h3>
-              <p className="max-w-p text-balance">{step.description}</p>
-            </div>
+            <Fragment key={step._key}>
+              <motion.div
+                {...sectionAnimationConfig}
+                className="lg:h-[66dvh] prose flex flex-col justify-center"
+              >
+                <div className="relative aspect-landscape lg:hidden rounded-lg overflow-hidden">
+                  <SanityImage
+                    src={step.image}
+                    alt={step.heading}
+                    className="object-cover absolute inset-0 mt-0 w-full h-full"
+                  />
+                </div>
+                <h3 className="text-lg font-bold font-body mb-4">
+                  {step.heading}
+                </h3>
+                <motion.p
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{
+                    margin: "100px 0px 100px 0px",
+                  }}
+                  variants={descriptionVariants}
+                  className="max-w-p text-balance"
+                >
+                  {step.description}
+                </motion.p>
+              </motion.div>
+            </Fragment>
           ))}
         </div>
         <div className="items-start justify-items-end hidden lg:grid">
@@ -76,7 +92,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 export default VerticalProcess;

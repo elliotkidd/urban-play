@@ -1,8 +1,9 @@
 import { TileType } from "@/lib/sanity/queries/fragments";
 import Link from "./link";
 import SanityImage from "./sanity-image";
-import processUrl from "@/utils/processUrl";
 import { twMerge } from "tailwind-merge";
+import { motion } from "motion/react";
+import { descriptionVariants, titleVariants } from "@/lib/motion";
 export default function ProjectTile({
   project,
   imageAspectRatio = "square",
@@ -51,8 +52,28 @@ export default function ProjectTile({
           </span>
         )}
       </div>
-      <h3 className="text-lg underline font-bold mb-4">{title}</h3>
-      <p className="text-sm line-clamp-2 max-w-[390px]">{description}</p>
+      <motion.h3
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          margin: "-100px 0px -100px 0px",
+        }}
+        variants={titleVariants}
+        className="text-lg underline font-bold mb-4"
+      >
+        {title}
+      </motion.h3>
+      <motion.p
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          margin: "-100px 0px -100px 0px",
+        }}
+        variants={descriptionVariants}
+        className="text-sm line-clamp-2 max-w-[390px]"
+      >
+        {description}
+      </motion.p>
     </Link>
   );
 }

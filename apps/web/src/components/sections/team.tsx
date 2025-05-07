@@ -2,7 +2,7 @@ import { TeamProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
 import SanityImage from "../sanity-image";
 import { motion } from "motion/react";
-import { sectionAnimationConfig } from "@/lib/motion";
+import { sectionAnimationConfig, customEase } from "@/lib/motion";
 
 function Team({ title, teamMembers, smallWrapper }: TeamProps) {
   return (
@@ -14,11 +14,29 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
       )}
     >
       <h2 className="h2">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8 not-prose">
+      <motion.ul
+        initial="hidden"
+        whileInView="show"
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.2 },
+          },
+        }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8 not-prose"
+      >
         {teamMembers.map(
           ({ _id, _key, image, name, position, startingYear }, i) => (
-            <div
-              key={_id || _key}
+            <motion.li
+              key={`team-member-${_id}-${i}`}
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { duration: 1, ease: customEase },
+                },
+              }}
               className={twMerge(
                 "font-bold",
                 i % 6 === 3 ? "lg:col-start-2" : "",
@@ -37,10 +55,10 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
               </div>
               <h3 className="no-underline !normal-case">{name}</h3>
               <p className="text-sm text-gray-500">{position}</p>
-            </div>
+            </motion.li>
           ),
         )}
-      </div>
+      </motion.ul>
     </motion.div>
   );
 }

@@ -3,29 +3,13 @@ import SectionHeader from "../section-header";
 import { twMerge } from "tailwind-merge";
 import SanityImage from "../sanity-image";
 import Link from "next/link";
-import { sectionAnimationConfig } from "@/lib/motion";
+import {
+  sectionAnimationConfig,
+  descriptionVariants,
+  titleVariants,
+} from "@/lib/motion";
 import { motion } from "motion/react";
 import { Fragment } from "react";
-
-const hidden = { opacity: 0, y: 16 };
-const visible = { opacity: 1, y: 0 };
-const transition = { duration: 0.5, ease: "easeInOut" };
-
-const solutionTitleVariants = {
-  hidden,
-  visible: {
-    ...visible,
-    transition: { ...transition, delay: 0.25 },
-  },
-};
-
-const solutionDescriptionVariants = {
-  hidden,
-  visible: {
-    ...visible,
-    transition: { ...transition, delay: 0.5 },
-  },
-};
 
 function SolutionsGridSection({
   sectionHeader,
@@ -51,17 +35,30 @@ function SolutionsGridSection({
                   className="object-cover w-full h-full inset-0"
                 />
               </div>
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col justify-between gap-8">
                 <div />
                 <div className="prose">
                   <motion.h3
-                    variants={solutionTitleVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{
+                      margin: "0px 0px 0px 0px",
+                    }}
+                    variants={titleVariants}
                     className="text-3xl uppercase"
                   >
                     {solution.title}
                   </motion.h3>
                   <motion.p
-                    variants={solutionDescriptionVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{
+                      margin: "0px 0px 0px 0px",
+                    }}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 0.4, transition: { duration: 0.5 } },
+                    }}
                     className="max-w-p text-balance"
                   >
                     {solution.description}

@@ -5,11 +5,12 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import { useRef } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import "swiper/css";
-import "swiper/css/effect-fade";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
+
+import "swiper/css";
+import "swiper/css/effect-fade";
 
 export default function TestimoniesSection({
   sectionHeader,
