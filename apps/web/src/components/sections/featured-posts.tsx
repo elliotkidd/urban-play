@@ -1,9 +1,10 @@
 import { FeaturedPostsProps } from "@/lib/sanity/queries/sections";
 import SectionHeader from "../section-header";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { TileType } from "@/lib/sanity/queries/fragments";
 import PostTile from "../post-tile";
 import { twMerge } from "tailwind-merge";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export default function FeaturedPostsSection({
   sectionHeader,
@@ -11,7 +12,8 @@ export default function FeaturedPostsSection({
   smallWrapper,
 }: FeaturedPostsProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
         smallWrapper && "wrapper--small",
@@ -32,6 +34,6 @@ export default function FeaturedPostsSection({
           })}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

@@ -1,8 +1,9 @@
 import { BUTTON_FRAGMENT } from "@/lib/sanity/queries/link";
 import { TypeFromSelection } from "groqd";
 import { twMerge } from "tailwind-merge";
-import SanityLink from "./sanity-link";
 import { Button } from "./ui/Button";
+import Link from "next/link";
+
 type SanityButtonsProps = {
   buttons: SanityButtonProps[] | null;
   className?: string;
@@ -17,11 +18,15 @@ export function SanityButtons({ buttons, className }: SanityButtonsProps) {
   return (
     <div className={twMerge("flex flex-col sm:flex-row gap-4", className)}>
       {buttons.map(({ url, variant, text, _key }, i) => (
-        <SanityLink key={_key} url={url}>
+        <Link
+          key={_key}
+          href={url?.href ?? "#"}
+          target={url?.openInNewTab ? "_blank" : "_self"}
+        >
           <Button as="span" variant={variant}>
             {text}
           </Button>
-        </SanityLink>
+        </Link>
       ))}
     </div>
   );

@@ -1,9 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import { ImageLinkCard } from "../image-link-card";
+import { sectionAnimationConfig } from "@/lib/motion";
+import { motion } from "motion/react";
 
 export function ImageLinkCards({ cards, smallWrapper }: any) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-sm",
         smallWrapper && "wrapper--small",
@@ -16,6 +19,6 @@ export function ImageLinkCards({ cards, smallWrapper }: any) {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

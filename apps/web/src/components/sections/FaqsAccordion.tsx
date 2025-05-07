@@ -8,6 +8,8 @@ import {
 } from "../ui/accordion";
 import { twMerge } from "tailwind-merge";
 import { accordionColors } from "@/utils/utils";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export function FAQsAccordion({
   title,
@@ -15,7 +17,8 @@ export function FAQsAccordion({
   smallWrapper,
 }: FAQAccordionProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-sm",
         smallWrapper && "wrapper--small",
@@ -52,6 +55,6 @@ export function FAQsAccordion({
           );
         })}
       </Accordion>
-    </div>
+    </motion.div>
   );
 }

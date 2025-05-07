@@ -60,7 +60,7 @@ export default async function RootLayout({
           )}
           <FooterServer />
           <SanityLive />
-          <LoadInScreen />
+          {/* <LoadInScreen /> */}
         </Providers>
       </body>
     </html>

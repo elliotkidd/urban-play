@@ -6,6 +6,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Textarea } from "../ui/inputs/Textarea";
 import { useFormspark } from "@formspark/use-formspark";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 const INPUT_CLASSES = [
   "focus:bg-theme-blue ",
@@ -64,7 +66,10 @@ function Contact({ title, globalSettings }: ContactProps) {
 
   return (
     <FormProvider {...methods}>
-      <div className="wrapper grid grid-cols-1 gap-4 lg:grid-cols-3 py-fluid-xs">
+      <motion.div
+        {...sectionAnimationConfig}
+        className="wrapper grid grid-cols-1 gap-4 lg:grid-cols-3 py-fluid-xs"
+      >
         <div className="prose">
           <h2 className="h2 mb-fluid-lg">{title}</h2>
           <div className="space-y-fluid-sm">
@@ -161,7 +166,7 @@ function Contact({ title, globalSettings }: ContactProps) {
             </Button>
           </form>
         )}
-      </div>
+      </motion.div>
     </FormProvider>
   );
 }

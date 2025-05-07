@@ -19,7 +19,7 @@ async function ProjectsGrid({ projects }: { projects: TileType[] }) {
   if (!projects) return null;
 
   return (
-    <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
+    <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid">
       {projects.length > 0 &&
         projects.map((project, index) => (
           <li key={project._id} className={COL_SPANS[index]}>

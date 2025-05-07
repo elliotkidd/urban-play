@@ -17,6 +17,8 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { accordionColors } from "@/utils/utils";
+import { sectionAnimationConfig } from "@/lib/motion";
+import { motion } from "motion/react";
 
 function MissingBlock({
   block,
@@ -137,7 +139,8 @@ export default function TwoColumnContentSection({
   columnRatio,
 }: TwoColumnContentProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs grid gap-4",
         smallWrapper && "wrapper--small",
@@ -186,6 +189,6 @@ export default function TwoColumnContentSection({
             />
           );
         })}
-    </div>
+    </motion.div>
   );
 }

@@ -4,6 +4,7 @@ import SanityImage from "../sanity-image";
 import { useState, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useScroll } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
   const [activeStep, setActiveStep] = useState(0);
@@ -26,7 +27,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
   });
 
   return (
-    <div className="wrapper">
+    <motion.div {...sectionAnimationConfig} className="wrapper">
       {sectionHeader && <SectionHeader {...sectionHeader} />}
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
         <div ref={containerRef} className="space-y-fluid-sm">
@@ -75,7 +76,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default VerticalProcess;

@@ -264,10 +264,12 @@ const config: Config = {
               marginTop: "1.2rem",
               marginBottom: "1.2rem",
               lineHeight: "100%",
+              textTransform: "uppercase",
             },
             h3: {
               fontFamily: `${theme("fontFamily.heading").join(", ")}`,
               fontSize: "var(--text-xl)",
+              textTransform: "uppercase",
               fontWeight: 900,
               marginTop: "1.2rem",
               marginBottom: "1.2rem",
@@ -298,16 +300,16 @@ const config: Config = {
               lineHeight: "100%",
               letterSpacing: "0.05em",
             },
-            '[class~="lead"]': {
-              fontSize: "var(--text-lg)",
-              fontWeight: 700,
+            p: {
+              fontSize: "var(--text-base)",
+              fontWeight: 400,
               marginTop: "1rem",
               marginBottom: "1rem",
               lineHeight: "120%",
             },
-            p: {
-              fontSize: "var(--text-base)",
-              fontWeight: 400,
+            '[class~="lead"]': {
+              fontSize: "var(--text-lg)",
+              fontWeight: 700,
               marginTop: "1rem",
               marginBottom: "1rem",
               lineHeight: "120%",

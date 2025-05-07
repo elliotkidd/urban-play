@@ -12,7 +12,7 @@ export default function ProjectTile({
   imageAspectRatio?: "square" | "landscape" | "portrait" | "video";
   className?: string;
 }) {
-  const { image, solutions, title, description } = project;
+  const { image, solutions, title, description, slug } = project;
 
   var imageAspectRatioClass: string;
 
@@ -34,7 +34,7 @@ export default function ProjectTile({
       break;
   }
   return (
-    <Link href={processUrl(project)} className={twMerge("block", className)}>
+    <Link href={slug} className={twMerge("block", className)}>
       <div
         className={twMerge(
           "relative mb-2 rounded-xl overflow-hidden",

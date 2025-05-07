@@ -1,6 +1,5 @@
 import type { InferType, Selection, TypeFromSelection } from "groqd";
 import { q } from "groqd";
-import { COLOR_SCHEME_FRAGMENT } from "./fragments";
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +26,11 @@ export const EXTERNAL_LINK_FRAGMENT = {
 export const CUSTOM_URL_FRAGMENT = {
   _key: q.string().nullable(),
   _type: q.literal("link"),
-  linkType: q.literal("internal").or(q.literal("external")),
   openInNewTab: q.boolean(),
-  internal: q("internal").deref().grab(LINK_REFERENCE_FRAGMENT),
-  external: q.string().nullable(),
+  href: q.select({
+    "linkType == 'internal'": q("internal").deref().grabOne("slug.current"),
+    "linkType == 'external'": q("external"),
+  }),
 } satisfies Selection;
 
 export type CustomUrlType = TypeFromSelection<typeof CUSTOM_URL_FRAGMENT>;

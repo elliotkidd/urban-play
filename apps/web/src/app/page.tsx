@@ -4,9 +4,6 @@ import { getMetaData } from "@/lib/seo";
 import { homePageQuery } from "@/lib/sanity/queries/documents";
 
 async function fetchHomePageData() {
-  // Add a 5-second delay to test loading screen
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   return await sanityFetch({
     query: homePageQuery.query,
   });

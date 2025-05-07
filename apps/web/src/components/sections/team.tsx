@@ -1,10 +1,13 @@
 import { TeamProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
 import SanityImage from "../sanity-image";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 function Team({ title, teamMembers, smallWrapper }: TeamProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid prose",
         smallWrapper && "wrapper--small",
@@ -27,18 +30,18 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                   className="object-cover absolute inset-0 h-full w-full"
                 />
                 {startingYear && (
-                  <span className="absolute bg-nav-bar-background/20 backdrop-blur text-nav-bar-text top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
+                  <span className="absolute bg-nav-bar-background/20 backdrop-blur text-nav-bar-text top-3 left-3 text-xs font-bold p-4 rounded-xl">
                     Since {startingYear}
                   </span>
                 )}
               </div>
-              <h3 className="no-underline">{name}</h3>
+              <h3 className="no-underline !normal-case">{name}</h3>
               <p className="text-sm text-gray-500">{position}</p>
             </div>
           ),
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default Team;

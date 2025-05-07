@@ -8,6 +8,8 @@ import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 
 // Default theme
 import "@splidejs/react-splide/css";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export default function ImageMarqueeSection({
   sectionHeader,
@@ -15,7 +17,8 @@ export default function ImageMarqueeSection({
   smallWrapper,
 }: ImageMarqueeProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs",
         smallWrapper && "wrapper--small",
@@ -59,6 +62,6 @@ export default function ImageMarqueeSection({
             );
           })}
       </Splide>
-    </div>
+    </motion.div>
   );
 }

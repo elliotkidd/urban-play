@@ -8,6 +8,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { twMerge } from "tailwind-merge";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export default function TestimoniesSection({
   sectionHeader,
@@ -19,7 +21,8 @@ export default function TestimoniesSection({
   const swiperRef = useRef<SwiperType>();
 
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
         smallWrapper && "wrapper--small",
@@ -86,6 +89,6 @@ export default function TestimoniesSection({
           <ChevronRight className="w-6 h-6" />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

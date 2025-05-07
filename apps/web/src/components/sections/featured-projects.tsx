@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
 import { twMerge } from "tailwind-merge";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export default function FeaturedProjectsSection({
   sectionHeader,
@@ -11,7 +13,8 @@ export default function FeaturedProjectsSection({
   smallWrapper,
 }: FeaturedProjectsProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs space-y-fluid lg:space-y-fluid-lg overflow-hidden",
         smallWrapper && "wrapper--small",
@@ -50,6 +53,6 @@ export default function FeaturedProjectsSection({
           })}
         </Swiper>
       )}
-    </div>
+    </motion.div>
   );
 }

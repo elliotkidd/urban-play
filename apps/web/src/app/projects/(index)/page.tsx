@@ -9,13 +9,13 @@ async function fetchProjects() {
   });
 }
 
-export async function generateMetadata() {
-  const { data } = await fetchProjects();
-  if (!data) {
-    return getMetaData({});
-  }
-  return getMetaData(data);
-}
+// export async function generateMetadata() {
+//   const { data } = await fetchProjects();
+//   if (!data) {
+//     return getMetaData({});
+//   }
+//   return getMetaData(data);
+// }
 
 export default async function ProjectsPage() {
   const { data } = await fetchProjects();

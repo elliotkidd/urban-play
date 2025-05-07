@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PageBuilder } from "@/components/pagebuilder";
 import { client } from "@/lib/sanity/client";
 import { sanityFetch } from "@/lib/sanity/live";
-import { querySlugPageData, querySlugPagePaths } from "@/lib/sanity/query";
+import { querySlugPagePaths } from "@/lib/sanity/query";
 import { getMetaData } from "@/lib/seo";
 import { pageQuery } from "@/lib/sanity/queries/documents";
 

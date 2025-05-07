@@ -5,11 +5,20 @@ import { PageBuilder } from "@/components/pagebuilder";
 import { projectIndexPageQuery } from "@/lib/sanity/queries/documents";
 import { sanityFetch } from "@/lib/sanity/live";
 import Link from "next/link";
+import { getMetaData } from "@/lib/seo";
 
 async function fetchProjectsIndexPageData() {
   return await sanityFetch({
     query: projectIndexPageQuery.query,
   });
+}
+
+export async function generateMetadata() {
+  const { data } = await fetchProjectsIndexPageData();
+  if (!data) {
+    return getMetaData({});
+  }
+  return getMetaData(data);
 }
 
 export default async function ProjectsIndexLayout({
@@ -35,7 +44,7 @@ export default async function ProjectsIndexLayout({
       >
         <HeroBlock {...hero} />
       </section>
-      <section className="lg:min-h-p-section">
+      <section className="lg:min-h-p-section mb-fluid-lg">
         <div className="wrapper flex flex-col lg:flex-row gap-fluid-sm justify-between py-fluid-xs">
           <RichText richText={description} className="max-w-p" />
           <div className="flex gap-2 max-w-xl flex-wrap lg:justify-end">

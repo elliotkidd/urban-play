@@ -2,6 +2,8 @@ import { twMerge } from "tailwind-merge";
 import { RichText } from "../richtext";
 import SanityImage from "../sanity-image";
 import { ImageBannerProps } from "@/lib/sanity/queries/sections";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export function ImageBannerSection({
   title,
@@ -35,10 +37,13 @@ export function ImageBannerSection({
           </div>
         )}
         {!containImage && (title || richText) && (
-          <div className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid">
+          <motion.div
+            {...sectionAnimationConfig}
+            className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid"
+          >
             <h2 className="h3 no-underline normal-case text-lg">{title}</h2>
             <RichText richText={richText} />
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

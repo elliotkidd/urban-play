@@ -247,3 +247,9 @@ h6,
 *:nth-last-child(1) {
   margin-bottom: 0 !important;
 }
+
+.prose {
+  h3 {
+    @apply uppercase;
+  }
+}

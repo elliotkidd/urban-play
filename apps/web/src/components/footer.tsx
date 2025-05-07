@@ -3,7 +3,6 @@ import Link from "next/link";
 import { sanityFetch } from "@/lib/sanity/live";
 import FooterLogo from "./FooterLogo";
 import { footerQuery, FooterType } from "@/lib/sanity/queries/documents";
-import SanityLink from "./sanity-link";
 import { getColorSchemeStyle } from "@/utils/utils";
 import { PageBuilder } from "./pagebuilder";
 
@@ -53,8 +52,8 @@ function SocialLinks({ data }: SocialLinksProps) {
           className="hover:opacity-50 transition-opacity duration-500"
         >
           <Link
-            href={url ?? "#"}
-            target="_blank"
+            href={url?.href ?? "#"}
+            target={url?.openInNewTab ? "_blank" : "_self"}
             prefetch={false}
             rel="noopener noreferrer"
             aria-label={label}
@@ -85,16 +84,22 @@ function FooterSection({ data }: { data: FooterType }) {
                 column.links &&
                 column?.links?.length > 0 && (
                   <ul key={`column-${column?._key}-${index}`} className="">
-                    {column?.links?.map((link: any, index: number) => (
-                      <li
-                        key={`${link?._key}-${index}-column-${column?._key}`}
-                        className="opacity-40 hover:opacity-100 transition-opacity duration-500"
-                      >
-                        <SanityLink className="" url={link.url}>
-                          {link.name}
-                        </SanityLink>
-                      </li>
-                    ))}
+                    {column?.links?.map((link: any, index: number) => {
+                      return (
+                        <li
+                          key={`${link?._key}-${index}-column-${column?._key}`}
+                          className="opacity-40 hover:opacity-100 transition-opacity duration-500"
+                        >
+                          <Link
+                            className=""
+                            href={link?.href ?? "#"}
+                            target={link?.openInNewTab ? "_blank" : "_self"}
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 ),
             )}

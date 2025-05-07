@@ -24,7 +24,6 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 import { Logo } from "./logo";
 import { SanityButtons } from "./sanity-buttons";
 import { SanityIcon } from "./sanity-icon";
-import SanityLink from "./sanity-link";
 import { NavBarColumnType, NavBarLinkType } from "@/lib/sanity/queries/link";
 import { NavBarType } from "@/lib/sanity/queries/documents";
 import useStore from "@/store/header";
@@ -157,9 +156,13 @@ function MobileNavbar({
               if (column._type === "navbarLink") {
                 const { name, _key, url } = column as NavBarLinkType;
                 return (
-                  <SanityLink key={`column-link-${name}-${_key}`} url={url}>
+                  <Link
+                    key={`column-link-${name}-${_key}`}
+                    href={url?.href ?? "#"}
+                    target={url?.openInNewTab ? "_blank" : "_self"}
+                  >
                     {name}
-                  </SanityLink>
+                  </Link>
                 );
               }
               return (
@@ -200,7 +203,14 @@ function NavbarColumnLink({
 
   const { url, name } = column as NavBarLinkType;
 
-  return <SanityLink url={url}>{name}</SanityLink>;
+  return (
+    <Link
+      href={url?.href ?? "#"}
+      target={url?.openInNewTab ? "_blank" : "_self"}
+    >
+      {name}
+    </Link>
+  );
 }
 
 function NavbarColumn({

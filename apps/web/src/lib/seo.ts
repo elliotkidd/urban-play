@@ -45,27 +45,19 @@ export function getMetaData(data: any): Metadata {
   });
 
   return {
-    title: `${meta.title} | Roboto Studio Demo`,
+    title: `${meta.title} | Urban Play`,
     description: meta.description,
     metadataBase: new URL(baseUrl),
-    creator: "Roboto Studio Demo",
-    authors: [{ name: "Roboto" }],
+    creator: "Urban Play",
+    authors: [{ name: "Made By Verse" }],
     icons: {
       icon: `${baseUrl}/favicon.ico`,
     },
-    keywords: [
-      "roboto",
-      "studio",
-      "demo",
-      "sanity",
-      "next",
-      "react",
-      "template",
-    ],
+    keywords: ["urban play", "playground", "play", "playground equipment"],
     twitter: {
       card: "summary_large_image",
       images: [ogImage],
-      creator: "@studioroboto",
+      creator: "@urbanplay",
       title: meta.title,
       description: meta.description,
     },
@@ -74,7 +66,7 @@ export function getMetaData(data: any): Metadata {
     },
     openGraph: {
       type: "website",
-      countryName: "UK",
+      countryName: "AU",
       description: meta.description,
       title: meta.title,
       images: [

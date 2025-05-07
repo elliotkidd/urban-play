@@ -31,7 +31,6 @@ const imageLinkCard = defineField({
       title: "Link URL",
       type: "customUrl",
     }),
-    ...sectionSettings,
   ],
   preview: {
     select: {

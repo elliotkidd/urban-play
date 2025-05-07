@@ -7,6 +7,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import SanityImage from "../sanity-image";
 import { twMerge } from "tailwind-merge";
 import { AnimatePresence, motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 const imageVariants = {
   prev: {
@@ -98,7 +99,8 @@ export default function SolutionsCarouselSection({
   };
 
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs",
         smallWrapper && "wrapper--small",
@@ -235,6 +237,6 @@ export default function SolutionsCarouselSection({
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

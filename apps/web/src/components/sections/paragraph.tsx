@@ -2,6 +2,9 @@ import { twMerge } from "tailwind-merge";
 import { RichText } from "../richtext";
 import SectionHeader from "../section-header";
 import { ParagraphProps } from "@/lib/sanity/queries/sections";
+import { motion, useInView } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
+import { useRef } from "react";
 
 export default function ParagraphSection({
   richText,
@@ -10,7 +13,8 @@ export default function ParagraphSection({
   smallWrapper,
 }: ParagraphProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs min-h-p-section",
         smallWrapper && "wrapper--small",
@@ -49,6 +53,6 @@ export default function ParagraphSection({
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

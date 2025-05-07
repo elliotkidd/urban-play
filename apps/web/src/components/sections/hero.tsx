@@ -1,15 +1,29 @@
-import { motion } from "motion/react";
 import { RichText } from "../richtext";
 import SanityImage from "../sanity-image";
 import { HeroProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
 
-export function HeroBlock({ title, image, richText }: HeroProps) {
+export function HeroBlock({
+  title,
+  image,
+  richText,
+  video,
+  mediaType,
+}: HeroProps) {
   return (
     <div id="hero" className="h-screen relative">
-      {image && (
+      {mediaType === "image" && image && (
         <SanityImage
           src={image}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+      {mediaType === "video" && video && (
+        <video
+          src={video}
+          autoPlay
+          muted
+          loop
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}

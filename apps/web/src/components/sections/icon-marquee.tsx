@@ -3,6 +3,8 @@ import SanityImage from "../sanity-image";
 import SectionHeader from "../section-header";
 import { IconMarqueeProps } from "@/lib/sanity/queries/sections";
 import Marquee from "react-fast-marquee";
+import { motion } from "motion/react";
+import { sectionAnimationConfig } from "@/lib/motion";
 
 export default function IconMarqueeSection({
   sectionHeader,
@@ -10,7 +12,8 @@ export default function IconMarqueeSection({
   smallWrapper,
 }: IconMarqueeProps) {
   return (
-    <div
+    <motion.div
+      {...sectionAnimationConfig}
       className={twMerge(
         "wrapper py-fluid-xs",
         smallWrapper && "wrapper--small",
@@ -36,6 +39,6 @@ export default function IconMarqueeSection({
             );
           })}
       </Marquee>
-    </div>
+    </motion.div>
   );
 }
