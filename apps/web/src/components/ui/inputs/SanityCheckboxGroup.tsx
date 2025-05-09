@@ -3,6 +3,11 @@ import { cn } from "@/lib/utils";
 import { CheckboxGroupProps } from "@/lib/sanity/queries/form";
 import { Label } from "@workspace/packages/ui/src/components/label";
 import { Checkbox } from "@workspace/packages/ui/src/components/checkbox";
+import {
+  FormField,
+  FormItem,
+} from "@workspace/packages/ui/src/components/form";
+import { useFormContext } from "react-hook-form";
 
 const CHECKBOX_CLASSES = [
   "data-[state=checked]:bg-theme-blue border-theme-blue",
@@ -17,29 +22,40 @@ export default function SanityCheckboxGroup({
   orientation,
   className,
 }: CheckboxGroupProps & { className?: string }) {
+  const { control } = useFormContext();
+
   return (
     <div className={cn("space-y-2", className)}>
       <Label>{label}</Label>
       <div
         className={cn(
-          "flex flex-col gap-2",
+          "flex flex-col gap-4",
           orientation === "horizontal" && "flex-row",
         )}
       >
         {options.map((option, index: number) => (
-          <div
+          <FormField
             key={option.value}
-            className={cn(
-              "flex items-center gap-2",
-              orientation === "horizontal" && "flex-row",
+            control={control}
+            name={option.value}
+            render={({ field }) => (
+              <FormItem
+                className={cn(
+                  "flex items-center gap-2 space-y-0",
+                  orientation === "horizontal" && "flex-row",
+                )}
+              >
+                <Checkbox
+                  {...field}
+                  id={option.value}
+                  className={CHECKBOX_CLASSES[index % CHECKBOX_CLASSES.length]}
+                />
+                <Label htmlFor={option.value} className="">
+                  {option.label}
+                </Label>
+              </FormItem>
             )}
-          >
-            <Checkbox
-              id={option.value}
-              className={CHECKBOX_CLASSES[index % CHECKBOX_CLASSES.length]}
-            />
-            <Label htmlFor={option.value}>{option.label}</Label>
-          </div>
+          />
         ))}
       </div>
     </div>

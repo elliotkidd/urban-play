@@ -1,3 +1,5 @@
+"use client";
+
 import { TileType } from "@/lib/sanity/queries/fragments";
 import Link from "./link";
 import SanityImage from "./sanity-image";

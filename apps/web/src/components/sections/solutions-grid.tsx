@@ -44,7 +44,7 @@ function SolutionsGridSection({
                     viewport={{
                       margin: "0px 0px 0px 0px",
                     }}
-                    variants={titleVariants}
+                    variants={titleVariants()}
                     className="text-3xl uppercase"
                   >
                     {solution.title}

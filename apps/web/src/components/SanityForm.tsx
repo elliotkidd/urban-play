@@ -171,9 +171,8 @@ export default function SanityForm({
   const formSchema = z.object(getFormSchema(form));
   const defaultValues = getDefaultValues(form);
 
-  const formContext = useForm<z.infer<typeof formSchema>>({
+  const formContext = useForm({
     defaultValues,
-    resolver: zodResolver(formSchema),
   });
 
   const { handleSubmit, formState, control } = formContext;

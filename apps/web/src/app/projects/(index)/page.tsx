@@ -1,6 +1,5 @@
 import { sanityFetch } from "@/lib/sanity/live";
 import { projectsQuery } from "@/lib/sanity/queries/documents";
-import { getMetaData } from "@/lib/seo";
 import ProjectsGrid from "../components/ProjectsGrid";
 
 async function fetchProjects() {
