@@ -111,19 +111,14 @@ export default function SanityForm({
   form: FormProps;
   className?: string;
 }) {
-  const formSchema = z.object(getFormSchema(form));
   const defaultValues = getDefaultValues(form);
-  console.log(defaultValues);
 
   const formContext = useForm({
     defaultValues,
   });
 
   const { handleSubmit, formState, control } = formContext;
-
   const { dirtyFields } = formState;
-
-  console.log(dirtyFields);
 
   const [submit, isSubmitting] = useFormspark({
     formId: FORM_SPARK_ID,

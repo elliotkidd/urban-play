@@ -1,5 +1,5 @@
 import { sanityFetch } from "@/lib/sanity/live";
-import { navBarQuery, NavBarType } from "@/lib/sanity/queries/documents";
+import { navBarQuery } from "@/lib/sanity/queries/documents";
 import { NavbarClient } from "./navbar-client";
 
 export async function NavbarServer() {

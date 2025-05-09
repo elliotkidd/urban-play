@@ -5,7 +5,11 @@ import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
-import { sectionAnimationConfig } from "@/lib/motion";
+import {
+  opacityStaggerChildrenConfig,
+  sectionAnimationConfig,
+  STAGGER_DELAY,
+} from "@/lib/motion";
 
 export default function FeaturedProjectsSection({
   sectionHeader,
@@ -21,18 +25,28 @@ export default function FeaturedProjectsSection({
       )}
     >
       <SectionHeader {...sectionHeader} />
-      <div className="grid grid-cols-1 gap-x-4 gap-y-fluid lg:grid-cols-3">
+      <motion.ul
+        {...opacityStaggerChildrenConfig}
+        className="grid grid-cols-1 gap-x-4 gap-y-fluid lg:grid-cols-3"
+      >
         {projects[0] && (
-          <ProjectTile project={projects[0]} imageAspectRatio="square" />
+          <ProjectTile
+            project={projects[0]}
+            imageAspectRatio="square"
+            index={0}
+            staggerDelay={STAGGER_DELAY}
+          />
         )}
         {projects[1] && (
           <ProjectTile
             project={projects[1]}
             imageAspectRatio="landscape"
             className="lg:col-span-2"
+            index={1}
+            staggerDelay={STAGGER_DELAY}
           />
         )}
-      </div>
+      </motion.ul>
       {projects && projects.length > 2 && (
         <Swiper
           slidesPerView={1.2}
@@ -47,7 +61,11 @@ export default function FeaturedProjectsSection({
           {projects.slice(2).map((project: TileType, i) => {
             return (
               <SwiperSlide key={project._id + i}>
-                <ProjectTile project={project} />
+                <ProjectTile
+                  project={project}
+                  index={i + 2}
+                  staggerDelay={STAGGER_DELAY}
+                />
               </SwiperSlide>
             );
           })}

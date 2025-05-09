@@ -1,5 +1,10 @@
+"use client";
+
 import ProjectTile from "@/components/project-tile";
+import { opacityStaggerChildrenConfig, STAGGER_DELAY } from "@/lib/motion";
 import { TileType } from "@/lib/sanity/queries/fragments";
+import { motion } from "motion/react";
+import dynamic from "next/dynamic";
 
 const COL_SPANS = [
   "lg:col-span-4",
@@ -15,27 +20,35 @@ const COL_SPANS = [
   "lg:col-span-3",
 ];
 
-async function ProjectsGrid({ projects }: { projects: TileType[] }) {
+function ProjectsGridClient({ projects }: { projects: TileType[] }) {
   if (!projects) return null;
 
   return (
-    <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid">
+    <motion.ul
+      {...opacityStaggerChildrenConfig}
+      className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid"
+    >
       {projects.length > 0 &&
         projects.map((project, index) => (
-          <li key={project._id} className={COL_SPANS[index]}>
-            <ProjectTile
-              project={project}
-              imageAspectRatio={
-                index % 11 === 0
-                  ? "square"
-                  : index % 11 === 1
-                    ? "landscape"
-                    : "portrait"
-              }
-            />
-          </li>
+          <ProjectTile
+            key={`${project._id}-${index}-project-tile`}
+            project={project}
+            className={COL_SPANS[index]}
+            index={index}
+            staggerDelay={STAGGER_DELAY}
+            imageAspectRatio={
+              index % 11 === 0
+                ? "square"
+                : index % 11 === 1
+                  ? "landscape"
+                  : "portrait"
+            }
+          />
         ))}
-    </ul>
+    </motion.ul>
   );
 }
-export default ProjectsGrid;
+export const ProjectsGrid = dynamic(() => Promise.resolve(ProjectsGridClient), {
+  ssr: false,
+  loading: () => <div>Loading...</div>,
+});

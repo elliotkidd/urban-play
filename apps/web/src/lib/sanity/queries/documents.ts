@@ -91,6 +91,22 @@ export const projectPageQuery = q("*")
 
 export type ProjectPage = InferType<typeof projectPageQuery>;
 
+const FOOTER_LINK_FRAGMENT = {
+  _key: q.string(),
+  name: q.string(),
+  url: q("url").grab(CUSTOM_URL_FRAGMENT),
+};
+
+export type FooterLinkProps = InferType<typeof FOOTER_LINK_FRAGMENT>;
+
+const FOOTER_COLUMN_FRAGMENT = {
+  _key: q.string(),
+  title: q.string(),
+  links: q("links[]", { isArray: true }).grab(FOOTER_LINK_FRAGMENT),
+};
+
+export type FooterColumnProps = InferType<typeof FOOTER_COLUMN_FRAGMENT>;
+
 export const footerQuery = q("*")
   .filterByType("footer")
   .slice(0)
@@ -100,15 +116,7 @@ export const footerQuery = q("*")
     subtitle: q.string(),
     columns: q("columns[]", { isArray: true })
       .filterByType("footerColumn")
-      .grab({
-        _key: q.string(),
-        title: q.string(),
-        links: q("links[]", { isArray: true }).grab({
-          _key: q.string(),
-          name: q.string(),
-          url: q("url").grab(CUSTOM_URL_FRAGMENT),
-        }),
-      }),
+      .grab(FOOTER_COLUMN_FRAGMENT),
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
     pageBuilder: SECTIONS_FRAGMENT,
     settings: q("*")

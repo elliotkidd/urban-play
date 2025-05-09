@@ -51,6 +51,7 @@ export default function SanityCheckboxGroup({
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    required={option.required}
                     className={
                       CHECKBOX_CLASSES[index % CHECKBOX_CLASSES.length]
                     }

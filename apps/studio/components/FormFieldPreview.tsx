@@ -21,17 +21,9 @@ type FormPreviewProps = PreviewProps & {
 };
 
 export function FormFieldWrapper(props: FormPreviewProps) {
-  const { _type, title, subtitle, columns, children } = props;
+  const { _type, title, subtitle, children } = props;
   return (
-    <Card
-      padding={3}
-      radius={2}
-      shadow={1}
-      style={{
-        maxWidth: "400px",
-        gridColumn: columns === 2 ? "span 2" : "auto",
-      }}
-    >
+    <Card padding={3} radius={2} shadow={1}>
       <Stack space={3}>
         <Text weight="semibold" size={1}>
           {String(title || "Untitled")}

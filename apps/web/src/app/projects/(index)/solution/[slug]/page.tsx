@@ -1,5 +1,5 @@
 import { sanityFetch } from "@/lib/sanity/live";
-import ProjectsGrid from "../../../components/ProjectsGrid";
+import { ProjectsGrid } from "../../../components/ProjectsGrid";
 import { projectsQueryBySolution } from "@/lib/sanity/queries/documents";
 
 async function fetchProjects(slug: string) {
