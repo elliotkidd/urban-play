@@ -57,7 +57,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
                   viewport={{
                     margin: "100px 0px 100px 0px",
                   }}
-                  variants={descriptionVariants}
+                  variants={descriptionVariants()}
                   className="max-w-p text-balance"
                 >
                   {step.description}

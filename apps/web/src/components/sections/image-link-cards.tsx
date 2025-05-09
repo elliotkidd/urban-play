@@ -1,6 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import { ImageLinkCard } from "../image-link-card";
-import { sectionAnimationConfig } from "@/lib/motion";
+import {
+  opacityStaggerChildrenConfig,
+  sectionAnimationConfig,
+  STAGGER_DELAY,
+} from "@/lib/motion";
 import { motion } from "motion/react";
 
 export function ImageLinkCards({ cards, smallWrapper }: any) {
@@ -13,11 +17,20 @@ export function ImageLinkCards({ cards, smallWrapper }: any) {
       )}
     >
       {Array.isArray(cards) && cards.length > 0 && (
-        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
-          {cards?.map((card) => (
-            <ImageLinkCard key={card._key} card={card} className={twMerge()} />
+        <motion.div
+          className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2"
+          {...opacityStaggerChildrenConfig}
+        >
+          {cards?.map((card, index) => (
+            <ImageLinkCard
+              key={card._key}
+              card={card}
+              className={twMerge()}
+              index={index}
+              staggerDelay={STAGGER_DELAY}
+            />
           ))}
-        </div>
+        </motion.div>
       )}
     </motion.div>
   );

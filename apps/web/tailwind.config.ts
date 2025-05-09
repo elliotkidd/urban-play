@@ -20,6 +20,7 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "../../packages/ui/src/components/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
     {

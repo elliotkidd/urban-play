@@ -7,6 +7,7 @@ import {
   TESTIMONY_FRAGMENT,
   TILE_FRAGMENT,
 } from "./fragments";
+import { FORM_FRAGMENT } from "./form";
 import {
   BUTTON_FRAGMENT,
   CUSTOM_URL_FRAGMENT,
@@ -384,6 +385,7 @@ const CONTACT_FRAGMENT = {
   _type: q.literal("contact"),
   _key: q.string(),
   title: q.string(),
+  form: FORM_FRAGMENT,
   globalSettings: q("*")
     .filterByType("settings")
     .slice(0)

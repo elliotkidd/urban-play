@@ -58,7 +58,7 @@ export default function ProjectTile({
         viewport={{
           margin: "-100px 0px -100px 0px",
         }}
-        variants={titleVariants}
+        variants={titleVariants()}
         className="text-lg underline font-bold mb-4"
       >
         {title}
@@ -69,7 +69,7 @@ export default function ProjectTile({
         viewport={{
           margin: "-100px 0px -100px 0px",
         }}
-        variants={descriptionVariants}
+        variants={descriptionVariants()}
         className="text-sm line-clamp-2 max-w-[390px]"
       >
         {description}
