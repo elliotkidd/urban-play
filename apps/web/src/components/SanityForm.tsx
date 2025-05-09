@@ -7,16 +7,9 @@ import {
   FormItem,
   FormField,
 } from "@workspace/packages/ui/src/components/form";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Input } from "@workspace/packages/ui/src/components/input";
 import { Textarea } from "@workspace/packages/ui/src/components/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@workspace/ui/components/select";
 import { cn } from "@/lib/utils";
 import { z } from "groqd";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +23,8 @@ import type {
   SelectProps,
 } from "@/lib/sanity/queries/form";
 import { useFormspark } from "@formspark/use-formspark";
+import SanitySelectFormField from "./ui/inputs/SanitySelectFormField";
+import { Button } from "@workspace/packages/ui/src/components/button";
 
 const FORM_SPARK_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
 
@@ -50,13 +45,6 @@ const DIRTY_INPUT_CLASSES = [
   "bg-theme-green",
   "bg-theme-yellow",
   "bg-theme-red",
-];
-
-const SELECT_ITEM_CLASSES = [
-  "hover:bg-theme-blue",
-  "hover:bg-theme-green",
-  "hover:bg-theme-yellow",
-  "hover:bg-theme-red",
 ];
 
 const getFormSchema = (form: FormProps) => {
@@ -103,7 +91,7 @@ const getDefaultValues = (form: FormProps) => {
     (acc, field) => {
       if (field._type === "checkboxGroup" && "options" in field) {
         field.options.forEach((option) => {
-          acc[`${field.name}.${option.value}`] = false;
+          acc[option.value] = false;
         });
       } else if (field._type === "radioGroup") {
         acc[field.name] = "";
@@ -116,51 +104,6 @@ const getDefaultValues = (form: FormProps) => {
   );
 };
 
-function SanitySelectFormField({
-  options,
-  name,
-  label,
-  placeholder,
-  className,
-}: SelectProps & {
-  className?: string;
-}) {
-  const { control } = useFormContext();
-  return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger className={className}>
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {options &&
-                options.map((option, i) => (
-                  <SelectItem
-                    key={option.value}
-                    value={option.value}
-                    className={cn(
-                      SELECT_ITEM_CLASSES[i % SELECT_ITEM_CLASSES.length],
-                      "hover:text-white",
-                    )}
-                  >
-                    {option.label}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-        </FormItem>
-      )}
-    />
-  );
-}
-
 export default function SanityForm({
   form,
   className,
@@ -170,6 +113,7 @@ export default function SanityForm({
 }) {
   const formSchema = z.object(getFormSchema(form));
   const defaultValues = getDefaultValues(form);
+  console.log(defaultValues);
 
   const formContext = useForm({
     defaultValues,
@@ -280,6 +224,9 @@ export default function SanityForm({
             }
           },
         )}
+        <Button type="submit" disabled={isSubmitting} className="lg:col-span-2">
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );
