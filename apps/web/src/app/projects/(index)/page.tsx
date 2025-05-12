@@ -3,6 +3,7 @@
 import { sanityFetch } from "@/lib/sanity/live";
 import { projectsQuery } from "@/lib/sanity/queries/documents";
 import { ProjectsGrid } from "../components/ProjectsGrid";
+import { HeroBlock } from "@/components/sections/hero";
 
 async function fetchProjects() {
   return await sanityFetch({

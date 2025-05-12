@@ -40,6 +40,8 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { ColorSchemeFragment } from "@/lib/sanity/queries/fragments";
+import { useTransitionRouter } from "next-view-transitions";
+import PageAnimation from "./PageAnimation";
 
 interface MenuItem {
   title: string;
@@ -61,7 +63,7 @@ function MenuItemLink({
         "flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-accent hover:text-accent-foreground items-center focus:bg-accent focus:text-accent-foreground",
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
-      onClick={() => setIsOpen?.(false)}
+      scroll={false}
       href={item.href ?? "/"}
     >
       {item.icon}
@@ -202,10 +204,16 @@ function NavbarColumnLink({
   if (column._type !== "navbarLink") return null;
 
   const { url, name } = column as NavBarLinkType;
-
+  const router = useTransitionRouter();
   return (
     <Link
       href={url?.href ?? "#"}
+      onClick={(e) => {
+        e.preventDefault();
+        router.push((url?.href as string) ?? "/", {
+          onTransitionReady: PageAnimation,
+        });
+      }}
       target={url?.openInNewTab ? "_blank" : "_self"}
     >
       {name}

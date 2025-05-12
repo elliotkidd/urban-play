@@ -23,6 +23,7 @@ function SolutionsGridSection({
           <Fragment key={solution._id}>
             <motion.div
               {...sectionAnimationConfig}
+              id={solution.slug?.slice(1)}
               className={twMerge(
                 i % 2 === 0 && "lg:col-start-2",
                 "lg:col-span-2 grid grid-cols-subgrid gap-4",
@@ -38,27 +39,9 @@ function SolutionsGridSection({
               <div className="flex flex-col justify-between gap-8">
                 <div />
                 <div className="prose">
-                  <motion.h3
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{
-                      margin: "0px 0px 0px 0px",
-                    }}
-                    variants={titleVariants()}
-                    className="text-3xl uppercase"
-                  >
-                    {solution.title}
-                  </motion.h3>
+                  <h3 className="text-3xl uppercase">{solution.title}</h3>
                   <motion.p
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{
-                      margin: "0px 0px 0px 0px",
-                    }}
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: { opacity: 0.4, transition: { duration: 0.5 } },
-                    }}
+                    variants={titleVariants()}
                     className="max-w-p text-balance"
                   >
                     {solution.description}

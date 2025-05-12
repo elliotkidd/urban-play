@@ -46,8 +46,8 @@ export const HERO_FRAGMENT = {
   richText: q(`richText[]`, { isArray: true })
     .select(RICHTEXT_BLOCKS)
     .nullable(),
-  image: q("image").grab(IMAGE_FRAGMENT),
-  video: q("video.asset").deref().grabOne("url", q.string()),
+  image: q("image").grab(IMAGE_FRAGMENT).nullable(),
+  video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
   mediaType: q.literal("image").or(q.literal("video")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;

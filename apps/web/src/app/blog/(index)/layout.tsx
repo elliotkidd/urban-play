@@ -39,7 +39,10 @@ async function BlogIndexLayout({ children }: { children: React.ReactNode }) {
   } = data ?? {};
 
   return (
-    <main className="" style={getColorSchemeStyle(colorScheme)}>
+    <main
+      className="bg-background text-text"
+      style={getColorSchemeStyle(colorScheme)}
+    >
       {featuredBlog && (
         <section className="mb-fluid-lg">
           {featuredBlog.image && (

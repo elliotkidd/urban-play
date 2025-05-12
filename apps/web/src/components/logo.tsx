@@ -1,8 +1,21 @@
-import Link from "next/link";
+"use client";
 
+import { useTransitionRouter } from "next-view-transitions";
+import Link from "next/link";
+import PageAnimation from "./PageAnimation";
 export function Logo() {
+  const router = useTransitionRouter();
   return (
-    <Link href="/" className="">
+    <Link
+      href="/"
+      className=""
+      onClick={(e) => {
+        e.preventDefault();
+        router.push("/", {
+          onTransitionReady: PageAnimation,
+        });
+      }}
+    >
       <svg
         width="31"
         height="21"

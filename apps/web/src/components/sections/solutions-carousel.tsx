@@ -6,18 +6,19 @@ import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 
 import SanityImage from "../sanity-image";
 import { twMerge } from "tailwind-merge";
-import { AnimatePresence, motion } from "motion/react";
-import { sectionAnimationConfig } from "@/lib/motion";
+import { AnimatePresence, easeOut, motion } from "motion/react";
+import { customEase, sectionAnimationConfig } from "@/lib/motion";
+import Link from "../link";
 
 const imageVariants = {
   prev: {
     initial: { x: "-100%" },
-    animate: { x: "0%" },
+    animate: { x: "0%", transition: { duration: 1, ease: "easeInOut" } },
     exit: { opacity: 0 },
   },
   next: {
     initial: { x: "100%" },
-    animate: { x: "0%" },
+    animate: { x: "0%", transition: { duration: 1, ease: "easeInOut" } },
     exit: { opacity: 0 },
   },
 };
@@ -110,18 +111,29 @@ export default function SolutionsCarouselSection({
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 items-stretch">
         <div className="flex flex-col w-full justify-between">
           <div className="relative" ref={descriptionRef}>
-            {solutions.map(({ _id, title, description }, index) => (
-              <div
-                key={_id}
-                className={twMerge(
-                  "bg-background absolute transition-opacity duration-1000",
-                  step === index ? "opacity-100" : "opacity-0",
-                )}
-              >
-                <h3 className="h3">{title}</h3>
-                <p className="max-w-p text-balance">{description}</p>
-              </div>
-            ))}
+            <AnimatePresence mode="wait">
+              {solutions.map(
+                ({ _id, title, description, slug }, index) =>
+                  index === step && (
+                    <motion.div
+                      key={_id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1 }}
+                      className={twMerge(
+                        "bg-background absolute transition-opacity duration-1000",
+                        step === index ? "opacity-100" : "opacity-0",
+                      )}
+                    >
+                      <Link href={`/what-we-do#${slug.slice(1)}`}>
+                        <h3 className="h3 underline">{title}</h3>
+                      </Link>
+                      <p className="max-w-p text-balance">{description}</p>
+                    </motion.div>
+                  ),
+              )}
+            </AnimatePresence>
           </div>
           <div className="hidden lg:flex flex-col w-full gap-2 items-start">
             <div className="w-48 flex justify-between items-center">

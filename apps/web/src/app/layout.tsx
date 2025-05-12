@@ -14,7 +14,7 @@ import { fonts } from "./fonts";
 import { NavbarServer } from "@/components/navbar";
 import { NavbarSkeletonResponsive } from "@/components/navbar-client";
 import { Suspense } from "react";
-import LoadInScreen from "@/components/LoadInScreen";
+import { ViewTransitions } from "next-view-transitions";
 
 export default async function RootLayout({
   children,
@@ -24,45 +24,47 @@ export default async function RootLayout({
   preconnect("https://cdn.sanity.io");
   prefetchDNS("https://cdn.sanity.io");
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fonts} font-body bg-background text-text transition-colors duration-500`}
-      >
-        <Lenis root />
-        <Providers>
-          <Suspense fallback={<NavbarSkeletonResponsive />}>
-            <NavbarServer />
-          </Suspense>
-          {(await draftMode()).isEnabled ? (
-            <>
-              {children}
-              <VisualEditing
-                refresh={async (payload) => {
-                  "use server";
-                  if (payload.source === "manual") {
-                    revalidatePath("/", "layout");
-                    return;
-                  }
-                  const id = payload?.document?._id?.startsWith("drafts.")
-                    ? payload?.document?._id.slice(7)
-                    : payload?.document?._id;
-                  const slug = payload?.document?.slug?.current;
-                  const type = payload?.document?._type;
-                  for (const tag of [slug, id, type]) {
-                    if (tag) revalidateTag(tag);
-                  }
-                }}
-              />
-              <PreviewBar />
-            </>
-          ) : (
-            children
-          )}
-          <FooterServer />
-          <SanityLive />
-          {/* <LoadInScreen /> */}
-        </Providers>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${fonts} font-body bg-black text-text transition-colors duration-500`}
+        >
+          <Lenis root />
+          <Providers>
+            <Suspense fallback={<NavbarSkeletonResponsive />}>
+              <NavbarServer />
+            </Suspense>
+            {(await draftMode()).isEnabled ? (
+              <>
+                {children}
+                <VisualEditing
+                  refresh={async (payload) => {
+                    "use server";
+                    if (payload.source === "manual") {
+                      revalidatePath("/", "layout");
+                      return;
+                    }
+                    const id = payload?.document?._id?.startsWith("drafts.")
+                      ? payload?.document?._id.slice(7)
+                      : payload?.document?._id;
+                    const slug = payload?.document?.slug?.current;
+                    const type = payload?.document?._type;
+                    for (const tag of [slug, id, type]) {
+                      if (tag) revalidateTag(tag);
+                    }
+                  }}
+                />
+                <PreviewBar />
+              </>
+            ) : (
+              children
+            )}
+            <FooterServer />
+            <SanityLive />
+            {/* <LoadInScreen /> */}
+          </Providers>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

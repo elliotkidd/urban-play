@@ -52,11 +52,6 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
                   {step.heading}
                 </h3>
                 <motion.p
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{
-                    margin: "100px 0px 100px 0px",
-                  }}
                   variants={descriptionVariants()}
                   className="max-w-p text-balance"
                 >
@@ -67,28 +62,30 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
           ))}
         </div>
         <div className="items-start justify-items-end hidden lg:grid">
-          <div className="sticky top-16 max-w-xl aspect-portrait rounded-lg overflow-hidden w-full">
-            <AnimatePresence>
-              {steps.map(
-                (step, i) =>
-                  i === activeStep && (
-                    <motion.div
-                      key={step._key}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-full h-full absolute inset-0"
-                    >
-                      <SanityImage
-                        src={step.image}
-                        alt={step.heading}
-                        className="object-cover w-full h-full inset-0"
-                      />
-                    </motion.div>
-                  ),
-              )}
-            </AnimatePresence>
+          <div className="sticky top-0 flex w-full justify-end items-center h-screen">
+            <div className="aspect-portrait max-w-xl w-full relative rounded-lg overflow-hidden">
+              <AnimatePresence>
+                {steps.map(
+                  (step, i) =>
+                    i === activeStep && (
+                      <motion.div
+                        key={step._key}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-full h-full absolute inset-0"
+                      >
+                        <SanityImage
+                          src={step.image}
+                          alt={step.heading}
+                          className="object-cover w-full h-full inset-0"
+                        />
+                      </motion.div>
+                    ),
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
