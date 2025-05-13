@@ -60,7 +60,8 @@ function SectionWrapper({
         "relative bg-background text-text",
         !removeMarginTop && "mt-fluid",
         !removeMarginBottom && "mb-fluid",
-        type === "cta" && "h-screen flex items-center",
+        (type === "cta" || type === "pageHeader") &&
+          "h-screen flex items-center",
         (type === "iconMarquee" || type === "imageMarquee") &&
           "overflow-hidden",
         hideOnPath && "hidden",

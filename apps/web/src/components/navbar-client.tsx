@@ -279,6 +279,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
           <SanityButtons
             buttons={buttons}
             className="flex items-center gap-4"
+            buttonClassName="btn--header"
           />
         </div>
       )}

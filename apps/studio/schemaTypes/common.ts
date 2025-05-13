@@ -37,18 +37,17 @@ export const pageBuilderField = defineField({
   type: "pageBuilder",
 });
 
+export const titleField = defineField({
+  name: "title",
+  type: "string",
+  title: "Title",
+});
+
 export const sectionHeaderField = defineField({
   name: "sectionHeader",
   type: "object",
   group: GROUP.MAIN_CONTENT,
-  fields: [
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Title",
-    }),
-    buttonsField,
-  ],
+  fields: [titleField, buttonsField],
 });
 
 export const iconField = defineField({

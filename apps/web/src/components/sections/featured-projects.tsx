@@ -65,6 +65,7 @@ export default function FeaturedProjectsSection({
                   project={project}
                   index={i + 2}
                   staggerDelay={STAGGER_DELAY}
+                  className="list-none"
                 />
               </SwiperSlide>
             );

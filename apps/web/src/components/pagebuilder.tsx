@@ -29,6 +29,7 @@ import SectionWrapper from "./sections/SectionWrapper";
 import SocialMedia from "./sections/SocialMedia";
 import Contact from "./sections/Contact";
 import VideoSection from "./sections/Video";
+import PageHeader from "./sections/PageHeader";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
@@ -53,6 +54,7 @@ const SECTION_COMPONENTS: Record<string, FC<any>> = {
   socialMedia: SocialMedia,
   contact: Contact,
   video: VideoSection,
+  pageHeader: PageHeader,
 } as const;
 
 type SectionType = keyof typeof SECTION_COMPONENTS;

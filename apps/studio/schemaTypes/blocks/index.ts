@@ -20,6 +20,7 @@ import { quote } from "./quote";
 import { socialMedia } from "./socialMedia";
 import { contact } from "./contact";
 import { video } from "./video";
+import { pageHeader } from "./pageHeader";
 
 export const pageBuilderBlocks = [
   hero,
@@ -44,4 +45,5 @@ export const pageBuilderBlocks = [
   socialMedia,
   contact,
   video,
+  pageHeader,
 ];

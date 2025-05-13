@@ -12,7 +12,11 @@ type SanityButtonsProps = {
 
 type SanityButtonProps = TypeFromSelection<typeof BUTTON_FRAGMENT>;
 
-export function SanityButtons({ buttons, className }: SanityButtonsProps) {
+export function SanityButtons({
+  buttons,
+  className,
+  buttonClassName,
+}: SanityButtonsProps) {
   if (!buttons?.length) return null;
 
   return (
@@ -23,7 +27,7 @@ export function SanityButtons({ buttons, className }: SanityButtonsProps) {
           href={url?.href ?? "#"}
           target={url?.openInNewTab ? "_blank" : "_self"}
         >
-          <Button as="span" variant={variant}>
+          <Button as="span" variant={variant} className={buttonClassName}>
             {text}
           </Button>
         </Link>

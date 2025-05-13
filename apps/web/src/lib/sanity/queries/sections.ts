@@ -54,10 +54,23 @@ export const HERO_FRAGMENT = {
 
 export type HeroProps = TypeFromSelection<typeof HERO_FRAGMENT>;
 
+const PAGE_HEADER_FRAGMENT = {
+  _type: q.literal("pageHeader"),
+  title: q.string(),
+  richText: q(`richText[]`, { isArray: true })
+    .select(RICHTEXT_BLOCKS)
+    .nullable(),
+  image: q("image").grab(IMAGE_FRAGMENT).nullable(),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type PageHeaderProps = TypeFromSelection<typeof PAGE_HEADER_FRAGMENT>;
+
 const PARAGRAPH_FRAGMENT = {
   _type: q.literal("paragraph"),
   _key: q.string(),
-  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  topText: q(`topText[]`, { isArray: true }).select(RICHTEXT_BLOCKS).nullable(),
+  buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
   annotations: q(`annotations[]`, { isArray: true })
     .grab({
       top: q.string(),
@@ -68,6 +81,7 @@ const PARAGRAPH_FRAGMENT = {
   richText: q(`richText[]`, { isArray: true })
     .select(RICHTEXT_BLOCKS)
     .nullable(),
+  largeSpacing: q.boolean(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
@@ -443,6 +457,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'socialMedia'": SOCIAL_MEDIA_FRAGMENT,
   "_type == 'contact'": CONTACT_FRAGMENT,
   "_type == 'video'": VIDEO_FRAGMENT,
+  "_type == 'pageHeader'": PAGE_HEADER_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

@@ -4,8 +4,8 @@ import { defineField, defineType } from "sanity";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
   annotationField,
+  buttonsField,
   richTextField,
-  sectionHeaderField,
   sectionSettings,
 } from "../common";
 
@@ -16,11 +16,27 @@ export const paragraph = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
-    sectionHeaderField,
+    defineField({
+      name: "topText",
+      title: "Top Text",
+      type: "richText",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      ...buttonsField,
+      group: GROUP.MAIN_CONTENT,
+    }),
     annotationField,
     defineField({
       ...richTextField,
       group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "largeSpacing",
+      title: "Large Spacing",
+      type: "boolean",
+      initialValue: false,
+      group: GROUP.SETTINGS,
     }),
     ...sectionSettings,
   ],
