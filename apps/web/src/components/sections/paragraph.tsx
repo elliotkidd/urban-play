@@ -17,7 +17,7 @@ export default function ParagraphSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs min-h-p-section",
+        "wrapper py-fluid-xs",
         smallWrapper && "wrapper--small",
         largeSpacing ? "space-y-fluid-xl" : "space-y-fluid-md",
       )}
