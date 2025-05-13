@@ -4,11 +4,7 @@ import SanityImage from "../sanity-image";
 import { useState, useRef, Fragment } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useScroll } from "motion/react";
-import {
-  descriptionVariants,
-  sectionAnimationConfig,
-  titleVariants,
-} from "@/lib/motion";
+import { descriptionVariants, sectionAnimationConfig } from "@/lib/motion";
 
 function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
   const [activeStep, setActiveStep] = useState(0);
@@ -34,7 +30,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
     <div className="wrapper">
       {sectionHeader && <SectionHeader {...sectionHeader} />}
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        <div ref={containerRef} className="space-y-fluid-sm">
+        <div ref={containerRef} className="space-y-fluid-sm my-fluid-lg">
           {steps.map((step) => (
             <Fragment key={step._key}>
               <motion.div
@@ -48,7 +44,7 @@ function VerticalProcess({ sectionHeader, steps }: ProcessProps) {
                     className="object-cover absolute inset-0 mt-0 w-full h-full"
                   />
                 </div>
-                <h3 className="text-lg font-bold font-body mb-4">
+                <h3 className="text-lg font-bold font-body !normal-case mb-4">
                   {step.heading}
                 </h3>
                 <motion.p

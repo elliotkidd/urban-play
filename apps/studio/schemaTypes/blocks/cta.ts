@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 
 import {
   buttonsField,
-  colorPickerField,
+  imageField,
   richTextField,
   sectionSettings,
 } from "../common";
@@ -22,6 +22,7 @@ export const cta = defineType({
       description: "The large text that is the primary focus of the block",
       group: GROUP.MAIN_CONTENT,
     }),
+    imageField,
     defineField({ ...richTextField, group: GROUP.MAIN_CONTENT }),
     defineField({ ...buttonsField, group: GROUP.MAIN_CONTENT }),
     ...sectionSettings,

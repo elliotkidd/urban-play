@@ -43,8 +43,8 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                   </span>
                 )}
               </div>
-              <h3 className="no-underline !normal-case">{name}</h3>
-              <p className="text-sm text-gray-500">{position}</p>
+              <h3 className="no-underline text-lg !normal-case mb-1">{name}</h3>
+              <p className="text-lg leading-none opacity-50">{position}</p>
             </motion.li>
           ),
         )}

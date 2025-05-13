@@ -141,14 +141,17 @@ export default function SolutionsCarouselSection({
                 <span className="text-xs normal-case font-bold mb-0 block leading-none opacity-40">
                   Next
                 </span>
-                <div className="relative" style={{ height: "var(--text-xs)" }}>
+                <div
+                  className="relative w-full flex justify-end"
+                  style={{ height: "var(--text-xs)" }}
+                >
                   <AnimatePresence>
                     {solutions.map(
                       ({ _id, title }, index) =>
                         (step + 1) % solutions.length === index && (
                           <motion.h4
                             key={_id}
-                            className="text-xs normal-case font-bold leading-none absolute"
+                            className="text-xs left-0 normal-case font-bold leading-none absolute"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -159,41 +162,67 @@ export default function SolutionsCarouselSection({
                         ),
                     )}
                   </AnimatePresence>
+                  <div className="flex-0 flex items-center gap-2">
+                    <div className="relative w-2.5 h-2.5">
+                      <svg className="w-2.5 h-2.5" viewBox="0 0 24 24">
+                        {/* Background circle */}
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeOpacity="0.2"
+                          strokeWidth="2"
+                        />
+                        {/* Progress circle */}
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeDasharray="62.83"
+                          strokeDashoffset={
+                            62.83 - (timerProgress / 100) * 62.83
+                          }
+                          transform="rotate(-90 12 12)"
+                        />
+                      </svg>
+                    </div>
+                    <button onClick={goPrev}>
+                      <svg
+                        width="5"
+                        height="10"
+                        viewBox="0 0 5 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M4.5 9L0.593741 5.09374L4.5 1.18748"
+                          stroke="currentColor"
+                          strokeWidth="0.781252"
+                        />
+                      </svg>
+                    </button>
+                    <button onClick={goNext}>
+                      <svg
+                        width="6"
+                        height="10"
+                        viewBox="0 0 6 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.09375 1L5.00001 4.90626L1.09375 8.81252"
+                          stroke="currentColor"
+                          strokeWidth="0.781252"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="flex-0 flex items-center gap-2">
-                <div className="relative w-5 h-5">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    {/* Background circle */}
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeOpacity="0.2"
-                      strokeWidth="2"
-                    />
-                    {/* Progress circle */}
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeDasharray="62.83"
-                      strokeDashoffset={62.83 - (timerProgress / 100) * 62.83}
-                      transform="rotate(-90 12 12)"
-                    />
-                  </svg>
-                </div>
-                <button onClick={goPrev}>
-                  <ArrowLeftIcon className="w-4 h-4" />
-                </button>
-                <button onClick={goNext}>
-                  <ArrowRightIcon className="w-4 h-4" />
-                </button>
               </div>
             </div>
             <div className="w-48  relative aspect-square rounded-lg overflow-hidden">

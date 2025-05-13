@@ -12,7 +12,6 @@ import { Input } from "@workspace/packages/ui/src/components/input";
 import { Textarea } from "@workspace/packages/ui/src/components/textarea";
 import { cn } from "@/lib/utils";
 import { z } from "groqd";
-import { zodResolver } from "@hookform/resolvers/zod";
 import SanityRadioGroup from "./ui/inputs/SanityRadioGroup";
 import SanityCheckboxGroup from "./ui/inputs/SanityCheckboxGroup";
 import type {
@@ -25,6 +24,7 @@ import type {
 import { useFormspark } from "@formspark/use-formspark";
 import SanitySelectFormField from "./ui/inputs/SanitySelectFormField";
 import { Button } from "@workspace/packages/ui/src/components/button";
+import SubmitButton from "./SubmitButton";
 
 const FORM_SPARK_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
 
@@ -219,9 +219,7 @@ export default function SanityForm({
             }
           },
         )}
-        <Button type="submit" disabled={isSubmitting} className="lg:col-span-2">
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </Button>
+        <SubmitButton />
       </form>
     </Form>
   );

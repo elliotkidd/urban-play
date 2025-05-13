@@ -24,6 +24,11 @@
   scroll-margin-top: calc(var(--navbar-height) + 1rem);
 }
 
+main {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 ::view-transition-group(root) {
   z-index: auto !important;
 }

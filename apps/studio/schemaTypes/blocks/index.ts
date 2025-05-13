@@ -19,6 +19,8 @@ import { faqsAccordion } from "./faqs-accordion";
 import { quote } from "./quote";
 import { socialMedia } from "./socialMedia";
 import { contact } from "./contact";
+import { video } from "./video";
+
 export const pageBuilderBlocks = [
   hero,
   cta,
@@ -41,4 +43,5 @@ export const pageBuilderBlocks = [
   quote,
   socialMedia,
   contact,
+  video,
 ];

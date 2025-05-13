@@ -205,6 +205,7 @@ function NavbarColumnLink({
 
   const { url, name } = column as NavBarLinkType;
   const router = useTransitionRouter();
+
   return (
     <Link
       href={url?.href ?? "#"}

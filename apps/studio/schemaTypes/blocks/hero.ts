@@ -4,6 +4,7 @@ import { defineField, defineType } from "sanity";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
   colorPickerField,
+  imageField,
   marginSettingsFields,
   richTextField,
 } from "../common";
@@ -39,13 +40,7 @@ export const hero = defineType({
       },
     }),
     defineField({
-      name: "image",
-      type: "image",
-      title: "Image",
-      options: {
-        hotspot: true,
-      },
-      group: GROUP.MAIN_CONTENT,
+      ...imageField,
       hidden: ({ parent }) => parent?.mediaType !== "image",
     }),
     defineField({

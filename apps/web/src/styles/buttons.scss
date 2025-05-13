@@ -10,7 +10,7 @@
   }
 
   &--outline {
-    @apply border border-primary-button text-primary-button;
+    @apply border border-text/20 hover:bg-text hover:text-background  transition-colors text-text;
   }
 
   &--inline {

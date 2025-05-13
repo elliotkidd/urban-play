@@ -152,6 +152,7 @@ const CTA_FRAGMENT = {
     .select(RICHTEXT_BLOCKS)
     .nullable(),
   title: q.string(),
+  image: q("image").grab(IMAGE_FRAGMENT),
   buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -409,6 +410,17 @@ const CONTACT_FRAGMENT = {
 
 export type ContactProps = TypeFromSelection<typeof CONTACT_FRAGMENT>;
 
+export const VIDEO_FRAGMENT = {
+  _type: q.literal("video"),
+  _key: q.string(),
+  video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  contain: q.boolean(),
+  mediaType: q.literal("image").or(q.literal("video")),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type VideoSectionProps = TypeFromSelection<typeof VIDEO_FRAGMENT>;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
@@ -430,6 +442,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'quote'": QUOTE_FRAGMENT,
   "_type == 'socialMedia'": SOCIAL_MEDIA_FRAGMENT,
   "_type == 'contact'": CONTACT_FRAGMENT,
+  "_type == 'video'": VIDEO_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

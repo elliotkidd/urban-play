@@ -38,7 +38,8 @@ function SectionWrapper({
   const hideOnPath =
     hideOn &&
     hideOn.length > 0 &&
-    hideOn.some((item) => path.includes(item.slug));
+    (hideOn.some((item) => path.includes(item.slug)) ||
+      path.startsWith("/blog/"));
 
   const { ref, inView } = useInView({
     rootMargin: "-10% 0px -90% 0px",
@@ -59,7 +60,7 @@ function SectionWrapper({
         "relative bg-background text-text",
         !removeMarginTop && "mt-fluid",
         !removeMarginBottom && "mb-fluid",
-        type === "cta" && "h-screen",
+        type === "cta" && "h-screen flex items-center",
         (type === "iconMarquee" || type === "imageMarquee") &&
           "overflow-hidden",
         hideOnPath && "hidden",

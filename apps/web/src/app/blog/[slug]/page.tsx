@@ -43,10 +43,6 @@ export async function generateMetadata({
   return getMetaData(data);
 }
 
-// export async function generateStaticParams() {
-//   return await fetchBlogPaths();
-// }
-
 export default async function BlogSlugPage({
   params,
 }: {
@@ -69,8 +65,8 @@ export default async function BlogSlugPage({
   } = data ?? {};
 
   return (
-    <div className="">
-      <article>
+    <>
+      <article className="bg-background pb-fluid-lg">
         <h1 className="sr-only">{title}</h1>
 
         {image && (
@@ -113,12 +109,6 @@ export default async function BlogSlugPage({
       </article>
 
       <PageBuilder pageBuilder={pageBuilder ?? []} type={_type} id={_id} />
-
-      {/* <aside className="hidden lg:block">
-        <div className="sticky top-4 rounded-lg ">
-          <TableOfContent richText={richText} />
-        </div>
-      </aside> */}
-    </div>
+    </>
   );
 }

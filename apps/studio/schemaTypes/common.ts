@@ -135,3 +135,13 @@ export const sectionSettings = [
   }),
   hideOnField,
 ];
+
+export const imageField = defineField({
+  name: "image",
+  title: "Image",
+  type: "image",
+  group: GROUP.MAIN_CONTENT,
+  options: {
+    hotspot: true,
+  },
+});

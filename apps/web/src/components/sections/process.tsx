@@ -7,13 +7,22 @@ import { useRef } from "react";
 
 function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const horizontalRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
+  const scrollAmount = (() => {
+    const horizontalWidth = horizontalRef.current?.offsetWidth ?? 0;
+    const scrollWidth = scrollRef.current?.offsetWidth ?? 0;
+    return horizontalWidth - scrollWidth;
+  })();
+
+  console.log(scrollAmount);
+
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollAmount]);
 
   return (
     <>
@@ -27,6 +36,7 @@ function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
       >
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div
+            ref={horizontalRef}
             className="flex gap-4 items-center px-fluid-xs"
             style={{ x }}
           >

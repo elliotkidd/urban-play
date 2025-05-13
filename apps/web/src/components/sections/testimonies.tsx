@@ -1,16 +1,13 @@
 import { TestimoniesProps } from "@/lib/sanity/queries/sections";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { SanityButtons } from "../sanity-buttons";
-import { Autoplay, EffectFade } from "swiper/modules";
 import { useRef } from "react";
-import { Swiper as SwiperType } from "swiper";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
 
-import "swiper/css";
-import "swiper/css/effect-fade";
+import "@splidejs/react-splide/css/core";
 
 export default function TestimoniesSection({
   sectionHeader,
@@ -19,7 +16,7 @@ export default function TestimoniesSection({
 }: TestimoniesProps) {
   const { title, buttons } = sectionHeader;
 
-  const swiperRef = useRef<SwiperType>();
+  const splideRef = useRef<any>(null);
 
   return (
     <motion.div
@@ -29,9 +26,11 @@ export default function TestimoniesSection({
         smallWrapper && "wrapper--small",
       )}
     >
-      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start prose mb-12">
+      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start mb-12">
         {title && (
-          <h2 className="max-w-section-heading text-balance">{title}</h2>
+          <h2 className="max-w-section-heading text-balance text-lg font-bold normal-case">
+            {title}
+          </h2>
         )}
         {buttons && (
           <SanityButtons
@@ -41,16 +40,18 @@ export default function TestimoniesSection({
         )}
       </div>
       {testimonies && testimonies.length > 0 && (
-        <Swiper
-          onBeforeInit={(swiper) => {
-            swiperRef.current = swiper;
+        <Splide
+          ref={splideRef}
+          options={{
+            type: "fade",
+            rewind: true,
+            autoplay: true,
+            interval: 5000,
+            speed: 1000,
+            arrows: false,
+            pagination: false,
           }}
-          speed={1000}
-          slidesPerView={1}
-          effect="fade"
-          modules={[EffectFade, Autoplay]}
           className="overflow-visible featured-projects-swiper mb-fluid-lg"
-          loop
         >
           {testimonies.map((testimony: any, i: number) => {
             const {
@@ -59,35 +60,59 @@ export default function TestimoniesSection({
               quote,
             } = testimony;
             return (
-              <SwiperSlide
+              <SplideSlide
                 key={_id + i}
                 className="space-y-fluid-lg bg-background flex flex-col items-start justify-between"
                 style={{ height: "auto", display: "flex" }}
               >
-                <blockquote className="max-w-section-heading text-balance uppercase font-black text-2xl leading-none">
+                <blockquote className="max-w-section-heading text-balance font-bold text-lg leading-none">
                   {quote}
                 </blockquote>
                 <div className="leading-none">
                   <span className="block">{name}</span>
                   <span className="block opacity-40">{position}</span>
                 </div>
-              </SwiperSlide>
+              </SplideSlide>
             );
           })}
-        </Swiper>
+        </Splide>
       )}
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 text-text">
         <button
-          onClick={() => swiperRef.current?.slidePrev()}
-          className="bg-primary-button text-white w-10 h-10 rounded-full flex items-center justify-center"
+          onClick={() => splideRef.current?.splide?.go("<")}
+          className="bg-transparent border border-text/20 hover:border-text transition-colors duration-300 text-white w-10 h-10 rounded-full flex items-center justify-center"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <svg
+            width="7"
+            height="12"
+            viewBox="0 0 7 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.27734 11.3164L1.21408 5.99998L6.27734 0.683557"
+              stroke="currentColor"
+              strokeWidth="1.01265"
+            />
+          </svg>
         </button>
         <button
-          onClick={() => swiperRef.current?.slideNext()}
-          className="bg-primary-button text-white w-10 h-10 rounded-full flex items-center justify-center"
+          onClick={() => splideRef.current?.splide?.go(">")}
+          className="bg-transparent border border-text/20 hover:border-text transition-colors duration-300 text-white w-10 h-10 rounded-full flex items-center justify-center"
         >
-          <ChevronRight className="w-6 h-6" />
+          <svg
+            width="7"
+            height="12"
+            viewBox="0 0 7 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0.945312 0.683594L6.00857 6.00002L0.945312 11.3164"
+              stroke="currentColor"
+              strokeWidth="1.01265"
+            />
+          </svg>
         </button>
       </div>
     </motion.div>
