@@ -29,6 +29,13 @@ export const process = defineType({
       title: "Steps",
       group: GROUP.MAIN_CONTENT,
     }),
+    defineField({
+      name: "showIndex",
+      type: "boolean",
+      title: "Show Index?",
+      initialValue: false,
+      group: GROUP.SETTINGS,
+    }),
     ...sectionSettings,
   ],
   preview: {

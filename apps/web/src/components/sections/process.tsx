@@ -5,7 +5,12 @@ import SanityImage from "../sanity-image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
-function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
+function Process({
+  steps,
+  smallWrapper,
+  sectionHeader,
+  showIndex,
+}: ProcessProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +45,7 @@ function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
             className="flex gap-4 items-center px-fluid-xs"
             style={{ x }}
           >
-            {steps.map((step) => (
+            {steps.map((step, i) => (
               <motion.div
                 key={step._key}
                 className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-landscape"
@@ -53,7 +58,14 @@ function Process({ steps, smallWrapper, sectionHeader }: ProcessProps) {
                   />
                 </div>
                 <div className="text-sm flex-none flex flex-col h-full justify-between max-w-xs">
-                  <h3 className="text-lg font-bold">{step.heading}</h3>
+                  <h3 className="text-lg font-bold">
+                    {showIndex && (
+                      <span className="opacity-30 mr-1">
+                        {i > 9 ? i + 1 : `0${i + 1}`}
+                      </span>
+                    )}
+                    {step.heading}
+                  </h3>
                   <div className="text-sm">{step.description}</div>
                 </div>
               </motion.div>

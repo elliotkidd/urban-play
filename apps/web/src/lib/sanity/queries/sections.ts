@@ -349,6 +349,7 @@ const PROCESS_FRAGMENT = {
     description: q.string(),
     image: q("image").grab(IMAGE_FRAGMENT),
   }),
+  showIndex: q.boolean(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
