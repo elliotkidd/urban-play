@@ -1,5 +1,5 @@
 import { InferType, q } from "groqd";
-import { HERO_FRAGMENT, SECTIONS_FRAGMENT } from "./sections";
+import { PAGE_HEADER_FRAGMENT, SECTIONS_FRAGMENT } from "./sections";
 import {
   COLOR_SCHEME_FRAGMENT,
   IMAGE_FRAGMENT,
@@ -51,7 +51,7 @@ export const projectIndexPageQuery = q("*")
         title: q.string(),
         slug: q.slug("slug"),
       }),
-    hero: q("hero").grab(HERO_FRAGMENT),
+    header: q("header").grab(PAGE_HEADER_FRAGMENT),
     pageBuilder: SECTIONS_FRAGMENT,
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   });
@@ -75,7 +75,7 @@ export const projectPageQuery = q("*")
     _id: q.string(),
     title: q.string(),
     slug: q.slug("slug"),
-    hero: q("hero").grab(HERO_FRAGMENT),
+    header: q("header").grab(PAGE_HEADER_FRAGMENT),
     description: q.string(),
     richText: q("richText[]").select(RICHTEXT_BLOCKS),
     image: q("image").grab(IMAGE_FRAGMENT),

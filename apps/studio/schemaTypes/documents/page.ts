@@ -27,9 +27,9 @@ export const page = defineType({
       title: "title",
       description: "description",
       slug: "slug.current",
-      media: "image",
+      media: "seoImage",
     },
-    prepare: ({ title, description, slug, media }) => ({
+    prepare: ({ title, slug, media }) => ({
       title,
       subtitle: slug,
       media,

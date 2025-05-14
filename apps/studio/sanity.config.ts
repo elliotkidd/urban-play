@@ -1,4 +1,5 @@
 import { colorPicker } from "@frontvibe/sanity-color-picker";
+import { imageHotspotArrayPlugin } from "sanity-plugin-hotspot-array";
 import { assist } from "@sanity/assist";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
@@ -51,6 +52,7 @@ export default defineConfig({
     unsplashImageAsset(),
     colorPicker(),
     groqdPlaygroundTool(),
+    imageHotspotArrayPlugin(),
   ],
 
   form: {

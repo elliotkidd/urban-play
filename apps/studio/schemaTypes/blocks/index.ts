@@ -21,6 +21,7 @@ import { socialMedia } from "./socialMedia";
 import { contact } from "./contact";
 import { video } from "./video";
 import { pageHeader } from "./pageHeader";
+import partnersRollover from "./partners-rollover";
 
 export const pageBuilderBlocks = [
   hero,
@@ -46,4 +47,5 @@ export const pageBuilderBlocks = [
   contact,
   video,
   pageHeader,
+  partnersRollover,
 ];

@@ -125,7 +125,7 @@
   );
 
   --text-4xl-min: 40;
-  --text-4xl-max: 64;
+  --text-4xl-max: 80;
   --text-4xl: clamp(
     calc(var(--text-4xl-min) / 16) * 1rem,
     calc(

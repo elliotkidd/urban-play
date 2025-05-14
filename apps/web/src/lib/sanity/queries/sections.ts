@@ -39,7 +39,7 @@ const SECTION_SETTINGS_FRAGMENT = {
     .nullable(),
 } satisfies Selection;
 
-export const HERO_FRAGMENT = {
+const HERO_FRAGMENT = {
   _type: q.literal("heroSection"),
   _key: q.string(),
   title: q.string(),
@@ -54,7 +54,7 @@ export const HERO_FRAGMENT = {
 
 export type HeroProps = TypeFromSelection<typeof HERO_FRAGMENT>;
 
-const PAGE_HEADER_FRAGMENT = {
+export const PAGE_HEADER_FRAGMENT = {
   _type: q.literal("pageHeader"),
   title: q.string(),
   richText: q(`richText[]`, { isArray: true })
@@ -436,6 +436,22 @@ export const VIDEO_FRAGMENT = {
 
 export type VideoSectionProps = TypeFromSelection<typeof VIDEO_FRAGMENT>;
 
+const PARTNERS_ROLLOVER_FRAGMENT = {
+  _type: q.literal("partnersRollover"),
+  _key: q.string(),
+  partners: q("partners[]", { isArray: true })
+    .deref()
+    .grab({
+      ...LINK_REFERENCE_FRAGMENT,
+      image: q("seoImage").grab(IMAGE_FRAGMENT),
+    }),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type PartnersRolloverProps = TypeFromSelection<
+  typeof PARTNERS_ROLLOVER_FRAGMENT
+>;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
@@ -459,6 +475,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'contact'": CONTACT_FRAGMENT,
   "_type == 'video'": VIDEO_FRAGMENT,
   "_type == 'pageHeader'": PAGE_HEADER_FRAGMENT,
+  "_type == 'partnersRollover'": PARTNERS_ROLLOVER_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

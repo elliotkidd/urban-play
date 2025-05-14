@@ -6,6 +6,7 @@ import { projectIndexPageQuery } from "@/lib/sanity/queries/documents";
 import { sanityFetch } from "@/lib/sanity/live";
 import Link from "next/link";
 import { getMetaData } from "@/lib/seo";
+import PageHeader from "@/components/sections/PageHeader";
 
 async function fetchProjectsIndexPageData() {
   return await sanityFetch({
@@ -30,8 +31,15 @@ export default async function ProjectsIndexLayout({
 
   if (!data) return null;
 
-  const { hero, pageBuilder, description, solutions, colorScheme, _id, _type } =
-    data ?? {};
+  const {
+    header,
+    pageBuilder,
+    description,
+    solutions,
+    colorScheme,
+    _id,
+    _type,
+  } = data ?? {};
 
   return (
     <main
@@ -39,10 +47,10 @@ export default async function ProjectsIndexLayout({
       style={getColorSchemeStyle(colorScheme)}
     >
       <section
-        style={getColorSchemeStyle(hero.colorScheme)}
-        className="relative bg-background text-text"
+        style={getColorSchemeStyle(header.colorScheme)}
+        className="relative bg-background text-text overflow-hidden h-screen flex items-center"
       >
-        <HeroBlock {...hero} />
+        <PageHeader {...header} />
       </section>
       <section className="lg:min-h-p-section mb-fluid-lg">
         <div className="wrapper flex flex-col lg:flex-row gap-fluid-sm justify-between py-fluid-xs">
