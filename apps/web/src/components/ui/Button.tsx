@@ -10,6 +10,7 @@ export const Button = forwardRef(
       children,
       className = "",
       variant = "default",
+      size = "default",
       carat = false,
       prependIcon,
       appendIcon,
@@ -19,6 +20,7 @@ export const Button = forwardRef(
       className?: string;
       children: any;
       variant?: "default" | "primary" | "outline" | "inline";
+      size?: "default" | "icon";
       carat?: boolean;
       prependIcon?: React.ReactNode;
       appendIcon?: React.ReactNode;
@@ -35,7 +37,13 @@ export const Button = forwardRef(
       inline: "btn--inline",
     };
 
-    const styles = twMerge(variants[variant], className);
+    const sizes = {
+      default: "btn--default-size",
+      icon: "btn--icon-size",
+      header: "btn--header-size",
+    };
+
+    const styles = twMerge(variants[variant], sizes[size], className);
 
     const iconClasses = twMerge(
       "duration-500",

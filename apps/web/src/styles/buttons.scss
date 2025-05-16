@@ -1,8 +1,20 @@
 .btn {
-  @apply py-5 px-8 inline-flex cursor-pointer items-center justify-center gap-2 text-center duration-500 text-xs font-medium rounded-lg text-nowrap;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 text-center duration-500 text-xs font-medium font-body rounded-lg text-nowrap;
 
-  &--header {
-    @apply p-4;
+  &--header-size {
+    height: 35px;
+    padding: 0 15px;
+  }
+
+  &--default-size {
+    height: 35px;
+    padding: 20px 35px;
+  }
+
+  &--icon-size {
+    padding: 0;
+    height: 35px;
+    width: 35px;
   }
 
   &--default {

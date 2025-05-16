@@ -12,6 +12,7 @@ type Props = {
   sizes?: string;
   height?: number;
   width?: number;
+  style?: React.CSSProperties;
 };
 
 export default function SanityImage({
@@ -21,6 +22,7 @@ export default function SanityImage({
   sizes,
   height,
   width,
+  style,
 }: Props) {
   const imageProps: any = useNextSanityImage(client, src, {
     imageBuilder: (imageUrlBuilder, options) => {
@@ -43,7 +45,7 @@ export default function SanityImage({
       loader={loader}
       alt={alt ? alt : ""}
       placeholder="blur"
-      style={{ maxWidth: "100%" }}
+      style={{ maxWidth: "100%", ...style }}
       height={height ? height : src?.height || undefined}
       width={width ? width : src?.width || undefined}
       className={className}

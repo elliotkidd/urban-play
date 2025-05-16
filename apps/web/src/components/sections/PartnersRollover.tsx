@@ -2,14 +2,10 @@
 
 import Link from "next/link";
 import { PartnersRolloverProps } from "@/lib/sanity/queries/sections";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useSpring } from "motion/react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import SanityImage from "../sanity-image";
 import { twMerge } from "tailwind-merge";
-
-const HOVER_SIZE = 200;
-
-const ROTATIONS: number[] = [-10, -5, 0, 5, 10];
 
 export default function PartnersRollover({ partners }: PartnersRolloverProps) {
   const [hover, setHover] = useState<number | null>(null);

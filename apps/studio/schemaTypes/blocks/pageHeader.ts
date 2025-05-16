@@ -8,6 +8,7 @@ import {
   marginSettingsFields,
   richTextField,
 } from "../common";
+import { blocksToText } from "../../utils/blocksToText";
 
 export const pageHeader = defineType({
   name: "pageHeader",
@@ -33,12 +34,13 @@ export const pageHeader = defineType({
   preview: {
     select: {
       title: "title",
+      subtitle: "richText",
       media: "image",
     },
-    prepare: ({ title, media }) => ({
+    prepare: ({ title, subtitle, media }) => ({
       title,
       media,
-      subtitle: "Page Header",
+      subtitle: `Page Header - ${blocksToText(subtitle)}`,
     }),
   },
 });

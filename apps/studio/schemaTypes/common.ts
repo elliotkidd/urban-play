@@ -114,6 +114,21 @@ export const marginSettingsFields = [
   }),
 ];
 
+export const paddingField = defineField({
+  name: "padding",
+  title: "Padding",
+  type: "string",
+  initialValue: "sm",
+  options: {
+    list: [
+      { title: "Small", value: "sm" },
+      { title: "Medium", value: "md" },
+      { title: "Large", value: "lg" },
+    ],
+  },
+  group: GROUP.SETTINGS,
+});
+
 export const hideOnField = defineField({
   name: "hideOn",
   title: "Hide On",
@@ -124,6 +139,7 @@ export const hideOnField = defineField({
 
 export const sectionSettings = [
   ...marginSettingsFields,
+  paddingField,
   colorPickerField,
   defineField({
     name: "smallWrapper",

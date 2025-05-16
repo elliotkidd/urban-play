@@ -38,6 +38,12 @@ export const twoColumnContent = defineType({
       type: "contentBlock",
       group: GROUP.MAIN_CONTENT,
     }),
+    defineField({
+      name: "alignCentre",
+      title: "Align Centre",
+      type: "boolean",
+      group: GROUP.SETTINGS,
+    }),
     ...sectionSettings,
   ],
   preview: {

@@ -279,7 +279,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
           <SanityButtons
             buttons={buttons}
             className="flex items-center gap-4"
-            buttonClassName="btn--header"
+            buttonSize="header"
           />
         </div>
       )}
@@ -302,7 +302,7 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
 
   return (
     <header id="navbar" style={headerStyle}>
-      <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
+      <nav className="grid grid-cols-[auto_1fr] items-center gap-5">
         <Logo />
         {isMobile ? (
           <MobileNavbar

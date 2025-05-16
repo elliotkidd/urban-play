@@ -8,6 +8,7 @@ type SanityButtonsProps = {
   buttons: SanityButtonProps[] | null;
   className?: string;
   buttonClassName?: string;
+  buttonSize?: "default" | "icon" | "header";
 };
 
 type SanityButtonProps = TypeFromSelection<typeof BUTTON_FRAGMENT>;
@@ -16,6 +17,7 @@ export function SanityButtons({
   buttons,
   className,
   buttonClassName,
+  buttonSize,
 }: SanityButtonsProps) {
   if (!buttons?.length) return null;
 
@@ -27,7 +29,12 @@ export function SanityButtons({
           href={url?.href ?? "#"}
           target={url?.openInNewTab ? "_blank" : "_self"}
         >
-          <Button as="span" variant={variant} className={buttonClassName}>
+          <Button
+            as="span"
+            size={buttonSize}
+            variant={variant}
+            className={buttonClassName}
+          >
             {text}
           </Button>
         </Link>

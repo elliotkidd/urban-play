@@ -67,7 +67,7 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
                 {item.content && (
                   <RichText
                     richText={item.content}
-                    className="prose-white mt-4 lg:mt-12"
+                    className="prose-white mt-4 lg:mt-fluid-lg"
                   />
                 )}
               </AccordionContent>
@@ -137,6 +137,8 @@ export default function TwoColumnContentSection({
   right,
   smallWrapper,
   columnRatio,
+  alignCentre,
+  padding,
 }: TwoColumnContentProps) {
   return (
     <motion.div
@@ -147,6 +149,9 @@ export default function TwoColumnContentSection({
         columnRatio === "5050" && "grid-cols-1 lg:grid-cols-2",
         (columnRatio === "2575" || columnRatio === "7525") &&
           "grid-cols-1 lg:grid-cols-3",
+        alignCentre && "items-center",
+        padding === "md" && "py-fluid-md",
+        padding === "lg" && "py-fluid-lg",
       )}
     >
       {left &&

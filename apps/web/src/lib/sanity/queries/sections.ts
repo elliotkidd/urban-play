@@ -32,6 +32,7 @@ export type SectionHeaderProps = TypeFromSelection<
 const SECTION_SETTINGS_FRAGMENT = {
   ...REMOVE_MARGIN_FRAGMENTS,
   colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+  padding: q.string(),
   smallWrapper: q.boolean(),
   hideOn: q("hideOn[]", { isArray: true })
     .deref()
@@ -300,6 +301,7 @@ const TWO_COLUMN_CONTENT_FRAGMENT = {
       _type: q.string(),
     },
   }),
+  alignCentre: q.boolean(),
   columnRatio: q.literal("5050").or(q.literal("2575")).or(q.literal("7525")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -452,6 +454,45 @@ export type PartnersRolloverProps = TypeFromSelection<
   typeof PARTNERS_ROLLOVER_FRAGMENT
 >;
 
+const SPOT_FRAGMENT = {
+  _type: q.literal("imageWithProductHotspots"),
+  _key: q.string(),
+  solution: q("solution")
+    .deref()
+    .grab({
+      _id: q.string(),
+      title: q.string(),
+      slug: q.slug("slug"),
+    }),
+  description: q.string(),
+  x: q.number(),
+  y: q.number(),
+} satisfies Selection;
+
+export type SpotProps = TypeFromSelection<typeof SPOT_FRAGMENT>;
+
+const IMAGE_WITH_HOTSPOT_FRAGMENT = {
+  _type: q.literal("imageWithProductHotspots"),
+  _key: q.string(),
+  image: q("image").grab(IMAGE_FRAGMENT),
+  hotspots: q("productHotspots[]", { isArray: true }).grab(SPOT_FRAGMENT),
+} satisfies Selection;
+
+export type ImageWithHotspotProps = TypeFromSelection<
+  typeof IMAGE_WITH_HOTSPOT_FRAGMENT
+>;
+
+const IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT = {
+  _type: q.literal("imageWithProductHotspots"),
+  _key: q.string(),
+  images: q("images[]", { isArray: true }).grab(IMAGE_WITH_HOTSPOT_FRAGMENT),
+  hotspots: q("hotspots[]", { isArray: true }).grab(SPOT_FRAGMENT),
+} satisfies Selection;
+
+export type ImageWithProductHotspotsProps = TypeFromSelection<
+  typeof IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT
+>;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
@@ -476,6 +517,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'video'": VIDEO_FRAGMENT,
   "_type == 'pageHeader'": PAGE_HEADER_FRAGMENT,
   "_type == 'partnersRollover'": PARTNERS_ROLLOVER_FRAGMENT,
+  "_type == 'hotspotImageCarousel'": IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

@@ -1,6 +1,6 @@
 import { TextQuoteIcon as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
-
+import { blocksToText } from "../../utils/blocksToText";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
   annotationField,
@@ -42,11 +42,12 @@ export const paragraph = defineType({
   ],
   preview: {
     select: {
-      title: "sectionHeader.title",
+      title: "topText",
+      subtitle: "richText",
     },
-    prepare: ({ title }) => ({
-      title,
-      subtitle: "Paragraph Block",
+    prepare: ({ title, subtitle }) => ({
+      title: blocksToText(title),
+      subtitle: `Paragraph Section - ${blocksToText(subtitle)}`,
     }),
   },
 });

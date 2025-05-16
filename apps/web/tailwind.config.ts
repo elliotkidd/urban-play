@@ -44,7 +44,7 @@ const config: Config = {
     extend: {
       aspectRatio: {
         landscape: "6 / 4",
-        portrait: "6 / 8",
+        portrait: "7 / 8",
       },
       spacing: {
         "fluid-xs": "var(--space-xs)",
@@ -62,6 +62,9 @@ const config: Config = {
       fontFamily: {
         body: ["var(--font-body)", ...fontFamily.sans],
         heading: ["var(--font-heading)", ...fontFamily.sans],
+      },
+      scale: {
+        "400": "4",
       },
       colors: {
         //@ts-ignore

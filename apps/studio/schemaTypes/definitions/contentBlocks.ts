@@ -1,5 +1,7 @@
+import { blocksToText } from "../../utils/blocksToText";
 import { defineArrayMember } from "sanity";
 import { defineField } from "sanity";
+import { Text, ListCollapse, SeparatorHorizontal } from "lucide-react";
 
 export const contentBlock = defineField({
   name: "contentBlock",
@@ -32,11 +34,25 @@ export const contentBlock = defineField({
           initialValue: "portrait",
         }),
       ],
+      preview: {
+        select: {
+          title: "aspectRatio",
+          media: "source",
+        },
+        prepare({ title, media }) {
+          return {
+            title: title.charAt(0).toUpperCase() + title.slice(1),
+            subtitle: "Image",
+            media,
+          };
+        },
+      },
     }),
     defineArrayMember({
       type: "object",
       title: "Rich Text",
       name: "richTextBlock",
+      icon: Text,
       fields: [
         defineField({
           name: "richText",
@@ -50,7 +66,8 @@ export const contentBlock = defineField({
         },
         prepare({ title }) {
           return {
-            title: "Rich Text Block",
+            title: "Rich Text",
+            subtitle: blocksToText(title),
           };
         },
       },
@@ -59,6 +76,7 @@ export const contentBlock = defineField({
       name: "accordion",
       type: "object",
       title: "Accordion",
+      icon: ListCollapse,
       fields: [
         defineField({
           name: "title",
@@ -67,6 +85,7 @@ export const contentBlock = defineField({
         }),
         defineField({
           name: "items",
+          title: "Items",
           type: "array",
           of: [
             defineArrayMember({
@@ -85,7 +104,6 @@ export const contentBlock = defineField({
               ],
             }),
           ],
-          title: "Items",
         }),
       ],
       preview: {
@@ -95,8 +113,14 @@ export const contentBlock = defineField({
         },
         prepare({ title, accordionItems }) {
           return {
-            title: title ?? "Untitled",
-            subtitle: accordionItems.length > 0 ? "Accordion" : "No items",
+            title: blocksToText(title),
+            subtitle: `Accordion - ${
+              accordionItems.length > 0
+                ? `${accordionItems.length} item${
+                    accordionItems.length > 1 ? "s" : ""
+                  }`
+                : "No items"
+            }`,
           };
         },
       },
@@ -105,6 +129,7 @@ export const contentBlock = defineField({
       type: "object",
       title: "Text Between",
       name: "textBetweenBlock",
+      icon: SeparatorHorizontal,
       fields: [
         defineField({
           name: "title",
@@ -124,8 +149,8 @@ export const contentBlock = defineField({
         },
         prepare({ title, text }) {
           return {
-            title: title ?? "Untitled",
-            subtitle: text ?? "No text",
+            title: blocksToText(title),
+            subtitle: `Text Between - ${blocksToText(text)}`,
           };
         },
       },

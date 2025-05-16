@@ -31,6 +31,7 @@ import Contact from "./sections/Contact";
 import VideoSection from "./sections/Video";
 import PageHeader from "./sections/PageHeader";
 import PartnersRollover from "./sections/PartnersRollover";
+import HotspotImageCarousel from "./sections/HotspotImageCarousel";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
@@ -57,6 +58,7 @@ const SECTION_COMPONENTS: Record<string, FC<any>> = {
   video: VideoSection,
   pageHeader: PageHeader,
   partnersRollover: PartnersRollover,
+  hotspotImageCarousel: HotspotImageCarousel,
 } as const;
 
 type SectionType = keyof typeof SECTION_COMPONENTS;
