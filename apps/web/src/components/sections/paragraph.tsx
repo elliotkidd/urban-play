@@ -22,7 +22,7 @@ export default function ParagraphSection({
         largeSpacing ? "space-y-fluid-xl" : "space-y-fluid-md",
       )}
     >
-      <div className="flex w-full justify-between gap-fluid-sm prose">
+      <div className="flex flex-col md:flex-row w-full justify-between gap-fluid-sm prose">
         {topText && <RichText richText={topText} className="max-w-p-lg" />}
         {buttons && !annotations && (
           <SanityButtons buttons={buttons} buttonClassName="btn--header" />

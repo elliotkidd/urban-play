@@ -26,7 +26,7 @@ export default function TestimoniesSection({
         smallWrapper && "wrapper--small",
       )}
     >
-      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start mb-12">
+      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start mb-12 gap-fluid">
         {title && (
           <h2 className="max-w-section-heading text-balance text-lg font-bold normal-case">
             {title}

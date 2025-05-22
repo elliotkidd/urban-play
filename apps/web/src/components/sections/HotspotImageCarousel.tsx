@@ -181,7 +181,7 @@ export default function HotspotImageCarousel({
 
   return (
     <div className="wrapper">
-      <div className="relative aspect-video rounded-xl overflow-hidden">
+      {/* <div className="relative aspect-video rounded-xl overflow-hidden">
         <AnimatePresence>
           {images.map(
             (item: ImageWithHotspotProps, index: number) =>
@@ -299,7 +299,7 @@ export default function HotspotImageCarousel({
               ),
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

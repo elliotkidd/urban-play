@@ -17,31 +17,54 @@ import { buttonVariants } from "@workspace/ui/components/button";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
 import { Logo } from "./logo";
 import { SanityButtons } from "./sanity-buttons";
 import { SanityIcon } from "./sanity-icon";
-import { NavBarColumnType, NavBarLinkType } from "@/lib/sanity/queries/link";
+import {
+  ButtonType,
+  NavBarColumnType,
+  NavBarLinkType,
+} from "@/lib/sanity/queries/link";
 import { NavBarType } from "@/lib/sanity/queries/documents";
 import useStore from "@/store/header";
 import { getColorSchemeStyle } from "@/utils/utils";
 import { Button } from "./ui/Button";
 import { twMerge } from "tailwind-merge";
-import { Menu } from "lucide-react";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
-import { ColorSchemeFragment } from "@/lib/sanity/queries/fragments";
 import { useTransitionRouter } from "next-view-transitions";
 import PageAnimation from "./PageAnimation";
+import { AnimatePresence, motion } from "motion/react";
+
+function MobileMenuTrigger({
+  isOpen,
+  setIsOpen,
+  disabled,
+  ...props
+}: {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  disabled?: boolean;
+} & React.HTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      onClick={() => setIsOpen(!isOpen)}
+      className={twMerge("menu-trigger-btn", props.className)}
+      disabled={disabled}
+      {...props}
+    >
+      <div>
+        <span className="menu-trigger-btn-line"></span>
+        <span className="menu-trigger-btn-line"></span>
+        <span className="menu-trigger-btn-line"></span>
+      </div>
+      <span className="sr-only">Open menu</span>
+    </button>
+  );
+}
 
 interface MenuItem {
   title: string;
@@ -115,12 +138,56 @@ function MobileNavbarAccordionColumn({
   );
 }
 
+const menuVariants = {
+  open: {
+    height: "calc(100vh - 8rem)",
+    transition: {
+      duration: 0.5,
+      type: "spring",
+      bounce: 0.5,
+    },
+  },
+  closed: {
+    height: "0",
+    transition: {
+      duration: 0.5,
+      delay: 0.5,
+      type: "tween",
+      ease: "easeOut",
+    },
+  },
+};
+
+const itemVariants = {
+  open: ({ index }: { index: number }) => ({
+    opacity: 1,
+    y: 0,
+    x: 0,
+    transition: {
+      delay: 0.35 + index * 0.1,
+      duration: 0.5,
+      type: "spring",
+      bounce: 0.5,
+    },
+  }),
+  closed: ({ index, totalItems }: { index: number; totalItems: number }) => ({
+    opacity: 0,
+    x: 50,
+    transition: {
+      delay: (totalItems - index - 1) * 0.1,
+      duration: 0.5,
+      type: "tween",
+      ease: "easeOut",
+    },
+  }),
+};
+
 function MobileNavbar({
   navbarData,
-  colorScheme,
+  headerStyle,
 }: {
   navbarData: any;
-  colorScheme: ColorSchemeFragment;
+  headerStyle: React.CSSProperties;
 }) {
   const { columns, buttons } = navbarData ?? {};
   const [isOpen, setIsOpen] = useState(false);
@@ -133,66 +200,77 @@ function MobileNavbar({
   }, [path]);
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex justify-end">
-        <SheetTrigger asChild>
-          <Button variant="default" size="icon">
-            <Menu className="size-4" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </SheetTrigger>
-      </div>
-      <SheetContent
-        className="overflow-y-auto"
-        style={getColorSchemeStyle(colorScheme)}
-      >
-        <SheetHeader>
-          <SheetTitle>
-            <Logo />
-          </SheetTitle>
-        </SheetHeader>
-
-        <div className="mb-8 mt-8 flex flex-col gap-4">
-          {Array.isArray(columns) &&
-            columns?.map((column: NavBarLinkType | NavBarColumnType) => {
-              if (column._type === "navbarLink") {
-                const { name, _key, url } = column as NavBarLinkType;
-                return (
-                  <Link
-                    key={`column-link-${name}-${_key}`}
-                    href={url?.href ?? "#"}
-                    target={url?.openInNewTab ? "_blank" : "_self"}
-                  >
-                    {name}
-                  </Link>
-                );
-              }
-              return (
-                <Accordion
-                  type="single"
-                  collapsible
+    <header id="mobile-navbar" style={headerStyle}>
+      <nav className="flex w-full items-center justify-between gap-5">
+        <Logo className="w-[50px]" />
+        <MobileMenuTrigger isOpen={isOpen} setIsOpen={setIsOpen} />
+      </nav>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            className="flex-1 flex flex-col overflow-hidden"
+          >
+            <ul className="space-y-4 flex-1 flex flex-col justify-center p-2.5">
+              {Array.isArray(columns) &&
+                columns?.map(
+                  (
+                    column: NavBarLinkType | NavBarColumnType,
+                    index: number,
+                  ) => {
+                    if (column._type === "navbarLink") {
+                      const { name, _key, url } = column as NavBarLinkType;
+                      return (
+                        <motion.li
+                          custom={{ index, totalItems: columns.length }}
+                          variants={itemVariants}
+                          key={`column-link-${name}-${_key}`}
+                        >
+                          <Link
+                            key={`column-link-${name}-${_key}`}
+                            href={url?.href ?? "#"}
+                            target={url?.openInNewTab ? "_blank" : "_self"}
+                            className="block h3"
+                          >
+                            {name}
+                          </Link>
+                        </motion.li>
+                      );
+                    }
+                    // return (
+                    //   <Accordion
+                    //     type="single"
+                    //     collapsible
+                    //     className="w-full"
+                    //     key={column._key}
+                    //   >
+                    //     <MobileNavbarAccordionColumn
+                    //       column={column}
+                    //       setIsOpen={setIsOpen}
+                    //     />
+                    //   </Accordion>
+                    // );
+                  },
+                )}
+            </ul>
+            <div className="flex flex-col gap-4 p-2.5">
+              {buttons?.map(({ _key, text, variant }: ButtonType) => (
+                <Button
+                  key={_key}
+                  variant={variant ?? "default"}
                   className="w-full"
-                  key={column._key}
                 >
-                  <MobileNavbarAccordionColumn
-                    column={column}
-                    setIsOpen={setIsOpen}
-                  />
-                </Accordion>
-              );
-            })}
-        </div>
-        {Array.isArray(buttons) && buttons.length > 0 && (
-          <div className="border-t pt-4">
-            <SanityButtons
-              buttons={buttons ?? []}
-              buttonClassName="w-full"
-              className="flex mt-2 flex-col gap-3"
-            />
-          </div>
+                  {text}
+                </Button>
+              ))}
+            </div>
+          </motion.div>
         )}
-      </SheetContent>
-    </Sheet>
+      </AnimatePresence>
+    </header>
   );
 }
 
@@ -301,69 +379,67 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
   }
 
   return (
-    <header id="navbar" style={headerStyle}>
-      <nav className="grid grid-cols-[auto_1fr] items-center gap-5">
-        <Logo />
-        {isMobile ? (
-          <MobileNavbar
-            navbarData={navbarData}
-            colorScheme={navbarData.defaultColorScheme}
-          />
-        ) : (
-          <DesktopNavbar navbarData={navbarData} />
-        )}
-      </nav>
-    </header>
+    <>
+      {isMobile ? (
+        <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
+      ) : (
+        <header id="navbar" style={headerStyle}>
+          <Logo />
+          <nav className="grid grid-cols-[auto_1fr] items-center gap-5">
+            <DesktopNavbar navbarData={navbarData} />
+          </nav>
+        </header>
+      )}
+    </>
   );
 };
 
 function SkeletonMobileNavbar() {
   return (
-    <div className="md:hidden">
-      <div className="flex justify-end">
-        <div className="h-12 w-12 rounded-md bg-text animate-pulse" />
-      </div>
-    </div>
+    <header id="mobile-navbar" className="md:hidden animate-pulse">
+      <nav className="flex w-full items-center justify-between gap-5">
+        <Logo className="w-[50px]" />
+        <MobileMenuTrigger isOpen={false} setIsOpen={() => {}} disabled />
+      </nav>
+    </header>
   );
 }
 
 function SkeletonDesktopNavbar() {
   return (
-    <div className="hidden md:grid grid-cols-[1fr_auto] items-center gap-8 w-full">
-      <div className="justify-center flex max-w-max flex-1 items-center gap-2">
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div
-            key={`nav-item-skeleton-${index.toString()}`}
-            className="h-10 w-32 rounded bg-text/20 animate-pulse"
-          />
-        ))}
-      </div>
-
-      <div className="justify-self-end">
-        <div className="flex items-center gap-4">
+    <header className="header-skeleton hidden md:block">
+      <div className="grid grid-cols-[1fr_auto] items-center gap-8 w-full">
+        <div className="justify-center flex max-w-max flex-1 items-center gap-2">
+          <Logo />
           {Array.from({ length: 2 }).map((_, index) => (
             <div
-              key={`nav-button-skeleton-${index.toString()}`}
-              className="h-10 w-32 rounded-[10px] bg-text/20 animate-pulse"
+              key={`nav-item-skeleton-${index.toString()}`}
+              className="h-10 w-32 rounded bg-text/20 animate-pulse"
             />
           ))}
         </div>
+
+        <div className="justify-self-end">
+          <div className="flex items-center gap-4">
+            {Array.from({ length: 2 }).map((_, index) => (
+              <div
+                key={`nav-button-skeleton-${index.toString()}`}
+                className="h-10 w-32 rounded-[10px] bg-text/20 animate-pulse"
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
 
 export function NavbarSkeletonResponsive() {
   return (
-    <header className="header-skeleton">
-      <nav className="grid grid-cols-[auto_1fr] items-center gap-4">
-        <Logo />
-        <>
-          <SkeletonMobileNavbar />
-          <SkeletonDesktopNavbar />
-        </>
-      </nav>
-    </header>
+    <>
+      <SkeletonMobileNavbar />
+      <SkeletonDesktopNavbar />
+    </>
   );
 }
 

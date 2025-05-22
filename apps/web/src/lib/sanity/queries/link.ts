@@ -54,7 +54,7 @@ export const BUTTON_FRAGMENT = {
     .or(q.literal("underline")),
 } satisfies Selection;
 
-export type ButtonType = InferType<typeof BUTTON_FRAGMENT>;
+export type ButtonType = TypeFromSelection<typeof BUTTON_FRAGMENT>;
 
 export const NAVBAR_COLUMN_FRAGMENT = {
   _key: q.string(),

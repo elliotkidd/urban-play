@@ -1,10 +1,10 @@
 #navbar,
 .header-skeleton {
-  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-sm;
+  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-lg;
 
   position: fixed;
   z-index: 999;
-  top: 0.5rem;
+  top: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -15,4 +15,43 @@
   font-weight: 500;
 
   transition: all 0.5s ease-in-out;
+}
+
+#mobile-navbar {
+  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-lg;
+
+  nav {
+    height: 66px;
+    padding: 5px 5px 5px 20px;
+  }
+
+  position: fixed;
+  overflow: hidden;
+  z-index: 999;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  width: calc(100% - 2rem);
+}
+
+.menu-trigger-btn {
+  height: 54px;
+  width: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    @apply space-y-[7px];
+  }
+
+  .menu-trigger-btn-line {
+    @apply bg-nav-bar-text;
+
+    width: 30px;
+    height: 1px;
+    display: block;
+  }
 }

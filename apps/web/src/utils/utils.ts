@@ -25,9 +25,9 @@ export const accordionColors = [
   { hover: "hover:bg-theme-red", open: "data-[state=open]:bg-theme-red" },
 ];
 
-export const getColorSchemeStyle = (
+export const getColorSchemeStyle: (
   colorScheme: ColorSchemeFragment | null,
-) => {
+) => React.CSSProperties = (colorScheme) => {
   if (!colorScheme) return {};
 
   if (

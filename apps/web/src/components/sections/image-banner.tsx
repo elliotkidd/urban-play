@@ -22,7 +22,7 @@ export function ImageBannerSection({
       )}
       <div
         className={twMerge(
-          "wrapper py-fluid-xs relative overflow-hidden",
+          "wrapper py-fluid-xs relative",
           !containImage && "flex h-full items-start",
           smallWrapper && "wrapper--small",
         )}
@@ -39,7 +39,7 @@ export function ImageBannerSection({
         {!containImage && (title || richText) && (
           <motion.div
             {...sectionAnimationConfig}
-            className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid"
+            className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid lg:sticky top-24"
           >
             <h2 className="h3 no-underline normal-case text-lg">{title}</h2>
             <RichText richText={richText} />

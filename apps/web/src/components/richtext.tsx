@@ -114,7 +114,12 @@ export function RichText<T>({
   if (!richText) return null;
 
   return (
-    <div className={twMerge("prose prose-headings:scroll-m-24", className)}>
+    <div
+      className={twMerge(
+        "prose prose-headings:scroll-m-24 text-balance",
+        className,
+      )}
+    >
       <PortableText
         value={richText as unknown as PortableTextBlock[]}
         components={components}

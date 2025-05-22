@@ -144,7 +144,7 @@ export default function TwoColumnContentSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs grid gap-4",
+        "wrapper grid gap-4",
         smallWrapper && "wrapper--small",
         columnRatio === "5050" && "grid-cols-1 lg:grid-cols-2",
         (columnRatio === "2575" || columnRatio === "7525") &&
@@ -152,6 +152,7 @@ export default function TwoColumnContentSection({
         alignCentre && "items-center",
         padding === "md" && "py-fluid-md",
         padding === "lg" && "py-fluid-lg",
+        padding !== "md" && padding !== "lg" && "py-fluid-xs",
       )}
     >
       {left &&
