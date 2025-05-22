@@ -51,16 +51,22 @@ const TRANSITION_WITHOUT_DELAY = {
   duration: DURATION,
 };
 
+const SPRING_TRANSITION = {
+  type: "spring",
+  bounce: 0.6,
+  visualDuration: 0.35,
+};
+
 const menuTriggerLineTopVariants = {
   open: {
     rotate: -45,
     top: 8,
-    transition: TRANSITION_WITH_DELAY,
+    transition: { ...TRANSITION_WITH_DELAY, ...SPRING_TRANSITION },
   },
   closed: {
     rotate: 0,
     top: 0,
-    transition: TRANSITION_WITHOUT_DELAY,
+    transition: { ...TRANSITION_WITHOUT_DELAY, ...SPRING_TRANSITION },
   },
 };
 
@@ -79,12 +85,12 @@ const menuTriggerLineBottomVariants = {
   open: {
     rotate: 45,
     bottom: 8,
-    transition: TRANSITION_WITH_DELAY,
+    transition: { ...TRANSITION_WITH_DELAY, ...SPRING_TRANSITION },
   },
   closed: {
     rotate: 0,
     bottom: 0,
-    transition: TRANSITION_WITHOUT_DELAY,
+    transition: { ...TRANSITION_WITHOUT_DELAY, ...SPRING_TRANSITION },
   },
 };
 
