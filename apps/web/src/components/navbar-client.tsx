@@ -39,6 +39,55 @@ import { useTransitionRouter } from "next-view-transitions";
 import PageAnimation from "./PageAnimation";
 import { AnimatePresence, motion } from "motion/react";
 
+const DURATION = 0.35;
+const DELAY = 0.15;
+
+const TRANSITION_WITH_DELAY = {
+  duration: DURATION,
+  delay: DELAY,
+};
+
+const TRANSITION_WITHOUT_DELAY = {
+  duration: DURATION,
+};
+
+const menuTriggerLineTopVariants = {
+  open: {
+    rotate: -45,
+    top: 8,
+    transition: TRANSITION_WITH_DELAY,
+  },
+  closed: {
+    rotate: 0,
+    top: 0,
+    transition: TRANSITION_WITHOUT_DELAY,
+  },
+};
+
+const menuTriggerLineMiddleVariants = {
+  open: {
+    scale: 0,
+    transition: TRANSITION_WITHOUT_DELAY,
+  },
+  closed: {
+    scale: 1,
+    transition: TRANSITION_WITH_DELAY,
+  },
+};
+
+const menuTriggerLineBottomVariants = {
+  open: {
+    rotate: 45,
+    bottom: 8,
+    transition: TRANSITION_WITH_DELAY,
+  },
+  closed: {
+    rotate: 0,
+    bottom: 0,
+    transition: TRANSITION_WITHOUT_DELAY,
+  },
+};
+
 function MobileMenuTrigger({
   isOpen,
   setIsOpen,
@@ -56,10 +105,29 @@ function MobileMenuTrigger({
       disabled={disabled}
       {...props}
     >
-      <div>
-        <span className="menu-trigger-btn-line"></span>
-        <span className="menu-trigger-btn-line"></span>
-        <span className="menu-trigger-btn-line"></span>
+      <div className="relative flex gap-[7px] flex-col">
+        <motion.span
+          className="menu-trigger-btn-line"
+          initial={{ rotate: 0, top: 0 }}
+          animate={isOpen ? "open" : "closed"}
+          variants={menuTriggerLineTopVariants}
+        ></motion.span>
+        <motion.span
+          className="menu-trigger-btn-line"
+          style={{
+            originX: "right",
+            top: "50%",
+          }}
+          initial={{ scale: 0 }}
+          animate={isOpen ? "open" : "closed"}
+          variants={menuTriggerLineMiddleVariants}
+        ></motion.span>
+        <motion.span
+          initial={{ rotate: 0, bottom: 0 }}
+          animate={isOpen ? "open" : "closed"}
+          variants={menuTriggerLineBottomVariants}
+          className="menu-trigger-btn-line relative"
+        ></motion.span>
       </div>
       <span className="sr-only">Open menu</span>
     </button>

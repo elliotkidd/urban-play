@@ -37,18 +37,22 @@
 }
 
 .menu-trigger-btn {
-  height: 54px;
-  width: 42px;
+  height: 42px;
+  width: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
 
   div {
-    @apply space-y-[7px];
+    @apply relative;
+
+    width: 30px;
+    height: 17px;
+    display: block;
   }
 
   .menu-trigger-btn-line {
-    @apply bg-nav-bar-text;
+    @apply bg-nav-bar-text absolute;
 
     width: 30px;
     height: 1px;
