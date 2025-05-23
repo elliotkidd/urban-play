@@ -38,7 +38,7 @@
   @apply text-lg font-bold underline;
 }
 
-button[type="submit"] {
+.submit-button {
   @apply bg-primary-button text-white font-medium justify-start p-4 rounded-lg duration-500 cursor-pointer;
 
   &:disabled {

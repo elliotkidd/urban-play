@@ -15,6 +15,7 @@ import { NavbarServer } from "@/components/navbar";
 import { NavbarSkeletonResponsive } from "@/components/navbar-client";
 import { Suspense } from "react";
 import { ViewTransitions } from "next-view-transitions";
+import { Toaster } from "@/components/ui/toaster";
 
 export default async function RootLayout({
   children,
@@ -62,6 +63,7 @@ export default async function RootLayout({
             <FooterServer />
             <SanityLive />
             {/* <LoadInScreen /> */}
+            <Toaster />
           </Providers>
         </body>
       </html>

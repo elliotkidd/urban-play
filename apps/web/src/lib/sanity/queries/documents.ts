@@ -127,6 +127,7 @@ export const footerQuery = q("*")
         contactDetails: q("contactDetails").grab({
           _key: q.string(),
           name: q.string(),
+          email: q.string(),
           phone: q.string(),
           address: q.string(),
         }),
