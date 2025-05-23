@@ -10,7 +10,7 @@ export default function SectionHeader({
   return (
     <div
       className={twMerge(
-        "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid",
+        "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-xs",
         className,
       )}
     >

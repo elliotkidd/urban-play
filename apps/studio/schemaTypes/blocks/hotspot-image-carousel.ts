@@ -2,7 +2,7 @@ import { InspectionPanel as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionSettings } from "../common";
+import { sectionHeaderField, sectionSettings } from "../common";
 
 export const hotspotImageCarousel = defineType({
   name: "hotspotImageCarousel",
@@ -11,6 +11,7 @@ export const hotspotImageCarousel = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    sectionHeaderField,
     defineField({
       name: "images",
       type: "array",

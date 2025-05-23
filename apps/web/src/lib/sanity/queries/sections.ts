@@ -485,8 +485,10 @@ export type ImageWithHotspotProps = TypeFromSelection<
 const IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT = {
   _type: q.literal("imageWithProductHotspots"),
   _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
   images: q("images[]", { isArray: true }).grab(IMAGE_WITH_HOTSPOT_FRAGMENT),
   hotspots: q("hotspots[]", { isArray: true }).grab(SPOT_FRAGMENT),
+  ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
 export type ImageWithProductHotspotsProps = TypeFromSelection<

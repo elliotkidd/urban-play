@@ -216,9 +216,9 @@ const menuVariants = {
   open: {
     height: "calc(100vh - 8rem)",
     transition: {
-      duration: 0.5,
+      visualDuration: 0.5,
       type: "spring",
-      bounce: 0.5,
+      bounce: 0.4,
     },
   },
   closed: {
@@ -239,7 +239,7 @@ const itemVariants = {
     x: 0,
     transition: {
       delay: 0.35 + index * 0.1,
-      duration: 0.5,
+      visualDuration: 0.5,
       type: "spring",
       bounce: 0.5,
     },
@@ -251,7 +251,7 @@ const itemVariants = {
       delay: (totalItems - index - 1) * 0.1,
       duration: 0.5,
       type: "tween",
-      ease: "easeOut",
+      ease: "backInOut",
     },
   }),
 };
@@ -303,30 +303,14 @@ function MobileNavbar({
                           variants={itemVariants}
                           key={`column-link-${name}-${_key}`}
                         >
-                          <Link
+                          <NavbarColumnLink
                             key={`column-link-${name}-${_key}`}
-                            href={url?.href ?? "#"}
-                            target={url?.openInNewTab ? "_blank" : "_self"}
-                            className="block h3"
-                          >
-                            {name}
-                          </Link>
+                            column={column}
+                            className="h3 block"
+                          />
                         </motion.li>
                       );
                     }
-                    // return (
-                    //   <Accordion
-                    //     type="single"
-                    //     collapsible
-                    //     className="w-full"
-                    //     key={column._key}
-                    //   >
-                    //     <MobileNavbarAccordionColumn
-                    //       column={column}
-                    //       setIsOpen={setIsOpen}
-                    //     />
-                    //   </Accordion>
-                    // );
                   },
                 )}
             </ul>
@@ -350,8 +334,10 @@ function MobileNavbar({
 
 function NavbarColumnLink({
   column,
+  className,
 }: {
   column: NavBarLinkType | NavBarColumnType;
+  className?: string;
 }) {
   if (column._type !== "navbarLink") return null;
 
@@ -368,6 +354,7 @@ function NavbarColumnLink({
         });
       }}
       target={url?.openInNewTab ? "_blank" : "_self"}
+      className={twMerge("text-nowrap", className)}
     >
       {name}
     </Link>
@@ -416,8 +403,8 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
   const { columns, buttons } = navbarData ?? {};
 
   return (
-    <div className="grid grid-cols-[1fr_auto] items-center gap-8">
-      <NavigationMenu className="space-x-4">
+    <>
+      <NavigationMenu className="space-x-5">
         {columns?.map((column: NavBarColumnType | NavBarLinkType) => {
           return column._type === "column" ? (
             <NavbarColumn key={`nav-${column._key}`} column={column} />
@@ -427,7 +414,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
         })}
       </NavigationMenu>
       {buttons && buttons.length > 0 && (
-        <div className="justify-self-end flex items-center gap-4">
+        <div className="justify-self-end flex items-center gap-4 ml-5">
           <SanityButtons
             buttons={buttons}
             className="flex items-center gap-4"
@@ -435,7 +422,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -458,10 +445,8 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
         <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
       ) : (
         <header id="navbar" style={headerStyle}>
-          <Logo />
-          <nav className="grid grid-cols-[auto_1fr] items-center gap-5">
-            <DesktopNavbar navbarData={navbarData} />
-          </nav>
+          <Logo className="w-[30px] flex items-center mr-5" />
+          <DesktopNavbar navbarData={navbarData} />
         </header>
       )}
     </>
