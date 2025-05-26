@@ -130,6 +130,7 @@ function NewsletterSignup() {
         resolve(true);
       }, 2000);
     });
+    form.reset();
   };
 
   return (
@@ -176,44 +177,23 @@ function NewsletterSignup() {
 export function FooterSection({ data }: { data: FooterType }) {
   const { colorScheme, settings, subtitle } = data;
   const { socialLinks, contactDetails } = settings;
-  const year = new Date().getFullYear();
-  const ref = useRef<HTMLElement>(null);
-
-  const inView = useInView(ref);
-
-  useEffect(() => {
-    if (inView) {
-      const navbar = document.getElementById("navbar");
-      if (navbar) {
-        navbar.classList.add("opacity-0");
-        navbar.classList.add("pointer-events-none");
-      }
-    } else {
-      const navbar = document.getElementById("navbar");
-      if (navbar) {
-        navbar.classList.remove("opacity-0");
-        navbar.classList.remove("pointer-events-none");
-      }
-    }
-  }, [inView]);
 
   return (
     <footer
-      ref={ref}
-      className="h-[60dvh]"
+      className="h-screen lg:h-[60dvh]"
       style={{
         clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0)",
         ...getColorSchemeStyle(colorScheme),
       }}
     >
-      <div className="h-[60dvh] w-full bottom-0 fixed bg-background text-text">
-        <div className="wrapper py-fluid-xs flex flex-col justify-between h-full">
-          <div className="grid grid-cols-6 gap-fluid-sm">
+      <div className="h-screen lg:h-[60dvh] w-full bottom-0 fixed bg-background text-text flex">
+        <div className="wrapper py-fluid-xs flex flex-col justify-between flex-1 mt-fluid-lg">
+          <div className="grid lg:grid-cols-6 gap-fluid-sm">
             <FooterLogo />
             <ContactDetails data={contactDetails} />
             <SocialLinks data={socialLinks} />
           </div>
-          <div className="grid grid-cols-6 gap-fluid-sm">
+          <div className="grid lg:grid-cols-6 gap-fluid-sm">
             <NewsletterSignup />
             <div className="lg:col-span-3 lg:col-start-4 prose">
               <p className="lead">{subtitle}</p>

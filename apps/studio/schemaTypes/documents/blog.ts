@@ -88,6 +88,13 @@ export const blog = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
+      name: "solutions",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "solution" }] }],
+      title: "Solutions",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
       name: "image",
       title: "Image",
       type: "image",

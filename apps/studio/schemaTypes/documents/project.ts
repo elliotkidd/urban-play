@@ -1,7 +1,6 @@
 import { defineField, defineType } from "sanity";
 
 import { GROUP, GROUPS } from "../../utils/constant";
-import { richTextField } from "../common";
 import { seoFields } from "../../utils/seo-fields";
 import { ogFields } from "../../utils/og-fields";
 import { PathnameFieldComponent } from "../../components/slug-field-component";
@@ -42,44 +41,6 @@ export const project = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
-      name: "hero",
-      title: "Hero",
-      type: "hero",
-      group: GROUP.MAIN_CONTENT,
-      options: {
-        collapsible: true,
-      },
-    }),
-    defineField({
-      name: "description",
-      type: "text",
-      title: "Description",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
-      name: "client",
-      type: "string",
-      title: "Client",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
-      name: "construction",
-      type: "string",
-      title: "Construction",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
-      name: "status",
-      type: "string",
-      title: "Status",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
-      ...richTextField,
-      title: "Content",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
       name: "pageBuilder",
       type: "pageBuilder",
       title: "Page Builder",
@@ -91,12 +52,14 @@ export const project = defineType({
   preview: {
     select: {
       title: "title",
-      media: "hero.image",
+      media: "seoImage",
+      solutions: "solutions",
     },
-    prepare: ({ title, media }) => {
+    prepare: ({ title, media, solutions }) => {
       return {
         title,
         media,
+        subtitle: solutions?.map((solution: any) => solution.title).join(", "),
       };
     },
   },

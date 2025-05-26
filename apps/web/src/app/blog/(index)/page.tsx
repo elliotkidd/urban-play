@@ -31,11 +31,7 @@ async function fetchBlogPosts(
   indexTo: number,
 ): Promise<{ data: { blogs: PostTileType[]; total: number } }> {
   return await sanityFetch({
-    query: blogsQuery,
-    params: {
-      indexFrom,
-      indexTo,
-    },
+    query: blogsQuery.slice(indexFrom, indexTo).query,
   });
 }
 
@@ -47,7 +43,8 @@ export default async function BlogIndexPage({
   const { page } = await searchParams;
   const currentPage = parseInt(page, 10) || 1;
 
-  const POSTS_PER_PAGE = COL_SPANS.length;
+  // const POSTS_PER_PAGE = COL_SPANS.length;
+  const POSTS_PER_PAGE = 2;
 
   const indexFrom = (currentPage - 1) * POSTS_PER_PAGE;
   const indexTo = indexFrom + POSTS_PER_PAGE;

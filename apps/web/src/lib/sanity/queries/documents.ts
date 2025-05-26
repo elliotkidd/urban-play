@@ -213,6 +213,8 @@ export const blogsQuery = `{
   "total": count(*[_type == "blog"])
 }`;
 
+export type Blogs = InferType<typeof blogsQuery>;
+
 export const blogBySolutionQuery = `{
   "blogs": *[_type == "blog" && solutions[]->slug.current == $slug][$indexFrom...$indexTo] {
    _id,

@@ -37,46 +37,11 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
 
   if (!data) notFound();
 
-  const {
-    title,
-    hero,
-    description,
-    richText,
-    client,
-    construction,
-    status,
-    pageBuilder,
-    relatedProjects,
-    _id,
-    _type,
-  } = data ?? {};
+  const { title, pageBuilder, relatedProjects, _id, _type } = data ?? {};
 
   return (
     <main className="bg-background text-text">
       <h1 className="sr-only">{title}</h1>
-      {hero && (
-        <section
-          style={getColorSchemeStyle(hero.colorScheme)}
-          className="text-text"
-        >
-          <HeroBlock {...hero} />
-        </section>
-      )}
-
-      <div className="wrapper py-fluid-xs">
-        <div className="flex w-full flex-col gap-2 lg:flex-row justify-between prose mb-fluid-lg">
-          <p className="lead max-w-section-heading">{description}</p>
-          <div className="not-prose grid grid-cols-2 mr-fluid text-xs leading-none">
-            <span className="opacity-50 block">Client</span>
-            <span className="block">{client}</span>
-            <span className="opacity-50 block">Construction</span>
-            <span className="block">{construction}</span>
-            <span className="opacity-50 block">Status</span>
-            <span className="block">{status}</span>
-          </div>
-        </div>
-        {richText && <RichText richText={richText} className="max-w-p-lg" />}
-      </div>
       <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
 
       {relatedProjects && (

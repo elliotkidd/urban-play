@@ -1,11 +1,10 @@
 "use server";
 
 import { sanityFetch } from "@/lib/sanity/live";
-import { projectsQuery } from "@/lib/sanity/queries/documents";
+import { Projects, projectsQuery } from "@/lib/sanity/queries/documents";
 import { ProjectsGrid } from "../components/ProjectsGrid";
-import { HeroBlock } from "@/components/sections/hero";
 
-async function fetchProjects() {
+async function fetchProjects(): Promise<{ data: Projects }> {
   return await sanityFetch({
     query: projectsQuery.query,
   });
