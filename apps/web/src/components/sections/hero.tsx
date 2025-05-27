@@ -36,19 +36,8 @@ export function HeroBlock({
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
-      <div
-        className="wrapper py-fluid-xs h-full flex flex-col justify-end relative z-[1]"
-        // initial={{
-        //   opacity: 0,
-        // }}
-        // animate={{
-        //   opacity: 1,
-        // }}
-        // transition={{
-        //   duration: 0.5,
-        //   ease: "easeInOut",
-        // }}
-      >
+      <div className="absolute inset-0 bg-black/20" />
+      <div className="wrapper py-fluid-xs h-full flex flex-col justify-end relative z-[1]">
         <RichText
           richText={richText}
           className="max-w-p prose-white mb-fluid-xs"
