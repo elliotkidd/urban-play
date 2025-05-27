@@ -39,7 +39,10 @@ export default function PostTile({
   const { image, title, description } = post;
 
   return (
-    <Link href={processUrl(post)} className={twMerge("block", className)}>
+    <Link
+      href={processUrl(post)}
+      className={twMerge("block not-prose", className)}
+    >
       <div
         className={twMerge(
           "relative mb-2 rounded-xl overflow-hidden",

@@ -16,10 +16,7 @@ const components: Partial<PortableTextReactComponents> = {
     h2: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h2
-          id={slug}
-          className="scroll-m-20 pb-2 text-3xl font-semibold first:mt-0"
-        >
+        <h2 id={slug} className="scroll-m-20 first:mt-0">
           {children}
         </h2>
       );
@@ -27,7 +24,7 @@ const components: Partial<PortableTextReactComponents> = {
     h3: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h3 id={slug} className="scroll-m-20 text-2xl font-semibold">
+        <h3 id={slug} className="scroll-m-20 font-semibold">
           {children}
         </h3>
       );
@@ -35,7 +32,7 @@ const components: Partial<PortableTextReactComponents> = {
     h4: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h4 id={slug} className="scroll-m-20 text-xl font-semibold">
+        <h4 id={slug} className="scroll-m-20 font-semibold">
           {children}
         </h4>
       );
@@ -43,7 +40,7 @@ const components: Partial<PortableTextReactComponents> = {
     h5: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h5 id={slug} className="scroll-m-20 text-lg font-semibold">
+        <h5 id={slug} className="scroll-m-20 font-semibold">
           {children}
         </h5>
       );

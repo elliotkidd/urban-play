@@ -336,16 +336,18 @@ export const blogSlugPageQuery = q("*")
     slug: q.slug("slug"),
     image: q("image").grab(IMAGE_FRAGMENT),
     richText: q("richText[]").select(RICHTEXT_BLOCKS),
+    solutions: q("solutions[]", { isArray: true })
+      .deref()
+      .grab(LINK_REFERENCE_FRAGMENT),
     description: q.string(),
     publishedAt: q.string(),
-    authors: q("authors[]", { isArray: true })
-      .deref()
-      .grab({
-        _id: q.string(),
-        name: q.string(),
-        image: q("image").grab(IMAGE_FRAGMENT),
-      }),
+    colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
     pageBuilder: SECTIONS_FRAGMENT,
+    relatedBlogs: q("*", { isArray: true })
+      .filterByType("blog")
+      .filter(`!(slug.current == $slug)`)
+      .filter("count((solutions[].ref)[@ in ^.solutions[].ref]) > 0")
+      .grab(POST_TILE_FRAGMENT),
   });
 
 export type BlogSlugPageType = InferType<typeof blogSlugPageQuery>;

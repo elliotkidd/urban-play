@@ -15,7 +15,7 @@ export default function ProjectTile({
   staggerDelay = 0,
   showDescription = false,
 }: {
-  project: TileType & { seoImage: ImageType };
+  project: TileType & { seoImage?: ImageType };
   imageAspectRatio?: "square" | "landscape" | "portrait" | "video";
   className?: string;
   index?: number;

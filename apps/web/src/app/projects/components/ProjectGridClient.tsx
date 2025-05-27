@@ -2,20 +2,7 @@
 
 import ProjectTile from "@/components/project-tile";
 import { ImageType, TileType } from "@/lib/sanity/queries/fragments";
-
-export const COL_SPANS = [
-  "lg:col-span-4",
-  "lg:col-span-8",
-  "lg:col-span-3",
-  "lg:col-span-6",
-  "lg:col-span-3",
-  "lg:col-span-3",
-  "lg:col-span-3",
-  "lg:col-span-6",
-  "lg:col-span-3",
-  "lg:col-span-6",
-  "lg:col-span-3",
-];
+import { PROJECT_GRID_COL_SPANS } from "@/utils/utils";
 
 export default function ProjectGridClient({
   projects,
@@ -29,7 +16,7 @@ export default function ProjectGridClient({
           <ProjectTile
             key={`${project._id}-${index}-project-tile`}
             project={project}
-            className={COL_SPANS[index]}
+            className={PROJECT_GRID_COL_SPANS[index]}
             index={index}
             showDescription
             staggerDelay={0}

@@ -1,15 +1,12 @@
 "use client";
 
-import { TileType } from "@/lib/sanity/queries/fragments";
+import { PostTileType } from "@/lib/sanity/queries/fragments";
 import { Swiper, SwiperSlide } from "swiper/react";
+import PostTile from "./post-tile";
+
 import "swiper/css";
-import ProjectTile from "./project-tile";
 
-type Props = {
-  projects: TileType[];
-};
-
-function ProjectsSwiper({ projects }: Props) {
+export function BlogSwiper({ posts }: { posts: PostTileType[] }) {
   return (
     <Swiper
       slidesPerView={1.2}
@@ -26,13 +23,13 @@ function ProjectsSwiper({ projects }: Props) {
         },
       }}
       style={{ overflow: "visible" }}
+      className="not-prose"
     >
-      {projects.map((project) => (
-        <SwiperSlide key={project._id}>
-          <ProjectTile project={project} />
+      {posts.map((post) => (
+        <SwiperSlide key={post._id}>
+          <PostTile post={post} image_aspect="portrait" />
         </SwiperSlide>
       ))}
     </Swiper>
   );
 }
-export default ProjectsSwiper;
