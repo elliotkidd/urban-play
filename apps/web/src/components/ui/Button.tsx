@@ -19,7 +19,7 @@ export const Button = forwardRef(
       as?: React.ElementType;
       className?: string;
       children: any;
-      variant?: "default" | "primary" | "outline" | "inline";
+      variant?: "default" | "primary" | "secondary" | "outline" | "inline";
       size?: "default" | "icon";
       carat?: boolean;
       prependIcon?: React.ReactNode;
@@ -33,6 +33,7 @@ export const Button = forwardRef(
     const variants = {
       default: `btn btn--default`,
       primary: `btn btn--primary`,
+      secondary: `btn btn--secondary`,
       outline: `btn btn--outline`,
       inline: "btn--inline",
     };

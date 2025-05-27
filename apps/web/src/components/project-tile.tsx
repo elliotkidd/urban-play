@@ -1,25 +1,28 @@
 "use client";
 
-import { TileType } from "@/lib/sanity/queries/fragments";
+import { ImageType, TileType } from "@/lib/sanity/queries/fragments";
 import Link from "./link";
 import SanityImage from "./sanity-image";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { childVars, descriptionVariants, titleVariants } from "@/lib/motion";
+
 export default function ProjectTile({
   project,
   imageAspectRatio = "square",
   className,
   index = 0,
   staggerDelay = 0,
+  showDescription = false,
 }: {
-  project: TileType;
+  project: TileType & { seoImage: ImageType };
   imageAspectRatio?: "square" | "landscape" | "portrait" | "video";
   className?: string;
   index?: number;
   staggerDelay?: number;
+  showDescription?: boolean;
 }) {
-  const { image, solutions, title, description, slug } = project;
+  const { image, solutions, title, shortDescription, slug, seoImage } = project;
 
   var imageAspectRatioClass: string;
 
@@ -51,7 +54,7 @@ export default function ProjectTile({
           )}
         >
           <SanityImage
-            src={image}
+            src={image || seoImage}
             className="object-cover inset-0 w-full h-full"
           />
           {solutions && solutions.length > 0 && (
@@ -66,12 +69,14 @@ export default function ProjectTile({
         >
           {title}
         </motion.h3>
-        <motion.p
-          variants={descriptionVariants(index * staggerDelay + 0.5)}
-          className="text-sm line-clamp-2 max-w-[390px]"
-        >
-          {description}
-        </motion.p>
+        {showDescription && shortDescription && (
+          <motion.p
+            variants={descriptionVariants(index * staggerDelay + 0.5)}
+            className="text-sm line-clamp-2 max-w-[520px] opacity-60"
+          >
+            {shortDescription}
+          </motion.p>
+        )}
       </Link>
     </motion.li>
   );

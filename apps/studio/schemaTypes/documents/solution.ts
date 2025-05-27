@@ -1,5 +1,4 @@
 import { defineField, defineType } from "sanity";
-import { slugField } from "../common";
 import { GROUP, GROUPS } from "../../utils/constant";
 
 export const solution = defineType({
@@ -14,7 +13,13 @@ export const solution = defineType({
       title: "Title",
       group: GROUP.MAIN_CONTENT,
     }),
-    slugField,
+    defineField({
+      name: "slug",
+      type: "slug",
+      title: "Slug",
+      group: GROUP.MAIN_CONTENT,
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "image",
       type: "image",

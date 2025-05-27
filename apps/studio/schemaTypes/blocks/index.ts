@@ -23,6 +23,7 @@ import { video } from "./video";
 import { pageHeader } from "./pageHeader";
 import partnersRollover from "./partners-rollover";
 import { hotspotImageCarousel } from "./hotspot-image-carousel";
+import { grid } from "./grid";
 
 export const pageBuilderBlocks = [
   hero,
@@ -50,4 +51,5 @@ export const pageBuilderBlocks = [
   pageHeader,
   partnersRollover,
   hotspotImageCarousel,
+  grid,
 ];

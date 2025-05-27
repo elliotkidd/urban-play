@@ -14,8 +14,6 @@ export const team = defineType({
       name: "title",
       type: "string",
       title: "Title",
-      description: "The large text that is the primary focus of the block",
-      validation: (Rule) => Rule.required(),
       group: GROUP.MAIN_CONTENT,
     }),
     ...sectionSettings,

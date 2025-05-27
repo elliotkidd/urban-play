@@ -7,7 +7,7 @@ import { type ComponentType, type FC } from "react";
 import { dataset, projectId, studioUrl } from "@/lib/sanity/api";
 
 import { CTABlock } from "./sections/cta";
-import { AwardsAccordion } from "./sections/awards-accordion";
+import { AwardsSection } from "./sections/awards";
 import { HeroBlock } from "./sections/hero";
 import { ImageLinkCards } from "./sections/image-link-cards";
 import ParagraphSection from "./sections/paragraph";
@@ -32,10 +32,11 @@ import VideoSection from "./sections/Video";
 import PageHeader from "./sections/PageHeader";
 import PartnersRollover from "./sections/PartnersRollover";
 import HotspotImageCarousel from "./sections/HotspotImageCarousel";
+import Grid from "./sections/Grid";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
-  awardsAccordion: AwardsAccordion,
+  awardsAccordion: AwardsSection,
   hero: HeroBlock,
   imageLinkCards: ImageLinkCards,
   paragraph: ParagraphSection,
@@ -59,6 +60,7 @@ const SECTION_COMPONENTS: Record<string, FC<any>> = {
   pageHeader: PageHeader,
   partnersRollover: PartnersRollover,
   hotspotImageCarousel: HotspotImageCarousel,
+  grid: Grid,
 } as const;
 
 type SectionType = keyof typeof SECTION_COMPONENTS;

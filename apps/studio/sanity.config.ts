@@ -18,6 +18,7 @@ import { schemaTypes } from "./schemaTypes";
 import { structure } from "./structure";
 import { createPageTemplate } from "./utils/helper";
 import { groqdPlaygroundTool } from "groqd-playground";
+import { visionTool } from "@sanity/vision";
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? "";
 const dataset = process.env.SANITY_STUDIO_DATASET;

@@ -4,7 +4,30 @@ import processUrl from "@/utils/processUrl";
 import Link from "./link";
 import { twMerge } from "tailwind-merge";
 
-function PostTile({
+export function PostTileSkeleton({
+  imageAspect,
+  className,
+}: {
+  imageAspect: "square" | "portrait" | "landscape";
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <div
+        className={twMerge(
+          "relative mb-2 rounded-xl overflow-hidden animate-pulse bg-gray-200",
+          imageAspect === "square" && "aspect-square",
+          imageAspect === "portrait" && "aspect-portrait",
+          imageAspect === "landscape" && "aspect-landscape",
+        )}
+      />
+      <div className="h-4 w-full mb-4 bg-gray-200 rounded-md animate-pulse" />
+      <div className="h-8 w-2/3 bg-gray-200 rounded-md animate-pulse" />
+    </div>
+  );
+}
+
+export default function PostTile({
   post,
   image_aspect,
   className,
@@ -35,4 +58,3 @@ function PostTile({
     </Link>
   );
 }
-export default PostTile;

@@ -3,13 +3,10 @@ import SectionHeader from "../section-header";
 import { twMerge } from "tailwind-merge";
 import SanityImage from "../sanity-image";
 import Link from "next/link";
-import {
-  sectionAnimationConfig,
-  descriptionVariants,
-  titleVariants,
-} from "@/lib/motion";
+import { sectionAnimationConfig, titleVariants } from "@/lib/motion";
 import { motion } from "motion/react";
 import { Fragment } from "react";
+import { Button } from "../ui/Button";
 
 function SolutionsGridSection({
   sectionHeader,
@@ -36,8 +33,7 @@ function SolutionsGridSection({
                   className="object-cover w-full h-full inset-0"
                 />
               </div>
-              <div className="flex flex-col justify-between gap-8">
-                <div />
+              <div className="flex flex-col justify-center gap-8">
                 <div className="prose">
                   <h3 className="text-3xl uppercase">{solution.title}</h3>
                   <motion.p
@@ -49,10 +45,10 @@ function SolutionsGridSection({
                 </div>
                 {solution.slug && (
                   <Link
-                    href={`/projects?solution=${solution.slug}`}
+                    href={`/projects?tags=${solution.slug}`}
                     className="link"
                   >
-                    See {solution.title} Projects
+                    <Button variant="default">View Projects</Button>
                   </Link>
                 )}
               </div>

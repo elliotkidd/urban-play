@@ -41,6 +41,12 @@ export const project = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
+      name: "shortDescription",
+      type: "text",
+      title: "Short Description",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
       name: "pageBuilder",
       type: "pageBuilder",
       title: "Page Builder",

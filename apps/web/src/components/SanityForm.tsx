@@ -128,7 +128,7 @@ export default function SanityForm({
     <Form {...formContext}>
       <form
         onSubmit={handleSubmit(submit)}
-        className={cn("grid lg:grid-cols-2 gap-4", className)}
+        className={cn("grid lg:grid-cols-2 gap-2 ", className)}
       >
         {form.map(
           (
@@ -195,7 +195,6 @@ export default function SanityForm({
                       <FormItem
                         className={cn(columns === 2 && "lg:col-span-2")}
                       >
-                        <FormLabel>{label}</FormLabel>
                         <FormControl>
                           <Component
                             {...field}

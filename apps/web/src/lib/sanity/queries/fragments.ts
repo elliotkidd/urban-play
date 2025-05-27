@@ -64,7 +64,7 @@ export const SEO_FRAGMENT: any = {
 export const TILE_FRAGMENT = {
   ...LINK_REFERENCE_FRAGMENT,
   image: q("seoImage").grab(IMAGE_FRAGMENT),
-  description: q.string(),
+  shortDescription: q.string(),
   solutions: q("solutions[]", { isArray: true }).deref().grab({
     _id: q.string(),
     title: q.string(),

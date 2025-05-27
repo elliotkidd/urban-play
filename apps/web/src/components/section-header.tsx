@@ -16,7 +16,11 @@ export default function SectionHeader({
     >
       {title && <h2 className="max-w-section-heading text-balance">{title}</h2>}
       {buttons && (
-        <SanityButtons buttons={buttons} className="flex items-center gap-2" />
+        <SanityButtons
+          buttons={buttons}
+          buttonSize="default"
+          className="flex items-center gap-2"
+        />
       )}
     </div>
   );

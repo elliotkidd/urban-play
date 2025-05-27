@@ -192,11 +192,12 @@ const AWARDS_ACCORDION_FRAGMENT = {
   _type: q.literal("awardsAccordion"),
   _key: q.string(),
   title: q.string(),
+  categories: q.number(),
   awards: q("*", { isArray: true }).filterByType("award").grab({
     _id: q.string(),
     _key: q.string(),
     title: q.string(),
-    awardType: q.string(),
+    forText: q.string(),
     year: q.string(),
   }),
   ...SECTION_SETTINGS_FRAGMENT,
@@ -495,6 +496,19 @@ export type ImageWithProductHotspotsProps = TypeFromSelection<
   typeof IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT
 >;
 
+const GRID_FRAGMENT = {
+  _type: q.literal("grid"),
+  _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  items: q("items[]", { isArray: true }).grab({
+    _key: q.string(),
+    heading: q.string(),
+    description: q.string(),
+  }),
+} satisfies Selection;
+
+export type GridProps = TypeFromSelection<typeof GRID_FRAGMENT>;
+
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
@@ -520,6 +534,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'pageHeader'": PAGE_HEADER_FRAGMENT,
   "_type == 'partnersRollover'": PARTNERS_ROLLOVER_FRAGMENT,
   "_type == 'hotspotImageCarousel'": IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT,
+  "_type == 'grid'": GRID_FRAGMENT,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

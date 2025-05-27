@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import SectionHeader from "../section-header";
 import SanityImage from "../sanity-image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function Process({
   steps,
@@ -14,18 +14,18 @@ function Process({
   const scrollRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
 
+  const [scrollAmount, setScrollAmount] = useState(0);
+
+  useEffect(() => {
+    const horizontalWidth = horizontalRef.current?.offsetWidth ?? 0;
+    const scrollWidth = scrollRef.current?.offsetWidth ?? 0;
+    setScrollAmount(horizontalWidth - scrollWidth);
+  }, [scrollRef, horizontalRef]);
+
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"],
   });
-
-  const scrollAmount = (() => {
-    const horizontalWidth = horizontalRef.current?.offsetWidth ?? 0;
-    const scrollWidth = scrollRef.current?.offsetWidth ?? 0;
-    return horizontalWidth - scrollWidth;
-  })();
-
-  console.log(scrollAmount);
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollAmount]);
 
@@ -36,7 +36,7 @@ function Process({
       </div>
       <div
         className={twMerge("relative overflow-visible")}
-        style={{ height: steps.length * 100 + "vh" }}
+        style={{ height: steps.length * 60 + "vh" }}
         ref={scrollRef}
       >
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
@@ -48,7 +48,7 @@ function Process({
             {steps.map((step, i) => (
               <motion.div
                 key={step._key}
-                className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-landscape"
+                className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-process"
                 style={{ height: "437px" }}
               >
                 <div className="relative aspect-portrait rounded-lg overflow-hidden flex-none">

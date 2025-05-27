@@ -56,8 +56,6 @@ export const projectIndexPageQuery = q("*")
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   });
 
-export const projectsQuery = q("*").filterByType("project").grab(TILE_FRAGMENT);
-
 export const projectsQueryBySolution = q("*")
   .filterByType("project")
   .filter(`$slug in solutions[]->slug.current`)
@@ -213,10 +211,46 @@ export const blogsQuery = `{
   "total": count(*[_type == "blog"])
 }`;
 
-export type Blogs = InferType<typeof blogsQuery>;
+export const projectsQuery = `{
+  "projects": *[_type == "project"][$indexFrom...$indexTo] {
+    _id,
+    title,
+    "slug": slug.current,
+    seoImage {
+      "_ref": seoImage.asset._ref,
+      "_type": "image",
+      "alt": asset->altText,
+      asset-> {
+        _id,
+        url,
+      },
+      crop {
+        bottom,
+        left,
+        right,
+        top,
+      },
+      hotspot {
+        height,
+        width,
+        x,
+        y
+      },
+      "height": asset->metadata.dimensions.height,
+      "width": asset->metadata.dimensions.width,
+      "id": asset->assetId,
+      "type": asset->mimeType,
+      "aspectRatio": asset->metadata.dimensions.aspectRatio,
+      "lqip": asset->metadata.lqip
+    },
+    description,
+    "publishedAt": publishedAt
+  },
+  "total": count(*[_type == "project"])
+}`;
 
 export const blogBySolutionQuery = `{
-  "blogs": *[_type == "blog" && solutions[]->slug.current == $slug][$indexFrom...$indexTo] {
+  "blogs": *[_type == "blog" && count((solutions[]->slug.current)[@ in $tags]) > 0][$indexFrom...$indexTo] {
    _id,
     title,
     "slug": slug.current,
@@ -248,9 +282,47 @@ export const blogBySolutionQuery = `{
       "lqip": asset->metadata.lqip
     },
     description,
-    "publishedAt": publishedAt
+    publishedAt
   },
-  "total": count(*[_type == "blog" && solutions[]->slug.current == $slug])
+  "total": count(*[_type == "blog" && count((solutions[]->slug.current)[@ in $tags]) > 0])
+}`;
+
+export const projectsBySolutionQuery = `{
+  "projects": *[_type == "project" && count((solutions[]->slug.current)[@ in $tags]) > 0][$indexFrom...$indexTo] {
+    _id,
+    title,
+    "slug": slug.current,
+    seoImage {
+      "_ref": seoImage.asset._ref,
+      "_type": "image",
+      "alt": asset->altText,
+      asset-> {
+        _id,
+        url,
+      },
+      crop {
+        bottom,
+        left,
+        right,
+        top,
+      },
+      hotspot {
+        height,
+        width,
+        x,
+        y
+      },
+      "height": asset->metadata.dimensions.height,
+      "width": asset->metadata.dimensions.width,
+      "id": asset->assetId,
+      "type": asset->mimeType,
+      "aspectRatio": asset->metadata.dimensions.aspectRatio,
+      "lqip": asset->metadata.lqip
+    },
+    description,
+    publishedAt
+  },
+  "total": count(*[_type == "project" && count((solutions[]->slug.current)[@ in $tags]) > 0])
 }`;
 
 export const blogSlugPageQuery = q("*")

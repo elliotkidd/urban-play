@@ -1,83 +1,101 @@
+import { BlogHeader } from "@/components/blog-header";
+import { PageBuilder } from "@/components/pagebuilder";
 import Pagination from "@/components/Pagination";
 import PostTile from "@/components/post-tile";
+import SanityImage from "@/components/sanity-image";
+import { Button } from "@/components/ui/Button";
 import { sanityFetch } from "@/lib/sanity/live";
-import { blogsQuery } from "@/lib/sanity/queries/documents";
+import {
+  BlogIndexPage,
+  blogIndexPageQuery,
+  blogsQuery,
+} from "@/lib/sanity/queries/documents";
 import { PostTileType } from "@/lib/sanity/queries/fragments";
+import { getMetaData } from "@/lib/seo";
+import { getColorSchemeStyle } from "@/utils/utils";
+import { Link } from "next-view-transitions";
+import BlogGrid, { BlogGridSkeleton } from "../components/BlogGrid";
+import { Suspense } from "react";
 
-const COL_SPANS = [
-  "lg:col-span-3",
-  "lg:col-span-3",
-  "lg:col-span-6",
-  "lg:col-span-3",
-  "lg:col-span-6",
-  "lg:col-span-3",
-  "lg:col-span-8",
-  "lg:col-span-4",
-];
-
-const IMAGE_ASPECTS: ("portrait" | "square" | "landscape")[] = [
-  "portrait",
-  "portrait",
-  "square",
-  "portrait",
-  "portrait",
-  "portrait",
-  "landscape",
-  "square",
-];
-
-async function fetchBlogPosts(
-  indexFrom: number,
-  indexTo: number,
-): Promise<{ data: { blogs: PostTileType[]; total: number } }> {
+async function fetchBlogPage(): Promise<{ data: BlogIndexPage }> {
   return await sanityFetch({
-    query: blogsQuery.slice(indexFrom, indexTo).query,
+    query: blogIndexPageQuery.query,
   });
 }
 
-export default async function BlogIndexPage({
+export async function generateMetadata() {
+  const { data } = await fetchBlogPage();
+  if (!data) {
+    return getMetaData({});
+  }
+  return getMetaData(data);
+}
+
+export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; tags: string[] }>;
 }) {
-  const { page } = await searchParams;
-  const currentPage = parseInt(page, 10) || 1;
+  const { data } = await fetchBlogPage();
+  if (!data) return null;
+  const {
+    title,
+    featuredBlog,
+    solutions,
+    colorScheme,
+    pageBuilder,
+    _id,
+    _type,
+  } = data ?? {};
+  const { page, tags } = await searchParams;
 
-  // const POSTS_PER_PAGE = COL_SPANS.length;
-  const POSTS_PER_PAGE = 2;
+  const POSTS_PER_PAGE = 12;
+
+  const currentPage = parseInt(page, 10) || 1;
 
   const indexFrom = (currentPage - 1) * POSTS_PER_PAGE;
   const indexTo = indexFrom + POSTS_PER_PAGE;
 
-  const { data } = await fetchBlogPosts(indexFrom, indexTo);
-  if (!data) return null;
-
-  const { blogs, total } = data;
-
   return (
-    <>
-      {blogs && blogs.length ? (
-        <>
-          <ul className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid">
-            {blogs &&
-              blogs.length > 0 &&
-              blogs.map((post: PostTileType, index: number) => (
-                <li key={post._id} className={COL_SPANS[index % 11]}>
-                  <PostTile
-                    key={post._id}
-                    post={post}
-                    image_aspect={IMAGE_ASPECTS[index % 11]}
-                  />
-                </li>
-              ))}
-          </ul>
-          <Pagination total={total} perPage={POSTS_PER_PAGE} />
-        </>
-      ) : (
-        <div className="wrapper prose text-center">
-          <h3 className="h3 font-heading uppercase">No posts!</h3>
-        </div>
+    <main
+      className="bg-background text-text"
+      style={getColorSchemeStyle(colorScheme)}
+    >
+      {featuredBlog && (
+        <section className="mb-fluid-lg">
+          {featuredBlog.image && (
+            <>
+              <div className="relavitve h-screen w-full">
+                <SanityImage
+                  src={featuredBlog.image}
+                  className="object-cover absolute inset-0 w-full h-full"
+                />
+              </div>
+              <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-4 items-start">
+                <p className="max-w-p-lg lead">{featuredBlog.description}</p>
+                <Link href={featuredBlog.slug}>
+                  <Button as="span">Read Article</Button>
+                </Link>
+              </div>
+            </>
+          )}
+        </section>
       )}
-    </>
+      <Suspense
+        fallback={
+          <BlogGridSkeleton title={title ?? ""} solutions={solutions ?? []} />
+        }
+      >
+        <BlogGrid
+          solutions={solutions}
+          title={title}
+          tags={tags}
+          indexFrom={indexFrom}
+          indexTo={indexTo}
+          perPage={POSTS_PER_PAGE}
+        />
+      </Suspense>
+      <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
+    </main>
   );
 }

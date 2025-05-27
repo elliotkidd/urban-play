@@ -29,12 +29,6 @@ function SectionWrapper({
   const { setColorScheme } = useStore();
   const path = usePathname();
 
-  // const hideOnPath =
-  //   (hideOn &&
-  //     hideOn.length > 0 &&
-  //     hideOn.some((item) => path.includes(item.slug))) ||
-  //   path.startsWith("/blog/");
-
   const hideOnPath =
     hideOn &&
     hideOn.length > 0 &&
@@ -62,7 +56,9 @@ function SectionWrapper({
         !removeMarginBottom && "mb-fluid",
         (type === "cta" || type === "pageHeader") &&
           "h-screen flex items-center",
-        (type === "iconMarquee" || type === "imageMarquee") &&
+        (type === "iconMarquee" ||
+          type === "imageMarquee" ||
+          type === "awardsAccordion") &&
           "overflow-hidden",
         hideOnPath && "hidden",
         className,

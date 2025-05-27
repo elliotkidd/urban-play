@@ -5,11 +5,14 @@ import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
+
 import {
   opacityStaggerChildrenConfig,
   sectionAnimationConfig,
   STAGGER_DELAY,
 } from "@/lib/motion";
+
+import "swiper/css";
 
 export default function FeaturedProjectsSection({
   sectionHeader,
@@ -35,6 +38,7 @@ export default function FeaturedProjectsSection({
             imageAspectRatio="square"
             index={0}
             staggerDelay={STAGGER_DELAY}
+            showDescription
           />
         )}
         {projects[1] && (
@@ -44,6 +48,7 @@ export default function FeaturedProjectsSection({
             className="lg:col-span-2"
             index={1}
             staggerDelay={STAGGER_DELAY}
+            showDescription
           />
         )}
       </motion.ul>
@@ -56,6 +61,7 @@ export default function FeaturedProjectsSection({
               slidesPerView: 4.2,
             },
           }}
+          direction="horizontal"
           className="overflow-visible featured-projects-swiper"
         >
           {projects.slice(2).map((project: TileType, i) => {

@@ -21,7 +21,7 @@
 }
 
 * {
-  scroll-margin-top: calc(var(--navbar-height) + 1rem);
+  scroll-padding-top: 4rem;
 }
 
 main {
@@ -47,4 +47,8 @@ main {
 ::view-transition-new(root) {
   z-index: 2;
   animation: none !important;
+}
+
+.aspect-process {
+  aspect-ratio: 2 / 1;
 }

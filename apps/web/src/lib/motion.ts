@@ -51,7 +51,8 @@ export const titleVariants = (delay?: number) => ({
 export const descriptionVariants = (delay?: number) => ({
   hidden,
   show: {
-    ...show,
+    opacity: 0.6,
+    y: 0,
     transition: { ...transition, delay: delay ?? 0.5 },
   },
 });

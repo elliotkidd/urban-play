@@ -11,6 +11,14 @@ export const awardsAccordion = defineType({
   groups: SECTION_GROUPS,
   fields: [
     defineField({
+      name: "categories",
+      type: "number",
+      title: "Categories",
+      description: "The number of Awards categories",
+      validation: (Rule) => Rule.required(),
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
       name: "title",
       type: "string",
       title: "Title",

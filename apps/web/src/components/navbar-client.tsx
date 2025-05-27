@@ -473,7 +473,7 @@ function SkeletonDesktopNavbar() {
           {Array.from({ length: 2 }).map((_, index) => (
             <div
               key={`nav-item-skeleton-${index.toString()}`}
-              className="h-10 w-32 rounded bg-text/20 animate-pulse"
+              className="h-[18px] w-32 rounded bg-text/20 animate-pulse"
             />
           ))}
         </div>

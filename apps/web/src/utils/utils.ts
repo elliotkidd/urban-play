@@ -49,3 +49,28 @@ export const getColorSchemeStyle: (
     "--colour-nav-bar-text": `${colorScheme.navBarText.rgb.r}, ${colorScheme.navBarText.rgb.g}, ${colorScheme.navBarText.rgb.b}`,
   } as React.CSSProperties;
 };
+
+export const BLOG_GRID_COL_SPANS = [
+  "lg:col-span-3",
+  "lg:col-span-3",
+  "lg:col-span-6",
+  "lg:col-span-3",
+  "lg:col-span-6",
+  "lg:col-span-3",
+  "lg:col-span-8",
+  "lg:col-span-4",
+];
+
+export const PROJECT_GRID_COL_SPANS = [
+  "lg:col-span-4",
+  "lg:col-span-8",
+  "lg:col-span-3",
+  "lg:col-span-6",
+  "lg:col-span-3",
+  "lg:col-span-3",
+  "lg:col-span-3",
+  "lg:col-span-6",
+  "lg:col-span-3",
+  "lg:col-span-6",
+  "lg:col-span-3",
+];

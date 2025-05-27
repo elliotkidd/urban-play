@@ -18,9 +18,22 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      name: "awardType",
-      title: "Award Type",
+      name: "forText",
+      title: "For",
       type: "string",
     }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      year: "year",
+      forText: "forText",
+    },
+    prepare({ title, year, forText }) {
+      return {
+        title: `${title}`,
+        subtitle: `${year} - ${forText}`,
+      };
+    },
+  },
 });
