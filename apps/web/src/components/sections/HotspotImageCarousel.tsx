@@ -104,13 +104,13 @@ function SlideBase({
         hotspots.map((spot: SpotProps, index: number) => {
           const { x, y, _key } = spot;
           return (
-            <motion.div
+            <div
               key={`hotspot-${_key}-${index}`}
               onClick={() =>
                 setActiveHotspot(activeHotspot === index ? null : index)
               }
               className={twMerge(
-                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border transition-colors duration-500",
+                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-colors duration-500",
                 activeHotspot === index ? "border-white" : "border-transparent",
               )}
               style={{
@@ -119,7 +119,7 @@ function SlideBase({
               }}
             >
               <div className="lg:w-6 lg:h-6 w-4 h-4 bg-white rounded-full" />
-            </motion.div>
+            </div>
           );
         })}
       {children}
@@ -148,7 +148,7 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
                 setActiveHotspot(activeHotspot === index ? null : index)
               }
               className={twMerge(
-                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border",
+                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-colors duration-500",
                 activeHotspot === index ? "border-white" : "border-transparent",
               )}
               style={{
@@ -274,7 +274,7 @@ function MobileHotspotImageCarousel({
       <div className="rounded-xl overflow-hidden mt-fluid-xs">
         <div
           className={cn(
-            "aspect-video relative overflow-hidden transition-all duration-500",
+            "aspect-video relative overflow-hidden transition-[border-radius] duration-500",
             activeHotspot === null && "rounded-xl",
           )}
         >
@@ -409,12 +409,12 @@ function DesktopHotspotImageCarousel({
 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [images, currentIndex]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentIndex((prev) => (prev + 1) % images.length);
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // }, [images, currentIndex]);
 
   return (
     <motion.div {...sectionAnimationConfig} className="wrapper py-fluid-xs">

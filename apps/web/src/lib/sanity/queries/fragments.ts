@@ -77,6 +77,10 @@ export const POST_TILE_FRAGMENT = {
   ...LINK_REFERENCE_FRAGMENT,
   image: q("image").grab(IMAGE_FRAGMENT),
   description: q.string(),
+  solutions: q("solutions[]", { isArray: true }).deref().grab({
+    _id: q.string(),
+    title: q.string(),
+  }),
 };
 
 export type PostTileType = TypeFromSelection<typeof POST_TILE_FRAGMENT>;
