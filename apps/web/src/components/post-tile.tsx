@@ -61,8 +61,7 @@ export default function PostTile({
           </span>
         )}
       </div>
-      <h3 className="text-base font-bold mb-4">{title}</h3>
-      <p className="line-clamp-3 prose">{description}</p>
+      <h3 className="text-lg font-bold mb-4">{title}</h3>
     </Link>
   );
 }
