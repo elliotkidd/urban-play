@@ -15,12 +15,12 @@ export default function Grid({ sectionHeader, items }: GridProps) {
           items.map((item) => (
             <motion.div
               key={item._key}
-              className="grid bg-gray-100 rounded-lg overflow-hidden text-center"
+              className="bg-gray-100 rounded-lg overflow-hidden text-center"
             >
-              <h3 className="bg-text text-background flex items-center justify-center font-bold text-xl p-8">
+              <h3 className="bg-text text-background flex items-center justify-center font-bold text-xl p-8 aspect-landscape">
                 {item.heading}
               </h3>
-              <div className="p-8 flex items-center justify-center">
+              <div className="p-8 flex items-center justify-center aspect-landscape prose">
                 <p className="opacity-50">{item.description}</p>
               </div>
             </motion.div>

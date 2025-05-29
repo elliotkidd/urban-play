@@ -219,7 +219,7 @@ const TEAM_FRAGMENT = {
       name: q.string(),
       image: q("image").grab(IMAGE_FRAGMENT),
       position: q.string(),
-      startingYear: q.string(),
+      yearsExperience: q.number().min(0).max(60),
     }),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;

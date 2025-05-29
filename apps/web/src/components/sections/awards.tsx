@@ -65,7 +65,7 @@ export function AwardsSection({
                 size="sm"
                 variant="ghost"
                 onClick={handlePrevPage}
-                className="p-0 text-xl font-bold opacity-20 hover:opacity-100 transition-opacity duration-500 disabled:opacity-20 mb-fluid-xs"
+                className="p-0 text-xl font-bold opacity-20 hover:opacity-100 transition-opacity duration-500 disabled:invisible mb-fluid-xs"
                 disabled={currentPage === 0}
               >
                 Prev
@@ -78,7 +78,7 @@ export function AwardsSection({
                 size="sm"
                 variant="ghost"
                 onClick={handleNextPage}
-                className="p-0 text-xl font-bold opacity-20 hover:opacity-100 transition-opacity duration-500 disabled:opacity-20 mb-fluid-xs"
+                className="p-0 text-xl font-bold opacity-20 hover:opacity-100 transition-opacity duration-500 disabled:invisible mb-fluid-xs"
                 disabled={currentPage === totalPages - 1}
               >
                 Next

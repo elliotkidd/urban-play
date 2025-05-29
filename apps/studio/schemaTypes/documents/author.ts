@@ -21,9 +21,10 @@ export const author = defineType({
       title: "Image",
     }),
     defineField({
-      name: "startingYear",
+      name: "yearsExperience",
       type: "number",
-      title: "Starting Year",
+      title: "Years Experience",
+      validation: (Rule) => Rule.min(0).max(60),
     }),
     defineField({
       name: "bio",
