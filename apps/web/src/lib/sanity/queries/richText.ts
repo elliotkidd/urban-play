@@ -70,6 +70,6 @@ export const IMAGE_BLOCK_FRAGMENT: any = {
 
 export const RICHTEXT_BLOCKS = {
   '_type == "block"': BASE_BLOCK_FRAGMENT,
-  '_type == "imageWithAlt"': IMAGE_BLOCK_FRAGMENT,
+  '_type == "image"': IMAGE_BLOCK_FRAGMENT,
   '_type == "buttonGroup"': BUTTON_GROUP_BLOCK_FRAGMENT,
 };

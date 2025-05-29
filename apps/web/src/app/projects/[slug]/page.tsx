@@ -1,14 +1,11 @@
 import { PageBuilder } from "@/components/pagebuilder";
 import ProjectsSwiper from "@/components/ProjectsSwiper";
-import { RichText } from "@/components/richtext";
-import { HeroBlock } from "@/components/sections/hero";
 import { sanityFetch } from "@/lib/sanity/live";
 import {
   type ProjectPage,
   projectPageQuery,
 } from "@/lib/sanity/queries/documents";
 import { getMetaData } from "@/lib/seo";
-import { getColorSchemeStyle } from "@/utils/utils";
 import { notFound } from "next/navigation";
 
 async function fetchProjectPageData(slug: string) {

@@ -182,15 +182,15 @@ const config: Config = {
             },
             h5: {
               fontSize: "var(--text-base)",
-              fontWeight: 900,
+              fontWeight: 400,
               marginTop: "1.2rem",
               marginBottom: "1.2rem",
               lineHeight: "100%",
-              letterSpacing: "-0.05em",
+              letterSpacing: "00em",
             },
             h6: {
               fontSize: "var(--text-xs)",
-              fontWeight: 900,
+              fontWeight: 400,
               textTransform: "uppercase",
               marginTop: "1.2rem",
               marginBottom: "1.2rem",
@@ -203,6 +203,7 @@ const config: Config = {
               marginTop: "1rem",
               marginBottom: "1rem",
               lineHeight: "120%",
+              opacity: 1,
             },
             p: {
               fontSize: "var(--text-base)",
@@ -210,6 +211,7 @@ const config: Config = {
               marginTop: "1rem",
               marginBottom: "1rem",
               lineHeight: "120%",
+              opacity: 0.6,
             },
             li: {
               fontSize: "var(--text-base)",

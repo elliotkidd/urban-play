@@ -96,8 +96,8 @@ const SOLUTIONS_SECTION_FRAGMENT = {
   _type: q.literal("solutionsCarousel").or(q.literal("solutionsGrid")),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  solutions: q("*", { isArray: true })
-    .filterByType("solution")
+  solutions: q("solutions[]", { isArray: true })
+    .deref()
     .grab({
       _id: q.string(),
       title: q.string(),
@@ -516,8 +516,7 @@ export type GridProps = TypeFromSelection<typeof GRID_FRAGMENT>;
 const SECTIONS_LIST_SELECTION = {
   "_type == 'hero'": HERO_FRAGMENT,
   "_type == 'paragraph'": PARAGRAPH_FRAGMENT,
-  "_type == 'solutionsCarousel' || _type == 'solutionsGrid'":
-    SOLUTIONS_SECTION_FRAGMENT,
+  "_type == 'solutionsGrid'": SOLUTIONS_SECTION_FRAGMENT,
   "_type == 'featuredProjects'": FEATURED_PROJECTS_FRAGMENT,
   "_type == 'iconMarquee'": ICON_MARQUEE_FRAGMENT,
   "_type == 'testimonies'": TESTIMONIES_FRAGMENT,

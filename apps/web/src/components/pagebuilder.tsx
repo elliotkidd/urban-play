@@ -11,7 +11,6 @@ import { AwardsSection } from "./sections/awards";
 import { HeroBlock } from "./sections/hero";
 import { ImageLinkCards } from "./sections/image-link-cards";
 import ParagraphSection from "./sections/paragraph";
-import SolutionsCarouselSection from "./sections/solutions-carousel";
 import FeaturedProjectsSection from "./sections/featured-projects";
 import IconMarqueeSection from "./sections/icon-marquee";
 import TestimoniesSection from "./sections/testimonies";
@@ -40,7 +39,6 @@ const SECTION_COMPONENTS: Record<string, FC<any>> = {
   hero: HeroBlock,
   imageLinkCards: ImageLinkCards,
   paragraph: ParagraphSection,
-  solutionsCarousel: SolutionsCarouselSection,
   featuredProjects: FeaturedProjectsSection,
   iconMarquee: IconMarqueeSection,
   testimonies: TestimoniesSection,

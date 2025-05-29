@@ -8,6 +8,7 @@ import {
 import { parseChildrenToSlug } from "@/utils";
 import SanityImage from "./sanity-image";
 import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
@@ -40,7 +41,7 @@ const components: Partial<PortableTextReactComponents> = {
     h5: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h5 id={slug} className="scroll-m-20 font-semibold">
+        <h5 id={slug} className="scroll-m-20">
           {children}
         </h5>
       );
@@ -48,7 +49,7 @@ const components: Partial<PortableTextReactComponents> = {
     h6: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
-        <h6 id={slug} className="scroll-m-20 text-base font-semibold">
+        <h6 id={slug} className="scroll-m-20 text-base">
           {children}
         </h6>
       );
@@ -57,7 +58,7 @@ const components: Partial<PortableTextReactComponents> = {
   },
   marks: {
     code: ({ children }) => (
-      <code className="rounded-md border-[1px] border-white border-opacity-10  bg-opacity-5 p-1 text-sm  lg:whitespace-nowrap">
+      <code className="rounded-md border-[1px] border-white border-opacity-10  bg-opacity-5 p-1 text-sm lg:whitespace-nowrap">
         {children}
       </code>
     ),
@@ -93,8 +94,18 @@ const components: Partial<PortableTextReactComponents> = {
   },
   types: {
     image: ({ value }) => {
+      console.log(value.aspectRatio < 1);
       return (
-        <SanityImage src={value} className="my-4 w-full overflow-hidden" />
+        <SanityImage
+          src={value}
+          style={{
+            maxWidth: value.aspectRatio < 1 ? "870px" : "100%",
+          }}
+          className={cn(
+            "my-fluid-lg w-full overflow-hidden",
+            value.aspectRatio < 1 && "max-w-section-heading mx-auto",
+          )}
+        />
       );
     },
   },

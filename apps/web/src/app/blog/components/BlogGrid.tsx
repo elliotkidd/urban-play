@@ -32,7 +32,6 @@ async function fetchBlogPosts(
   indexFrom: number,
   indexTo: number,
 ): Promise<{ data: { blogs: PostTileType[]; total: number } }> {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   return await sanityFetch({
     query: blogsQuery,
     params: {

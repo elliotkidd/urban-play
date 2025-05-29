@@ -1,6 +1,6 @@
 import { FeaturedPostsProps } from "@/lib/sanity/queries/sections";
 import SectionHeader from "../section-header";
-import { TileType } from "@/lib/sanity/queries/fragments";
+import { PostTileType } from "@/lib/sanity/queries/fragments";
 import PostTile from "../post-tile";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
@@ -22,7 +22,7 @@ export default function FeaturedPostsSection({
       <SectionHeader {...sectionHeader} />
       {posts && posts.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {posts.map((post: TileType, i: number) => {
+          {posts.map((post: PostTileType, i: number) => {
             return (
               <PostTile
                 key={post._id + i}

@@ -55,9 +55,9 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
               value={item._key}
               key={`AccordionItem-${item._key}-${index}`}
               className={twMerge(
-                "p-3 accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white",
-                accordionColors[index % accordionColors.length].hover,
-                accordionColors[index % accordionColors.length].open,
+                "p-3 accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-text data-[state=open]:bg-text",
+                // accordionColors[index % accordionColors.length].hover,
+                // accordionColors[index % accordionColors.length].open,
               )}
             >
               <AccordionTrigger className="py-2 text-lg leading-none no-underline group font-bold">

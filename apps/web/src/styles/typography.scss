@@ -18,10 +18,6 @@
   max-width: 870px;
 }
 
-.jumbo {
-  font-size: clamp(60px, 10vw, 140px);
-}
-
 :root {
   --fluid-min-width: 640;
   --fluid-max-width: 1280;
@@ -224,12 +220,13 @@ h2 {
 h3,
 .h3,
 h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
+.h4 {
   @apply text-lg font-bold leading-none;
+}
+
+h5,
+h6 {
+  @apply tracking-wide;
 }
 
 .font-body {
@@ -255,5 +252,17 @@ h6,
 .prose {
   h3 {
     @apply uppercase;
+  }
+}
+
+.blog-post--content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    @apply max-w-section-heading mx-auto;
   }
 }

@@ -12,6 +12,7 @@ import { PageBuilder } from "@/components/pagebuilder";
 import { getColorSchemeStyle } from "@/utils/utils";
 import { BlogSwiper } from "@/components/BlogSwiper";
 import { ShareButtons } from "./components/ShareButtons";
+import Header from "./components/Header";
 
 async function fetchBlogSlugPageData(
   slug: string,
@@ -62,21 +63,12 @@ export default async function BlogSlugPage({
         className="bg-background pb-fluid-lg"
         style={getColorSchemeStyle(colorScheme)}
       >
-        <section className="h-screen flex items-center relative prose overflow-hidden">
-          {image && (
-            <SanityImage
-              src={image}
-              className="w-full absolute inset-0 object-cover h-full"
-              alt={title}
-            />
-          )}
-          <div className="wrapper grid lg:grid-cols-2 gap-4 relative z-10 prose prose-white">
-            <h1 className="uppercase text-3xl font-black font-heading">
-              {title}
-            </h1>
-            <p className="lead max-w-p-lg mt-0">{description}</p>
-          </div>
-        </section>
+        <Header
+          image={image}
+          title={title}
+          description={description}
+          colourScheme={colorScheme}
+        />
         <section className="prose grid lg:grid-cols-4 wrapper pt-fluid-xs pb-fluid">
           <div className="lg:col-start-4 space-y-8">
             <p className="grid grid-cols-3 text-xs">
@@ -108,7 +100,7 @@ export default async function BlogSlugPage({
         </section>
 
         <div className="wrapper wrapper--small">
-          <RichText richText={richText ?? []} />
+          <RichText richText={richText ?? []} className="blog-post--content" />
         </div>
       </article>
 

@@ -39,14 +39,14 @@ export default function ParagraphSection({
           <ul
             className={twMerge(
               "w-80 list-none not-prose text-xs",
-              annotationDirection === "vertical" ? "space-y-4" : "space-y-1",
+              annotationDirection !== "horizontal" ? "space-y-4" : "space-y-1",
             )}
           >
-            {annotations.map(({ top, bottom, _key }) => (
+            {annotations.map(({ top, bottom, _key }, index) => (
               <>
                 {annotationDirection === "horizontal" ? (
                   <li
-                    key={_key}
+                    key={`${_key}-horizontal-annotation-${index}`}
                     className="leading-none grid grid-cols-3 gap-2"
                   >
                     <span className="block opacity-40">{top}</span>
@@ -61,7 +61,10 @@ export default function ParagraphSection({
                     </span>
                   </li>
                 ) : (
-                  <li key={_key} className="leading-none">
+                  <li
+                    key={`${_key}-vertical-annotation-${index}`}
+                    className="leading-none"
+                  >
                     <span className="block">{top}</span>
                     <span className="block opacity-40">{bottom}</span>
                   </li>

@@ -54,34 +54,6 @@ export const blog = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "authors",
-      type: "array",
-      title: "Authors",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [
-            {
-              type: "author",
-              options: {
-                disableNew: true,
-              },
-            },
-          ],
-          options: {
-            disableNew: true,
-          },
-        }),
-      ],
-      validation: (Rule) => [
-        Rule.required(),
-        Rule.max(1),
-        Rule.min(1),
-        Rule.unique(),
-      ],
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
       name: "publishedAt",
       type: "date",
       initialValue: () => new Date().toISOString().split("T")[0],
