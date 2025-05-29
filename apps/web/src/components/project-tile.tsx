@@ -45,8 +45,8 @@ export default function ProjectTile({
   }
 
   return (
-    <motion.li variants={childVars} className={className}>
-      <Link href={slug} className={twMerge("block")}>
+    <motion.div variants={childVars} className={className}>
+      <Link href={slug} className={twMerge("block group")}>
         <div
           className={twMerge(
             "relative mb-2 rounded-xl overflow-hidden",
@@ -55,7 +55,7 @@ export default function ProjectTile({
         >
           <SanityImage
             src={image || seoImage}
-            className="object-cover inset-0 w-full h-full"
+            className="object-cover inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
           />
           {solutions && solutions.length > 0 && (
             <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
@@ -78,6 +78,6 @@ export default function ProjectTile({
           </motion.p>
         )}
       </Link>
-    </motion.li>
+    </motion.div>
   );
 }

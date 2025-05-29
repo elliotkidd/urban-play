@@ -2,7 +2,6 @@ import { TestimoniesProps } from "@/lib/sanity/queries/sections";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { SanityButtons } from "../sanity-buttons";
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";

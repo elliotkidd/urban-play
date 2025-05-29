@@ -13,6 +13,7 @@ export default function ParagraphSection({
   annotations,
   smallWrapper,
   largeSpacing,
+  annotationDirection,
 }: ParagraphProps) {
   return (
     <motion.div
@@ -35,12 +36,37 @@ export default function ParagraphSection({
         )}
         {buttons && !annotations && <SanityButtons buttons={buttons} />}
         {annotations && !buttons && (
-          <ul className="w-80 space-y-4  list-none not-prose">
+          <ul
+            className={twMerge(
+              "w-80 list-none not-prose text-xs",
+              annotationDirection === "vertical" ? "space-y-4" : "space-y-1",
+            )}
+          >
             {annotations.map(({ top, bottom, _key }) => (
-              <li key={_key} className="leading-none">
-                <span className="block">{top}</span>
-                <span className="block opacity-40">{bottom}</span>
-              </li>
+              <>
+                {annotationDirection === "horizontal" ? (
+                  <li
+                    key={_key}
+                    className="leading-none grid grid-cols-3 gap-2"
+                  >
+                    <span className="block opacity-40">{top}</span>
+                    <span className="block col-span-2">
+                      {bottom.split(",").map((word, i) => {
+                        return (
+                          <span key={i} className="block">
+                            {word}
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </li>
+                ) : (
+                  <li key={_key} className="leading-none">
+                    <span className="block">{top}</span>
+                    <span className="block opacity-40">{bottom}</span>
+                  </li>
+                )}
+              </>
             ))}
           </ul>
         )}

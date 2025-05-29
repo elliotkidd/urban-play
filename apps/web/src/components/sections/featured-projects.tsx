@@ -1,7 +1,5 @@
 import { FeaturedProjectsProps } from "@/lib/sanity/queries/sections";
 import SectionHeader from "../section-header";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { TileType } from "@/lib/sanity/queries/fragments";
 import ProjectTile from "../project-tile";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
@@ -12,7 +10,7 @@ import {
   STAGGER_DELAY,
 } from "@/lib/motion";
 
-import "swiper/css";
+import ProjectsSwiper from "../ProjectsSwiper";
 
 export default function FeaturedProjectsSection({
   sectionHeader,
@@ -53,30 +51,7 @@ export default function FeaturedProjectsSection({
         )}
       </motion.ul>
       {projects && projects.length > 2 && (
-        <Swiper
-          slidesPerView={1.2}
-          spaceBetween={24}
-          breakpoints={{
-            768: {
-              slidesPerView: 4.2,
-            },
-          }}
-          direction="horizontal"
-          className="overflow-visible featured-projects-swiper"
-        >
-          {projects.slice(2).map((project: TileType, i) => {
-            return (
-              <SwiperSlide key={project._id + i}>
-                <ProjectTile
-                  project={project}
-                  index={i + 2}
-                  staggerDelay={STAGGER_DELAY}
-                  className="list-none"
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+        <ProjectsSwiper projects={projects.slice(2)} />
       )}
     </motion.div>
   );

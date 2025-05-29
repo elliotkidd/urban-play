@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { client } from "@/lib/sanity/client";
 import { sanityFetch } from "@/lib/sanity/live";
-import { queryBlogPaths } from "@/lib/sanity/query";
 import { getMetaData } from "@/lib/seo";
 import SanityImage from "@/components/sanity-image";
 import { RichText } from "@/components/richtext";
@@ -58,21 +56,12 @@ export default async function BlogSlugPage({
     relatedBlogs,
   } = data ?? {};
 
-  console.log(relatedBlogs);
-
   return (
     <>
       <article
         className="bg-background pb-fluid-lg"
         style={getColorSchemeStyle(colorScheme)}
       >
-        {/* <h1 className="sr-only">{title}</h1>
-
-        {image && (
-          <div className="mb-12">
-            <SanityImage src={image} className="h-screen w-full" />
-          </div>
-        )} */}
         <section className="h-screen flex items-center relative prose overflow-hidden">
           {image && (
             <SanityImage

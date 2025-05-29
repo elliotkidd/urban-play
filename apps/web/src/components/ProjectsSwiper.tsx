@@ -1,38 +1,44 @@
 "use client";
 
 import { TileType } from "@/lib/sanity/queries/fragments";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import ProjectTile from "./project-tile";
-
 type Props = {
   projects: TileType[];
 };
 
 function ProjectsSwiper({ projects }: Props) {
   return (
-    <Swiper
-      slidesPerView={1.2}
-      spaceBetween={32}
-      breakpoints={{
-        768: {
-          slidesPerView: 2.2,
-        },
-        1024: {
-          slidesPerView: 3.2,
-        },
-        1280: {
-          slidesPerView: 4.2,
+    <Splide
+      options={{
+        type: "slide",
+        perPage: 4,
+        gap: "1rem",
+        arrows: false,
+        pagination: false,
+        drag: true,
+        trimSpace: false,
+        perMove: 1,
+        breakpoints: {
+          768: {
+            perPage: 1,
+          },
+          1024: {
+            perPage: 2,
+          },
+          1280: {
+            perPage: 3,
+          },
         },
       }}
-      style={{ overflow: "visible" }}
+      className="not-prose"
     >
       {projects.map((project) => (
-        <SwiperSlide key={project._id}>
+        <SplideSlide key={project._id}>
           <ProjectTile project={project} />
-        </SwiperSlide>
+        </SplideSlide>
       ))}
-    </Swiper>
+    </Splide>
   );
 }
 export default ProjectsSwiper;

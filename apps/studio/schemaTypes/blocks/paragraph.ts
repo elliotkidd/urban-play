@@ -38,6 +38,19 @@ export const paragraph = defineType({
       initialValue: false,
       group: GROUP.SETTINGS,
     }),
+    defineField({
+      name: "annotationDirection",
+      title: "Annotation Direction",
+      type: "string",
+      initialValue: "vertical",
+      options: {
+        list: [
+          { title: "Vertical", value: "vertical" },
+          { title: "Horizontal", value: "horizontal" },
+        ],
+      },
+      group: GROUP.SETTINGS,
+    }),
     ...sectionSettings,
   ],
   preview: {

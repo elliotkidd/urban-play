@@ -15,6 +15,7 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 import { customEase, sectionAnimationConfig } from "@/lib/motion";
 import SectionHeader from "../section-header";
 import { cn } from "@/lib/utils";
+import { SanityButtons } from "../sanity-buttons";
 
 const SLIDE_VARIANTS = {
   initial: { opacity: 0 },
@@ -59,6 +60,7 @@ function SlideProgressBar({
                 varyColour && activeHotspot !== null
                   ? "bg-background"
                   : "bg-text",
+                !varyColour && "bg-white",
               )}
             />
           )}
@@ -69,6 +71,7 @@ function SlideProgressBar({
                 varyColour && activeHotspot !== null
                   ? "bg-background"
                   : "bg-text",
+                !varyColour && "bg-white",
               )}
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
@@ -137,6 +140,7 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
         alt={image.alt ?? ""}
         className="w-full h-full object-cover"
       />
+      <div className="absolute inset-0 bg-black/20  h-full w-full pointer-events-none" />
       {Array.isArray(hotspots) &&
         hotspots.length > 0 &&
         hotspots.map((spot: SpotProps, index: number) => {
@@ -147,6 +151,13 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
               onClick={() =>
                 setActiveHotspot(activeHotspot === index ? null : index)
               }
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: customEase,
+                delay: (index + 1) * 0.5,
+              }}
               className={twMerge(
                 "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-colors duration-500",
                 activeHotspot === index ? "border-white" : "border-transparent",
@@ -407,22 +418,37 @@ function DesktopHotspotImageCarousel({
   images: ImageWithHotspotProps[];
   sectionHeader: SectionHeaderProps;
 }) {
+  const { title, buttons } = sectionHeader;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prev) => (prev + 1) % images.length);
-  //   }, 10000);
-  //   return () => clearInterval(interval);
-  // }, [images, currentIndex]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [images, currentIndex]);
 
   return (
     <motion.div {...sectionAnimationConfig} className="wrapper py-fluid-xs">
       <div className="relative aspect-video rounded-xl overflow-hidden">
-        <SectionHeader
-          {...sectionHeader}
-          className="p-fluid-sm relative z-10"
-        />
+        <div
+          className={twMerge(
+            "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-xs p-fluid-sm relative z-10",
+          )}
+        >
+          {title && (
+            <h2 className="max-w-section-heading text-balance text-white">
+              {title}
+            </h2>
+          )}
+          {buttons && (
+            <SanityButtons
+              buttons={buttons}
+              buttonSize="default"
+              className="flex items-center gap-2"
+            />
+          )}
+        </div>
         <AnimatePresence mode="sync">
           {images.map(
             (item: ImageWithHotspotProps, index: number) =>
@@ -441,6 +467,7 @@ function DesktopHotspotImageCarousel({
               ),
           )}
         </AnimatePresence>
+
         <SlideProgressBar
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}

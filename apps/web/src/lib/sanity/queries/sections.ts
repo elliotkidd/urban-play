@@ -83,6 +83,10 @@ const PARAGRAPH_FRAGMENT = {
     .select(RICHTEXT_BLOCKS)
     .nullable(),
   largeSpacing: q.boolean(),
+  annotationDirection: q
+    .literal("vertical")
+    .or(q.literal("horizontal"))
+    .nullable(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

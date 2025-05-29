@@ -7,7 +7,7 @@ function Quote({ quote, author: { name, position } }) {
       {...sectionAnimationConfig}
       className="wrapper py-fluid-lg prose"
     >
-      <p className="lead max-w-p-lg">{quote}</p>
+      <blockquote className="lead max-w-p-lg">{quote}</blockquote>
       <p className="text-xs">
         {name} - <span className="opacity-50">{position}</span>
       </p>
