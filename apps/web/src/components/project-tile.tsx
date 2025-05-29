@@ -65,7 +65,7 @@ export default function ProjectTile({
         </div>
         <motion.h3
           variants={titleVariants(index * staggerDelay + 0.25)}
-          className="text-lg underline font-bold mb-4"
+          className="text-lg font-bold mb-4"
         >
           {title}
         </motion.h3>
