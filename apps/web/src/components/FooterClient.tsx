@@ -202,7 +202,7 @@ export function FooterSection({ data }: { data: FooterType }) {
               <ul className="">
                 <li>
                   <Link
-                    href="/privacy"
+                    href="/privacy-policy"
                     className="opacity-50 hover:opacity-100 transition-opacity duration-500"
                   >
                     Privacy Policy

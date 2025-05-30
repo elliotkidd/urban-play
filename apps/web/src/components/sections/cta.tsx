@@ -13,16 +13,16 @@ export function CTABlock({ richText, title, buttons, image }: CTAProps) {
       />
       <div className="absolute inset-0 bg-black/20" />
       <div className="wrapper pointer-events-none absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
-        <h2 className="max-w-p">{title}</h2>
-        <div className="text-lg text-muted-foreground">
+        <h2 className="max-w-p mb-0">{title}</h2>
+        <div className="">
           <RichText
             richText={richText}
-            className="text-balance max-w-p-lg mb-fluid-lg"
+            className="text-balance max-w-p-lg mb-fluid"
           />
           <SanityButtons
             buttons={buttons}
             buttonClassName="w-full sm:w-auto"
-            className="w-full sm:w-fit grid gap-2 sm:grid-flow-col lg:justify-start mb-8 pointer-events-auto"
+            className="w-full sm:w-fit grid gap-2 sm:grid-flow-col lg:justify-start mb-8 pointer-events-auto not-prose"
           />
         </div>
       </div>
