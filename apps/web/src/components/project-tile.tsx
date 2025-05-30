@@ -49,7 +49,7 @@ export default function ProjectTile({
       <Link href={slug} className={twMerge("block group")}>
         <div
           className={twMerge(
-            "relative mb-2 rounded-xl overflow-hidden",
+            "relative mb-4 rounded-xl overflow-hidden",
             imageAspectRatioClass,
           )}
         >

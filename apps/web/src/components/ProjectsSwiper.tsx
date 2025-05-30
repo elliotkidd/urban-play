@@ -5,9 +5,10 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import ProjectTile from "./project-tile";
 type Props = {
   projects: TileType[];
+  imageAspectRatio: "portrait" | "landscape" | "square" | "video";
 };
 
-function ProjectsSwiper({ projects }: Props) {
+function ProjectsSwiper({ projects, imageAspectRatio }: Props) {
   return (
     <Splide
       options={{
@@ -35,7 +36,7 @@ function ProjectsSwiper({ projects }: Props) {
     >
       {projects.map((project) => (
         <SplideSlide key={project._id}>
-          <ProjectTile project={project} />
+          <ProjectTile project={project} imageAspectRatio={imageAspectRatio} />
         </SplideSlide>
       ))}
     </Splide>

@@ -47,7 +47,10 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
             <div className="prose mb-fluid-sm">
               <h2 className="">More Projects</h2>
             </div>
-            <ProjectsSwiper projects={relatedProjects} />
+            <ProjectsSwiper
+              projects={relatedProjects}
+              imageAspectRatio="portrait"
+            />
           </div>
         </section>
       )}
