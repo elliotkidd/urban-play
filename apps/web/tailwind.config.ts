@@ -213,12 +213,13 @@ const config: Config = {
               lineHeight: "120%",
               opacity: 0.6,
             },
-            li: {
+            ul: {
               fontSize: "var(--text-base)",
               fontWeight: 400,
               marginTop: "0.5rem",
               marginBottom: "0.5rem",
               lineHeight: "120%",
+              opacity: 0.6,
             },
             a: {
               color: theme("colors.accent"),

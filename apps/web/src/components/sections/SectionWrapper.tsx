@@ -32,8 +32,7 @@ function SectionWrapper({
   const hideOnPath =
     hideOn &&
     hideOn.length > 0 &&
-    (hideOn.some((item) => path.includes(item.slug)) ||
-      path.startsWith("/blog/"));
+    hideOn.some((item) => path.includes(item.slug));
 
   const { ref, inView } = useInView({
     rootMargin: "-10% 0px -90% 0px",
