@@ -32,7 +32,7 @@ function ContactDetails({ data }: ContactDetailsProps) {
   const { name, email, phone, address } = data;
 
   return (
-    <div className="lg:col-start-4">
+    <div className="lg:col-start-7 lg:col-span-2">
       <h4 className="text-sm mb-1">Contact</h4>
       <Link
         href={`mailto:${email}`}
@@ -76,7 +76,7 @@ function SocialLinks({ data }: SocialLinksProps) {
   ].filter((link) => link.url);
 
   return (
-    <div className="lg:col-start-6">
+    <div className="lg:col-start-9">
       <h4 className="text-sm mb-1">Follow</h4>
       <ul className="">
         {socialLinks.map(({ url, label }, index) => (
@@ -134,7 +134,7 @@ function NewsletterSignup() {
   };
 
   return (
-    <div className="lg:col-span-2">
+    <div className="lg:col-span-3">
       <h4 className="text-sm mb-fluid-sm">Join our newsletter</h4>
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -188,17 +188,17 @@ export function FooterSection({ data }: { data: FooterType }) {
     >
       <div className="h-screen lg:h-[60dvh] w-full bottom-0 fixed bg-background text-text flex">
         <div className="wrapper py-fluid-xs flex flex-col justify-between flex-1 mt-fluid-lg lg:mt-0">
-          <div className="grid lg:grid-cols-6 gap-fluid-sm">
+          <div className="grid lg:grid-cols-9 gap-fluid-sm">
             <FooterLogo />
             <ContactDetails data={contactDetails} />
             <SocialLinks data={socialLinks} />
           </div>
-          <div className="grid lg:grid-cols-6 gap-fluid-sm">
+          <div className="grid lg:grid-cols-9 gap-fluid-sm">
             <NewsletterSignup />
-            <div className="lg:col-span-3 lg:col-start-4 prose">
+            <div className="lg:col-span-3 lg:col-start-7 prose">
               <p className="lead">{subtitle}</p>
             </div>
-            <div className="flex lg:col-span-6 justify-between border-t pt-4 border-primary text-xs">
+            <div className="flex lg:col-span-9 justify-between border-t pt-4 border-white/20 text-xs">
               <ul className="">
                 <li>
                   <Link
@@ -217,7 +217,14 @@ export function FooterSection({ data }: { data: FooterType }) {
                   </Link>
                 </li>
               </ul>
-              <p className="opacity-60">Site by Groundcrew</p>
+              <a
+                className="opacity-60 hover:opacity-100 transition-opacity duration-500"
+                href="https://groundcrew.com.au"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Site by Groundcrew
+              </a>
             </div>
           </div>
         </div>
