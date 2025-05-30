@@ -34,7 +34,7 @@ export default function ImageMarqueeSection({
           drag: "free",
           autoScroll: {
             autoStart: true,
-            speed: 1,
+            speed: 0.5,
             pauseOnHover: false,
             pauseOnFocus: false,
           },
