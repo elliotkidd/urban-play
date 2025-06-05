@@ -23,7 +23,6 @@ import type {
 } from "@/lib/sanity/queries/form";
 import { useFormspark } from "@formspark/use-formspark";
 import SanitySelectFormField from "./ui/inputs/SanitySelectFormField";
-import { Button } from "@workspace/packages/ui/src/components/button";
 import SubmitButton from "./SubmitButton";
 
 const FORM_SPARK_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
@@ -95,6 +94,8 @@ const getDefaultValues = (form: FormProps) => {
         });
       } else if (field._type === "radioGroup") {
         acc[field.name] = "";
+      } else if (field._type === "select") {
+        acc[field.name] = null;
       } else {
         acc[field.name] = "";
       }
@@ -140,16 +141,21 @@ export default function SanityForm({
             index: number,
           ) => {
             const { _type, columns, _key, ...rest } = props;
+            console.log(props.name);
             switch (_type) {
               case "select":
                 return (
                   <SanitySelectFormField
                     key={_key}
                     {...(rest as SelectProps)}
-                    className={cn(columns === 2 && "lg:col-span-2")}
+                    className={cn(
+                      columns === 2 && "lg:col-span-2",
+                      dirtyFields[props.name] &&
+                        DIRTY_INPUT_CLASSES[index % DIRTY_INPUT_CLASSES.length],
+                      FOCUS_INPUT_CLASSES[index % FOCUS_INPUT_CLASSES.length],
+                    )}
                   />
                 );
-                break;
               case "checkboxGroup":
                 return (
                   <SanityCheckboxGroup
@@ -171,7 +177,7 @@ export default function SanityForm({
               default:
                 const Component = components[_type];
 
-                const { name, label } = props;
+                const { name } = props;
 
                 if (!Component) {
                   return (
@@ -214,7 +220,6 @@ export default function SanityForm({
                     )}
                   />
                 );
-                break;
             }
           },
         )}
