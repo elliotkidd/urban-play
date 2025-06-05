@@ -39,6 +39,8 @@ export default function PartnersRollover({ partners }: PartnersRolloverProps) {
                 >
                   <SanityImage
                     src={image}
+                    // width={288}
+                    // height={288}
                     className="w-full h-full object-cover"
                   />
                 </motion.div>

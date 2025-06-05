@@ -7,10 +7,10 @@ import ProjectTile from "./project-tile";
 
 type Props = {
   projects: TileType[];
-  imageAspectRatio: "portrait" | "landscape" | "square" | "video";
+  imageAspectRatio?: "portrait" | "landscape" | "square" | "video";
 };
 
-function ProjectsSwiper({ projects, imageAspectRatio }: Props) {
+function ProjectsSwiper({ projects, imageAspectRatio = "square" }: Props) {
   return (
     <Swiper
       slidesPerView={4}
