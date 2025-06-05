@@ -49,7 +49,7 @@ export default async function BlogPage({
   } = data ?? {};
   const { page, tags } = await searchParams;
 
-  const POSTS_PER_PAGE = 12;
+  const POSTS_PER_PAGE = 8;
 
   const currentPage = parseInt(page, 10) || 1;
 

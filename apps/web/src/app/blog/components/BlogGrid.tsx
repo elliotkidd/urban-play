@@ -118,11 +118,14 @@ async function BlogGrid({
             {blogs &&
               blogs.length > 0 &&
               blogs.map((post: PostTileType, index: number) => (
-                <li key={post._id} className={BLOG_GRID_COL_SPANS[index % 11]}>
+                <li
+                  key={post._id}
+                  className={BLOG_GRID_COL_SPANS[index % perPage]}
+                >
                   <PostTile
                     key={post._id}
                     post={post}
-                    image_aspect={IMAGE_ASPECTS[index % 11]}
+                    image_aspect={IMAGE_ASPECTS[index % perPage]}
                   />
                 </li>
               ))}

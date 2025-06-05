@@ -20,7 +20,10 @@ export default function PageHeader({
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
   return (
-    <div ref={ref} className="relative h-screen flex items-center">
+    <div
+      ref={ref}
+      className="relative h-screen flex items-center overflow-hidden"
+    >
       <motion.div
         style={{ y }}
         className="h-[calc(100vh+200px)] w-full object-cover absolute inset-0"

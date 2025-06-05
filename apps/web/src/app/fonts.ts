@@ -12,6 +12,10 @@ const fontBody = localFont({
       weight: "600",
     },
     {
+      path: "../fonts/suisse-intl-medium.otf",
+      weight: "500",
+    },
+    {
       path: "../fonts/suisse-intl-book.otf",
       weight: "400",
     },

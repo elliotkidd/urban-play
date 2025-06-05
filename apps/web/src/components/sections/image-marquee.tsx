@@ -2,12 +2,9 @@ import { twMerge } from "tailwind-merge";
 import SanityImage from "../sanity-image";
 import SectionHeader from "../section-header";
 import { ImageMarqueeProps } from "@/lib/sanity/queries/sections";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-
-import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
-
-// Default theme
-import "@splidejs/react-splide/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
 
@@ -25,31 +22,24 @@ export default function ImageMarqueeSection({
       )}
     >
       {sectionHeader && <SectionHeader {...sectionHeader} />}
-      <Splide
-        options={{
-          type: "loop",
-          perPage: "auto",
-          perMove: 1,
-          gap: "1rem",
-          drag: "free",
-          autoScroll: {
-            autoStart: true,
-            speed: 0.5,
-            pauseOnHover: false,
-            pauseOnFocus: false,
-          },
-          fixedHeight: "468px",
-          arrows: false,
-          clones: 2,
+      <Swiper
+        modules={[Autoplay]}
+        slidesPerView="auto"
+        spaceBetween={16}
+        loop={true}
+        speed={5000}
+        autoplay={{
+          delay: 1,
+          disableOnInteraction: false,
         }}
-        extensions={{ AutoScroll }}
         style={{ overflow: "visible" }}
+        className="h-[468px] auto-scroll"
       >
         {images &&
           images.length > 0 &&
           images.map((image, index) => {
             return (
-              <SplideSlide
+              <SwiperSlide
                 key={index}
                 style={{
                   width: "auto",
@@ -58,10 +48,10 @@ export default function ImageMarqueeSection({
                 className="rounded-lg overflow-hidden"
               >
                 <SanityImage src={image} />
-              </SplideSlide>
+              </SwiperSlide>
             );
           })}
-      </Splide>
+      </Swiper>
     </motion.div>
   );
 }

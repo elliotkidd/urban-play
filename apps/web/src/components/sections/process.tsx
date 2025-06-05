@@ -2,10 +2,12 @@ import { ProcessProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
 import SectionHeader from "../section-header";
 import SanityImage from "../sanity-image";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { ChevronLeftIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import "swiper/css";
+import type { Swiper as SwiperType } from "swiper";
 
 function Process({
   steps,
@@ -13,12 +15,13 @@ function Process({
   sectionHeader,
   showIndex,
 }: ProcessProps) {
-  const splideRef = useRef<Splide>(null);
+  const swiperRef = useRef<SwiperType>();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    console.log(currentIndex);
-    splideRef.current?.go(currentIndex);
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(currentIndex);
+    }
   }, [currentIndex]);
 
   return (
@@ -44,21 +47,18 @@ function Process({
           <ChevronRightIcon className="w-4 h-4" />
         </button>
       </div>
-      <Splide
-        hasTrack
-        options={{
-          perPage: 2,
-          perMove: 1,
-          gap: "var(--space-xs)",
-          arrows: false,
-          pagination: false,
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={16}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
         }}
-        onMounted={(splide) => {
-          splideRef.current = splide;
+        onSlideChange={(swiper) => {
+          setCurrentIndex(swiper.activeIndex);
         }}
       >
         {steps.map((step, i) => (
-          <SplideSlide
+          <SwiperSlide
             key={step._key}
             className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4"
             style={{ height: "437px" }}
@@ -80,9 +80,9 @@ function Process({
               </h3>
               <div className="text-sm">{step.description}</div>
             </div>
-          </SplideSlide>
+          </SwiperSlide>
         ))}
-      </Splide>
+      </Swiper>
     </div>
   );
 }

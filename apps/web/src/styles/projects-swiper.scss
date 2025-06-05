@@ -5,11 +5,8 @@
   }
 }
 
-.splide {
-  .splide__track {
-    overflow: visible;
-    .splide__list {
-      overflow: visible;
-    }
+.auto-scroll {
+  .swiper-wrapper {
+    transition-timing-function: linear;
   }
 }

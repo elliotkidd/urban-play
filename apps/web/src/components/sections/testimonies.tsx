@@ -1,12 +1,14 @@
 import { TestimoniesProps } from "@/lib/sanity/queries/sections";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Autoplay } from "swiper/modules";
 import { SanityButtons } from "../sanity-buttons";
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
-
-import "@splidejs/react-splide/css/core";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
+import "swiper/css/effect-fade";
 
 export default function TestimoniesSection({
   sectionHeader,
@@ -14,8 +16,7 @@ export default function TestimoniesSection({
   smallWrapper,
 }: TestimoniesProps) {
   const { title, buttons } = sectionHeader;
-
-  const splideRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType>();
 
   return (
     <motion.div
@@ -39,16 +40,17 @@ export default function TestimoniesSection({
         )}
       </div>
       {testimonies && testimonies.length > 0 && (
-        <Splide
-          ref={splideRef}
-          options={{
-            type: "fade",
-            rewind: true,
-            autoplay: true,
-            interval: 5000,
-            speed: 1000,
-            arrows: false,
-            pagination: false,
+        <Swiper
+          modules={[EffectFade, Autoplay]}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          speed={1000}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
           }}
           className="overflow-visible featured-projects-swiper mb-fluid-lg"
         >
@@ -59,7 +61,7 @@ export default function TestimoniesSection({
               quote,
             } = testimony;
             return (
-              <SplideSlide
+              <SwiperSlide
                 key={_id + i}
                 className="space-y-fluid-lg bg-background flex flex-col items-start justify-between"
                 style={{ height: "auto", display: "flex" }}
@@ -71,14 +73,14 @@ export default function TestimoniesSection({
                   <span className="block">{name}</span>
                   <span className="block opacity-40">{position}</span>
                 </div>
-              </SplideSlide>
+              </SwiperSlide>
             );
           })}
-        </Splide>
+        </Swiper>
       )}
       <div className="flex items-center justify-start gap-2 text-text">
         <button
-          onClick={() => splideRef.current?.splide?.go("<")}
+          onClick={() => swiperRef.current?.slidePrev()}
           className="bg-transparent border border-text/20 hover:border-text transition-colors duration-300 text-white w-10 h-10 rounded-full flex items-center justify-center"
         >
           <svg
@@ -96,7 +98,7 @@ export default function TestimoniesSection({
           </svg>
         </button>
         <button
-          onClick={() => splideRef.current?.splide?.go(">")}
+          onClick={() => swiperRef.current?.slideNext()}
           className="bg-transparent border border-text/20 hover:border-text transition-colors duration-300 text-white w-10 h-10 rounded-full flex items-center justify-center"
         >
           <svg

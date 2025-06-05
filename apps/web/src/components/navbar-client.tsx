@@ -354,7 +354,10 @@ function NavbarColumnLink({
         });
       }}
       target={url?.openInNewTab ? "_blank" : "_self"}
-      className={twMerge("text-nowrap", className)}
+      className={twMerge(
+        "text-nowrap text-xs text-medium hover:opacity-60 transition-opacity duration-500",
+        className,
+      )}
     >
       {name}
     </Link>

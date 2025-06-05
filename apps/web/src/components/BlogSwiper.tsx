@@ -1,41 +1,39 @@
 "use client";
 
 import { PostTileType } from "@/lib/sanity/queries/fragments";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import PostTile from "./post-tile";
 
 export function BlogSwiper({ posts }: { posts: PostTileType[] }) {
   return (
-    <Splide
-      options={{
-        type: "slide",
-        perPage: 4,
-        gap: "1rem",
-        arrows: false,
-        pagination: false,
-        drag: true,
-        trimSpace: false,
-        perMove: 1,
-        breakpoints: {
-          768: {
-            perPage: 1,
-          },
-          1024: {
-            perPage: 2,
-          },
-          1280: {
-            perPage: 3,
-          },
+    <Swiper
+      slidesPerView={4}
+      spaceBetween={16}
+      className="not-prose"
+      breakpoints={{
+        320: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 1,
+        },
+        1024: {
+          slidesPerView: 2,
+        },
+        1280: {
+          slidesPerView: 3,
+        },
+        1536: {
+          slidesPerView: 4,
         },
       }}
-      className="not-prose"
     >
       {posts.map((post) => (
-        <SplideSlide key={post._id}>
+        <SwiperSlide key={post._id}>
           <PostTile post={post} image_aspect="portrait" />
-        </SplideSlide>
+        </SwiperSlide>
       ))}
-    </Splide>
+    </Swiper>
   );
 }
