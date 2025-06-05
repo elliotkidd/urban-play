@@ -61,7 +61,7 @@ export default function PostTile({
           </span>
         )}
       </div>
-      <h3 className="text-lg font-bold mb-4">{title}</h3>
+      <h3 className="text-lg font-bold mb-4 leading-[120%]">{title}</h3>
     </Link>
   );
 }
