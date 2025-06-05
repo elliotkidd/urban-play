@@ -37,7 +37,7 @@ function Contact({ title, globalSettings, form }: ContactProps) {
       className="wrapper grid grid-cols-1 gap-fluid lg:grid-cols-3 py-fluid-xs"
     >
       <div className="prose">
-        <h2 className="h2 mb-fluid-lg">{title}</h2>
+        <h2 className="h2 mb-fluid-sm">{title}</h2>
         <div className="space-y-fluid-sm">
           {socialLinks && (
             <div className="not-prose leading-none space-y-1 text-xs">

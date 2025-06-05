@@ -7,7 +7,6 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { twMerge } from "tailwind-merge";
-import { accordionColors } from "@/utils/utils";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
 
@@ -25,7 +24,7 @@ export function FAQsAccordion({
       )}
     >
       <div className="flex justify-between prose mb-fluid-sm">
-        <h2 className="">{title}</h2>
+        <h2 className="h2">{title}</h2>
       </div>
       <Accordion
         type="single"
@@ -38,17 +37,18 @@ export function FAQsAccordion({
               value={faq._id}
               key={`AccordionItem-${faq._id}-${index}`}
               className={twMerge(
-                "p-3 accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white",
-                accordionColors[index % accordionColors.length].hover,
-                accordionColors[index % accordionColors.length].open,
+                "accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-bottle-green data-[state=open]:bg-bottle-green",
               )}
             >
-              <AccordionTrigger className="py-2 text-[15px] leading-none hover:no-underline group">
+              <AccordionTrigger className="px-4 py-6 text-[15px] leading-none hover:no-underline group">
                 {faq.title}
               </AccordionTrigger>
-              <AccordionContent className="pb-2">
+              <AccordionContent className="p-4">
                 {faq.answer && (
-                  <RichText richText={faq.answer} className="prose-white" />
+                  <RichText
+                    richText={faq.answer}
+                    className="prose-white mt-fluid"
+                  />
                 )}
               </AccordionContent>
             </AccordionItem>

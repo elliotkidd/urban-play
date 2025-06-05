@@ -1,13 +1,16 @@
 .btn {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2 text-center duration-500 text-xs font-medium font-body rounded-lg text-nowrap;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 text-center duration-500 text-base font-medium font-body rounded-lg text-nowrap;
+
+  line-height: 120%;
+  letter-spacing: 0.005em;
 
   &--header-size {
     height: 35px;
+    font-size: var(--text-xs);
     padding: 0 15px;
   }
 
   &--default-size {
-    height: 35px;
     padding: 20px 35px;
   }
 
@@ -26,7 +29,7 @@
   }
 
   &--outline {
-    @apply border border-text/20 hover:bg-text hover:text-background  transition-colors text-text;
+    @apply border border-text/20 hover:bg-text hover:text-background transition-colors text-text;
   }
 
   &--inline {

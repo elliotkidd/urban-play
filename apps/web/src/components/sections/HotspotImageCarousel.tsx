@@ -130,9 +130,15 @@ function SlideBase({
   );
 }
 
-function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
-  const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
-
+function DesktopSlide({
+  image,
+  hotspots,
+  activeHotspot,
+  setActiveHotspot,
+}: ImageWithHotspotProps & {
+  activeHotspot: number | null;
+  setActiveHotspot: (index: number | null) => void;
+}) {
   return (
     <>
       <SanityImage
@@ -151,23 +157,26 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
               onClick={() =>
                 setActiveHotspot(activeHotspot === index ? null : index)
               }
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
               transition={{
                 duration: 0.5,
                 ease: customEase,
-                delay: (index + 1) * 0.5,
+                delay: (index + 1) * 0.3,
               }}
               className={twMerge(
-                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-colors duration-500",
+                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-[border-color, opacity] duration-500",
                 activeHotspot === index ? "border-white" : "border-transparent",
+                activeHotspot !== null &&
+                  activeHotspot !== index &&
+                  "opacity-50",
               )}
               style={{
                 top: `${y}%`,
                 left: `${x}%`,
               }}
             >
-              <div className="lg:w-6 lg:h-6 w-4 h-4 bg-white rounded-full" />
+              <div className="lg:w-6 lg:h-6 w-4 h-4 bg-white rounded-full drop-shadow-lg" />
             </motion.div>
           );
         })}
@@ -179,7 +188,7 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
               index === activeHotspot && (
                 <motion.div
                   key={`hotspot-${spot._key}-${index}`}
-                  className="absolute bottom-4 left-4 w-80 bg-navbar-background/20 rounded-lg backdrop-blur-lg p-2"
+                  className="absolute bottom-4 left-4 w-[400px] bg-navbar-background/20 rounded-lg backdrop-blur-lg p-2 z-10"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -191,7 +200,7 @@ function DesktopSlide({ image, hotspots }: ImageWithHotspotProps) {
                       alt={image.alt ?? ""}
                       className="w-full h-full object-cover"
                       style={{
-                        transform: `scale(5)`,
+                        transform: `scale(4)`,
                         transformOrigin: `${spot.x}% ${spot.y}%`,
                         transition: "transform 0.3s ease-out",
                       }}
@@ -420,24 +429,27 @@ function DesktopHotspotImageCarousel({
 }) {
   const { title, buttons } = sectionHeader;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [images, currentIndex]);
+    if (activeHotspot === null) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [images, currentIndex, activeHotspot]);
 
   return (
     <motion.div {...sectionAnimationConfig} className="wrapper py-fluid-xs">
       <div className="relative aspect-video rounded-xl overflow-hidden">
         <div
           className={twMerge(
-            "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-xs p-fluid-sm relative z-10",
+            "flex flex-col w-full lg:flex-row lg:justify-between items-start gap-fluid-xs p-fluid-sm relative z-10",
           )}
         >
           {title && (
-            <h2 className="max-w-section-heading text-balance text-white">
+            <h2 className="max-w-section-heading text-4xl leading-[95%] font-heading text-balance text-white">
               {title}
             </h2>
           )}
@@ -462,7 +474,11 @@ function DesktopHotspotImageCarousel({
                   exit="exit"
                   transition={{ duration: 1 }}
                 >
-                  <DesktopSlide {...item} />
+                  <DesktopSlide
+                    {...item}
+                    activeHotspot={activeHotspot}
+                    setActiveHotspot={setActiveHotspot}
+                  />
                 </motion.div>
               ),
           )}

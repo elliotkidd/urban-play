@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
 import { SanityButtons } from "../sanity-buttons";
 import { cn } from "@/lib/utils";
+import { Fragment } from "react";
 
 export default function ParagraphSection({
   richText,
@@ -42,41 +43,35 @@ export default function ParagraphSection({
               annotationDirection !== "horizontal" ? "space-y-4" : "space-y-1",
             )}
           >
-            {annotations.map(({ top, bottom, _key }, index) => (
-              <>
-                {annotationDirection === "horizontal" ? (
-                  <li
-                    key={`${_key}-horizontal-annotation-${index}`}
-                    className="leading-none grid grid-cols-3 gap-2"
-                  >
-                    <span className="block opacity-40">{top}</span>
-                    <span className="block col-span-2">
-                      {bottom.split(",").map((word, i) => {
-                        return (
-                          <span key={i} className="block">
-                            {word}
-                          </span>
-                        );
-                      })}
-                    </span>
-                  </li>
-                ) : (
-                  <li
-                    key={`${_key}-vertical-annotation-${index}`}
-                    className="leading-none"
-                  >
-                    <span className="block">{top}</span>
-                    <span className="block opacity-40">{bottom}</span>
-                  </li>
-                )}
-              </>
-            ))}
+            {annotations.map(({ top, bottom, _key }, index) => {
+              return (
+                <Fragment key={_key}>
+                  {annotationDirection === "horizontal" ? (
+                    <li className="leading-none grid grid-cols-3 gap-2">
+                      <span className="block opacity-40">{top}</span>
+                      <span className="block col-span-2">
+                        {bottom.split(",").map((word, i) => {
+                          return (
+                            <span key={i} className="block">
+                              {word}
+                            </span>
+                          );
+                        })}
+                      </span>
+                    </li>
+                  ) : (
+                    <li className="leading-none">
+                      <span className="block">{top}</span>
+                      <span className="block opacity-40">{bottom}</span>
+                    </li>
+                  )}
+                </Fragment>
+              );
+            })}
           </ul>
         )}
       </div>
-      <div className="prose">
-        {richText && <RichText richText={richText} className="max-w-p-lg" />}
-      </div>
+      {richText && <RichText richText={richText} className="max-w-p-lg" />}
     </motion.div>
   );
 }

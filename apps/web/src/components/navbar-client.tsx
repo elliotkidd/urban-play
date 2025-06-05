@@ -445,7 +445,7 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
         <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
       ) : (
         <header id="navbar" style={headerStyle}>
-          <Logo className="w-[30px] flex items-center mr-5" />
+          <Logo className="w-[36px] flex items-center mr-5" />
           <DesktopNavbar navbarData={navbarData} />
         </header>
       )}

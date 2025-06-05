@@ -41,7 +41,7 @@ export function ImageBannerSection({
             {...sectionAnimationConfig}
             className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid lg:sticky top-24"
           >
-            <h2 className="h3 no-underline normal-case text-lg">{title}</h2>
+            <p className="lead">{title}</p>
             <RichText richText={richText} />
           </motion.div>
         )}

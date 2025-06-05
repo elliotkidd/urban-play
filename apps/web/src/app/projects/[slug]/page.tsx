@@ -43,7 +43,7 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
 
       {relatedProjects && (
         <section className="overflow-hidden mt-fluid-lg">
-          <div className="wrapper py-fluid-xs">
+          <div className="wrapper pt-fluid-xs pb-fluid-xl">
             <div className="prose mb-fluid-sm">
               <h2 className="">More Projects</h2>
             </div>

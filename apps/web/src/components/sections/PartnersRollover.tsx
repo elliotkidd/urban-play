@@ -31,14 +31,11 @@ export default function PartnersRollover({ partners }: PartnersRolloverProps) {
                     x: "-50%",
                     y: "-50%",
                     transition: {
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 10,
-                      mass: 1,
+                      duration: 0.5,
                     },
                   }}
                   exit={{ scale: 0, rotate: 0, x: "-50%", y: "-50%" }}
-                  className="absolute w-48 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-portrait rounded-xl overflow-hidden z-10 pointer-events-none"
+                  className="absolute w-[18rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-portrait rounded-xl overflow-hidden z-10 pointer-events-none"
                 >
                   <SanityImage
                     src={image}

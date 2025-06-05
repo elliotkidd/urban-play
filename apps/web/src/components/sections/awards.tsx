@@ -4,21 +4,16 @@ import { AwardsAccordionProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { sectionAnimationConfig } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 
 const itemVariants = {
   hidden: {
     opacity: 0,
-    x: 100,
   },
   show: (i: number) => ({
     opacity: 1,
-    x: 0,
     transition: {
-      type: "spring",
-      bounce: 0.6,
-      visualDuration: 0.35,
+      duration: 0.5,
       delay: i * 0.1,
     },
   }),

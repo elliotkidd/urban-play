@@ -60,7 +60,7 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
                 // accordionColors[index % accordionColors.length].open,
               )}
             >
-              <AccordionTrigger className="py-2 text-lg leading-none no-underline group font-bold">
+              <AccordionTrigger className="py-2 text-lg leading-none no-underline group font-bold h3">
                 {item.heading}
               </AccordionTrigger>
               <AccordionContent className="pb-2">
@@ -139,12 +139,18 @@ export default function TwoColumnContentSection({
   columnRatio,
   alignCentre,
   padding,
+  gap,
 }: TwoColumnContentProps) {
   return (
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper grid gap-4",
+        "wrapper grid gap-fluid-xs",
+        gap === "xs" && "gap-fluid-xs",
+        gap === "sm" && "gap-fluid-sm",
+        gap === "md" && "gap-fluid-md",
+        gap === "lg" && "gap-fluid-lg",
+        gap === "xl" && "gap-fluid-xl",
         smallWrapper && "wrapper--small",
         columnRatio === "5050" && "grid-cols-1 lg:grid-cols-2",
         (columnRatio === "2575" || columnRatio === "7525") &&

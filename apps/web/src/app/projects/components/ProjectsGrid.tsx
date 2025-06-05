@@ -17,27 +17,18 @@ type SolutionType = {
   slug: string;
 };
 
-async function fetchProjects(indexFrom: number, indexTo: number) {
+async function fetchProjects() {
   return await sanityFetch({
     query: projectsQuery,
-    params: {
-      indexFrom,
-      indexTo,
-    },
+    params: {},
   });
 }
 
-async function fetchProjectsBySolution(
-  indexFrom: number,
-  indexTo: number,
-  tags: string[] | string,
-) {
+async function fetchProjectsBySolution(tags: string[] | string) {
   tags = Array.isArray(tags) ? tags : [tags];
   return await sanityFetch({
     query: projectsBySolutionQuery,
     params: {
-      indexFrom,
-      indexTo,
       tags,
     },
   });
@@ -63,36 +54,23 @@ export function ProjectsGridSkeleton() {
   );
 }
 
-export async function ProjectsGrid({
-  tags,
-  indexFrom,
-  indexTo,
-  perPage,
-}: {
-  solutions: SolutionType[];
-  title: string;
-  tags: string[];
-  indexTo: number;
-  indexFrom: number;
-  perPage: number;
-}) {
+export async function ProjectsGrid({ tags }: { tags: string[] }) {
   let response;
 
   tags
-    ? (response = await fetchProjectsBySolution(indexFrom, indexTo, tags))
-    : (response = await fetchProjects(indexFrom, indexTo));
+    ? (response = await fetchProjectsBySolution(tags))
+    : (response = await fetchProjects());
 
   const { data } = response ?? {};
   if (!data) return null;
 
-  const { projects, total } = data ?? {};
+  const { projects } = data ?? {};
 
   return (
     <>
       {projects.length > 0 ? (
         <>
           <ProjectGridClient projects={projects} />
-          <Pagination total={total} perPage={perPage} />
         </>
       ) : (
         <div className="wrapper prose text-center">

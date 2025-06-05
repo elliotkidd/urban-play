@@ -33,7 +33,7 @@ export default async function ProjectsPage({
 }: {
   searchParams: Promise<{ page: string; tags: string[] }>;
 }) {
-  const { page, tags } = await searchParams;
+  const { tags } = await searchParams;
 
   const { data } = await fetchProjectsIndexPageData();
   if (!data) return null;
@@ -49,11 +49,6 @@ export default async function ProjectsPage({
     title,
   } = data ?? {};
 
-  const POSTS_PER_PAGE = 12;
-  const currentPage = parseInt(page, 10) || 1;
-  const indexFrom = (currentPage - 1) * POSTS_PER_PAGE;
-  const indexTo = indexFrom + POSTS_PER_PAGE;
-
   return (
     <main
       className="bg-background text-text"
@@ -67,14 +62,7 @@ export default async function ProjectsPage({
       </section>
       <ProjectsHeader description={description} solutions={solutions} />
       <Suspense fallback={<ProjectsGridSkeleton />}>
-        <ProjectsGrid
-          solutions={solutions}
-          title={title}
-          tags={tags}
-          indexFrom={indexFrom}
-          indexTo={indexTo}
-          perPage={POSTS_PER_PAGE}
-        />
+        <ProjectsGrid tags={tags} />
       </Suspense>
 
       <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />

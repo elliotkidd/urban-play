@@ -15,7 +15,7 @@
 }
 
 .max-w-section-heading {
-  max-width: 870px;
+  max-width: 640px;
 }
 
 :root {
@@ -37,7 +37,7 @@
 
 :root {
   --text-xs-min: 10;
-  --text-xs-max: 12;
+  --text-xs-max: 11;
   --text-xs: clamp(
     calc(var(--text-xs-min) / 16) * 1rem,
     calc(
@@ -81,7 +81,7 @@
   );
 
   --text-lg-min: 20;
-  --text-lg-max: 24;
+  --text-lg-max: 25;
   --text-lg: clamp(
     calc(var(--text-lg-min) / 16) * 1rem,
     calc(
@@ -125,7 +125,7 @@
   );
 
   --text-4xl-min: 40;
-  --text-4xl-max: 80;
+  --text-4xl-max: 72;
   --text-4xl: clamp(
     calc(var(--text-4xl-min) / 16) * 1rem,
     calc(
@@ -136,7 +136,7 @@
   );
 
   --text-5xl-min: 64;
-  --text-5xl-max: 140;
+  --text-5xl-max: 96;
   --text-5xl: clamp(
     calc(var(--text-5xl-min) / 16) * 1rem,
     calc(
@@ -169,7 +169,7 @@
   );
 
   --space-min: 40;
-  --space-max: 64;
+  --space-max: 60;
   --space: clamp(
     calc(var(--space-min) / 16) * 1rem,
     calc(
@@ -180,7 +180,7 @@
   );
 
   --space-md-min: 64;
-  --space-md-max: 96;
+  --space-md-max: 90;
   --space-md: clamp(
     calc(var(--space-md-min) / 16) * 1rem,
     calc(
@@ -191,7 +191,7 @@
   );
 
   --space-lg-min: 96;
-  --space-lg-max: 128;
+  --space-lg-max: 120;
   --space-lg: clamp(
     calc(var(--space-lg-min) / 16) * 1rem,
     calc(
@@ -215,13 +215,6 @@
 
 h2 {
   @apply uppercase tracking-tight;
-}
-
-h3,
-.h3,
-h4,
-.h4 {
-  @apply text-lg font-bold leading-none;
 }
 
 h5,
@@ -249,12 +242,6 @@ h6 {
   margin-bottom: 0 !important;
 }
 
-.prose {
-  h3 {
-    @apply uppercase;
-  }
-}
-
 .blog-post--content {
   h1,
   h2,
@@ -267,4 +254,8 @@ h6 {
   ol {
     @apply max-w-section-heading mx-auto;
   }
+}
+
+p.lead {
+  @apply text-lg font-bold leading-[120%];
 }

@@ -37,7 +37,7 @@ function SolutionsGridSection({
                 </div>
                 <div className="flex flex-col justify-center gap-8">
                   <div className="prose">
-                    <h3 className="text-3xl uppercase">{solution.title}</h3>
+                    <h2 className="text-3xl uppercase">{solution.title}</h2>
                     <motion.p
                       variants={titleVariants()}
                       className="max-w-p text-balance"

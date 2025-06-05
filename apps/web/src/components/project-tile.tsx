@@ -58,14 +58,14 @@ export default function ProjectTile({
             className="object-cover inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
           />
           {solutions && solutions.length > 0 && (
-            <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold px-2 py-1 rounded-lg">
+            <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold p-[15px] tracking-[0.005em] rounded-lg">
               {solutions[0].title}
             </span>
           )}
         </div>
         <motion.h3
           variants={titleVariants(index * staggerDelay + 0.25)}
-          className="text-lg font-bold mb-4"
+          className="text-lg leading-[120%] font-bold mb-4"
         >
           {title}
         </motion.h3>

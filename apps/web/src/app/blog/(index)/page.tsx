@@ -65,14 +65,14 @@ export default async function BlogPage({
         <section className="mb-fluid-lg">
           {featuredBlog.image && (
             <>
-              <div className="relavitve h-screen w-full">
+              <div className="relative h-[80dvh] w-full overflow-hidden">
                 <SanityImage
                   src={featuredBlog.image}
                   className="object-cover absolute inset-0 w-full h-full"
                 />
               </div>
               <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-4 items-start">
-                <p className="max-w-p-lg lead">{featuredBlog.description}</p>
+                <h2 className="max-w-section-heading ">{featuredBlog.title}</h2>
                 <Link href={featuredBlog.slug}>
                   <Button as="span">Read Article</Button>
                 </Link>

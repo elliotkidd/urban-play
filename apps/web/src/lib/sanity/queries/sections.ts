@@ -308,6 +308,7 @@ const TWO_COLUMN_CONTENT_FRAGMENT = {
   }),
   alignCentre: q.boolean(),
   columnRatio: q.literal("5050").or(q.literal("2575")).or(q.literal("7525")),
+  gap: q.string(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

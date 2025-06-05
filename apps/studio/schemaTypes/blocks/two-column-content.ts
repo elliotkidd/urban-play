@@ -44,6 +44,22 @@ export const twoColumnContent = defineType({
       type: "boolean",
       group: GROUP.SETTINGS,
     }),
+    defineField({
+      name: "gap",
+      title: "Gap",
+      type: "string",
+      options: {
+        list: [
+          { title: "X-Small", value: "xs" },
+          { title: "Small", value: "sm" },
+          { title: "Medium", value: "md" },
+          { title: "Large", value: "lg" },
+          { title: "X-Large", value: "xl" },
+        ],
+      },
+      initialValue: "xs",
+      group: GROUP.SETTINGS,
+    }),
     ...sectionSettings,
   ],
   preview: {

@@ -57,7 +57,8 @@ function SectionWrapper({
           "h-screen flex items-center",
         (type === "iconMarquee" ||
           type === "imageMarquee" ||
-          type === "awardsAccordion") &&
+          type === "awardsAccordion" ||
+          type === "process") &&
           "overflow-hidden",
         hideOnPath && "hidden",
         className,
