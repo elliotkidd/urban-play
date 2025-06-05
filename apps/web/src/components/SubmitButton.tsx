@@ -19,7 +19,10 @@ export default function SubmitButton() {
       type="submit"
       disabled={pending}
       onMouseLeave={() => setHover((hover + 1) % HOVER_CLASSES.length)}
-      className={twMerge("lg:col-span-2", HOVER_CLASSES[hover])}
+      className={twMerge(
+        "lg:col-span-2 justify-start p-[15px] h-[68px]",
+        HOVER_CLASSES[hover],
+      )}
     >
       {pending ? "Submitting..." : "Submit"}
     </Button>

@@ -126,7 +126,12 @@ export function FormSelectFieldPreview(
   return (
     <FormFieldWrapper {...props}>
       <Select disabled>
-        <option key={`i-${options[0].value}`}>{options[0].label}</option>;
+        {options &&
+          Array.isArray(options) &&
+          options.map((option: { label: string; value: string }, i: number) => {
+            const { label, value } = option;
+            return <option key={`i-${value}`}>{label}</option>;
+          })}
       </Select>
     </FormFieldWrapper>
   );

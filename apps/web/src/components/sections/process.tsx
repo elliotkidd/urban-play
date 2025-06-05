@@ -25,7 +25,12 @@ function Process({
   }, [currentIndex]);
 
   return (
-    <div className={twMerge("wrapper", smallWrapper && "wrapper--small")}>
+    <div
+      className={twMerge(
+        "wrapper overflow-visible",
+        smallWrapper && "wrapper--small",
+      )}
+    >
       <SectionHeader {...sectionHeader} />
       <div className="flex justify-end gap-2 mb-fluid-xs">
         <button
@@ -48,7 +53,7 @@ function Process({
         </button>
       </div>
       <Swiper
-        slidesPerView={2}
+        slidesPerView={"auto"}
         spaceBetween={16}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -56,12 +61,15 @@ function Process({
         onSlideChange={(swiper) => {
           setCurrentIndex(swiper.activeIndex);
         }}
+        style={{
+          overflow: "visible",
+        }}
       >
         {steps.map((step, i) => (
           <SwiperSlide
             key={step._key}
-            className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4"
-            style={{ height: "437px" }}
+            className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-video"
+            style={{ maxWidth: "981px", width: "100%", display: "flex" }}
           >
             <div className="relative aspect-portrait rounded-lg overflow-hidden flex-none">
               <SanityImage

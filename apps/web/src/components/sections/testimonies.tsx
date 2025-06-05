@@ -45,11 +45,12 @@ export default function TestimoniesSection({
           effect="fade"
           fadeEffect={{ crossFade: true }}
           speed={1000}
+          loop
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
           }}
-          onSwiper={(swiper) => {
+          onAfterInit={(swiper) => {
             swiperRef.current = swiper;
           }}
           className="overflow-visible featured-projects-swiper mb-fluid-lg"
