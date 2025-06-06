@@ -281,12 +281,14 @@ function MobileHotspotImageCarousel({
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-      setActiveHotspot(0);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [images, currentIndex]);
+    if (activeHotspot === null) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+        setActiveHotspot(null);
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [images, currentIndex, activeHotspot]);
 
   return (
     <motion.div {...sectionAnimationConfig} className="wrapper">
