@@ -9,7 +9,7 @@ const fontBody = localFont({
   src: [
     {
       path: "../fonts/suisse-intl-bold.otf",
-      weight: "600",
+      weight: "700",
     },
     {
       path: "../fonts/suisse-intl-medium.otf",

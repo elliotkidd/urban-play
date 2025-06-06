@@ -88,7 +88,6 @@ export const blog = defineType({
       title: "Page Builder",
       group: GROUP.MAIN_CONTENT,
     }),
-    colorPickerField,
     ...seoFields,
     ...ogFields,
   ],

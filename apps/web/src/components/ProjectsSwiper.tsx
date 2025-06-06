@@ -33,6 +33,9 @@ function ProjectsSwiper({ projects, imageAspectRatio = "square" }: Props) {
           slidesPerView: 4,
         },
       }}
+      style={{
+        overflow: "visible",
+      }}
     >
       {projects.map((project) => (
         <SwiperSlide key={project._id}>

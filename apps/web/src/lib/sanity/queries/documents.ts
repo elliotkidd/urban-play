@@ -341,7 +341,12 @@ export const blogSlugPageQuery = q("*")
       .grab(LINK_REFERENCE_FRAGMENT),
     description: q.string(),
     publishedAt: q.string(),
-    colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+    indexData: q("*")
+      .filterByType("blogIndex")
+      .slice(0)
+      .grab({
+        colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+      }),
     pageBuilder: SECTIONS_FRAGMENT,
     relatedBlogs: q("*", { isArray: true })
       .filterByType("blog")

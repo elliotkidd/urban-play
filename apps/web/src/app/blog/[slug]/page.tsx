@@ -53,7 +53,7 @@ export default async function BlogSlugPage({
     richText,
     solutions,
     pageBuilder,
-    colorScheme,
+    indexData: { colorScheme },
     relatedBlogs,
   } = data ?? {};
 

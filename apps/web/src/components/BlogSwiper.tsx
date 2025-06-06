@@ -28,6 +28,9 @@ export function BlogSwiper({ posts }: { posts: PostTileType[] }) {
           slidesPerView: 4,
         },
       }}
+      style={{
+        overflow: "visible",
+      }}
     >
       {posts.map((post) => (
         <SwiperSlide key={post._id}>
