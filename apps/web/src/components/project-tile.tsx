@@ -28,19 +28,19 @@ export default function ProjectTile({
 
   switch (imageAspectRatio) {
     case "square":
-      imageAspectRatioClass = "aspect-square";
+      imageAspectRatioClass = "lg:aspect-square";
       break;
     case "landscape":
-      imageAspectRatioClass = "aspect-landscape";
+      imageAspectRatioClass = "lg:aspect-landscape";
       break;
     case "portrait":
-      imageAspectRatioClass = "aspect-portrait";
+      imageAspectRatioClass = "lg:aspect-portrait";
       break;
     case "video":
-      imageAspectRatioClass = "aspect-video";
+      imageAspectRatioClass = "lg:aspect-video";
       break;
     default:
-      imageAspectRatioClass = "aspect-square";
+      imageAspectRatioClass = "lg:aspect-square";
       break;
   }
 
@@ -49,7 +49,7 @@ export default function ProjectTile({
       <Link href={slug} className={twMerge("block group")}>
         <div
           className={twMerge(
-            "relative mb-4 rounded-xl overflow-hidden",
+            "relative mb-4 rounded-xl overflow-hidden aspect-square",
             imageAspectRatioClass,
           )}
         >

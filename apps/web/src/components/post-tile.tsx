@@ -45,10 +45,10 @@ export default function PostTile({
     >
       <div
         className={twMerge(
-          "relative mb-2 rounded-xl overflow-hidden",
-          image_aspect === "square" && "aspect-square",
-          image_aspect === "portrait" && "aspect-portrait",
-          image_aspect === "landscape" && "aspect-landscape",
+          "relative mb-2 rounded-xl overflow-hidden aspect-square",
+          image_aspect === "square" && "lg:aspect-square",
+          image_aspect === "portrait" && "lg:aspect-portrait",
+          image_aspect === "landscape" && "lg:aspect-landscape",
         )}
       >
         <SanityImage
