@@ -18,6 +18,8 @@ export function ImageBannerSection({
         <SanityImage
           src={image}
           className="absolute inset-0 w-full h-full object-cover"
+          width={1440}
+          height={1024}
         />
       )}
       <div
@@ -32,6 +34,8 @@ export function ImageBannerSection({
             <SanityImage
               src={image}
               className="object-cover absolute inset-0 w-full h-full"
+              width={1440}
+              height={1024}
             />
             <div className="bg-accent relative rounded-xl p-fluid-xs z-[1]"></div>
           </div>

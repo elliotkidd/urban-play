@@ -101,6 +101,8 @@ function SlideBase({
         src={image}
         alt={image.alt ?? ""}
         className="w-full h-full object-cover"
+        width={1440}
+        height={1024}
       />
       {Array.isArray(hotspots) &&
         hotspots.length > 0 &&
@@ -145,6 +147,8 @@ function DesktopSlide({
         src={image}
         alt={image.alt ?? ""}
         className="w-full h-full object-cover"
+        width={1440}
+        height={1024}
       />
       <div className="absolute inset-0 bg-black/20  h-full w-full pointer-events-none" />
       {Array.isArray(hotspots) &&

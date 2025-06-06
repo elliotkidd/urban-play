@@ -33,6 +33,8 @@ export default function PageHeader({
             src={image}
             className="h-full w-full object-cover absolute inset-0"
             alt={title}
+            width={1440}
+            height={1024}
           />
         )}
       </motion.div>

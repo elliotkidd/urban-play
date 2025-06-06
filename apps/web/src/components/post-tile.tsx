@@ -54,6 +54,8 @@ export default function PostTile({
         <SanityImage
           src={image}
           className="object-cover inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
+          width={1440}
+          height={1024}
         />
         {solutions && solutions.length > 0 && (
           <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold p-[15px] tracking-[0.005em] rounded-lg">

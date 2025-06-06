@@ -10,6 +10,8 @@ export function CTABlock({ richText, title, buttons, image }: CTAProps) {
         src={image}
         className="h-screen w-full object-cover absolute inset-0"
         alt={title}
+        width={1440}
+        height={1024}
       />
       <div className="absolute inset-0 bg-black/20" />
       <div className="wrapper pointer-events-none absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
