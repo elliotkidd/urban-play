@@ -36,7 +36,7 @@ export default function PostTile({
   image_aspect: "square" | "portrait" | "landscape";
   className?: string;
 }) {
-  const { image, title, description, solutions } = post;
+  const { image, title, solutions } = post;
 
   return (
     <Link
