@@ -22,7 +22,7 @@ export default function PageHeader({
   return (
     <div
       ref={ref}
-      className="relative h-screen flex items-center overflow-hidden"
+      className="relative h-screen w-full flex items-center overflow-hidden"
     >
       <motion.div
         style={{ y }}
