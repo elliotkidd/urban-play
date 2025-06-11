@@ -171,7 +171,9 @@ const CTA_FRAGMENT = {
     .select(RICHTEXT_BLOCKS)
     .nullable(),
   title: q.string(),
-  image: q("image").grab(IMAGE_FRAGMENT),
+  image: q("image").grab(IMAGE_FRAGMENT).nullable(),
+  video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  mediaType: q.literal("image").or(q.literal("video")),
   buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;

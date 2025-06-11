@@ -3,16 +3,33 @@ import { SanityButtons } from "../sanity-buttons";
 import { CTAProps } from "@/lib/sanity/queries/sections";
 import SanityImage from "../sanity-image";
 
-export function CTABlock({ richText, title, buttons, image }: CTAProps) {
+export function CTABlock({
+  richText,
+  title,
+  buttons,
+  image,
+  video,
+  mediaType,
+}: CTAProps) {
   return (
     <>
-      <SanityImage
-        src={image}
-        className="h-screen w-full object-cover absolute inset-0"
-        alt={title}
-        width={1440}
-        height={1024}
-      />
+      {}
+      {mediaType === "image" && image && (
+        <SanityImage
+          src={image}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+      {mediaType === "video" && video && (
+        <video
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       <div className="absolute inset-0 bg-black/20" />
       <div className="wrapper pointer-events-none absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">
         <h2 className="max-w-p mb-0">{title}</h2>
