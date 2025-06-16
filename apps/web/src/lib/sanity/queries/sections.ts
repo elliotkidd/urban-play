@@ -1,4 +1,4 @@
-import { q, Selection, TypeFromSelection } from "groqd";
+import { q, Selection, TypeFromSelection, z } from "groqd";
 import { RICHTEXT_BLOCKS } from "./richText";
 import {
   COLOR_SCHEME_FRAGMENT,
@@ -87,6 +87,12 @@ const PARAGRAPH_FRAGMENT = {
     .literal("vertical")
     .or(q.literal("horizontal"))
     .nullable(),
+  downloadableFile: q("downloadableFile").grab({
+    _type: q.literal("file"),
+    _id: q.string(),
+    url: q("asset").deref().grabOne("url", q.string()),
+    filename: q.string(),
+  }),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

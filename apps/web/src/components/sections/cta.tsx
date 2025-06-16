@@ -13,7 +13,6 @@ export function CTABlock({
 }: CTAProps) {
   return (
     <>
-      {}
       {mediaType === "image" && image && (
         <SanityImage
           src={image}

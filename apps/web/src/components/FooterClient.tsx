@@ -2,10 +2,7 @@
 
 import { FooterType } from "@/lib/sanity/queries/documents";
 import { getColorSchemeStyle } from "@/utils/utils";
-import { useEffect } from "react";
-import { useInView } from "motion/react";
 import Link from "next/link";
-import { useRef } from "react";
 import FooterLogo from "./FooterLogo";
 import { Input } from "@workspace/packages/ui/src/components/input";
 import {
@@ -17,6 +14,7 @@ import {
 import { useForm } from "react-hook-form";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 type SocialLinksProps = {
   data: any;
@@ -25,6 +23,8 @@ type SocialLinksProps = {
 type ContactDetailsProps = {
   data: any;
 };
+
+const FORMSPARK_FORM_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
 
 function ContactDetails({ data }: ContactDetailsProps) {
   if (!data) return null;
@@ -114,22 +114,21 @@ function NewsletterSignup() {
     formState: { isSubmitting },
   } = form;
 
-  useEffect(() => {
-    console.log("isSubmitting", isSubmitting);
-  }, [isSubmitting]);
+  console.log(FORMSPARK_FORM_ID);
 
   const onSubmit = async (data: any) => {
-    console.log("onSubmit");
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(data);
-        toast({
-          title: "Thank you for subscribing!",
-          description: "You will receive an email with the latest news",
-        });
-        resolve(true);
-      }, 2000);
-    });
+    try {
+      await axios.post(`https://submit-form.com/${FORMSPARK_FORM_ID}`, data);
+      toast({
+        title: "Thank you for subscribing!",
+        description: "You will receive an email with the latest news",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+    }
     form.reset();
   };
 
@@ -150,7 +149,7 @@ function NewsletterSignup() {
                       type="email"
                       label="Email"
                       placeholder="Email"
-                      className="rounded-none bg-transparent placeholder:opacity-60"
+                      className="rounded-none bg-transparent placeholder:opacity-60 text-white placeholder:text-white"
                     />
                   </FormControl>
                 </FormItem>

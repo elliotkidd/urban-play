@@ -32,6 +32,12 @@ export const paragraph = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
+      name: "downloadableFile",
+      title: "Downloadable File",
+      type: "file",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
       name: "largeSpacing",
       title: "Large Spacing",
       type: "boolean",
