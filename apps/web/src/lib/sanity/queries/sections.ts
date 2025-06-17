@@ -91,7 +91,6 @@ const PARAGRAPH_FRAGMENT = {
     _type: q.literal("file"),
     _id: q.string(),
     url: q("asset").deref().grabOne("url", q.string()),
-    filename: q.string(),
   }),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -122,10 +121,7 @@ const FEATURED_PROJECTS_FRAGMENT = {
   _type: q.literal("featuredProjects"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  projects: q("*", { isArray: true })
-    .filterByType("project")
-    .slice(0, 5)
-    .grab(TILE_FRAGMENT),
+  projects: q("projects[]", { isArray: true }).deref().grab(TILE_FRAGMENT),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
