@@ -68,18 +68,18 @@ function Process({
         {steps.map((step, i) => (
           <SwiperSlide
             key={step._key}
-            className="bg-nav-bar-background/20 rounded-lg flex gap-[45px] aspect-video"
+            className="bg-nav-bar-background/20 rounded-lg flex gap-fluid-sm aspect-video"
             style={{ maxWidth: "981px", width: "100%", display: "flex" }}
           >
-            <div className="p-4 flex-none aspect-portrait">
-              <div className="relative aspect-portrait rounded-lg overflow-hidden">
+            <div className="p-2 flex-none aspect-portrait">
+              <div className="relative w-full h-full rounded-lg overflow-hidden">
                 <SanityImage
                   src={step.image}
                   className="w-full h-full absolute inset-0 object-cover"
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col h-full justify-between max-w-lg space-y-fluid pr-[45px] py-[45px]">
+            <div className="flex-1 flex flex-col h-full justify-between max-w-lg space-y-fluid pr-fluid-sm py-fluid-sm">
               <h3 className="text-lg font-bold">
                 {showIndex && (
                   <span className="opacity-30 mr-1">

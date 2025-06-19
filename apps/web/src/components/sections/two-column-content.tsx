@@ -19,6 +19,7 @@ import {
 import { accordionColors } from "@/utils/utils";
 import { sectionAnimationConfig } from "@/lib/motion";
 import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 function MissingBlock({
   block,
@@ -144,8 +145,8 @@ export default function TwoColumnContentSection({
   return (
     <motion.div
       {...sectionAnimationConfig}
-      className={twMerge(
-        "wrapper grid gap-fluid-xs",
+      className={cn(
+        "wrapper grid",
         gap === "xs" && "gap-fluid-xs",
         gap === "sm" && "gap-fluid-sm",
         gap === "md" && "gap-fluid-md",

@@ -158,7 +158,7 @@
   );
 
   --space-sm-min: 24;
-  --space-sm-max: 40;
+  --space-sm-max: 45;
   --space-sm: clamp(
     calc(var(--space-sm-min) / 16) * 1rem,
     calc(
@@ -215,6 +215,12 @@
 
 h2 {
   @apply uppercase tracking-tight;
+}
+
+h2,
+h3,
+h4 {
+  @apply text-balance;
 }
 
 h5,

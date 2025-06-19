@@ -144,14 +144,14 @@ export default function ParagraphSection({
           <RichText
             richText={topText}
             className={cn(
-              "max-w-p-lg",
-              (!buttons || !annotations) && "max-w-p-xl",
+              "max-w-[770px]",
+              !buttons && !annotations && "max-w-p-xl",
             )}
           />
         )}
         {buttons && !annotations && <SanityButtons buttons={buttons} />}
         {annotations && !buttons && (
-          <div className="w-80 space-y-fluid-sm">
+          <div className="w-80 flex-none space-y-fluid-sm">
             <ul
               className={twMerge(
                 "list-none not-prose text-xs",
@@ -165,12 +165,12 @@ export default function ParagraphSection({
                   <Fragment key={_key}>
                     {annotationDirection === "horizontal" ? (
                       <li className="leading-none grid grid-cols-3 gap-2">
-                        <span className="block opacity-40">{top}</span>
-                        <span className="block col-span-2">
+                        <span className="block text-body-copy">{top}</span>
+                        <span className="block col-span-2 text-text">
                           {bottom.split(",").map((word, i) => {
                             return (
                               <span key={i} className="block">
-                                {word}
+                                {word.trim()}
                               </span>
                             );
                           })}
@@ -192,7 +192,7 @@ export default function ParagraphSection({
           </div>
         )}
       </div>
-      {richText && <RichText richText={richText} className="max-w-[700px]" />}
+      {richText && <RichText richText={richText} className="max-w-[770px]" />}
     </motion.div>
   );
 }

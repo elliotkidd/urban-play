@@ -71,8 +71,8 @@ export default async function BlogPage({
                   className="object-cover absolute inset-0 w-full h-full"
                 />
               </div>
-              <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-4 items-start">
-                <h2 className="max-w-section-heading ">{featuredBlog.title}</h2>
+              <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-fluid-sm items-start">
+                <h2 className="text-balance mb-0">{featuredBlog.title}</h2>
                 <Link href={featuredBlog.slug}>
                   <Button as="span">Read Article</Button>
                 </Link>
