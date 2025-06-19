@@ -17,11 +17,11 @@ export default function Grid({ sectionHeader, items }: GridProps) {
               key={item._key}
               className="bg-gray-100 rounded-lg overflow-hidden text-center"
             >
-              <h3 className="bg-text text-background flex items-center justify-center font-bold text-xl p-8 aspect-landscape">
+              <h3 className="bg-text text-background flex items-center justify-center font-bold text-lg leading-[120%] p-8 aspect-landscape">
                 {item.heading}
               </h3>
               <div className="p-8 flex items-center justify-center aspect-landscape prose">
-                <p className="opacity-50">{item.description}</p>
+                <p className="">{item.description}</p>
               </div>
             </motion.div>
           ))}

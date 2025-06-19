@@ -44,6 +44,8 @@ export default function ProjectTile({
       break;
   }
 
+  console.log(showDescription, shortDescription);
+
   return (
     <motion.div variants={childVars} className={className}>
       <Link href={slug} className={twMerge("block group")}>
@@ -74,7 +76,7 @@ export default function ProjectTile({
         {showDescription && shortDescription && (
           <motion.p
             variants={descriptionVariants(index * staggerDelay + 0.5)}
-            className="text-sm line-clamp-2 max-w-[520px] opacity-60"
+            className="line-clamp-2 max-w-[520px] text-body-copy leading-[120%]"
           >
             {shortDescription}
           </motion.p>

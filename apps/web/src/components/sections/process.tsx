@@ -68,16 +68,18 @@ function Process({
         {steps.map((step, i) => (
           <SwiperSlide
             key={step._key}
-            className="bg-nav-bar-background/20 p-4 rounded-lg flex gap-4 aspect-video"
+            className="bg-nav-bar-background/20 rounded-lg flex gap-[45px] aspect-video"
             style={{ maxWidth: "981px", width: "100%", display: "flex" }}
           >
-            <div className="relative aspect-portrait rounded-lg overflow-hidden flex-none">
-              <SanityImage
-                src={step.image}
-                className="w-full h-full absolute inset-0 object-cover"
-              />
+            <div className="p-4 flex-none aspect-portrait">
+              <div className="relative aspect-portrait rounded-lg overflow-hidden">
+                <SanityImage
+                  src={step.image}
+                  className="w-full h-full absolute inset-0 object-cover"
+                />
+              </div>
             </div>
-            <div className="text-sm flex-1 flex flex-col h-full justify-between max-w-lg space-y-fluid">
+            <div className="flex-1 flex flex-col h-full justify-between max-w-lg space-y-fluid pr-[45px] py-[45px]">
               <h3 className="text-lg font-bold">
                 {showIndex && (
                   <span className="opacity-30 mr-1">
@@ -86,7 +88,7 @@ function Process({
                 )}
                 {step.heading}
               </h3>
-              <div className="text-sm">{step.description}</div>
+              <p className="text-[16px] leading-[20px]">{step.description}</p>
             </div>
           </SwiperSlide>
         ))}

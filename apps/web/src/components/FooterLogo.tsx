@@ -1,6 +1,11 @@
-function FooterLogo() {
+function FooterLogo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 1400 264" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      viewBox="0 0 1400 264"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M253.991 100.311C251.731 99.1798 247.714 98.6141 243.446 98.6141C220.348 98.6141 206.664 115.775 206.664 143.495V200.948H165.301V59.7045H206.413V82.8365C213.82 66.5561 228.633 56.5615 246.898 56.5615C250.037 56.5615 253.175 57.1273 254.054 57.4415V100.311H253.991Z"
         fill="currentColor"

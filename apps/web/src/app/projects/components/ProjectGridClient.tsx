@@ -16,7 +16,9 @@ export default function ProjectGridClient({
           <ProjectTile
             key={`${project._id}-${index}-project-tile`}
             project={project}
-            className={PROJECT_GRID_COL_SPANS[index]}
+            className={
+              PROJECT_GRID_COL_SPANS[index % PROJECT_GRID_COL_SPANS.length]
+            }
             index={index}
             showDescription
             staggerDelay={0}

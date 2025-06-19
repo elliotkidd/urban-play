@@ -25,7 +25,7 @@ function SolutionsGridSection({
                 id={solution.slug?.slice(1)}
                 className={twMerge(
                   i % 2 !== 0 && "lg:col-start-2",
-                  "lg:col-span-2 grid grid-cols-subgrid gap-4",
+                  "lg:col-span-2 grid grid-cols-subgrid gap-[45px]",
                 )}
               >
                 <div className="relative aspect-landscape lg:aspect-portrait rounded-lg overflow-hidden">

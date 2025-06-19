@@ -130,8 +130,6 @@ export default function ParagraphSection({
   annotationDirection,
   downloadableFile,
 }: ParagraphProps) {
-  console.log(downloadableFile);
-
   return (
     <motion.div
       {...sectionAnimationConfig}
@@ -180,8 +178,8 @@ export default function ParagraphSection({
                       </li>
                     ) : (
                       <li className="leading-none">
-                        <span className="block">{top}</span>
-                        <span className="block opacity-40">{bottom}</span>
+                        <span className="block text-text">{top}</span>
+                        <span className="block text-body-copy">{bottom}</span>
                       </li>
                     )}
                   </Fragment>

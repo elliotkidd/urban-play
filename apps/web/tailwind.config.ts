@@ -85,6 +85,10 @@ const config: Config = {
         "theme-red": "#ED3E61",
         //@ts-ignore
         "bottle-green": withOpacityValue("--bottle-green"),
+        //@ts-ignore
+        "body-copy": withOpacityValue("--colour-body-copy"),
+        //@ts-ignore
+        "body-copy-white": withOpacityValue("--colour-body-copy-white"),
       },
       fontSize: {
         "5xl": "var(--text-5xl)",
@@ -124,7 +128,7 @@ const config: Config = {
         DEFAULT: {
           css: {
             maxWidth: "auto",
-            "--tw-prose-body": theme("colors.text/60"),
+            "--tw-prose-body": theme("colors.body-copy"),
             "--tw-prose-headings": theme("colors.text"),
             "--tw-prose-lead": theme("colors.text"),
             "--tw-prose-links": theme("colors.text"),
@@ -212,7 +216,6 @@ const config: Config = {
               marginTop: "1rem",
               marginBottom: "1rem",
               lineHeight: "125%",
-              opacity: 0.6,
             },
             ul: {
               fontSize: "var(--text-base)",
@@ -220,7 +223,6 @@ const config: Config = {
               marginTop: "0.5rem",
               marginBottom: "0.5rem",
               lineHeight: "125%",
-              opacity: 0.6,
             },
             a: {
               color: theme("colors.accent"),
@@ -233,7 +235,7 @@ const config: Config = {
         white: {
           css: {
             maxWidth: "auto",
-            "--tw-prose-body": "rgba(255, 255, 255, 0.7)",
+            "--tw-prose-body": theme("colors.body-copy-white"),
             "--tw-prose-headings": "white",
             "--tw-prose-lead": "white",
             "--tw-prose-links": "white",

@@ -215,6 +215,11 @@ export const projectsQuery = `{
   "projects": *[_type == "project"] {
     _id,
     title,
+    shortDescription,
+    solutions[]-> {
+      _id,
+      title,
+    },
     "slug": slug.current,
     seoImage {
       "_ref": seoImage.asset._ref,
@@ -243,7 +248,6 @@ export const projectsQuery = `{
       "aspectRatio": asset->metadata.dimensions.aspectRatio,
       "lqip": asset->metadata.lqip
     },
-    description,
     "publishedAt": publishedAt
   },
   "total": count(*[_type == "project"])
@@ -319,7 +323,7 @@ export const projectsBySolutionQuery = `{
       "aspectRatio": asset->metadata.dimensions.aspectRatio,
       "lqip": asset->metadata.lqip
     },
-    description,
+    shortDescription,
     publishedAt
   },
   "total": count(*[_type == "project" && count((solutions[]->slug.current)[@ in $tags]) > 0])

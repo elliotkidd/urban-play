@@ -188,7 +188,9 @@ export function FooterSection({ data }: { data: FooterType }) {
       <div className="h-screen lg:h-[60dvh] w-full bottom-0 fixed bg-background text-text flex">
         <div className="wrapper py-fluid-xs flex flex-col justify-between flex-1 mt-fluid-lg lg:mt-0">
           <div className="grid lg:grid-cols-9 gap-fluid-sm">
-            <FooterLogo />
+            <div className="lg:col-span-2">
+              <FooterLogo className="lg:w-[224px]" />
+            </div>
             <ContactDetails data={contactDetails} />
             <SocialLinks data={socialLinks} />
           </div>
