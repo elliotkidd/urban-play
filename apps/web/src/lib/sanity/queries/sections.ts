@@ -404,6 +404,7 @@ const SOCIAL_MEDIA_FRAGMENT = {
   _type: q.literal("socialMedia"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  images: q("images[]", { isArray: true }).grab(IMAGE_FRAGMENT),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

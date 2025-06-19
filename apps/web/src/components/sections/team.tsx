@@ -35,7 +35,7 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                   className="object-cover absolute inset-0 h-full w-full"
                 />
                 {yearsExperience && (
-                  <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold p-[15px] tracking-[0.005em] rounded-xl">
+                  <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-medium p-[15px] tracking-[0.005em] rounded-xl">
                     {yearsExperience} Years Industry Experience
                   </span>
                 )}

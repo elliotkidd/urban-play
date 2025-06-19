@@ -1,7 +1,7 @@
 import { Instagram as icon } from "lucide-react";
-import { defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
-import { SECTION_GROUPS } from "../../utils/constant";
+import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import { sectionHeaderField, sectionSettings } from "../common";
 
 export const socialMedia = defineType({
@@ -10,7 +10,17 @@ export const socialMedia = defineType({
   icon,
   type: "object",
   groups: SECTION_GROUPS,
-  fields: [sectionHeaderField, ...sectionSettings],
+  fields: [
+    sectionHeaderField,
+    defineField({
+      name: "images",
+      title: "Images",
+      type: "array",
+      group: GROUP.MAIN_CONTENT,
+      of: [{ type: "image" }],
+    }),
+    ...sectionSettings,
+  ],
   preview: {
     select: {
       title: "sectionHeader.title",

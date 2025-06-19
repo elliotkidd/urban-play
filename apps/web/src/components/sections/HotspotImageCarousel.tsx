@@ -51,6 +51,7 @@ function SlideProgressBar({
             varyColour && activeHotspot !== null
               ? "bg-background/20"
               : "bg-text/20",
+            !varyColour && "bg-white/40",
           )}
         >
           {currentIndex > index && (
@@ -455,7 +456,7 @@ function DesktopHotspotImageCarousel({
           )}
         >
           {title && (
-            <h2 className="max-w-section-heading text-4xl leading-[95%] font-heading text-balance text-white">
+            <h2 className="max-w-[750px] text-4xl leading-[95%] font-heading text-balance text-white">
               {title}
             </h2>
           )}

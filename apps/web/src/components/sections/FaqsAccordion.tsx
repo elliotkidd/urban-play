@@ -47,7 +47,7 @@ export function FAQsAccordion({
                 {faq.answer && (
                   <RichText
                     richText={faq.answer}
-                    className="prose-white mt-fluid"
+                    className="prose-white mt-fluid max-w-3xl"
                   />
                 )}
               </AccordionContent>

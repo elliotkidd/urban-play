@@ -34,7 +34,7 @@ export default function Header({
       <div className="absolute inset-0 bg-black/20 h-full w-full" />
       <div className="wrapper grid lg:grid-cols-2 gap-4 relative z-10 prose prose-white">
         <h1 className="uppercase text-3xl font-black font-heading">{title}</h1>
-        <p className="lead max-w-p-lg mt-0">{description}</p>
+        <p className="lead mt-0">{description}</p>
       </div>
     </section>
   );

@@ -194,7 +194,7 @@ export default function ParagraphSection({
           </div>
         )}
       </div>
-      {richText && <RichText richText={richText} className="max-w-p-lg" />}
+      {richText && <RichText richText={richText} className="max-w-[700px]" />}
     </motion.div>
   );
 }

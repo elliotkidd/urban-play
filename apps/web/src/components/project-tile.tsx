@@ -60,7 +60,7 @@ export default function ProjectTile({
             height={1024}
           />
           {solutions && solutions.length > 0 && (
-            <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-bold p-[15px] tracking-[0.005em] rounded-lg">
+            <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg">
               {solutions[0].title}
             </span>
           )}

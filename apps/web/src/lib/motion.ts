@@ -69,3 +69,9 @@ export const sectionAnimationConfig = {
     ease: "easeInOut",
   },
 };
+
+export const SPRING_OPTIONS = {
+  damping: 10,
+  mass: 0.3,
+  bounce: 0.2,
+};
