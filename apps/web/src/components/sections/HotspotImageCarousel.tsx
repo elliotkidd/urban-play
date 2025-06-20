@@ -7,7 +7,7 @@ import type {
   SpotProps,
 } from "@/lib/sanity/queries/sections";
 import SanityImage from "../sanity-image";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
@@ -27,13 +27,15 @@ function SlideProgressBar({
   currentIndex,
   activeHotspot,
   setCurrentIndex,
+  setActiveHotspot,
   images,
   className,
   varyColour = false,
 }: {
   currentIndex: number;
   activeHotspot?: number | null;
-  setCurrentIndex: (index: number) => void;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
+  setActiveHotspot: Dispatch<SetStateAction<number | null>>;
   images: ImageWithHotspotProps[];
   className?: string;
   varyColour?: boolean;
@@ -45,6 +47,7 @@ function SlideProgressBar({
           key={`timer-${_key}-${index}`}
           onClick={() => {
             setCurrentIndex(index);
+            setActiveHotspot(null);
           }}
           className={cn(
             "h-1 w-10 lg:w-[82px] rounded-full overflow-hidden bg-white/20 cursor-pointer transition-colors duration-500",
@@ -342,6 +345,7 @@ function MobileHotspotImageCarousel({
             images={images}
             varyColour
             activeHotspot={activeHotspot}
+            setActiveHotspot={setActiveHotspot}
           />
 
           <AnimatePresence mode="wait">
@@ -442,6 +446,7 @@ function DesktopHotspotImageCarousel({
     if (activeHotspot === null) {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
+        setActiveHotspot(null);
       }, 10000);
       return () => clearInterval(interval);
     }
@@ -495,7 +500,8 @@ function DesktopHotspotImageCarousel({
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
           images={images}
-          className="absolute bottom-0 right-0 "
+          className="absolute bottom-0 right-0"
+          setActiveHotspot={setActiveHotspot}
         />
       </div>
     </motion.div>

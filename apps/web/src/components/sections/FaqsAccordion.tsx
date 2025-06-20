@@ -40,14 +40,14 @@ export function FAQsAccordion({
                 "accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-bottle-green data-[state=open]:bg-bottle-green",
               )}
             >
-              <AccordionTrigger className="px-4 py-6 text-[15px] leading-none hover:no-underline group">
+              <AccordionTrigger className="text-[15px] leading-none hover:no-underline group">
                 {faq.title}
               </AccordionTrigger>
-              <AccordionContent className="p-4">
+              <AccordionContent className="">
                 {faq.answer && (
                   <RichText
                     richText={faq.answer}
-                    className="prose-white mt-fluid max-w-3xl"
+                    className="prose-white mt-fluid max-w-2xl"
                   />
                 )}
               </AccordionContent>

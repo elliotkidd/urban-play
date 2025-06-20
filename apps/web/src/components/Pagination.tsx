@@ -38,7 +38,7 @@ function Pagination({ total, perPage }: { total: number; perPage: number }) {
           onClick={handlePrevious}
           disabled={currentPage === 1}
         >
-          Previous
+          Prev
         </button>
         <button
           className="btn--inline hover:opacity-70 transition-opacity duration-500 disabled:opacity-50"

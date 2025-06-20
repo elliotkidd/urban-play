@@ -75,6 +75,8 @@ function SocialLinks({ data }: SocialLinksProps) {
     },
   ].filter((link) => link.url);
 
+  console.log(socialLinks);
+
   return (
     <div className="lg:col-start-9">
       <h4 className="text-sm mb-1">Follow</h4>
@@ -85,8 +87,8 @@ function SocialLinks({ data }: SocialLinksProps) {
             className="opacity-50 hover:opacity-100 transition-opacity duration-500"
           >
             <Link
-              href={url?.href ?? "#"}
-              target={url?.openInNewTab ? "_blank" : "_self"}
+              href={url ?? "#"}
+              target="_blank"
               prefetch={false}
               rel="noopener noreferrer"
               aria-label={label}
@@ -134,7 +136,7 @@ function NewsletterSignup() {
 
   return (
     <div className="lg:col-span-3">
-      <h4 className="text-sm mb-fluid-sm">Join our newsletter</h4>
+      <h4 className="text-sm mb-fluid-xs font-semibold">Join our newsletter</h4>
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex w-full rounded-lg overflow-hidden border border-white/10">

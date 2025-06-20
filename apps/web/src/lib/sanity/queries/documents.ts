@@ -166,7 +166,12 @@ export const blogIndexPageQuery = q("*")
     solutions: q("*", { isArray: true })
       .filterByType("solution")
       .grab(LINK_REFERENCE_FRAGMENT),
-    featuredBlog: q("featured").deref().grab(POST_TILE_FRAGMENT),
+    featuredBlog: q("featured")
+      .deref()
+      .grab({
+        ...POST_TILE_FRAGMENT,
+        publishedAt: q.string(),
+      }),
     pageBuilder: SECTIONS_FRAGMENT,
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
   });

@@ -41,14 +41,14 @@ function Contact({ title, globalSettings, form }: ContactProps) {
         <div className="space-y-fluid-sm">
           {socialLinks && (
             <div className="not-prose leading-none space-y-1 text-xs">
-              <h4 className="">Socials</h4>
+              <h4 className="text-text">Socials</h4>
               <ul className="space-y-1">
                 {Array.isArray(socials) &&
                   socials.length > 0 &&
                   socials.map(({ url, label }, index) => (
                     <li
                       key={`social-link-${url}-${index.toString()}`}
-                      className="opacity-50 hover:opacity-100 transition-opacity duration-500"
+                      className="hover:text-text transition-colors duration-500"
                     >
                       <Link
                         href={url ?? "#"}
@@ -65,16 +65,16 @@ function Contact({ title, globalSettings, form }: ContactProps) {
             </div>
           )}
           <div className="not-prose leading-none space-y-1 text-xs">
-            <h4 className="">Address</h4>
-            <p className="opacity-50 hover:opacity-100 transition-opacity duration-500">
+            <h4 className="text-text">Address</h4>
+            <p className="hover:text-text transition-colors duration-500">
               {formattedAddress}
             </p>
           </div>
           <div className="not-prose leading-none space-y-1 text-xs">
-            <h4 className="">Phone</h4>
+            <h4 className="text-text">Phone</h4>
             <Link
               href={`tel:${phone}`}
-              className="opacity-50 hover:opacity-100 transition-opacity duration-500"
+              className="hover:text-text transition-colors duration-500"
             >
               {phone}
             </Link>

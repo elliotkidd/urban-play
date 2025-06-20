@@ -73,19 +73,20 @@ export default function PartnersRollover({ partners }: PartnersRolloverProps) {
       <AnimatePresence>
         {hoveredIndex !== null && (
           <motion.div
-            initial={{ scale: 0, rotate: 0, x: "-50%", y: "-50%" }}
+            initial={{ scale: 0, opacity: 0, rotate: 0, x: "-50%", y: "-50%" }}
             animate={{
               scale: 1,
               rotate: rotation,
               x: "-50%",
               y: "-50%",
+              opacity: 1,
               transition: {
                 visualDuration: 0.5,
                 type: "spring",
                 //...SPRING_OPTIONS,
               },
             }}
-            exit={{ scale: 0, rotate: 0, x: "-50%", y: "-50%" }}
+            exit={{ scale: 0, opacity: 0, rotate: 0, x: "-50%", y: "-50%" }}
             style={{
               position: "fixed",
               top: top,

@@ -1,16 +1,11 @@
-import { BlogHeader } from "@/components/blog-header";
 import { PageBuilder } from "@/components/pagebuilder";
-import Pagination from "@/components/Pagination";
-import PostTile from "@/components/post-tile";
 import SanityImage from "@/components/sanity-image";
 import { Button } from "@/components/ui/Button";
 import { sanityFetch } from "@/lib/sanity/live";
 import {
   BlogIndexPage,
   blogIndexPageQuery,
-  blogsQuery,
 } from "@/lib/sanity/queries/documents";
-import { PostTileType } from "@/lib/sanity/queries/fragments";
 import { getMetaData } from "@/lib/seo";
 import { getColorSchemeStyle } from "@/utils/utils";
 import { Link } from "next-view-transitions";
@@ -65,11 +60,39 @@ export default async function BlogPage({
         <section className="mb-fluid-lg">
           {featuredBlog.image && (
             <>
-              <div className="relative h-[80dvh] w-full overflow-hidden">
+              <div className="relative h-[80dvh] w-full overflow-hidden py-fluid-xs flex items-end">
                 <SanityImage
                   src={featuredBlog.image}
                   className="object-cover absolute inset-0 w-full h-full"
                 />
+                <div className="relative z-10 wrapper flex w-full justify-between items-end">
+                  <div className="text-xs text-white">
+                    <p className="opacity-50">Date</p>
+                    <p>
+                      {featuredBlog.publishedAt
+                        ? new Date(featuredBlog.publishedAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              weekday: "long",
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            },
+                          )
+                        : "Date unavailable"}
+                    </p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    {featuredBlog.solutions &&
+                      featuredBlog.solutions.length > 0 &&
+                      featuredBlog.solutions.map(({ title }) => (
+                        <span className="bg-background text-text text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg">
+                          {title}
+                        </span>
+                      ))}
+                  </div>
+                </div>
               </div>
               <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-fluid-sm items-start">
                 <h2 className="text-balance mb-0">{featuredBlog.title}</h2>

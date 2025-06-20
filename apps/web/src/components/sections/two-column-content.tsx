@@ -16,7 +16,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { accordionColors } from "@/utils/utils";
 import { sectionAnimationConfig } from "@/lib/motion";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -42,12 +41,15 @@ function MissingBlock({
 
 function AccordionBlock({ title, items }: AccordionBlockProps) {
   return (
-    <div className="flex flex-col gap-4 justify-center">
-      <RichText richText={title} />
+    <div className="">
+      {title && <RichText richText={title} className="accordion-title" />}
       <Accordion
         type="single"
         collapsible
-        className="w-full bg-[#F3F3F3] rounded-lg overflow-hidden"
+        className={cn(
+          "w-full bg-[#F3F3F3] rounded-lg overflow-hidden",
+          title && "mt-fluid-sm",
+        )}
         style={{ maxWidth: "577px" }}
       >
         {items?.map((item, index) => {
@@ -56,15 +58,13 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
               value={item._key}
               key={`AccordionItem-${item._key}-${index}`}
               className={twMerge(
-                "p-3 accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-text data-[state=open]:bg-text",
-                // accordionColors[index % accordionColors.length].hover,
-                // accordionColors[index % accordionColors.length].open,
+                "accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-text data-[state=open]:bg-text",
               )}
             >
-              <AccordionTrigger className="py-2 text-lg leading-none no-underline group font-bold h3">
+              <AccordionTrigger className="text-lg leading-none no-underline group font-bold h3">
                 {item.heading}
               </AccordionTrigger>
-              <AccordionContent className="pb-2">
+              <AccordionContent className="">
                 {item.content && (
                   <RichText
                     richText={item.content}
@@ -88,7 +88,7 @@ function ImageBlock({
   return (
     <div
       className={twMerge(
-        "relative overflow-hidden rounded-lg mb-4",
+        "relative overflow-hidden rounded-lg",
         aspectRatio === "portrait" && "aspect-portrait",
         aspectRatio === "landscape" && "aspect-landscape",
         aspectRatio === "square" && "aspect-square",

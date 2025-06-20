@@ -265,3 +265,15 @@ h6 {
 .lead {
   @apply text-lg font-bold leading-[120%];
 }
+
+h3 {
+  @apply tracking-[-0.01em];
+}
+
+.accordion-title {
+  @apply space-y-fluid-sm;
+
+  p {
+    @apply max-w-md;
+  }
+}
