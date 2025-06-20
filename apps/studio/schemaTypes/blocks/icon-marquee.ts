@@ -16,7 +16,7 @@ export const iconMarquee = defineType({
       name: "icons",
       type: "array",
       of: [{ type: "image" }],
-      description: "Add icons (.svg) to the marquee",
+      description: "Add icons (.svg, .png) to the marquee",
       title: "Icons",
       group: GROUP.MAIN_CONTENT,
     }),

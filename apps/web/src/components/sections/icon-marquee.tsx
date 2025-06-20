@@ -30,9 +30,8 @@ export default function IconMarqueeSection({
               <div className="mx-2 h-fluid-lg rounded aspect-landscape bg-nav-bar-background/20 flex items-center justify-center transition-all duration-500">
                 <SanityImage
                   src={icon}
-                  height={100}
                   className={twMerge(
-                    "transition-all duration-500 h-fluid-sm w-auto",
+                    "transition-all duration-500 h-fluid-sm w-auto object-contain",
                   )}
                 />
               </div>
