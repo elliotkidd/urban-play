@@ -27,7 +27,33 @@ export const pageHeader = defineType({
       ...richTextField,
       group: GROUP.MAIN_CONTENT,
     }),
-    imageField,
+    defineField({
+      name: "mediaType",
+      type: "string",
+      title: "Media Type",
+      group: GROUP.MAIN_CONTENT,
+      initialValue: "image",
+      options: {
+        list: [
+          { title: "Image", value: "image" },
+          { title: "Video", value: "video" },
+        ],
+      },
+    }),
+    defineField({
+      ...imageField,
+      hidden: ({ parent }) => parent?.mediaType !== "image",
+    }),
+    defineField({
+      name: "video",
+      type: "file",
+      title: "Video",
+      group: GROUP.MAIN_CONTENT,
+      hidden: ({ parent }) => parent?.mediaType !== "video",
+      options: {
+        accept: "video/*",
+      },
+    }),
     colorPickerField,
     ...marginSettingsFields,
   ],

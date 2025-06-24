@@ -10,6 +10,8 @@ export default function PageHeader({
   title,
   richText,
   image,
+  video,
+  mediaType,
 }: PageHeaderProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -28,14 +30,28 @@ export default function PageHeader({
         style={{ y }}
         className="h-[calc(100vh+200px)] w-full object-cover absolute inset-0"
       >
-        {image && (
+        {mediaType === "image" && image && (
           <SanityImage
             src={image}
-            className="h-full w-full object-cover absolute inset-0"
-            alt={title}
-            width={1440}
-            height={1024}
+            className="absolute inset-0 w-full h-full object-cover"
           />
+        )}
+        {mediaType === "video" && video ? (
+          <video
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          image && (
+            <SanityImage
+              src={image}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )
         )}
       </motion.div>
       <div className="absolute inset-0 bg-black/20" />
