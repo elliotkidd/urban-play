@@ -75,8 +75,6 @@ function SocialLinks({ data }: SocialLinksProps) {
     },
   ].filter((link) => link.url);
 
-  console.log(socialLinks);
-
   return (
     <div className="lg:col-start-9">
       <h4 className="text-sm mb-1">Follow</h4>
@@ -115,8 +113,6 @@ function NewsletterSignup() {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
-
-  console.log(FORMSPARK_FORM_ID);
 
   const onSubmit = async (data: any) => {
     try {

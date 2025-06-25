@@ -139,11 +139,18 @@ interface MenuItem {
   href?: string;
 }
 
-function MenuItemLink({ item }: { item: MenuItem }) {
+function MenuItemLink({
+  item,
+  className,
+}: {
+  item: MenuItem;
+  className?: string;
+}) {
   return (
     <Link
       className={cn(
         "select-none leading-none outline-none items-center text-center text-nowrap hover:opacity-60 transition-all duration-500",
+        className,
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
       scroll={false}
@@ -161,17 +168,26 @@ function MobileNavbarAccordionColumn({
   column: any;
   setIsOpen: (isOpen: boolean) => void;
 }) {
-  if (column.type !== "column") return null;
+  if (column._type !== "navbarColumn") return null;
+
+  const router = useTransitionRouter();
+
   return (
     <AccordionItem value={column.title ?? column._key} className="border-b-0">
-      <AccordionTrigger className="mb-4 py-0 font-semibold hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
-        <div
-          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
+      <AccordionTrigger className=" py-0 font-bold text-xl hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
+        <Link
+          href={column.url?.href ?? "#"}
+          onClick={(e) => {
+            e.preventDefault();
+            router.push((column.url?.href as string) ?? "/", {
+              onTransitionReady: PageAnimation,
+            });
+          }}
         >
           {column.title}
-        </div>
+        </Link>
       </AccordionTrigger>
-      <AccordionContent className="mt-2">
+      <AccordionContent className="mt-2 pb-0 space-y-2">
         {column.links?.map((item: any) => (
           <MenuItemLink
             key={item._key}
@@ -179,6 +195,7 @@ function MobileNavbarAccordionColumn({
               href: item.href ?? "",
               title: item.name ?? "",
             }}
+            className="text-sm font-bold leading-[120%] block text-left"
           />
         ))}
       </AccordionContent>
@@ -262,32 +279,40 @@ function MobileNavbar({
             variants={menuVariants}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <ul className="gap-[10px] flex-1 flex flex-col justify-center p-2.5">
+            <Accordion
+              type="single"
+              collapsible
+              className="gap-[10px] flex-1 flex flex-col justify-center p-2.5"
+            >
               {Array.isArray(columns) &&
                 columns?.map(
                   (
                     column: NavBarLinkType | NavBarColumnType,
                     index: number,
                   ) => {
-                    if (column._type === "navbarLink") {
-                      const { name, _key, url } = column as NavBarLinkType;
-                      return (
-                        <motion.li
-                          custom={{ index, totalItems: columns.length }}
-                          variants={itemVariants}
+                    const { name, _key, url } = column as NavBarLinkType;
+                    return column._type === "navbarColumn" ? (
+                      <MobileNavbarAccordionColumn
+                        key={`column-${column._key}`}
+                        column={column}
+                        setIsOpen={setIsOpen}
+                      />
+                    ) : (
+                      <motion.div
+                        custom={{ index, totalItems: columns.length }}
+                        variants={itemVariants}
+                        key={`column-link-${name}-${_key}`}
+                      >
+                        <NavbarColumnLink
                           key={`column-link-${name}-${_key}`}
-                        >
-                          <NavbarColumnLink
-                            key={`column-link-${name}-${_key}`}
-                            column={column}
-                            className="text-xl font-bold leading-[120%] block"
-                          />
-                        </motion.li>
-                      );
-                    }
+                          column={column}
+                          className="text-xl font-bold leading-[120%] block"
+                        />
+                      </motion.div>
+                    );
                   },
                 )}
-            </ul>
+            </Accordion>
             <SanityButtons
               buttons={buttons}
               className="flex flex-col gap-4 p-2.5"
