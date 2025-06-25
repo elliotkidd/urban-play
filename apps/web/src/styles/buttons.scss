@@ -37,7 +37,7 @@
   }
 
   &--header {
-    @apply bg-background text-primary-button lg:bg-primary-button lg:text-background lg:hover:bg-background lg:hover:text-primary-button;
+    @apply bg-background text-primary-button lg:bg-primary-button lg:text-white lg:hover:bg-background lg:hover:text-primary-button;
   }
 }
 
