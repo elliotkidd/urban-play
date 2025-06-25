@@ -38,6 +38,7 @@ import { twMerge } from "tailwind-merge";
 import { useTransitionRouter } from "next-view-transitions";
 import PageAnimation from "./PageAnimation";
 import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 const DURATION = 0.35;
 const DELAY = 0.15;
@@ -142,34 +143,20 @@ function MobileMenuTrigger({
 
 interface MenuItem {
   title: string;
-  description: string;
-  icon: JSX.Element;
   href?: string;
 }
 
-function MenuItemLink({
-  item,
-  setIsOpen,
-}: {
-  item: MenuItem;
-  setIsOpen?: (isOpen: boolean) => void;
-}) {
+function MenuItemLink({ item }: { item: MenuItem }) {
   return (
     <Link
       className={twMerge(
-        "flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-accent hover:text-accent-foreground items-center focus:bg-accent focus:text-accent-foreground",
+        "select-none leading-none outline-none transition-colors items-center text-center",
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
       scroll={false}
       href={item.href ?? "/"}
     >
-      {item.icon}
-      <div className="">
-        <div className="text-sm font-semibold">{item.title}</div>
-        <p className="text-sm leading-snug text-muted-foreground line-clamp-2">
-          {item.description}
-        </p>
-      </div>
+      <div className="">{item.title}</div>
     </Link>
   );
 }
@@ -198,11 +185,8 @@ function MobileNavbarAccordionColumn({
         {column.links?.map((item: any) => (
           <MenuItemLink
             key={item._key}
-            setIsOpen={setIsOpen}
             item={{
-              description: item.description ?? "",
               href: item.href ?? "",
-              icon: <SanityIcon icon={item.icon} className="size-5 shrink-0" />,
               title: item.name ?? "",
             }}
           />
@@ -288,7 +272,7 @@ function MobileNavbar({
             variants={menuVariants}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <ul className="space-y-4 flex-1 flex flex-col justify-center p-2.5">
+            <ul className="gap-[10px] flex-1 flex flex-col justify-center p-2.5">
               {Array.isArray(columns) &&
                 columns?.map(
                   (
@@ -306,7 +290,7 @@ function MobileNavbar({
                           <NavbarColumnLink
                             key={`column-link-${name}-${_key}`}
                             column={column}
-                            className="h3 block"
+                            className="text-xl font-bold leading-[120%] block"
                           />
                         </motion.li>
                       );
@@ -314,17 +298,11 @@ function MobileNavbar({
                   },
                 )}
             </ul>
-            <div className="flex flex-col gap-4 p-2.5">
-              {buttons?.map(({ _key, text, variant }: ButtonType) => (
-                <Button
-                  key={_key}
-                  variant={variant ?? "default"}
-                  className="w-full"
-                >
-                  {text}
-                </Button>
-              ))}
-            </div>
+            <SanityButtons
+              buttons={buttons}
+              className="flex flex-col gap-4 p-2.5"
+              buttonClassName="btn--header w-full text-primary"
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -354,8 +332,8 @@ function NavbarColumnLink({
         });
       }}
       target={url?.openInNewTab ? "_blank" : "_self"}
-      className={twMerge(
-        "text-nowrap text-xs text-medium hover:opacity-60 transition-opacity duration-500",
+      className={cn(
+        "text-nowrap font-medium hover:opacity-60 transition-opacity duration-500",
         className,
       )}
     >
@@ -369,27 +347,33 @@ function NavbarColumn({
 }: {
   column: NavBarColumnType | NavBarLinkType;
 }) {
-  if (column._type !== "column") return null;
+  if (column._type !== "navbarColumn") return null;
+  const router = useTransitionRouter();
 
-  const { title, links } = column as NavBarColumnType;
+  const { title, links, url } = column as NavBarColumnType;
   return (
     <NavigationMenuList>
-      <NavigationMenuItem className="text-muted-foreground dark:text-neutral-300">
-        <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
+      <NavigationMenuItem className="">
+        <NavigationMenuTrigger>
+          <Link
+            href={url?.href ?? "#"}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push((url?.href as string) ?? "/", {
+                onTransitionReady: PageAnimation,
+              });
+            }}
+          >
+            {title}
+          </Link>
+        </NavigationMenuTrigger>
         <NavigationMenuContent>
-          <ul className="w-80 p-3">
-            {links?.map((item: any) => (
-              <li key={item._key}>
+          <ul className="px-5 pt-[5px] pb-[15px] space-y-5 text-xs">
+            {links?.map((item) => (
+              <li key={`${item._key}-${item.name}`}>
                 <MenuItemLink
                   item={{
-                    description: item.description ?? "",
-                    href: item.href ?? "",
-                    icon: (
-                      <SanityIcon
-                        icon={item.icon}
-                        className="size-5 shrink-0"
-                      />
-                    ),
+                    href: (item.url?.href as string) ?? "",
                     title: item.name ?? "",
                   }}
                 />
@@ -409,10 +393,14 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
     <>
       <NavigationMenu className="space-x-5">
         {columns?.map((column: NavBarColumnType | NavBarLinkType) => {
-          return column._type === "column" ? (
+          return column._type === "navbarColumn" ? (
             <NavbarColumn key={`nav-${column._key}`} column={column} />
           ) : (
-            <NavbarColumnLink key={`nav-${column._key}`} column={column} />
+            <NavbarColumnLink
+              key={`nav-${column._key}`}
+              column={column}
+              className="text-xs"
+            />
           );
         })}
       </NavigationMenu>
@@ -422,6 +410,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
             buttons={buttons}
             className="flex items-center gap-4"
             buttonSize="header"
+            buttonClassName="btn--header"
           />
         </div>
       )}

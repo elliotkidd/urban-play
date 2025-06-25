@@ -53,18 +53,11 @@ const navbarColumnLink = defineField({
   title: "Navigation Column Link",
   description: "A link within a navigation column",
   fields: [
-    iconField,
     defineField({
       name: "name",
       type: "string",
       title: "Link Text",
       description: "The text that will be displayed for this navigation link",
-    }),
-    defineField({
-      name: "description",
-      type: "string",
-      title: "Description",
-      description: "The description for this navigation link",
     }),
     defineField({
       name: "url",
@@ -109,6 +102,12 @@ const navbarColumn = defineField({
       title: "Column Title",
       description:
         "The heading text displayed above this group of navigation links",
+    }),
+    defineField({
+      name: "url",
+      type: "customUrl",
+      title: "Link URL",
+      description: "The URL that this link will navigate to when clicked",
     }),
     defineField({
       name: "links",

@@ -61,7 +61,11 @@ export const NAVBAR_COLUMN_FRAGMENT = {
   _type: q.string(),
   title: q.string(),
   url: q("url").grab(CUSTOM_URL_FRAGMENT),
-  links: q("links[]", { isArray: true }).grab(CUSTOM_URL_FRAGMENT),
+  links: q("links[]", { isArray: true }).grab({
+    _key: q.string(),
+    url: q("url").grab(CUSTOM_URL_FRAGMENT),
+    name: q.string(),
+  }),
 } satisfies Selection;
 
 export type NavBarColumnType = TypeFromSelection<typeof NAVBAR_COLUMN_FRAGMENT>;

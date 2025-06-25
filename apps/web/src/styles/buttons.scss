@@ -21,11 +21,11 @@
   }
 
   &--default {
-    @apply bg-primary-button text-white;
+    @apply bg-primary-button text-white hover:bg-button-hover;
   }
 
   &--secondary {
-    @apply bg-text text-background;
+    @apply bg-text text-background hover:bg-button-hover hover:text-white;
   }
 
   &--outline {
@@ -34,6 +34,10 @@
 
   &--inline {
     @apply bg-transparent text-primary-button font-bold;
+  }
+
+  &--header {
+    @apply bg-background text-primary-button lg:bg-primary-button lg:text-background lg:hover:bg-background lg:hover:text-primary-button;
   }
 }
 

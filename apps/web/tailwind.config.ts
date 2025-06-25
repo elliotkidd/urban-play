@@ -85,6 +85,7 @@ const config: Config = {
         "theme-red": "#ED3E61",
         //@ts-ignore
         "bottle-green": withOpacityValue("--bottle-green"),
+        "button-hover": "#4A4F3F",
         //@ts-ignore
         "body-copy": withOpacityValue("--colour-body-copy"),
         //@ts-ignore

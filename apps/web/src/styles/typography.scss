@@ -36,7 +36,7 @@
 }
 
 :root {
-  --text-xs-min: 10;
+  --text-xs-min: 11;
   --text-xs-max: 11;
   --text-xs: clamp(
     calc(var(--text-xs-min) / 16) * 1rem,
@@ -58,7 +58,7 @@
     calc(var(--text-sm-max) / 16) * 1rem
   );
 
-  --text-base-min: 14;
+  --text-base-min: 16;
   --text-base-max: 16;
   --text-base: clamp(
     calc(var(--text-base-min) / 16) * 1rem,
@@ -80,7 +80,7 @@
     calc(var(--text-md-max) / 16) * 1rem
   );
 
-  --text-lg-min: 20;
+  --text-lg-min: 18;
   --text-lg-max: 25;
   --text-lg: clamp(
     calc(var(--text-lg-min) / 16) * 1rem,
@@ -91,7 +91,7 @@
     calc(var(--text-lg-max) / 16) * 1rem
   );
 
-  --text-xl-min: 24;
+  --text-xl-min: 25;
   --text-xl-max: 32;
   --text-xl: clamp(
     calc(var(--text-xl-min) / 16) * 1rem,
@@ -113,7 +113,7 @@
     calc(var(--text-2xl-max) / 16) * 1rem
   );
 
-  --text-3xl-min: 32;
+  --text-3xl-min: 35;
   --text-3xl-max: 60;
   --text-3xl: clamp(
     calc(var(--text-3xl-min) / 16) * 1rem,
