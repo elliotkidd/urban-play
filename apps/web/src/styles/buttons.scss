@@ -11,7 +11,7 @@
   }
 
   &--default-size {
-    padding: 20px 35px;
+    @apply p-[20px] lg:py-[20px] lg:px-[35px];
   }
 
   &--icon-size {
