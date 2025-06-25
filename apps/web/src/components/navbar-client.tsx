@@ -23,17 +23,10 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 
 import { Logo } from "./logo";
 import { SanityButtons } from "./sanity-buttons";
-import { SanityIcon } from "./sanity-icon";
-import {
-  ButtonType,
-  NavBarColumnType,
-  NavBarLinkType,
-} from "@/lib/sanity/queries/link";
+import { NavBarColumnType, NavBarLinkType } from "@/lib/sanity/queries/link";
 import { NavBarType } from "@/lib/sanity/queries/documents";
 import useStore from "@/store/header";
 import { getColorSchemeStyle } from "@/utils/utils";
-import { Button } from "./ui/Button";
-import { twMerge } from "tailwind-merge";
 
 import { useTransitionRouter } from "next-view-transitions";
 import PageAnimation from "./PageAnimation";
@@ -108,7 +101,7 @@ function MobileMenuTrigger({
   return (
     <button
       onClick={() => setIsOpen(!isOpen)}
-      className={twMerge("menu-trigger-btn", props.className)}
+      className={cn("menu-trigger-btn", props.className)}
       disabled={disabled}
       {...props}
     >
@@ -149,8 +142,8 @@ interface MenuItem {
 function MenuItemLink({ item }: { item: MenuItem }) {
   return (
     <Link
-      className={twMerge(
-        "select-none leading-none outline-none transition-colors items-center text-center",
+      className={cn(
+        "select-none leading-none outline-none items-center text-center text-nowrap hover:opacity-60 transition-all duration-500",
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
       scroll={false}
@@ -173,10 +166,7 @@ function MobileNavbarAccordionColumn({
     <AccordionItem value={column.title ?? column._key} className="border-b-0">
       <AccordionTrigger className="mb-4 py-0 font-semibold hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
         <div
-          className={twMerge(
-            buttonVariants({ variant: "ghost" }),
-            "justify-start",
-          )}
+          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
         >
           {column.title}
         </div>
@@ -301,7 +291,7 @@ function MobileNavbar({
             <SanityButtons
               buttons={buttons}
               className="flex flex-col gap-4 p-2.5"
-              buttonClassName="btn--header w-full text-primary"
+              buttonClassName="btn--header w-full"
             />
           </motion.div>
         )}
