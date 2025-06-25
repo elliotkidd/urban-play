@@ -31,7 +31,7 @@ export default function IconMarqueeSection({
                 <SanityImage
                   src={icon}
                   className={twMerge(
-                    "transition-all duration-500 h-fluid-sm w-auto object-contain",
+                    "transition-all duration-500 object-cover h-full",
                   )}
                 />
               </div>
