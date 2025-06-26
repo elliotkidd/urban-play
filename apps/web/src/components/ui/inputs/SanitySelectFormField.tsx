@@ -1,4 +1,4 @@
-import { SelectProps } from "@/lib/sanity/queries/form";
+import { FormFieldProps } from "@/lib/sanity/queries/form";
 
 import { SelectItem } from "@workspace/packages/ui/src/components/select";
 import {
@@ -25,9 +25,9 @@ export default function SanitySelectFormField({
   options,
   name,
   label,
-  placeholder,
+  choices,
   className,
-}: SelectProps & {
+}: FormFieldProps & {
   className?: string;
 }) {
   const { control } = useFormContext();
@@ -50,8 +50,8 @@ export default function SanitySelectFormField({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options &&
-                options.map((option, i) => (
+              {choices &&
+                choices.map((option, i) => (
                   <SelectItem
                     key={option.value}
                     value={option.value}

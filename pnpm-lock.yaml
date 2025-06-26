@@ -207,6 +207,9 @@ importers:
       next-view-transitions:
         specifier: ^0.3.4
         version: 0.3.4(next@15.2.0-canary.17(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-decd7b8-20250118)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      nodemailer:
+        specifier: ^7.0.3
+        version: 7.0.3
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -216,12 +219,21 @@ importers:
       react-fast-marquee:
         specifier: ^1.6.5
         version: 1.6.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-google-recaptcha-v3:
+        specifier: ^1.11.0
+        version: 1.11.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-hook-form:
         specifier: ^7.54.2
         version: 7.54.2(react@19.0.0)
       react-intersection-observer:
         specifier: ^9.16.0
         version: 9.16.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-phone-number-input:
+        specifier: ^3.4.12
+        version: 3.4.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-signature-canvas:
+        specifier: 1.1.0-alpha.2
+        version: 1.1.0-alpha.2(@types/prop-types@15.7.14)(@types/react@18.3.0)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       sass:
         specifier: ^1.85.1
         version: 1.85.1
@@ -3571,6 +3583,9 @@ packages:
   '@types/shallow-equals@1.0.3':
     resolution: {integrity: sha512-xZx/hZsf1p9J5lGN/nGTsuW/chJCdlyGxilwg1TS78rygBCU5bpY50zZiFcIimlnl0p41kAyaASsy0bqU7WyBA==}
 
+  '@types/signature_pad@2.3.6':
+    resolution: {integrity: sha512-v3j92gCQJoxomHhd+yaG4Vsf8tRS/XbzWKqDv85UsqjMGy4zhokuwKe4b6vhbgncKkh+thF+gpz6+fypTtnFqQ==}
+
   '@types/speakingurl@13.0.6':
     resolution: {integrity: sha512-ywkRHNHBwq0mFs/2HRgW6TEBAzH66G8f2Txzh1aGR0UC9ZoAUHfHxLZGDhwMpck4BpSnB61eNFIFmlV+TJ+KUA==}
 
@@ -4270,6 +4285,9 @@ packages:
   cosmiconfig@7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
     engines: {node: '>=10'}
+
+  country-flag-icons@1.5.19:
+    resolution: {integrity: sha512-D/ZkRyj+ywJC6b2IrAN3/tpbReMUqmuRLlcKFoY/o0+EPQN9Ev/e8tV+D3+9scvu/tarxwLErNwS73C3yzxs/g==}
 
   crc-32@1.2.2:
     resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
@@ -5385,6 +5403,17 @@ packages:
   ini@1.3.8:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
 
+  input-format@0.3.14:
+    resolution: {integrity: sha512-gHMrgrbCgmT4uK5Um5eVDUohuV9lcs95ZUUN9Px2Y0VIfjTzT2wF8Q3Z4fwLFm7c5Z2OXCm53FHoovj6SlOKdg==}
+    peerDependencies:
+      react: '>=18.1.0'
+      react-dom: '>=18.1.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   inquirer@7.3.3:
     resolution: {integrity: sha512-JG3eIAj5V9CwcGvuOmoo6LB9kbAYT8HXffUl6memuszlwDC/qvFAJw49XJ5NROSFNPxp3iQg1GqkFhaY/CR0IA==}
     engines: {node: '>=8.0.0'}
@@ -5815,6 +5844,9 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
+  libphonenumber-js@1.12.9:
+    resolution: {integrity: sha512-VWwAdNeJgN7jFOD+wN4qx83DTPMVPPAUyx9/TUkBXKLiNkuWWk6anV0439tgdtwaJDrEdqkvdN22iA6J4bUCZg==}
+
   lilconfig@3.1.3:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
@@ -6215,6 +6247,10 @@ packages:
 
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
+
+  nodemailer@7.0.3:
+    resolution: {integrity: sha512-Ajq6Sz1x7cIK3pN6KesGTah+1gnwMnx5gKl3piQlQQE/PwyJ4Mbc8is2psWYxK3RJTVeqsDaCv8ZzXLCDHMTZw==}
+    engines: {node: '>=6.0.0'}
 
   normalize-package-data@2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
@@ -6764,6 +6800,12 @@ packages:
       '@types/react':
         optional: true
 
+  react-google-recaptcha-v3@1.11.0:
+    resolution: {integrity: sha512-kLQqpz/77m8+trpBwzqcxNtvWZYoZ/YO6Vm2cVTHW8hs80BWUfDpC7RDwuAvpswwtSYApWfaSpIDFWAIBNIYxQ==}
+    peerDependencies:
+      react: ^16.3 || ^17.0 || ^18.0 || ^19.0
+      react-dom: ^17.0 || ^18.0 || ^19.0
+
   react-hook-form@7.54.2:
     resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
     engines: {node: '>=18.0.0'}
@@ -6813,6 +6855,12 @@ packages:
 
   react-is@19.0.0:
     resolution: {integrity: sha512-H91OHcwjZsbq3ClIDHMzBShc1rotbfACdWENsmEf0IFvZ3FgGPtdHMcsv45bQ1hAbgdfiA8SnxTKfDS+x/8m2g==}
+
+  react-phone-number-input@3.4.12:
+    resolution: {integrity: sha512-Raob77KdtLGm49iC6nuOX9qy6Mg16idkgC7Y1mHmvG2WBYoauHpzxYNlfmFskQKeiztrJIwPhPzBhjFwjenNCA==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
 
   react-photo-album@2.4.1:
     resolution: {integrity: sha512-dzqP5QbYAugA0uZTl3qsVldckzDXYDkDOvA8CpACl51hSEfhJmCfwhbnI4WBHnETQHv48nnNQ1jhrulst8njLA==}
@@ -6882,6 +6930,20 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react-signature-canvas@1.1.0-alpha.2:
+    resolution: {integrity: sha512-tKUNk3Gmh04Ug4K8p5g8Is08BFUKvbXxi0PyetQ/f8OgCBzcx4vqNf9+OArY/TdNdfHtswXQNRwZD6tyELjkjQ==}
+    peerDependencies:
+      '@types/prop-types': ^15.7.3
+      '@types/react': 0.14 - 19
+      prop-types: ^15.5.8
+      react: 0.14 - 19
+      react-dom: 0.14 - 19
+    peerDependenciesMeta:
+      '@types/prop-types':
+        optional: true
+      '@types/react':
+        optional: true
 
   react-style-singleton@2.2.3:
     resolution: {integrity: sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==}
@@ -7328,6 +7390,9 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  signature_pad@2.3.2:
+    resolution: {integrity: sha512-peYXLxOsIY6MES2TrRLDiNg2T++8gGbpP2yaC+6Ohtxr+a2dzoaqWosWDY9sWqTAAk6E/TyQO+LJw9zQwyu5kA==}
+
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
 
@@ -7709,6 +7774,9 @@ packages:
   treeify@1.1.0:
     resolution: {integrity: sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==}
     engines: {node: '>=0.6'}
+
+  trim-canvas@0.1.2:
+    resolution: {integrity: sha512-nd4Ga3iLFV94mdhW9JFMLpQbHUyCQuhFOD71PEAt1NjtMD5wbZctzhX8c3agHNybMR5zXD1XTGoIEWk995E6pQ==}
 
   trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
@@ -11959,6 +12027,8 @@ snapshots:
 
   '@types/shallow-equals@1.0.3': {}
 
+  '@types/signature_pad@2.3.6': {}
+
   '@types/speakingurl@13.0.6': {}
 
   '@types/stylis@4.2.5': {}
@@ -12859,6 +12929,8 @@ snapshots:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+
+  country-flag-icons@1.5.19: {}
 
   crc-32@1.2.2: {}
 
@@ -14328,6 +14400,13 @@ snapshots:
 
   ini@1.3.8: {}
 
+  input-format@0.3.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      prop-types: 15.8.1
+    optionalDependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   inquirer@7.3.3:
     dependencies:
       ansi-escapes: 4.3.2
@@ -14786,6 +14865,8 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
+  libphonenumber-js@1.12.9: {}
+
   lilconfig@3.1.3: {}
 
   lines-and-columns@1.2.4: {}
@@ -15179,6 +15260,8 @@ snapshots:
       resolve: 1.22.9
 
   node-releases@2.0.19: {}
+
+  nodemailer@7.0.3: {}
 
   normalize-package-data@2.5.0:
     dependencies:
@@ -15779,6 +15862,12 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.0
 
+  react-google-recaptcha-v3@1.11.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   react-hook-form@7.54.2(react@18.3.1):
     dependencies:
       react: 18.3.1
@@ -15827,6 +15916,16 @@ snapshots:
   react-is@18.3.1: {}
 
   react-is@19.0.0: {}
+
+  react-phone-number-input@3.4.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      classnames: 2.5.1
+      country-flag-icons: 1.5.19
+      input-format: 0.3.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      libphonenumber-js: 1.12.9
+      prop-types: 15.8.1
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   react-photo-album@2.4.1(react@18.3.1):
     dependencies:
@@ -15922,6 +16021,19 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
+
+  react-signature-canvas@1.1.0-alpha.2(@types/prop-types@15.7.14)(@types/react@18.3.0)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@babel/runtime': 7.26.0
+      '@types/signature_pad': 2.3.6
+      prop-types: 15.8.1
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      signature_pad: 2.3.2
+      trim-canvas: 0.1.2
+    optionalDependencies:
+      '@types/prop-types': 15.7.14
+      '@types/react': 18.3.0
 
   react-style-singleton@2.2.3(@types/react@18.3.0)(react@19.0.0):
     dependencies:
@@ -16792,6 +16904,8 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
+  signature_pad@2.3.2: {}
+
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
@@ -17310,6 +17424,8 @@ snapshots:
       punycode: 2.3.1
 
   treeify@1.1.0: {}
+
+  trim-canvas@0.1.2: {}
 
   trim-newlines@3.0.1: {}
 

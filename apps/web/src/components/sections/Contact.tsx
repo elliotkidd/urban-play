@@ -1,16 +1,16 @@
 import { ContactProps } from "@/lib/sanity/queries/sections";
 import Link from "next/link";
-import { useFormspark } from "@formspark/use-formspark";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
-import SanityForm from "../SanityForm";
+import { Form } from "../Form";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-const FORM_SPARK_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 function Contact({ title, globalSettings, form }: ContactProps) {
   const { contactDetails, socialLinks } = globalSettings;
   const { instagram, facebook, twitter, linkedin, youtube } = socialLinks ?? {};
-  const { name, phone, address } = contactDetails;
+  const { phone, address } = contactDetails;
   const formattedAddress = address.split(",", 2).map((line, index) => (
     <span key={index} className="block">
       {line}
@@ -81,7 +81,11 @@ function Contact({ title, globalSettings, form }: ContactProps) {
           </div>
         </div>
       </div>
-      <SanityForm className="col-span-2" form={form} />
+      <GoogleReCaptchaProvider
+        reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}
+      >
+        <Form formData={form} className="lg:col-span-2" />
+      </GoogleReCaptchaProvider>
     </motion.div>
   );
 }

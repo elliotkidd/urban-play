@@ -106,6 +106,44 @@ export const settings = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "formEmailRecipients",
+      title: "Form Email Recipients",
+      description:
+        "Email addresses that will receive notifications when this form is submitted",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "email",
+              title: "Email",
+              type: "string",
+              validation: (Rule) => Rule.required().email(),
+            },
+            {
+              name: "name",
+              title: "Name",
+              type: "string",
+            },
+          ],
+          preview: {
+            select: {
+              email: "email",
+              name: "name",
+            },
+            prepare({ email, name }) {
+              return {
+                title: name || email,
+                subtitle: name ? email : undefined,
+              };
+            },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.unique(),
+    }),
     socialLinks,
   ],
   preview: {

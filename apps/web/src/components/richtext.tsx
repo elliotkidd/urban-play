@@ -94,7 +94,6 @@ const components: Partial<PortableTextReactComponents> = {
   },
   types: {
     image: ({ value }) => {
-      console.log(value.aspectRatio < 1);
       return (
         <SanityImage
           src={value}

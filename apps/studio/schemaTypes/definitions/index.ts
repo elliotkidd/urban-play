@@ -4,6 +4,7 @@ import { customUrl } from "./custom-url";
 import { pageBuilder } from "./pagebuilder";
 import { richText } from "./rich-text";
 import { hotspots } from "./hotspots";
+import { formFieldType } from "./formField";
 
 export const definitions = [
   customUrl,
@@ -11,5 +12,6 @@ export const definitions = [
   button,
   pageBuilder,
   contentBlock,
+  formFieldType,
   ...hotspots,
 ];

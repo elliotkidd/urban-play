@@ -8,8 +8,6 @@ export const useDimensions = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log("resize");
-      console.log(window.innerWidth);
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
 

@@ -1,7 +1,7 @@
 import { Award as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-export default defineType({
+export const award = defineType({
   name: "award",
   title: "Award",
   type: "document",

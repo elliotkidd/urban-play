@@ -17,13 +17,21 @@ import { useForm } from "react-hook-form";
 import { Input } from "@workspace/packages/ui/src/components/input";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "../ui/Button";
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 
-const FORMSPARK_FORM_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-function SignupForDownload({ downloadableFile }: { downloadableFile: any }) {
+function SignupForDownload({
+  downloadableFile,
+  recipients,
+}: {
+  downloadableFile: any;
+  recipients: any;
+}) {
   const pathname = usePathname();
 
   const getLastPathSegment = (path: string) => {
@@ -37,6 +45,7 @@ function SignupForDownload({ downloadableFile }: { downloadableFile: any }) {
   });
 
   const { toast } = useToast();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
     handleSubmit,
@@ -46,31 +55,54 @@ function SignupForDownload({ downloadableFile }: { downloadableFile: any }) {
   const onSubmit = async (data: any, e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!executeRecaptcha) {
+      console.log("Recaptcha not ready");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("email", data.email);
+
     const lastPathSegment = getLastPathSegment(pathname);
-    const dataWithPath = { ...data, page: lastPathSegment };
+    formDataToSend.append("page", lastPathSegment);
+
+    const recaptchaToken = await executeRecaptcha(
+      lastPathSegment.replace("-", "_"),
+    );
+    formDataToSend.append("recaptchaToken", recaptchaToken);
+    formDataToSend.append("recipients", JSON.stringify(recipients || []));
 
     try {
-      await axios.post(
-        `https://submit-form.com/${FORMSPARK_FORM_ID}`,
-        dataWithPath,
-      );
-
-      // Trigger file download after successful submission
-      if (downloadableFile && downloadableFile.url) {
-        const link = document.createElement("a");
-        link.href = downloadableFile.url;
-        link.download = "download";
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      toast({
-        title: "Success",
-        description: "Email sent successfully",
+      const response = await fetch(`/api/email-submission`, {
+        method: "POST",
+        body: formDataToSend,
       });
+
+      if (!response.ok) {
+        toast({
+          title: "Error",
+          description: "Failed to submit form",
+        });
+        return;
+      } else {
+        // Trigger file download after successful submission
+        if (downloadableFile && downloadableFile.url) {
+          const link = document.createElement("a");
+          link.href = downloadableFile.url;
+          link.download = "download";
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+
+        toast({
+          title: "Success",
+          description: "Email sent successfully",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -95,9 +127,8 @@ function SignupForDownload({ downloadableFile }: { downloadableFile: any }) {
                   <Input
                     {...field}
                     type="email"
-                    label="Email"
                     placeholder="Enter Email"
-                    className="rounded-none bg-transparent placeholder:opacity-60 p-2 text-xs placeholder:text-xs h-[35px]"
+                    className="rounded-none bg-transparent placeholder:opacity-60 p-2 text-xs placeholder:text-xs h-[35px] placeholder:text-text text-text"
                   />
                 </FormControl>
               </FormItem>
@@ -129,6 +160,7 @@ export default function ParagraphSection({
   largeSpacing,
   annotationDirection,
   downloadableFile,
+  recipients,
 }: ParagraphProps) {
   return (
     <motion.div
@@ -186,8 +218,15 @@ export default function ParagraphSection({
                 );
               })}
             </ul>
-            {downloadableFile && (
-              <SignupForDownload downloadableFile={downloadableFile} />
+            {downloadableFile && recipients && (
+              <GoogleReCaptchaProvider
+                reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}
+              >
+                <SignupForDownload
+                  downloadableFile={downloadableFile}
+                  recipients={recipients}
+                />
+              </GoogleReCaptchaProvider>
             )}
           </div>
         )}

@@ -10,7 +10,11 @@ const HOVER_CLASSES = [
   "hover:bg-theme-yellow hover:text-white",
 ];
 
-export default function SubmitButton() {
+export default function SubmitButton({
+  submitButtonText,
+}: {
+  submitButtonText: string;
+}) {
   const { pending } = useFormStatus();
   const [hover, setHover] = useState(0);
 
@@ -24,7 +28,7 @@ export default function SubmitButton() {
         HOVER_CLASSES[hover],
       )}
     >
-      {pending ? "Submitting..." : "Submit"}
+      {pending ? "Submitting..." : submitButtonText}
     </Button>
   );
 }

@@ -13,7 +13,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@workspace/ui/components/navigation-menu";
-import { buttonVariants } from "@workspace/ui/components/button";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

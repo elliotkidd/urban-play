@@ -44,8 +44,6 @@ export default function ProjectTile({
       break;
   }
 
-  console.log(showDescription, shortDescription);
-
   return (
     <motion.div variants={childVars} className={className}>
       <Link href={slug} className={twMerge("block group")}>

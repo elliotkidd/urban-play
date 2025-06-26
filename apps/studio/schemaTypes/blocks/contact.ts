@@ -2,7 +2,6 @@ import { defineField, defineType } from "sanity";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import { sectionSettings } from "../common";
 import { Mail as icon } from "lucide-react";
-import { formField } from "../form";
 
 export const contact = defineType({
   name: "contact",
@@ -17,7 +16,13 @@ export const contact = defineType({
       type: "string",
       group: GROUP.MAIN_CONTENT,
     }),
-    defineField({ ...formField, group: GROUP.MAIN_CONTENT }),
+    defineField({
+      name: "form",
+      title: "Form",
+      type: "reference",
+      to: [{ type: "form" }],
+      group: GROUP.MAIN_CONTENT,
+    }),
     ...sectionSettings,
   ],
   preview: {

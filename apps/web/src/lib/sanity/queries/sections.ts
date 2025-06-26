@@ -94,6 +94,13 @@ const PARAGRAPH_FRAGMENT = {
     _id: q.string(),
     url: q("asset").deref().grabOne("url", q.string()),
   }),
+  recipients: q("*")
+    .filterByType("settings")
+    .grabOne("formEmailRecipients[]")
+    .grab({
+      email: q.string(),
+      name: q.string(),
+    }),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

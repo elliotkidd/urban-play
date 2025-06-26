@@ -2,17 +2,10 @@ import * as React from "react";
 
 import { cn } from "@workspace/ui/lib/utils";
 
-interface InputProps extends React.ComponentProps<"input"> {
-  label: string;
-}
-
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
     return (
       <>
-        <label htmlFor={props.name} className="sr-only">
-          {label}
-        </label>
         <input
           type={type}
           className={cn(

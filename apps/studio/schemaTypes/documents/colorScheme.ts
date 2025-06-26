@@ -3,7 +3,7 @@ import { type StringRule, defineField, defineType } from "sanity";
 
 import { ColorSchemeMedia } from "../../components/ColorScheme";
 
-export default defineType({
+export const colorScheme = defineType({
   name: "colorScheme",
   title: "Color schemes",
   type: "document",

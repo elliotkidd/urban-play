@@ -46,8 +46,8 @@ const DIRTY_INPUT_CLASSES = [
   "bg-theme-red",
 ];
 
-const getFormSchema = (form: FormProps) => {
-  return form.reduce(
+const getFormSchema = (fields: FormProps["fields"]) => {
+  return fields.reduce(
     (schema, field) => {
       if (field._type === "checkboxGroup" && "options" in field) {
         schema[field.name] = z.record(z.string(), z.boolean());
@@ -85,8 +85,8 @@ const getFormSchema = (form: FormProps) => {
   );
 };
 
-const getDefaultValues = (form: FormProps) => {
-  return form.reduce(
+const getDefaultValues = (fields: FormProps["fields"]) => {
+  return fields.reduce(
     (acc, field) => {
       if (field._type === "checkboxGroup" && "options" in field) {
         field.options.forEach((option) => {
@@ -106,13 +106,13 @@ const getDefaultValues = (form: FormProps) => {
 };
 
 export default function SanityForm({
-  form,
+  form: { fields, title, id, message, recipients, submitButtonText },
   className,
 }: {
   form: FormProps;
   className?: string;
 }) {
-  const defaultValues = getDefaultValues(form);
+  const defaultValues = getDefaultValues(fields);
 
   const formContext = useForm({
     defaultValues,
@@ -131,7 +131,7 @@ export default function SanityForm({
         onSubmit={handleSubmit(submit)}
         className={cn("grid lg:grid-cols-2 gap-2 ", className)}
       >
-        {form.map(
+        {fields.map(
           (
             props:
               | SelectProps
@@ -141,7 +141,6 @@ export default function SanityForm({
             index: number,
           ) => {
             const { _type, columns, _key, ...rest } = props;
-            console.log(props.name);
             switch (_type) {
               case "select":
                 return (
@@ -201,6 +200,7 @@ export default function SanityForm({
                       <FormItem
                         className={cn(columns === 2 && "lg:col-span-2")}
                       >
+                        <FormLabel className="sr-only">{props.label}</FormLabel>
                         <FormControl>
                           <Component
                             {...field}
@@ -223,7 +223,7 @@ export default function SanityForm({
             }
           },
         )}
-        <SubmitButton />
+        <SubmitButton submitButtonText={submitButtonText} />
       </form>
     </Form>
   );

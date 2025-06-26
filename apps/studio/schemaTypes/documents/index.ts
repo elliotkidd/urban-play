@@ -1,8 +1,9 @@
 import { author } from "./author";
-import award from "./award";
+import { award } from "./award";
 import { blog } from "./blog";
 import { blogIndex } from "./blog-index";
-import colorScheme from "./colorScheme";
+import { colorScheme } from "./colorScheme";
+import { form } from "./form";
 import { faq } from "./faq";
 import { footer } from "./footer";
 import { homePage } from "./home-page";
@@ -26,6 +27,7 @@ export const documents = [
   blog,
   page,
   award,
+  form,
   faq,
   author,
   colorScheme,
