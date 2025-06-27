@@ -136,6 +136,10 @@ export const footerQuery = q("*")
           twitter: q.string(),
           youtube: q.string(),
         }),
+        recipients: q("recipients[]", { isArray: true }).grab({
+          email: q.string(),
+          name: q.string(),
+        }),
       }),
   });
 

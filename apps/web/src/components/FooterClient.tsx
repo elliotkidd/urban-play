@@ -10,11 +10,13 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
 } from "@workspace/packages/ui/src/components/form";
 import { useForm } from "react-hook-form";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 type SocialLinksProps = {
   data: any;
@@ -23,8 +25,6 @@ type SocialLinksProps = {
 type ContactDetailsProps = {
   data: any;
 };
-
-const FORMSPARK_FORM_ID = process.env.NEXT_PUBLIC_FORM_SPARK_ID ?? "";
 
 function ContactDetails({ data }: ContactDetailsProps) {
   if (!data) return null;
@@ -100,7 +100,11 @@ function SocialLinks({ data }: SocialLinksProps) {
   );
 }
 
-function NewsletterSignup() {
+function NewsletterSignup({
+  recipients,
+}: {
+  recipients: { email: string; name: string }[];
+}) {
   const form = useForm({
     defaultValues: {
       email: "",
@@ -108,19 +112,47 @@ function NewsletterSignup() {
   });
 
   const { toast } = useToast();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!executeRecaptcha) {
+      console.log("Recaptcha not ready");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("email", data.email);
+
+    const recaptchaToken = await executeRecaptcha("footer_Submission");
+    formDataToSend.append("recaptchaToken", recaptchaToken);
+    formDataToSend.append("recipients", JSON.stringify(recipients || []));
+
     try {
-      await axios.post(`https://submit-form.com/${FORMSPARK_FORM_ID}`, data);
-      toast({
-        title: "Thank you for subscribing!",
-        description: "You will receive an email with the latest news",
+      const response = await fetch(`/api/email-submission`, {
+        method: "POST",
+        body: formDataToSend,
       });
+
+      if (!response.ok) {
+        toast({
+          title: "Error",
+          description: "Failed to submit form",
+        });
+        return;
+      } else {
+        toast({
+          title: "Success",
+          description: "Email sent successfully",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -141,11 +173,13 @@ function NewsletterSignup() {
               name="email"
               render={({ field }) => (
                 <FormItem className="space-y-0 flex-1">
+                  <FormLabel htmlFor="email" className="sr-only">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type="email"
-                      label="Email"
                       placeholder="Email"
                       className="rounded-none bg-transparent placeholder:opacity-60 text-white placeholder:text-white"
                     />
@@ -173,7 +207,7 @@ function NewsletterSignup() {
 
 export function FooterSection({ data }: { data: FooterType }) {
   const { colorScheme, settings, subtitle } = data;
-  const { socialLinks, contactDetails } = settings;
+  const { socialLinks, contactDetails, recipients } = settings;
 
   return (
     <footer
@@ -193,7 +227,7 @@ export function FooterSection({ data }: { data: FooterType }) {
             <SocialLinks data={socialLinks} />
           </div>
           <div className="grid lg:grid-cols-9 gap-fluid-sm">
-            <NewsletterSignup />
+            <NewsletterSignup recipients={recipients} />
             <div className="lg:col-span-3 lg:col-start-7 prose">
               <p className="lead">{subtitle}</p>
             </div>
