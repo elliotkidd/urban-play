@@ -194,7 +194,7 @@ function MobileNavbarAccordionColumn({
               href: item.href ?? "",
               title: item.name ?? "",
             }}
-            className="text-sm font-bold leading-[120%] block text-left"
+            className="text-xl px-4 font-bold leading-[120%] block text-left"
           />
         ))}
       </AccordionContent>
@@ -206,9 +206,9 @@ const menuVariants = {
   open: {
     height: "calc(100vh - 8rem)",
     transition: {
-      visualDuration: 0.5,
-      type: "spring",
-      bounce: 0.4,
+      duration: 0.5,
+      // type: "spring",
+      // bounce: 0.4,
     },
   },
   closed: {
@@ -222,28 +222,20 @@ const menuVariants = {
   },
 };
 
-const itemVariants = {
-  open: ({ index }: { index: number }) => ({
+const menuContentVariants = {
+  open: {
     opacity: 1,
-    y: 0,
-    x: 0,
     transition: {
-      delay: 0.35 + index * 0.1,
-      visualDuration: 0.5,
-      type: "spring",
-      bounce: 0.5,
-    },
-  }),
-  closed: ({ index, totalItems }: { index: number; totalItems: number }) => ({
-    opacity: 0,
-    x: 50,
-    transition: {
-      delay: (totalItems - index - 1) * 0.1,
       duration: 0.5,
-      type: "tween",
-      ease: "backInOut",
+      delay: 0.5,
     },
-  }),
+  },
+  closed: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
 };
 
 function MobileNavbar({
@@ -276,47 +268,49 @@ function MobileNavbar({
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="flex-1 flex flex-col overflow-hidden"
+            className="flex"
           >
-            <Accordion
-              type="single"
-              collapsible
-              className="gap-[10px] flex-1 flex flex-col justify-center p-2.5"
+            <motion.div
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuContentVariants}
+              className="flex-1 flex flex-col overflow-hidden"
             >
-              {Array.isArray(columns) &&
-                columns?.map(
-                  (
-                    column: NavBarLinkType | NavBarColumnType,
-                    index: number,
-                  ) => {
-                    const { name, _key, url } = column as NavBarLinkType;
-                    return column._type === "navbarColumn" ? (
-                      <MobileNavbarAccordionColumn
-                        key={`column-${column._key}`}
-                        column={column}
-                        setIsOpen={setIsOpen}
-                      />
-                    ) : (
-                      <motion.div
-                        custom={{ index, totalItems: columns.length }}
-                        variants={itemVariants}
-                        key={`column-link-${name}-${_key}`}
-                      >
+              <Accordion
+                type="single"
+                collapsible
+                className="gap-[10px] flex-1 flex flex-col justify-center p-2.5"
+              >
+                {Array.isArray(columns) &&
+                  columns?.map(
+                    (
+                      column: NavBarLinkType | NavBarColumnType,
+                      index: number,
+                    ) => {
+                      const { name, _key, url } = column as NavBarLinkType;
+                      return column._type === "navbarColumn" ? (
+                        <MobileNavbarAccordionColumn
+                          key={`column-${column._key}`}
+                          column={column}
+                          setIsOpen={setIsOpen}
+                        />
+                      ) : (
                         <NavbarColumnLink
                           key={`column-link-${name}-${_key}`}
                           column={column}
                           className="text-xl font-bold leading-[120%] block"
                         />
-                      </motion.div>
-                    );
-                  },
-                )}
-            </Accordion>
-            <SanityButtons
-              buttons={buttons}
-              className="flex flex-col gap-4 p-2.5"
-              buttonClassName="btn--header w-full"
-            />
+                      );
+                    },
+                  )}
+              </Accordion>
+              <SanityButtons
+                buttons={buttons}
+                className="flex flex-col gap-4 p-2.5"
+                buttonClassName="btn--header w-full"
+              />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
