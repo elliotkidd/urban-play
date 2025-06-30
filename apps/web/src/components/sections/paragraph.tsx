@@ -1,4 +1,3 @@
-import { twMerge } from "tailwind-merge";
 import { RichText } from "../richtext";
 import { ParagraphProps } from "@/lib/sanity/queries/sections";
 import { motion } from "motion/react";
@@ -165,13 +164,20 @@ export default function ParagraphSection({
   return (
     <motion.div
       {...sectionAnimationConfig}
-      className={twMerge(
+      className={cn(
         "wrapper py-fluid-xs",
         smallWrapper && "wrapper--small",
         largeSpacing ? "space-y-fluid-xl" : "space-y-fluid-md",
       )}
     >
-      <div className="flex flex-col md:flex-row w-full justify-between gap-fluid-sm prose">
+      <div
+        className={cn(
+          "flex md:flex-row w-full justify-between gap-fluid-sm prose",
+          !(buttons && buttons.length === 1 && !annotations)
+            ? "flex-col"
+            : "flex-row",
+        )}
+      >
         {topText && (
           <RichText
             richText={topText}
@@ -185,7 +191,7 @@ export default function ParagraphSection({
         {annotations && !buttons && (
           <div className="w-80 flex-none space-y-fluid-sm">
             <ul
-              className={twMerge(
+              className={cn(
                 "list-none not-prose text-xs",
                 annotationDirection !== "horizontal"
                   ? "space-y-4"

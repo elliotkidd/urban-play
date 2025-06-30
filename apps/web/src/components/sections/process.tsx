@@ -53,7 +53,12 @@ function Process({
         </button>
       </div>
       <Swiper
-        slidesPerView={"auto"}
+        slidesPerView={1}
+        breakpoints={{
+          1024: {
+            slidesPerView: "auto",
+          },
+        }}
         spaceBetween={16}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -68,10 +73,10 @@ function Process({
         {steps.map((step, i) => (
           <SwiperSlide
             key={step._key}
-            className="bg-nav-bar-background/20 rounded-lg flex gap-fluid-sm aspect-video"
-            style={{ maxWidth: "981px", width: "100%", display: "flex" }}
+            className="bg-nav-bar-background/20 rounded-lg flex flex-col lg:flex-row gap-fluid-sm lg:aspect-video lg:max-w-[981px] p-fluid-sm lg:p-0"
+            style={{ width: "100%", display: "flex" }}
           >
-            <div className="p-2 flex-none aspect-portrait">
+            <div className="lg:p-2 flex-none aspect-portrait order-last lg:order-first">
               <div className="relative w-full h-full rounded-lg overflow-hidden">
                 <SanityImage
                   src={step.image}
@@ -79,7 +84,7 @@ function Process({
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col h-full justify-between max-w-lg space-y-fluid pr-fluid-sm py-fluid-sm">
+            <div className="flex-1 flex flex-col lg:h-full lg:justify-between max-w-lg space-y-fluid-sm lg:space-y-fluid lg:pr-fluid-sm lg:py-fluid-sm">
               <h3 className="text-lg font-bold">
                 {showIndex && (
                   <span className="opacity-30 mr-1">
@@ -88,7 +93,9 @@ function Process({
                 )}
                 {step.heading}
               </h3>
-              <p className="text-[16px] leading-[20px]">{step.description}</p>
+              <p className="text-[16px] leading-[20px] text-body-copy">
+                {step.description}
+              </p>
             </div>
           </SwiperSlide>
         ))}

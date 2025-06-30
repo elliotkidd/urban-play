@@ -31,7 +31,7 @@ function Pagination({ total, perPage }: { total: number; perPage: number }) {
     scrollToBlogGrid();
   };
   return (
-    <div className="wrapper flex flex-col items-center justify-between gap-4 lg:flex-row">
+    <div className="wrapper flex flex-col lg:items-center justify-between gap-4 lg:flex-row">
       <div className="flex gap-2">
         <button
           className="btn--inline hover:opacity-70 transition-opacity duration-500 disabled:opacity-50"

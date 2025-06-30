@@ -146,7 +146,7 @@ export default function TwoColumnContentSection({
     <motion.div
       {...sectionAnimationConfig}
       className={cn(
-        "wrapper grid",
+        "wrapper grid gap-fluid",
         gap === "xs" && "gap-fluid-xs",
         gap === "sm" && "gap-fluid-sm",
         gap === "md" && "gap-fluid-md",

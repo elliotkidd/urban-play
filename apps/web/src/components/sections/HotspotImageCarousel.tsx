@@ -7,7 +7,7 @@ import type {
   SpotProps,
 } from "@/lib/sanity/queries/sections";
 import SanityImage from "../sanity-image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
@@ -349,80 +349,92 @@ function MobileHotspotImageCarousel({
           />
 
           <AnimatePresence mode="wait">
-            {images[currentIndex].hotspots.map(
-              (spot, index) =>
-                activeHotspot === index && (
-                  <motion.div
-                    key={`hotspot-${spot._key}-${index}`}
-                    initial={{ height: 0 }}
-                    animate={{ height: "auto" }}
-                    exit={{ height: 0 }}
-                    transition={{ duration: 0.75, ease: customEase }}
-                  >
-                    <div className="p-4 pt-12 space-y-8">
-                      <div className="flex w-full justify-between items-center gap-2">
-                        <p className="text-xs">Solutions</p>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() =>
-                              setActiveHotspot(
-                                (index -
-                                  1 +
-                                  images[currentIndex].hotspots.length) %
-                                  images[currentIndex].hotspots.length,
-                              )
-                            }
-                            className="bg-background rounded-full flex w-10 h-10 items-center justify-center text-text"
-                          >
-                            <svg
-                              width="5"
-                              height="10"
-                              viewBox="0 0 5 10"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M4.5 9L0.593741 5.09374L4.5 1.18748"
-                                stroke="currentColor"
-                                strokeWidth="0.781252"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() =>
-                              setActiveHotspot(
-                                (index + 1) %
-                                  images[currentIndex].hotspots.length,
-                              )
-                            }
-                            className="bg-background rounded-full flex w-10 h-10 items-center justify-center text-text"
-                          >
-                            <svg
-                              width="6"
-                              height="10"
-                              viewBox="0 0 6 10"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1.09375 1L5.00001 4.90626L1.09375 8.81252"
-                                stroke="currentColor"
-                                strokeWidth="0.781252"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      <Link
-                        href={spot.solution.slug ?? ""}
-                        className="underline block"
+            {activeHotspot !== null && (
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: "auto" }}
+                exit={{ height: 0 }}
+                transition={{ duration: 0.75, ease: customEase }}
+              >
+                <div className="p-[30px] space-y-[100px]">
+                  <div className="flex w-full justify-between items-center gap-2">
+                    <p className="text-sm">Solutions</p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          setActiveHotspot(
+                            (activeHotspot -
+                              1 +
+                              images[currentIndex].hotspots.length) %
+                              images[currentIndex].hotspots.length,
+                          )
+                        }
+                        className="bg-background rounded-full flex w-10 h-10 items-center justify-center text-text"
                       >
-                        {spot.solution.title}
-                      </Link>
-                      <p className=" text-sm mb-4">{spot.description}</p>
+                        <svg
+                          width="5"
+                          height="10"
+                          viewBox="0 0 5 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.5 9L0.593741 5.09374L4.5 1.18748"
+                            stroke="currentColor"
+                            strokeWidth="0.781252"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() =>
+                          setActiveHotspot(
+                            (activeHotspot + 1) %
+                              images[currentIndex].hotspots.length,
+                          )
+                        }
+                        className="bg-background rounded-full flex w-10 h-10 items-center justify-center text-text"
+                      >
+                        <svg
+                          width="6"
+                          height="10"
+                          viewBox="0 0 6 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1.09375 1L5.00001 4.90626L1.09375 8.81252"
+                            stroke="currentColor"
+                            strokeWidth="0.781252"
+                          />
+                        </svg>
+                      </button>
                     </div>
-                  </motion.div>
-                ),
+                  </div>
+                  <AnimatePresence mode="wait">
+                    {images[currentIndex].hotspots.map(
+                      (spot, index) =>
+                        index === activeHotspot && (
+                          <motion.div
+                            key={`hotspot-${spot._key}-${index}`}
+                            className="space-y-[100px]"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            <Link
+                              href={spot.solution.slug ?? ""}
+                              className="text-xl font-bold leading-[120%] block"
+                            >
+                              {spot.solution.title}
+                            </Link>
+                            <p className=" text-sm mb-4">{spot.description}</p>
+                          </motion.div>
+                        ),
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>

@@ -168,8 +168,8 @@
     calc(var(--space-sm-max) / 16) * 1rem
   );
 
-  --space-min: 40;
-  --space-max: 60;
+  --space-min: 50;
+  --space-max: 50;
   --space: clamp(
     calc(var(--space-min) / 16) * 1rem,
     calc(

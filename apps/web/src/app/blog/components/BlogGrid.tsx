@@ -1,3 +1,4 @@
+import { ProjectsHeader } from "@/app/projects/components/ProjectsHeader";
 import { BlogHeader } from "@/components/blog-header";
 import Pagination from "@/components/Pagination";
 import PostTile, { PostTileSkeleton } from "@/components/post-tile";

@@ -83,7 +83,7 @@ export default async function BlogPage({
                     </p>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="gap-2 hidden lg:flex">
                     {featuredBlog.solutions &&
                       featuredBlog.solutions.length > 0 &&
                       featuredBlog.solutions.map(({ title }) => (

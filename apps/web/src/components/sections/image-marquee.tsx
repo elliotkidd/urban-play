@@ -23,17 +23,11 @@ export default function ImageMarqueeSection({
     >
       {sectionHeader && <SectionHeader {...sectionHeader} />}
       <Swiper
-        modules={[Autoplay]}
         slidesPerView="auto"
         spaceBetween={16}
         loop={true}
-        speed={5000}
-        autoplay={{
-          delay: 1,
-          disableOnInteraction: false,
-        }}
         style={{ overflow: "visible" }}
-        className="h-[468px] auto-scroll"
+        className="h-[200px] lg:h-[468px]"
       >
         {images &&
           images.length > 0 &&
