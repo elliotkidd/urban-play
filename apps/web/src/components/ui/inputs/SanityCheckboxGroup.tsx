@@ -1,6 +1,6 @@
+import { FormFieldProps } from "@/lib/sanity/queries/form";
 import { cn } from "@/lib/utils";
 
-import { CheckboxGroupProps } from "@/lib/sanity/queries/form";
 import { Checkbox } from "@workspace/packages/ui/src/components/checkbox";
 import {
   FormControl,
@@ -21,37 +21,26 @@ export default function SanityCheckboxGroup({
   options,
   label,
   name,
-  orientation,
+  choices,
   className,
-}: CheckboxGroupProps & { className?: string }) {
+}: FormFieldProps & { className?: string }) {
   const { control } = useFormContext();
 
   return (
     <div className={cn("space-y-2", className)}>
       <FormLabel>{label}</FormLabel>
-      <div
-        className={cn(
-          "flex flex-col gap-4",
-          orientation === "horizontal" && "flex-row",
-        )}
-      >
-        {options.map((option, index: number) => (
+      <div className={cn("flex gap-4 flex-row")}>
+        {choices.map((option, index: number) => (
           <FormField
-            key={option.value}
+            key={option.label}
             control={control}
-            name={option.value}
+            name={option.label}
             render={({ field }) => (
-              <FormItem
-                className={cn(
-                  "flex items-center gap-2 space-y-0",
-                  orientation === "horizontal" && "flex-row",
-                )}
-              >
+              <FormItem className={cn("flex items-center gap-2 space-y-0")}>
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    required={option.required}
                     className={
                       CHECKBOX_CLASSES[index % CHECKBOX_CLASSES.length]
                     }

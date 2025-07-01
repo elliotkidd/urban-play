@@ -1,6 +1,6 @@
 import { RadioGroupItem } from "@workspace/packages/ui/src/components/radio-group";
 
-import { RadioGroupProps } from "@/lib/sanity/queries/form";
+import type { FormFieldProps } from "@/lib/sanity/queries/form";
 import { cn } from "@/lib/utils";
 import { Label } from "@workspace/packages/ui/src/components/label";
 import { RadioGroup } from "@workspace/packages/ui/src/components/radio-group";
@@ -30,9 +30,9 @@ export default function SanityRadioGroup({
   options,
   name,
   label,
-  orientation,
+  choices,
   className,
-}: RadioGroupProps & { className?: string }) {
+}: FormFieldProps & { className?: string }) {
   const { control } = useFormContext();
 
   return (
@@ -45,14 +45,11 @@ export default function SanityRadioGroup({
           <FormControl>
             <RadioGroup
               name={name}
-              orientation={orientation}
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className={cn(
-                orientation === "horizontal" && "flex flex-row gap-2",
-              )}
+              className={cn("flex flex-row gap-2")}
             >
-              {options.map((option, index: number) => (
+              {choices.map((option, index: number) => (
                 <div key={option.value} className="flex items-center space-x-2">
                   <RadioGroupItem
                     value={option.value}
