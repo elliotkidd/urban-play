@@ -330,5 +330,9 @@ export const querySitemapData = defineQuery(/* groq */ `{
   "blogPages": *[_type == "blog" && defined(slug.current)]{
     "slug": slug.current,
     "lastModified": _updatedAt
+  },
+  "projectPages": *[_type == "project" && defined(slug.current)]{
+    "slug": slug.current,
+    "lastModified": _updatedAt
   }
 }`);

@@ -56,6 +56,7 @@ export default async function BlogPage({
       className="bg-background text-text"
       style={getColorSchemeStyle(colorScheme)}
     >
+      <h1 className="sr-only">{title}</h1>
       {featuredBlog && (
         <section className="mb-fluid-lg">
           {featuredBlog.image && (

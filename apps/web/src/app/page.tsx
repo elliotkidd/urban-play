@@ -26,5 +26,10 @@ export default async function Page() {
 
   const { _id, _type, pageBuilder } = homePageData ?? {};
 
-  return <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />;
+  return (
+    <>
+      <h1 className="sr-only">Urban Play Homepage</h1>
+      <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
+    </>
+  );
 }

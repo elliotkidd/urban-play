@@ -54,6 +54,7 @@ export default async function ProjectsPage({
       className="bg-background text-text"
       style={getColorSchemeStyle(colorScheme)}
     >
+      <h1 className="sr-only">{title}</h1>
       <section
         style={getColorSchemeStyle(header.colorScheme)}
         className="relative bg-background text-text overflow-hidden h-screen flex items-center"

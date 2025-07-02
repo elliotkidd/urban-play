@@ -37,7 +37,7 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { title, pageBuilder, relatedProjects, _id, _type } = data ?? {};
 
   return (
-    <main className="bg-background text-text">
+    <div className="bg-background text-text">
       <h1 className="sr-only">{title}</h1>
       <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
 
@@ -54,7 +54,7 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
           </div>
         </section>
       )}
-    </main>
+    </div>
   );
 }
 

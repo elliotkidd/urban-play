@@ -64,6 +64,9 @@ export default async function SlugPage({
       <p className="text-text mb-6">This page has no content blocks yet.</p>
     </div>
   ) : (
-    <PageBuilder pageBuilder={pageBuilder} id={_id} type={_type} />
+    <>
+      <h1 className="sr-only">{title}</h1>
+      <PageBuilder pageBuilder={pageBuilder} id={_id} type={_type} />
+    </>
   );
 }
