@@ -413,7 +413,7 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
         })}
       </NavigationMenu>
       {buttons && buttons.length > 0 && (
-        <div className="justify-self-end flex items-center gap-4 ml-5">
+        <div className="justify-self-end flex items-center gap-4 ml-5 z-10">
           <SanityButtons
             buttons={buttons}
             className="flex items-center gap-4"
@@ -445,7 +445,8 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
         <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
       ) : (
         <header id="navbar" style={headerStyle}>
-          <Logo className="w-[36px] flex items-center mr-5" />
+          <div className="absolute inset-0 bg-nav-bar-background/20 backdrop-blur-lg rounded-[10px]" />
+          <Logo className="w-[36px] flex items-center mr-5 z-10" />
           <DesktopNavbar navbarData={navbarData} />
         </header>
       )}

@@ -1,6 +1,6 @@
 #navbar,
 .header-skeleton {
-  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-lg;
+  @apply text-nav-bar-text text-xs;
 
   position: fixed;
   z-index: 999;
