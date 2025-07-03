@@ -7,7 +7,8 @@ import { querySitemapData } from "@/lib/sanity/query";
 const baseUrl = getBaseUrl();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { slugPages, blogPages } = await client.fetch(querySitemapData);
+  const { slugPages, blogPages, projectPages } =
+    await client.fetch(querySitemapData);
   return [
     {
       url: baseUrl,
@@ -22,6 +23,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
     ...blogPages.map((page: any) => ({
+      url: `${baseUrl}${page.slug}`,
+      lastModified: new Date(page.lastModified ?? new Date()),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    })),
+    ...projectPages.map((page: any) => ({
       url: `${baseUrl}${page.slug}`,
       lastModified: new Date(page.lastModified ?? new Date()),
       changeFrequency: "weekly" as const,
