@@ -40,8 +40,8 @@ function Contact({ title, globalSettings, form }: ContactProps) {
         <h2 className="h2 mb-fluid-sm">{title}</h2>
         <div className="space-y-fluid-sm">
           {socialLinks && (
-            <div className="not-prose leading-none space-y-1 text-xs">
-              <p className="text-text text-base">Socials</p>
+            <div className="not-prose leading-none space-y-1 text-base">
+              <p className="text-text">Socials</p>
               <ul className="space-y-1">
                 {Array.isArray(socials) &&
                   socials.length > 0 &&
@@ -64,12 +64,12 @@ function Contact({ title, globalSettings, form }: ContactProps) {
               </ul>
             </div>
           )}
-          <div className="not-prose leading-none space-y-1 text-xs">
-            <p className="text-text text-base">Address</p>
+          <div className="not-prose leading-none space-y-1 text-base">
+            <p className="text-text">Address</p>
             <p className="">{formattedAddress}</p>
           </div>
-          <div className="not-prose leading-none space-y-1 text-xs">
-            <p className="text-text text-base">Phone</p>
+          <div className="not-prose leading-none space-y-1 text-base">
+            <p className="text-text">Phone</p>
             <Link
               href={`tel:${phone}`}
               className="text-text opacity-50 hover:opacity-100 transition-opactiy duration-500 block"
