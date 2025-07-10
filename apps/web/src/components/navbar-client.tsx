@@ -183,7 +183,7 @@ function MobileNavbarAccordionColumn({
 
   return (
     <AccordionItem value={column.title ?? column._key} className="border-b-0">
-      <AccordionTrigger className=" py-0 font-bold text-xl hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
+      <AccordionTrigger className="py-0 font-bold text-xl hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
         <Link
           href={column.url?.href ?? "#"}
           onClick={(e) => {
@@ -369,12 +369,18 @@ function NavbarColumn({
 }) {
   if (column._type !== "navbarColumn") return null;
   const router = useTransitionRouter();
+  const pathname = usePathname();
 
   const { title, links, url } = column as NavBarColumnType;
+
+  console.log(pathname, url?.href);
+
   return (
     <NavigationMenuList>
       <NavigationMenuItem className="">
-        <NavigationMenuTrigger>
+        <NavigationMenuTrigger
+          className={cn(pathname === url?.href && "opacity-100")}
+        >
           <Link
             href={url?.href ?? "#"}
             onClick={(e) => {
