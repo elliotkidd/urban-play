@@ -12,7 +12,16 @@ import { cn } from "@/lib/utils";
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
-    normal: ({ children }) => <p>{children}</p>,
+    normal: ({ children }) => {
+      const isEmpty =
+        children &&
+        Array.isArray(children) &&
+        children.length === 1 &&
+        children[0].length === 0;
+
+      console.log(isEmpty);
+      return isEmpty ? <br /> : <p>{children}</p>;
+    },
     lead: ({ children }: any) => <p className="lead">{children}</p>,
     h2: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
