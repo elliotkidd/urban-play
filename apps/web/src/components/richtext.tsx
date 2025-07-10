@@ -19,7 +19,6 @@ const components: Partial<PortableTextReactComponents> = {
         children.length === 1 &&
         children[0].length === 0;
 
-      console.log(isEmpty);
       return isEmpty ? <br /> : <p>{children}</p>;
     },
     lead: ({ children }: any) => <p className="lead">{children}</p>,
