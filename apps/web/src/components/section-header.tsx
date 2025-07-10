@@ -14,7 +14,12 @@ export default function SectionHeader({
         className,
       )}
     >
-      {title && <h2 className="max-w-section-heading text-balance">{title}</h2>}
+      {title && (
+        <h2
+          className="text-balance"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+      )}
       {buttons && (
         <SanityButtons
           buttons={buttons}

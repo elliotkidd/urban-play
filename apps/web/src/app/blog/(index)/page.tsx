@@ -58,7 +58,7 @@ export default async function BlogPage({
     >
       <h1 className="sr-only">{title}</h1>
       {featuredBlog && (
-        <section className="mb-fluid-lg">
+        <section className="mb-fluid-xs">
           {featuredBlog.image && (
             <>
               <div className="relative h-[80dvh] w-full overflow-hidden py-fluid-xs flex items-end">
@@ -67,39 +67,31 @@ export default async function BlogPage({
                   className="object-cover absolute inset-0 w-full h-full"
                 />
                 <div className="relative z-10 wrapper flex w-full justify-between items-end">
-                  <div className="text-xs text-white">
-                    <p className="opacity-50">Date</p>
-                    <p>
-                      {featuredBlog.publishedAt
-                        ? new Date(featuredBlog.publishedAt).toLocaleDateString(
-                            "en-US",
-                            {
+                  <div className="prose prose-white">
+                    <div className="text-xs text-white">
+                      <p className="opacity-50 m-0">Date</p>
+                      <p className="mt-0">
+                        {featuredBlog.publishedAt
+                          ? new Date(
+                              featuredBlog.publishedAt,
+                            ).toLocaleDateString("en-US", {
                               weekday: "long",
                               day: "numeric",
                               month: "long",
                               year: "numeric",
-                            },
-                          )
-                        : "Date unavailable"}
-                    </p>
+                            })
+                          : "Date unavailable"}
+                      </p>
+                    </div>
+                    <h2 className="text-balance mb-0">{featuredBlog.title}</h2>
                   </div>
 
                   <div className="gap-2 hidden lg:flex">
-                    {featuredBlog.solutions &&
-                      featuredBlog.solutions.length > 0 &&
-                      featuredBlog.solutions.map(({ title }) => (
-                        <span className="bg-background text-text text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg">
-                          {title}
-                        </span>
-                      ))}
+                    <Link href={featuredBlog.slug}>
+                      <Button as="span">Read Article</Button>
+                    </Link>
                   </div>
                 </div>
-              </div>
-              <div className="wrapper py-fluid-xs prose flex flex-col lg:flex-row justify-between gap-fluid-sm items-start">
-                <h2 className="text-balance mb-0">{featuredBlog.title}</h2>
-                <Link href={featuredBlog.slug}>
-                  <Button as="span">Read Article</Button>
-                </Link>
               </div>
             </>
           )}

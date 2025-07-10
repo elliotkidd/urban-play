@@ -22,7 +22,7 @@ export default function TestimoniesSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
+        "wrapper py-fluid-xs space-y-fluid overflow-hidden",
         smallWrapper && "wrapper--small",
       )}
     >
@@ -64,7 +64,7 @@ export default function TestimoniesSection({
             return (
               <SwiperSlide
                 key={_id + i}
-                className="space-y-fluid-lg bg-background flex flex-col items-start justify-between"
+                className="space-y-fluid bg-background flex flex-col items-start justify-between"
                 style={{ height: "auto", display: "flex" }}
               >
                 <blockquote className="max-w-section-heading text-balance font-bold text-lg leading-none">

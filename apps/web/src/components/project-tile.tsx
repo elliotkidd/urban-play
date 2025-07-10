@@ -49,20 +49,27 @@ export default function ProjectTile({
       <Link href={slug} className={twMerge("block group")}>
         <div
           className={twMerge(
-            "relative mb-4 rounded-xl overflow-hidden aspect-square",
+            "relative mb-4 rounded-xl overflow-hidden aspect-square flex items-start justify-start p-3",
             imageAspectRatioClass,
           )}
         >
           <SanityImage
             src={image || seoImage}
-            className="object-cover inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
+            className="object-cover absolute inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
             width={1440}
             height={1024}
           />
           {solutions && solutions.length > 0 && (
-            <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg">
-              {solutions[0].title}
-            </span>
+            <div className="flex gap-1">
+              {solutions.slice(0, 2).map((solution, index) => (
+                <span
+                  key={solution._id || index}
+                  className="bg-nav-bar-background/20 backdrop-blur text-white text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg"
+                >
+                  {solution.title}
+                </span>
+              ))}
+            </div>
           )}
         </div>
         <motion.h3

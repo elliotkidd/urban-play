@@ -1,3 +1,4 @@
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import {
   Award,
   BookA,
@@ -101,14 +102,11 @@ export const structure = (
   return S.list()
     .title("Content")
     .items([
-      //createSingleTon({ S, type: "homePage", icon: HomeIcon }),
       createIndexList({
         S,
         index: { type: "homePage", icon: BookA },
         list: { type: "page", title: "Pages" },
       }),
-      // S.divider(),
-      // createList({ S, type: "page", title: "Pages" }),
       S.divider(),
       createIndexList({
         S,
@@ -117,11 +115,12 @@ export const structure = (
       }),
       createList({ S, type: "solution", title: "Solutions", icon: Lightbulb }),
       S.divider(),
-      createList({
+      orderableDocumentListDeskItem({
         S,
         type: "award",
         title: "Awards",
         icon: Award,
+        context,
       }),
       createList({
         S,

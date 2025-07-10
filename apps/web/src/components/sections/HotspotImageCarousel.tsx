@@ -173,8 +173,10 @@ function DesktopSlide({
                 delay: (index + 1) * 0.3,
               }}
               className={twMerge(
-                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-[border-color, opacity] duration-500",
-                activeHotspot === index ? "border-white" : "border-transparent",
+                "absolute z-10 lg:w-12 lg:h-12 w-6 h-6 flex items-center justify-center rounded-full cursor-pointer border hover:border-white transition-[border-color, opacity] duration-1500",
+                activeHotspot === index
+                  ? "border-white"
+                  : "border-transparent animate-pulse",
                 activeHotspot !== null &&
                   activeHotspot !== index &&
                   "opacity-50",

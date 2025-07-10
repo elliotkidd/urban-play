@@ -34,7 +34,7 @@ function Process({
       <SectionHeader {...sectionHeader} />
       <div className="flex justify-end gap-2 mb-fluid-xs">
         <button
-          className="w-10 h-10 rounded-full border flex justify-center items-center border-text/20"
+          className="w-10 h-10 rounded-full border flex justify-center items-center border-text/20 hover:border-text transition-all duration-500"
           disabled={currentIndex === 0}
           onClick={() => {
             setCurrentIndex(currentIndex - 1);
@@ -43,7 +43,7 @@ function Process({
           <ChevronLeftIcon className="w-4 h-4" />
         </button>
         <button
-          className="w-10 h-10 rounded-full border flex justify-center items-center border-text/20"
+          className="w-10 h-10 rounded-full border flex justify-center items-center border-text/20 hover:border-text transition-all duration-500"
           disabled={currentIndex === steps.length - 1}
           onClick={() => {
             setCurrentIndex(currentIndex + 1);

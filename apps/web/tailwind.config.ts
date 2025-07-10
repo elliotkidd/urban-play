@@ -217,7 +217,8 @@ const config: Config = {
               fontWeight: 400,
               marginTop: "1rem",
               marginBottom: "1rem",
-              lineHeight: "120%",
+              lineHeight: "140%",
+              letterSpacing: "-0.16px",
             },
             ul: {
               fontSize: "var(--text-base)",

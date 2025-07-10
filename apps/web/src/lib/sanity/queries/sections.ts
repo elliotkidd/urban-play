@@ -210,13 +210,16 @@ const AWARDS_ACCORDION_FRAGMENT = {
   _key: q.string(),
   title: q.string(),
   categories: q.number(),
-  awards: q("*", { isArray: true }).filterByType("award").grab({
-    _id: q.string(),
-    _key: q.string(),
-    title: q.string(),
-    forText: q.string(),
-    year: q.string(),
-  }),
+  awards: q("*", { isArray: true })
+    .filterByType("award")
+    .order("orderRank")
+    .grab({
+      _id: q.string(),
+      _key: q.string(),
+      title: q.string(),
+      forText: q.string(),
+      year: q.string(),
+    }),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
@@ -414,6 +417,10 @@ const SOCIAL_MEDIA_FRAGMENT = {
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
   images: q("images[]", { isArray: true }).grab(IMAGE_FRAGMENT),
+  linkedInUrl: q("*")
+    .filterByType("settings")
+    .slice(0)
+    .grabOne("socialLinks.linkedin", q.string()),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

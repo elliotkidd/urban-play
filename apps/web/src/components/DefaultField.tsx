@@ -17,20 +17,6 @@ import SanitySelectFormField from "./ui/inputs/SanitySelectFormField";
 import { SanityTextAreaFormField } from "./ui/inputs/SanityTextAreaFormField";
 import { SanityInput } from "./ui/inputs/SanityInput";
 
-const FOCUS_INPUT_CLASSES = [
-  "focus:bg-theme-blue",
-  "focus:bg-theme-green",
-  "focus:bg-theme-yellow",
-  "focus:bg-theme-red",
-];
-
-const DIRTY_INPUT_CLASSES = [
-  "bg-theme-blue",
-  "bg-theme-green",
-  "bg-theme-yellow",
-  "bg-theme-red",
-];
-
 export type ValidationRule = {
   type: string;
   value: string;
@@ -111,12 +97,7 @@ export const DefaultField: FC<FieldComponentProps> = ({
         return (
           <SanityTextAreaFormField
             {...field}
-            className={cn(
-              dirtyFields[name] &&
-                DIRTY_INPUT_CLASSES[index % DIRTY_INPUT_CLASSES.length],
-              FOCUS_INPUT_CLASSES[index % FOCUS_INPUT_CLASSES.length],
-              errorClasses,
-            )}
+            className={cn(dirtyFields[name] && errorClasses)}
           />
         );
 
@@ -124,12 +105,7 @@ export const DefaultField: FC<FieldComponentProps> = ({
         return (
           <SanitySelectFormField
             {...field}
-            className={cn(
-              dirtyFields[name] &&
-                DIRTY_INPUT_CLASSES[index % DIRTY_INPUT_CLASSES.length],
-              FOCUS_INPUT_CLASSES[index % FOCUS_INPUT_CLASSES.length],
-              errorClasses,
-            )}
+            className={cn(dirtyFields[name] && errorClasses)}
           />
         );
 
@@ -262,12 +238,7 @@ export const DefaultField: FC<FieldComponentProps> = ({
         return (
           <SanityInput
             {...field}
-            className={cn(
-              dirtyFields[name] &&
-                DIRTY_INPUT_CLASSES[index % DIRTY_INPUT_CLASSES.length],
-              FOCUS_INPUT_CLASSES[index % FOCUS_INPUT_CLASSES.length],
-              errorClasses,
-            )}
+            className={cn(dirtyFields[name] && errorClasses)}
           />
         );
     }

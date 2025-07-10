@@ -145,14 +145,24 @@ function MenuItemLink({
   item: MenuItem;
   className?: string;
 }) {
+  const pathname = usePathname();
+  const router = useTransitionRouter();
+
   return (
     <Link
       className={cn(
-        "select-none leading-none outline-none items-center text-center text-nowrap hover:opacity-60 transition-all duration-500",
+        "select-none leading-none outline-none items-center text-center text-nowrap hover:opacity-100 transition-all duration-500",
+        pathname !== item.href && "opacity-60",
         className,
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
       scroll={false}
+      onClick={(e) => {
+        e.preventDefault();
+        router.push((item.href as string) ?? "/", {
+          onTransitionReady: PageAnimation,
+        });
+      }}
       href={item.href ?? "/"}
     >
       <div className="">{item.title}</div>
@@ -329,6 +339,7 @@ function NavbarColumnLink({
 
   const { url, name } = column as NavBarLinkType;
   const router = useTransitionRouter();
+  const pathname = usePathname();
 
   return (
     <Link
@@ -341,7 +352,8 @@ function NavbarColumnLink({
       }}
       target={url?.openInNewTab ? "_blank" : "_self"}
       className={cn(
-        "text-nowrap font-medium hover:opacity-60 transition-opacity duration-500",
+        "text-nowrap font-medium hover:opacity-100 transition-opacity duration-500",
+        pathname !== url?.href && "opacity-60",
         className,
       )}
     >

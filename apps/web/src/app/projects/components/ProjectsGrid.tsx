@@ -1,11 +1,9 @@
 import ProjectGridClient from "./ProjectGridClient";
 import {
-  projectsBySolutionQuery,
   projectsQuery,
+  projectsBySolutionQuery,
 } from "@/lib/sanity/queries/documents";
-import { log } from "console";
 import { sanityFetch } from "@/lib/sanity/live";
-import Pagination from "@/components/Pagination";
 import { PostTileSkeleton } from "@/components/post-tile";
 import { PROJECT_GRID_COL_SPANS } from "@/utils/utils";
 
@@ -68,7 +66,7 @@ export async function ProjectsGrid({ tags }: { tags: string[] }) {
 
   return (
     <>
-      {projects.length > 0 ? (
+      {projects && projects.length > 0 ? (
         <>
           <ProjectGridClient projects={projects} />
         </>

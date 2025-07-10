@@ -81,7 +81,7 @@
   );
 
   --text-lg-min: 18;
-  --text-lg-max: 25;
+  --text-lg-max: 23;
   --text-lg: clamp(
     calc(var(--text-lg-min) / 16) * 1rem,
     calc(
@@ -214,7 +214,7 @@
 }
 
 h2 {
-  @apply uppercase tracking-tight;
+  @apply uppercase;
 }
 
 h2,

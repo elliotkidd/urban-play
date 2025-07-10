@@ -2,7 +2,7 @@
 
 import { AwardsAccordionProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 
@@ -28,22 +28,6 @@ export function AwardsSection({
   categories,
   smallWrapper,
 }: AwardsAccordionProps) {
-  const [currentPage, setCurrentPage] = useState(0);
-  const awardsPerPage = 15;
-  const totalPages = Math.ceil(awards.length / awardsPerPage);
-
-  const paginatedAwards = awards.slice(
-    currentPage * awardsPerPage,
-    (currentPage + 1) * awardsPerPage,
-  );
-
-  const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 0));
-  };
   return (
     <div
       className={twMerge(
@@ -56,28 +40,10 @@ export function AwardsSection({
         {awards && awards.length > 0 && (
           <div className="flex gap-8 list-none lg:mr-8 not-prose text-xs">
             <div className="leading-none ">
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={handlePrevPage}
-                className="p-0 text-lg font-bold leading-[120%] text-primary-button hover:text-button-hover transition-all duration-500 disabled:opacity-20 mb-fluid-xs"
-                disabled={currentPage === 0}
-              >
-                Prev
-              </Button>
               <p className="mb-1 opacity-40">Total Awards</p>
               <p className="">{awards.length}</p>
             </div>
             <div className="leading-none">
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={handleNextPage}
-                className="p-0 text-lg font-bold leading-[120%] text-primary-button hover:text-button-hover transition-all duration-500 disabled:opacity-20 mb-fluid-xs"
-                disabled={currentPage === totalPages - 1}
-              >
-                Next
-              </Button>
               <p className="mb-1 opacity-40">Categories</p>
               <p className="">{categories}</p>
             </div>
@@ -86,7 +52,7 @@ export function AwardsSection({
       </div>
       <ul className="grid lg:grid-cols-5 gap-x-fluid-sm gap-y-fluid-sm">
         <AnimatePresence mode="wait">
-          {paginatedAwards.map(({ _id, year, title, forText }, i) => (
+          {awards.map(({ _id, year, title, forText }, i) => (
             <motion.li
               key={_id}
               whileInView="show"

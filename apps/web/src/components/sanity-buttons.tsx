@@ -27,28 +27,30 @@ export function SanityButtons({
 
   return (
     <div className={twMerge("flex flex-col sm:flex-row gap-4", className)}>
-      {buttons.map(({ url, variant, text, _key }, i) => (
-        <Link
-          key={_key}
-          onClick={(e) => {
-            e.preventDefault();
-            router.push((url?.href as string) ?? "/", {
-              onTransitionReady: PageAnimation,
-            });
-          }}
-          href={url?.href ?? "#"}
-          target={url?.openInNewTab ? "_blank" : "_self"}
-        >
-          <Button
-            as="span"
-            size={buttonSize}
-            variant={variant}
-            className={buttonClassName}
+      {buttons.map(({ url, variant, text, _key }, i) => {
+        return (
+          <Link
+            key={_key}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push((url?.href as string) ?? "/", {
+                onTransitionReady: PageAnimation,
+              });
+            }}
+            href={url?.href ?? "#"}
+            target={url?.openInNewTab ? "_blank" : "_self"}
           >
-            {text}
-          </Button>
-        </Link>
-      ))}
+            <Button
+              as="span"
+              size={buttonSize}
+              variant={variant}
+              className={buttonClassName}
+            >
+              {text}
+            </Button>
+          </Link>
+        );
+      })}
     </div>
   );
 }

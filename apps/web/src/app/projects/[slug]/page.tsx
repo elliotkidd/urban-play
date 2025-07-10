@@ -1,5 +1,5 @@
 import { PageBuilder } from "@/components/pagebuilder";
-import ProjectsSwiper from "@/components/ProjectsSwiper";
+import { RelatedProjects } from "@/components/sections/RelatedProjects";
 import { sanityFetch } from "@/lib/sanity/live";
 import {
   type ProjectPage,
@@ -41,19 +41,7 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
       <h1 className="sr-only">{title}</h1>
       <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
 
-      {relatedProjects && (
-        <section className="overflow-hidden mt-fluid-lg">
-          <div className="wrapper pt-fluid-xs pb-fluid-xl">
-            <div className="prose mb-fluid-sm">
-              <h2 className="">More Projects</h2>
-            </div>
-            <ProjectsSwiper
-              projects={relatedProjects}
-              imageAspectRatio="portrait"
-            />
-          </div>
-        </section>
-      )}
+      {relatedProjects && <RelatedProjects relatedProjects={relatedProjects} />}
     </div>
   );
 }

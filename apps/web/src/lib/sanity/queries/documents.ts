@@ -305,6 +305,10 @@ export const projectsBySolutionQuery = `{
     _id,
     title,
     "slug": slug.current,
+    solutions[]-> {
+      _id,
+      title,
+    },
     seoImage {
       "_ref": seoImage.asset._ref,
       "_type": "image",

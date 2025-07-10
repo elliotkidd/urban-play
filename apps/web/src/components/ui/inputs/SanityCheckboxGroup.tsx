@@ -10,13 +10,6 @@ import {
 } from "@workspace/packages/ui/src/components/form";
 import { useFormContext } from "react-hook-form";
 
-const CHECKBOX_CLASSES = [
-  "data-[state=checked]:bg-theme-blue border-theme-blue",
-  "data-[state=checked]:bg-theme-green border-theme-green",
-  "data-[state=checked]:bg-theme-yellow border-theme-yellow",
-  "data-[state=checked]:bg-theme-red border-theme-red",
-];
-
 export default function SanityCheckboxGroup({
   options,
   label,
@@ -41,9 +34,6 @@ export default function SanityCheckboxGroup({
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className={
-                      CHECKBOX_CLASSES[index % CHECKBOX_CLASSES.length]
-                    }
                   />
                 </FormControl>
                 <FormLabel htmlFor={option.value} className="">

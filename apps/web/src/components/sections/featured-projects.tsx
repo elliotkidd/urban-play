@@ -10,7 +10,7 @@ import {
   STAGGER_DELAY,
 } from "@/lib/motion";
 
-import ProjectsSwiper from "../ProjectsSwiper";
+import { ProjectsSwiper } from "../ProjectsSwiper";
 
 export default function FeaturedProjectsSection({
   sectionHeader,

@@ -101,7 +101,7 @@ const components: Partial<PortableTextReactComponents> = {
             maxWidth: value.aspectRatio < 1 ? "870px" : "100%",
           }}
           className={cn(
-            "my-fluid-lg w-full overflow-hidden",
+            "my-fluid-lg w-full overflow-hidden object-cover rounded-lg",
             value.aspectRatio < 1 && "max-w-section-heading mx-auto",
           )}
         />

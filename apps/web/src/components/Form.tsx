@@ -153,7 +153,7 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
     <ShadForm {...form}>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        className={cn("grid lg:grid-cols-2 gap-2 ", className)}
+        className={cn("grid lg:grid-cols-2 gap-2", className)}
       >
         {formData.fields.map((field, index: number) => (
           <DefaultField key={field._key} field={field} index={index} />

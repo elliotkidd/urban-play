@@ -1,3 +1,7 @@
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 import { Award as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -6,7 +10,9 @@ export const award = defineType({
   title: "Award",
   type: "document",
   icon,
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: "award" }),
     defineField({
       name: "title",
       title: "Title",
