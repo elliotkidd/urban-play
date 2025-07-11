@@ -16,6 +16,7 @@ function SectionWrapper({
   removeMarginBottom,
   className,
   hideOn,
+  dataSanity,
 }: {
   children: React.ReactNode;
   colorScheme: ColorSchemeFragment;
@@ -25,6 +26,7 @@ function SectionWrapper({
   removeMarginBottom: boolean;
   hideOn: LinkReferenceType[];
   className?: string;
+  dataSanity?: string;
 }) {
   const { setColorScheme } = useStore();
   const path = usePathname();
@@ -49,6 +51,7 @@ function SectionWrapper({
       ref={ref}
       id={`${type}-${_key}`}
       style={getColorSchemeStyle(colorScheme)}
+      data-sanity={dataSanity}
       className={twMerge(
         "relative bg-background text-text",
         !removeMarginTop && "mt-fluid",

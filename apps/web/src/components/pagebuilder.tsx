@@ -120,6 +120,14 @@ export function PageBuilder({
             removeMarginBottom={block.removeMarginBottom}
             colorScheme={block.colorScheme}
             hideOn={block.hideOn}
+            dataSanity={createDataAttribute({
+              id: id,
+              baseUrl: studioUrl,
+              projectId: projectId,
+              dataset: dataset,
+              type: type,
+              path: `pageBuilder[_key=="${block._key}"]`,
+            }).toString()}
           >
             <Component {...block} />
           </SectionWrapper>
