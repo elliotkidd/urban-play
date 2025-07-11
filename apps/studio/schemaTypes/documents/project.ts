@@ -5,13 +5,19 @@ import { seoFields } from "../../utils/seo-fields";
 import { ogFields } from "../../utils/og-fields";
 import { PathnameFieldComponent } from "../../components/slug-field-component";
 import { createSlug, isUnique } from "../../utils/slug";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 
 export const project = defineType({
   name: "project",
   title: "Project",
   type: "document",
   groups: GROUPS,
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: "project" }),
     defineField({
       name: "title",
       type: "string",

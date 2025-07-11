@@ -67,6 +67,7 @@ type CreateIndexList = {
   S: StructureBuilder;
   list: Base;
   index: Base<SingletonType>;
+  context: StructureResolverContext;
 };
 
 const createIndexList = ({ S, index, list }: CreateIndexList) => {
@@ -95,6 +96,41 @@ const createIndexList = ({ S, index, list }: CreateIndexList) => {
     );
 };
 
+const createIndexListWithOrderableItems = ({
+  S,
+  index,
+  list,
+  context,
+}: CreateIndexList) => {
+  const indexTitle = index.title ?? getTitleCase(index.type);
+  const listTitle = list.title ?? getTitleCase(list.type);
+  return S.listItem()
+    .title(listTitle)
+    .icon(index.icon ?? File)
+    .child(
+      S.list()
+        .title(indexTitle)
+        .items([
+          S.listItem()
+            .title(indexTitle)
+            .icon(index.icon ?? File)
+            .child(
+              S.document()
+                .views([S.view.form()])
+                .schemaType(index.type)
+                .documentId(index.type),
+            ),
+          orderableDocumentListDeskItem({
+            type: list.type,
+            S,
+            context,
+            icon: list.icon ?? File,
+            title: `${listTitle}`,
+          }),
+        ]),
+    );
+};
+
 export const structure = (
   S: StructureBuilder,
   context: StructureResolverContext,
@@ -106,12 +142,14 @@ export const structure = (
         S,
         index: { type: "homePage", icon: BookA },
         list: { type: "page", title: "Pages" },
+        context,
       }),
       S.divider(),
-      createIndexList({
+      createIndexListWithOrderableItems({
         S,
         index: { type: "projectIndex", icon: Grid2x2 },
         list: { type: "project", title: "Projects", icon: Hammer },
+        context,
       }),
       createList({ S, type: "solution", title: "Solutions", icon: Lightbulb }),
       S.divider(),
@@ -130,10 +168,11 @@ export const structure = (
       }),
       createList({ S, type: "testimony", title: "Testimonies", icon: Quote }),
       S.divider(),
-      createIndexList({
+      createIndexListWithOrderableItems({
         S,
         index: { type: "blogIndex", icon: BookMarked },
         list: { type: "blog", title: "Blogs", icon: FileText },
+        context,
       }),
       createList({ S, type: "author", title: "Authors", icon: User }),
       S.divider(),

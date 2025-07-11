@@ -221,7 +221,7 @@ export const blogsQuery = `{
 }`;
 
 export const projectsQuery = `{
-  "projects": *[_type == "project"] {
+  "projects": *[_type == "project"] | order(orderRank) {
     _id,
     title,
     shortDescription,
@@ -301,7 +301,7 @@ export const blogBySolutionQuery = `{
 }`;
 
 export const projectsBySolutionQuery = `{
-  "projects": *[_type == "project" && count((solutions[]->slug.current)[@ in $tags]) > 0] {
+  "projects": *[_type == "project" && count((solutions[]->slug.current)[@ in $tags]) > 0] | order(orderRank) {
     _id,
     title,
     "slug": slug.current,

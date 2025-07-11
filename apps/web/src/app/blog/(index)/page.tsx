@@ -66,6 +66,7 @@ export default async function BlogPage({
                   src={featuredBlog.image}
                   className="object-cover absolute inset-0 w-full h-full"
                 />
+                <div className="absolute inset-0 bg-black/20" />
                 <div className="relative z-10 wrapper flex w-full justify-between items-end">
                   <div className="prose prose-white">
                     <div className="text-xs text-white">

@@ -11,7 +11,7 @@ export function YoutubeEmbed({ url }: { url: string }) {
     <YouTube
       videoId={videoId}
       iframeClassName="w-full aspect-video"
-      className="w-full aspect-video"
+      className="max-w-[640px] mx-auto my-fluid"
     />
   );
 }
