@@ -48,6 +48,7 @@
     "react-intersection-observer": "^9.16.0",
     "react-phone-number-input": "^3.4.12",
     "react-signature-canvas": "1.1.0-alpha.2",
+    "react-youtube": "^10.1.0",
     "sass": "^1.85.1",
     "server-only": "^0.0.1",
     "slugify": "^1.6.6",

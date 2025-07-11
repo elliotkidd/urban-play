@@ -68,8 +68,15 @@ export const IMAGE_BLOCK_FRAGMENT: any = {
   maxWidth: q.number().nullable(),
 } satisfies Selection;
 
+const VIDEO_BLOCK_FRAGMENT: any = {
+  _key: q.string(),
+  _type: q.string(),
+  url: q.string(),
+} satisfies Selection;
+
 export const RICHTEXT_BLOCKS = {
   '_type == "block"': BASE_BLOCK_FRAGMENT,
   '_type == "image"': IMAGE_BLOCK_FRAGMENT,
   '_type == "buttonGroup"': BUTTON_GROUP_BLOCK_FRAGMENT,
+  '_type == "video"': VIDEO_BLOCK_FRAGMENT,
 };

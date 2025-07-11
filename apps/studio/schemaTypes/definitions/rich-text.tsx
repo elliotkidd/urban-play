@@ -1,4 +1,5 @@
 import { ImageIcon, LinkIcon } from "@sanity/icons";
+import { YoutubeIcon } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 const leadRender = ({ children }: { children: React.ReactNode }) => {
@@ -58,6 +59,19 @@ const richTextMembers = [
         name: "caption",
         type: "string",
         title: "Caption Text",
+      }),
+    ],
+  }),
+  defineArrayMember({
+    name: "video",
+    type: "object",
+    title: "YouTube Video",
+    icon: YoutubeIcon,
+    fields: [
+      defineField({
+        name: "url",
+        type: "url",
+        title: "YouTube Video URL",
       }),
     ],
   }),

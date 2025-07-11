@@ -9,6 +9,7 @@ import { parseChildrenToSlug } from "@/utils";
 import SanityImage from "./sanity-image";
 import { twMerge } from "tailwind-merge";
 import { cn } from "@/lib/utils";
+import { YoutubeEmbed } from "./YoutubeEmbed";
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
@@ -114,6 +115,9 @@ const components: Partial<PortableTextReactComponents> = {
           )}
         />
       );
+    },
+    video: ({ value }) => {
+      return <YoutubeEmbed url={value.url} />;
     },
   },
   hardBreak: () => <br />,

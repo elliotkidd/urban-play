@@ -164,10 +164,7 @@ const FEATURED_POSTS_FRAGMENT = {
   _type: q.literal("featuredPost"),
   _key: q.string(),
   sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
-  posts: q("*", { isArray: true })
-    .filterByType("blog")
-    .slice(0, 2)
-    .grab(POST_TILE_FRAGMENT),
+  posts: q("posts[]", { isArray: true }).deref().grab(POST_TILE_FRAGMENT),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 
