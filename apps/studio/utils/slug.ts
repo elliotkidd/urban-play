@@ -2,6 +2,8 @@ import type { SlugifierFn } from "sanity";
 import {
   defineField,
   type FieldDefinition,
+  getDraftId,
+  getPublishedId,
   type SlugValidationContext,
 } from "sanity";
 import slugify from "slugify";
@@ -13,7 +15,7 @@ export function defineSlug(
 ): FieldDefinition<"slug"> {
   const slugOptions = schema?.options;
 
-  return defineField({
+  const result = defineField({
     ...schema,
     name: schema.name ?? "slug",
     title: schema?.title ?? "URL",
@@ -27,6 +29,8 @@ export function defineSlug(
       isUnique: slugOptions?.isUnique ?? isUnique,
     },
   });
+
+  return result;
 }
 
 export async function isUnique(
@@ -34,27 +38,35 @@ export async function isUnique(
   context: SlugValidationContext,
 ): Promise<boolean> {
   const { document, getClient } = context;
-  const client = getClient({ apiVersion: "2023-06-21" });
-  const id = document?._id.replace(/^drafts\./, "");
+
+  const client = getClient({ apiVersion: "2025-02-10" });
+  const id = getPublishedId(document?._id ?? "");
+  const draftId = getDraftId(id);
+
   const params = {
-    draft: `drafts.${id}`,
+    draft: draftId,
     published: id,
     slug,
   };
+
   const query = "*[!(_id in [$draft, $published]) && slug.current == $slug]";
+
   const result = await client.fetch(query, params);
-  return result.length === 0;
+
+  const isUniqueResult = result.length === 0;
+  return isUniqueResult;
 }
 
 export const getDocTypePrefix = (type: string) => {
-  if (["page"].includes(type)) return "";
+  if (["page"].includes(type)) {
+    return "";
+  }
   return type;
 };
 
 const slugMapper = {
   homePage: "/",
   blogIndex: "/blog",
-  projectIndex: "/projects",
 } as Record<string, string>;
 
 export const createSlug: SlugifierFn = (input, _, { parent }) => {
@@ -62,7 +74,9 @@ export const createSlug: SlugifierFn = (input, _, { parent }) => {
     _type: string;
   };
 
-  if (slugMapper[_type]) return slugMapper[_type];
+  if (slugMapper[_type]) {
+    return slugMapper[_type];
+  }
 
   const prefix = getDocTypePrefix(_type);
 
@@ -71,5 +85,7 @@ export const createSlug: SlugifierFn = (input, _, { parent }) => {
     remove: /[^a-zA-Z0-9 ]/g,
   });
 
-  return `/${[prefix, slug].filter(Boolean).join("/")}`;
+  const finalSlug = `/${[prefix, slug].filter(Boolean).join("/")}`;
+
+  return finalSlug;
 };

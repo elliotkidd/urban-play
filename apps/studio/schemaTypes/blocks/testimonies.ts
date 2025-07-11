@@ -2,7 +2,11 @@ import { Quote as icon } from "lucide-react";
 import { defineType } from "sanity";
 
 import { SECTION_GROUPS } from "../../utils/constant";
-import { sectionHeaderField, sectionSettings } from "../common";
+import {
+  colorPickerField,
+  sectionHeaderField,
+  sectionSettings,
+} from "../common";
 
 export const testimonies = defineType({
   name: "testimonies",
@@ -10,7 +14,7 @@ export const testimonies = defineType({
   icon,
   type: "object",
   groups: SECTION_GROUPS,
-  fields: [sectionHeaderField, ...sectionSettings],
+  fields: [colorPickerField, sectionHeaderField, ...sectionSettings],
   preview: {
     select: {
       title: "sectionHeader.title",

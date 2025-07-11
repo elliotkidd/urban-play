@@ -2,7 +2,7 @@ import { Award } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionSettings } from "../common";
+import { colorPickerField, sectionSettings } from "../common";
 
 export const awardsAccordion = defineType({
   name: "awardsAccordion",
@@ -10,6 +10,7 @@ export const awardsAccordion = defineType({
   icon: Award,
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "categories",
       type: "number",

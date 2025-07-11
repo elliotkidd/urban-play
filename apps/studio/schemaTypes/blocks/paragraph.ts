@@ -5,6 +5,7 @@ import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 import {
   annotationField,
   buttonsField,
+  colorPickerField,
   richTextField,
   sectionSettings,
 } from "../common";
@@ -16,6 +17,7 @@ export const paragraph = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "topText",
       title: "Top Text",

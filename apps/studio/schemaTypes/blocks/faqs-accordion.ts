@@ -2,7 +2,7 @@ import { HelpCircle as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionSettings } from "../common";
+import { colorPickerField, sectionSettings } from "../common";
 
 export const faqsAccordion = defineType({
   name: "faqsAccordion",
@@ -10,6 +10,7 @@ export const faqsAccordion = defineType({
   icon,
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "title",
       type: "string",

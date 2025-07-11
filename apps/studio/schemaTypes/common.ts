@@ -65,7 +65,7 @@ export const colorPickerField = defineField({
   title: "Color Scheme",
   type: "reference",
   to: [{ type: "colorScheme" }],
-  group: GROUP.SETTINGS,
+  group: GROUP.MAIN_CONTENT,
   validation: (Rule) => Rule.required(),
 });
 
@@ -140,7 +140,6 @@ export const hideOnField = defineField({
 export const sectionSettings = [
   ...marginSettingsFields,
   paddingField,
-  colorPickerField,
   defineField({
     name: "smallWrapper",
     title: "Small Wrapper?",

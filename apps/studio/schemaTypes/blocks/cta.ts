@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 
 import {
   buttonsField,
+  colorPickerField,
   imageField,
   richTextField,
   sectionSettings,
@@ -15,6 +16,7 @@ export const cta = defineType({
   icon: PhoneIcon,
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "title",
       title: "Title",

@@ -2,7 +2,11 @@ import { Rows2 as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionHeaderField, sectionSettings } from "../common";
+import {
+  colorPickerField,
+  sectionHeaderField,
+  sectionSettings,
+} from "../common";
 
 export const solutionsGrid = defineType({
   name: "solutionsGrid",
@@ -11,6 +15,7 @@ export const solutionsGrid = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     sectionHeaderField,
     defineField({
       name: "solutions",

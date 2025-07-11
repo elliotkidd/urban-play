@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { GROUP, GROUPS } from "../../utils/constant";
-import { sectionSettings } from "../common";
+import { colorPickerField, sectionSettings } from "../common";
 import { List as icon } from "lucide-react";
 
 const partnersRollover = defineType({
@@ -10,6 +10,7 @@ const partnersRollover = defineType({
   icon,
   groups: GROUPS,
   fields: [
+    colorPickerField,
     ...sectionSettings,
     defineField({
       name: "partners",

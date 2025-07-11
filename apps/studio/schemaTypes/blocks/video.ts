@@ -2,7 +2,7 @@ import { Video } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionSettings } from "../common";
+import { colorPickerField, sectionSettings } from "../common";
 
 export const video = defineType({
   name: "video",
@@ -11,6 +11,7 @@ export const video = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "video",
       type: "file",

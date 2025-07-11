@@ -17,6 +17,7 @@ export const pageHeader = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "title",
       type: "string",
@@ -54,7 +55,6 @@ export const pageHeader = defineType({
         accept: "video/*",
       },
     }),
-    colorPickerField,
     ...marginSettingsFields,
   ],
   preview: {

@@ -2,7 +2,11 @@ import { Hammer as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { sectionHeaderField, sectionSettings } from "../common";
+import {
+  colorPickerField,
+  sectionHeaderField,
+  sectionSettings,
+} from "../common";
 
 export const featuredProjects = defineType({
   name: "featuredProjects",
@@ -11,6 +15,7 @@ export const featuredProjects = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     sectionHeaderField,
     defineField({
       name: "projects",

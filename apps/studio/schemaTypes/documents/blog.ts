@@ -1,11 +1,10 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
-import { PathnameFieldComponent } from "../../components/slug-field-component";
 import { GROUP, GROUPS } from "../../utils/constant";
 import { ogFields } from "../../utils/og-fields";
 import { seoFields } from "../../utils/seo-fields";
 import { createSlug, isUnique } from "../../utils/slug";
-import { colorPickerField } from "../common";
+import { PathnameFieldComponent } from "../../components/slug-field-component";
 
 export const blog = defineType({
   name: "blog",
@@ -42,6 +41,8 @@ export const blog = defineType({
       name: "slug",
       type: "slug",
       title: "URL",
+      description:
+        "The web address where people can find your blog post (automatically created from title)",
       group: GROUP.MAIN_CONTENT,
       components: {
         field: PathnameFieldComponent,
@@ -51,7 +52,16 @@ export const blog = defineType({
         slugify: createSlug,
         isUnique,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => [
+        Rule.required().error("A URL slug is required"),
+        Rule.custom((value, context) => {
+          if (!value?.current) return true;
+          if (!value.current.startsWith("/blog/")) {
+            return 'URL slug must start with "/blog/"';
+          }
+          return true;
+        }),
+      ],
     }),
     defineField({
       name: "publishedAt",

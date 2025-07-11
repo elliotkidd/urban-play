@@ -16,6 +16,7 @@ export const hero = defineType({
   type: "object",
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "title",
       type: "string",
@@ -53,7 +54,6 @@ export const hero = defineType({
         accept: "video/*",
       },
     }),
-    colorPickerField,
     ...marginSettingsFields,
   ],
   preview: {

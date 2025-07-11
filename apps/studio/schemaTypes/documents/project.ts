@@ -22,6 +22,8 @@ export const project = defineType({
       name: "slug",
       type: "slug",
       title: "URL",
+      description:
+        "The web address where people can find your blog post (automatically created from title)",
       group: GROUP.MAIN_CONTENT,
       components: {
         field: PathnameFieldComponent,
@@ -31,7 +33,16 @@ export const project = defineType({
         slugify: createSlug,
         isUnique,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => [
+        Rule.required().error("A URL slug is required"),
+        Rule.custom((value, context) => {
+          if (!value?.current) return true;
+          if (!value.current.startsWith("/projects/")) {
+            return 'URL slug must start with "/projects/"';
+          }
+          return true;
+        }),
+      ],
     }),
     defineField({
       name: "solutions",

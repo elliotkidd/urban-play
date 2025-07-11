@@ -2,11 +2,7 @@ import { ImageIcon, ImagesIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import {
-  colorPickerField,
-  marginSettingsFields,
-  sectionSettings,
-} from "../common";
+import { colorPickerField, marginSettingsFields } from "../common";
 
 const imageLinkCard = defineField({
   name: "imageLinkCard",
@@ -14,6 +10,7 @@ const imageLinkCard = defineField({
   icon: ImageIcon,
   groups: SECTION_GROUPS,
   fields: [
+    colorPickerField,
     defineField({
       name: "title",
       title: "Card Title",
