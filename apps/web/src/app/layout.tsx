@@ -5,6 +5,8 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity";
 import { preconnect, prefetchDNS } from "react-dom";
 
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+
 import { FooterServer } from "@/components/footer";
 import { PreviewBar } from "@/components/preview-bar";
 import { SanityLive } from "@/lib/sanity/live";
@@ -16,6 +18,9 @@ import { NavbarSkeletonResponsive } from "@/components/navbar-client";
 import { Suspense } from "react";
 import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "@/components/ui/toaster";
+
+const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || false;
+const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || false;
 
 export default async function RootLayout({
   children,
@@ -30,6 +35,8 @@ export default async function RootLayout({
         <body
           className={`${fonts} font-body bg-black text-text transition-colors duration-500`}
         >
+          {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+          {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
           <Lenis root />
           <Providers>
             <div className="bg-background">
