@@ -16,7 +16,7 @@ export function SanityTextAreaFormField({
   className,
   richText,
   fileOptions,
-  options: { placeholder },
+  options,
   ...rest
 }: FormFieldProps & {
   className?: string;
@@ -31,7 +31,7 @@ export function SanityTextAreaFormField({
           <FormLabel className="sr-only">{label}</FormLabel>
           <FormControl>
             <Textarea
-              placeholder={placeholder ?? label}
+              placeholder={options?.placeholder ?? label}
               {...field}
               {...rest}
               rows={6}

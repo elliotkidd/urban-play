@@ -14,6 +14,7 @@ export const form = defineType({
       description: "Internal title for the form",
       validation: (Rule) => Rule.required(),
     }),
+    
     defineField({
       name: "id",
       title: "Form ID",

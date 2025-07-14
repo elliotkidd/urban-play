@@ -17,7 +17,7 @@ export function SanityInput({
   className,
   richText,
   fileOptions,
-  options: { placeholder },
+  options,
   ...rest
 }: FormFieldProps & {
   className?: string;
@@ -36,7 +36,7 @@ export function SanityInput({
           <FormLabel className="sr-only">{label}</FormLabel>
           <FormControl>
             <Input
-              placeholder={placeholder ?? label}
+              placeholder={options?.placeholder ?? label}
               {...field}
               {...rest}
               className={className}
