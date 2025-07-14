@@ -5,13 +5,19 @@ import { ogFields } from "../../utils/og-fields";
 import { seoFields } from "../../utils/seo-fields";
 import { createSlug, isUnique } from "../../utils/slug";
 import { PathnameFieldComponent } from "../../components/slug-field-component";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 
 export const blog = defineType({
   name: "blog",
   title: "Blog",
   type: "document",
   groups: GROUPS,
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: "blog" }),
     defineField({
       name: "title",
       type: "string",
