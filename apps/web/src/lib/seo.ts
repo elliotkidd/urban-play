@@ -49,11 +49,10 @@ export function getMetaData(data: any): Metadata {
     description: meta.description,
     metadataBase: new URL(baseUrl),
     creator: "Urban Play",
-    authors: [{ name: "Made By Verse" }],
+    authors: [{ name: "Urban Play" }],
     icons: {
       icon: `${baseUrl}/favicon.ico`,
     },
-    keywords: ["urban play", "playground", "play", "playground equipment"],
     twitter: {
       card: "summary_large_image",
       images: [ogImage],
