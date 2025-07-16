@@ -33,6 +33,9 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                 <SanityImage
                   src={image}
                   className="object-cover absolute inset-0 h-full w-full"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  width={600}
+                  height={700}
                 />
                 {yearsExperience && (
                   <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-medium p-[15px] tracking-[0.005em] rounded-xl">

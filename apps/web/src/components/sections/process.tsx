@@ -81,6 +81,9 @@ function Process({
                 <SanityImage
                   src={step.image}
                   className="w-full h-full absolute inset-0 object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  width={600}
+                  height={800}
                 />
               </div>
             </div>

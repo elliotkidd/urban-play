@@ -107,6 +107,7 @@ function SlideBase({
         className="w-full h-full object-cover"
         width={1440}
         height={1024}
+        sizes="100vw"
       />
       {Array.isArray(hotspots) &&
         hotspots.length > 0 &&

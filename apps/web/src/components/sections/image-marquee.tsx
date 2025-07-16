@@ -66,7 +66,10 @@ export default function ImageMarqueeSection({
                 }}
                 className="rounded-lg overflow-hidden"
               >
-                <SanityImage src={image} />
+                <SanityImage
+                  src={image}
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
               </SwiperSlide>
             );
           })}

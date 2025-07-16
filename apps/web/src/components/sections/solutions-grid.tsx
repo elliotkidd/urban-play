@@ -33,6 +33,9 @@ function SolutionsGridSection({
                     src={solution.image}
                     alt={solution.title}
                     className="object-cover w-full h-full inset-0"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    width={600}
+                    height={700}
                   />
                 </div>
                 <div className="flex flex-col justify-center gap-8">

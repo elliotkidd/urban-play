@@ -25,6 +25,9 @@ function SocialMedia({ sectionHeader, images, linkedInUrl }: SocialMediaProps) {
               <SanityImage
                 src={image}
                 className="object-cover inset-0 w-full h-full"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                width={600}
+                height={800}
               />
             </Link>
           ))}

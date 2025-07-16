@@ -56,8 +56,21 @@ export default function ProjectTile({
           <SanityImage
             src={image || seoImage}
             className="object-cover absolute inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
-            width={1440}
-            height={1024}
+            width={
+              imageAspectRatio === "landscape"
+                ? 800
+                : imageAspectRatio === "portrait"
+                  ? 600
+                  : 900
+            }
+            height={
+              imageAspectRatio === "landscape"
+                ? 600
+                : imageAspectRatio === "portrait"
+                  ? 800
+                  : 900
+            }
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
           {solutions && solutions.length > 0 && (
             <div className="flex gap-1">

@@ -34,6 +34,9 @@ export default function PageHeader({
           <SanityImage
             src={image}
             className="absolute inset-0 w-full h-full object-cover"
+            height={1024}
+            width={1440}
+            sizes="100vw"
           />
         )}
         {mediaType === "video" && video ? (
@@ -50,6 +53,9 @@ export default function PageHeader({
             <SanityImage
               src={image}
               className="absolute inset-0 w-full h-full object-cover"
+              height={1024}
+              width={1440}
+              sizes="100vw"
             />
           )
         )}

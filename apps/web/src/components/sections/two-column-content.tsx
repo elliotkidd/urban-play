@@ -98,6 +98,7 @@ function ImageBlock({
       <SanityImage
         src={image}
         className="object-cover absolute inset-0 h-full w-full"
+        sizes="(max-width: 768px) 100vw, 50vw"
       />
     </div>
   );

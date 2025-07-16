@@ -20,6 +20,7 @@ export function ImageBannerSection({
           className="absolute inset-0 w-full h-full object-cover"
           width={1440}
           height={1024}
+          sizes="100vw"
         />
       )}
       <div
@@ -36,6 +37,7 @@ export function ImageBannerSection({
               className="object-cover absolute inset-0 w-full h-full"
               width={1440}
               height={1024}
+              sizes="100vw"
             />
             <div className="bg-accent relative rounded-xl p-fluid-xs z-[1]"></div>
           </div>
