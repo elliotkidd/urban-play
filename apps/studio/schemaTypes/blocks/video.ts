@@ -2,7 +2,12 @@ import { Video } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { colorPickerField, sectionSettings } from "../common";
+import {
+  colorPickerField,
+  imageField,
+  sectionSettings,
+  vimeoField,
+} from "../common";
 
 export const video = defineType({
   name: "video",
@@ -18,8 +23,16 @@ export const video = defineType({
       options: {
         accept: "video/*",
       },
+      deprecated: {
+        reason: "Please use vimeo URL instead",
+      },
       title: "Video",
       group: GROUP.MAIN_CONTENT,
+    }),
+    vimeoField,
+    defineField({
+      ...imageField,
+      title: "Cover Image",
     }),
     defineField({
       name: "contain",

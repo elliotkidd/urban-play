@@ -7,6 +7,7 @@ import {
   imageField,
   marginSettingsFields,
   richTextField,
+  vimeoField,
 } from "../common";
 
 export const hero = defineType({
@@ -49,10 +50,17 @@ export const hero = defineType({
       type: "file",
       title: "Video",
       group: GROUP.MAIN_CONTENT,
+      deprecated: {
+        reason: "Please use vimeo URL instead",
+      },
       hidden: ({ parent }) => parent?.mediaType !== "video",
       options: {
         accept: "video/*",
       },
+    }),
+    defineField({
+      ...vimeoField,
+      hidden: ({ parent }) => parent?.mediaType !== "video",
     }),
     ...marginSettingsFields,
   ],

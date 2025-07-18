@@ -6,13 +6,10 @@ import { useRef } from "react";
 
 export default function VideoSection({
   video,
+  vimeoUrl,
   contain,
   smallWrapper,
-}: {
-  video: string | null;
-  contain: boolean;
-  smallWrapper: boolean;
-}) {
+}: VideoSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -30,16 +27,20 @@ export default function VideoSection({
         contain && "wrapper",
       )}
     >
-      {video && (
-        <motion.video
-          style={{ scale }}
-          src={video}
-          autoPlay
-          muted
-          loop
-          controls
-          className="w-full h-full object-cover"
-        />
+      {vimeoUrl ? (
+        <motion.div style={{ scale }}></motion.div>
+      ) : (
+        video && (
+          <motion.video
+            style={{ scale }}
+            src={video}
+            autoPlay
+            muted
+            loop
+            controls
+            className="w-full h-full object-cover"
+          />
+        )
       )}
     </div>
   );

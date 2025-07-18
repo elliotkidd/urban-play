@@ -159,3 +159,20 @@ export const imageField = defineField({
     hotspot: true,
   },
 });
+
+export const vimeoField = defineField({
+  name: "vimeoUrl",
+  type: "url",
+  title: "Vimeo URL",
+  group: GROUP.MAIN_CONTENT,
+  validation: (Rule) =>
+    Rule.uri({
+      scheme: ["http", "https"],
+      allowRelative: false,
+    }).custom((value) => {
+      if (!value) return true; // Allow empty values
+      const vimeoRegex =
+        /^(https?:\/\/)?(www\.)?(vimeo\.com\/)(\d{1,10})(\/[a-zA-Z0-9\-_]+)?(\?.*)?$/;
+      return vimeoRegex.test(value) || "Please enter a valid Vimeo URL";
+    }),
+});

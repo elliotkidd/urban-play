@@ -7,6 +7,7 @@ import {
   imageField,
   marginSettingsFields,
   richTextField,
+  vimeoField,
 } from "../common";
 import { blocksToText } from "../../utils/blocksToText";
 
@@ -50,10 +51,17 @@ export const pageHeader = defineType({
       type: "file",
       title: "Video",
       group: GROUP.MAIN_CONTENT,
+      deprecated: {
+        reason: "Please use vimeo URL instead",
+      },
       hidden: ({ parent }) => parent?.mediaType !== "video",
       options: {
         accept: "video/*",
       },
+    }),
+    defineField({
+      ...vimeoField,
+      hidden: ({ parent }) => parent?.mediaType !== "video",
     }),
     ...marginSettingsFields,
   ],

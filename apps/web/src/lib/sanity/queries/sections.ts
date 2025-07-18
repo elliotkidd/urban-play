@@ -49,6 +49,7 @@ const HERO_FRAGMENT = {
     .nullable(),
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  vimeoUrl: q.string().nullable(),
   mediaType: q.literal("image").or(q.literal("video")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -63,6 +64,7 @@ export const PAGE_HEADER_FRAGMENT = {
     .nullable(),
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  vimeoUrl: q.string().nullable(),
   mediaType: q.literal("image").or(q.literal("video")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -181,6 +183,7 @@ const CTA_FRAGMENT = {
   title: q.string(),
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  vimeoUrl: q.string().nullable(),
   mediaType: q.literal("image").or(q.literal("video")),
   buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
   ...SECTION_SETTINGS_FRAGMENT,
@@ -455,8 +458,8 @@ export const VIDEO_FRAGMENT = {
   _type: q.literal("video"),
   _key: q.string(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
+  vimeoUrl: q.string().nullable(),
   contain: q.boolean(),
-  mediaType: q.literal("image").or(q.literal("video")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
 

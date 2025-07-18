@@ -2,6 +2,8 @@ import { RichText } from "../richtext";
 import SanityImage from "../sanity-image";
 import { HeroProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
+import { VimeoVideo } from "../VimeoVideo";
+import { extractVimeoId } from "@/utils/utils";
 
 const heroSVG = (
   <svg viewBox="0 0 1677 184" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,25 +19,30 @@ export function HeroBlock({
   image,
   richText,
   video,
+  vimeoUrl,
   mediaType,
 }: HeroProps) {
   return (
-    <div id="hero" className="h-screen relative">
+    <div id="hero" className="h-screen relative overflow-hidden">
       {mediaType === "image" && image && (
         <SanityImage
           src={image}
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
-      {mediaType === "video" && video && (
-        <video
-          src={video}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {mediaType === "video" && vimeoUrl ? (
+        <VimeoVideo videoId={extractVimeoId(vimeoUrl) || ""} />
+      ) : (
+        video && (
+          <video
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )
       )}
       <div className="absolute inset-0 bg-black/20" />
       <div className="wrapper py-fluid-xs h-full flex flex-col justify-end relative z-[1]">

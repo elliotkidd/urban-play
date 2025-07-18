@@ -7,6 +7,7 @@ import {
   imageField,
   richTextField,
   sectionSettings,
+  vimeoField,
 } from "../common";
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
 
@@ -46,10 +47,17 @@ export const cta = defineType({
       type: "file",
       title: "Video",
       group: GROUP.MAIN_CONTENT,
+      deprecated: {
+        reason: "Please use vimeo URL instead",
+      },
       hidden: ({ parent }) => parent?.mediaType !== "video",
       options: {
         accept: "video/*",
       },
+    }),
+    defineField({
+      ...vimeoField,
+      hidden: ({ parent }) => parent?.mediaType !== "video",
     }),
     defineField({ ...richTextField, group: GROUP.MAIN_CONTENT }),
     defineField({ ...buttonsField, group: GROUP.MAIN_CONTENT }),

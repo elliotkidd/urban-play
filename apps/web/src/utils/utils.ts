@@ -74,3 +74,20 @@ export const PROJECT_GRID_COL_SPANS = [
   "lg:col-span-6",
   "lg:col-span-3",
 ];
+
+/**
+ * Extracts the video ID from a Vimeo URL
+ * @param vimeoUrl - The full Vimeo URL (e.g., "https://vimeo.com/123456789")
+ * @returns The video ID as a string, or null if the URL is invalid
+ */
+export function extractVimeoId(
+  vimeoUrl: string | null | undefined,
+): string | null {
+  if (!vimeoUrl) return null;
+
+  const vimeoRegex =
+    /^(https?:\/\/)?(www\.)?(vimeo\.com\/)(\d{1,10})(\/[a-zA-Z0-9\-_]+)?(\?.*)?$/;
+  const match = vimeoUrl.match(vimeoRegex);
+
+  return match ? match[4] : null;
+}

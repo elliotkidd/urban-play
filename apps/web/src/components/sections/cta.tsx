@@ -2,6 +2,8 @@ import { RichText } from "../richtext";
 import { SanityButtons } from "../sanity-buttons";
 import { CTAProps } from "@/lib/sanity/queries/sections";
 import SanityImage from "../sanity-image";
+import { VimeoVideo } from "../VimeoVideo";
+import { extractVimeoId } from "@/utils/utils";
 
 export function CTABlock({
   richText,
@@ -9,6 +11,7 @@ export function CTABlock({
   buttons,
   image,
   video,
+  vimeoUrl,
   mediaType,
 }: CTAProps) {
   return (
@@ -19,15 +22,19 @@ export function CTABlock({
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
-      {mediaType === "video" && video && (
-        <video
-          src={video}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {mediaType === "video" && vimeoUrl ? (
+        <VimeoVideo videoId={extractVimeoId(vimeoUrl) || ""} />
+      ) : (
+        video && (
+          <video
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )
       )}
       <div className="absolute inset-0 bg-black/20" />
       <div className="wrapper pointer-events-none absolute grid lg:grid-cols-2 gap-fluid-sm prose py-fluid-sm">

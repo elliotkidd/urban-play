@@ -5,12 +5,15 @@ import { RichText } from "../richtext";
 import SanityImage from "../sanity-image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import { VimeoVideo } from "../VimeoVideo";
+import { extractVimeoId } from "@/utils/utils";
 
 export default function PageHeader({
   title,
   richText,
   image,
   video,
+  vimeoUrl,
   mediaType,
 }: PageHeaderProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,25 +42,28 @@ export default function PageHeader({
             sizes="100vw"
           />
         )}
-        {mediaType === "video" && video ? (
-          <video
-            src={video}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        {mediaType === "video" && vimeoUrl ? (
+          <VimeoVideo videoId={extractVimeoId(vimeoUrl) || ""} />
         ) : (
-          image && (
-            <SanityImage
-              src={image}
+          video && (
+            <video
+              src={video}
+              autoPlay
+              muted
+              loop
+              playsInline
               className="absolute inset-0 w-full h-full object-cover"
-              height={1024}
-              width={1440}
-              sizes="100vw"
             />
           )
+        )}
+        {image && (
+          <SanityImage
+            src={image}
+            className="absolute inset-0 w-full h-full object-cover"
+            height={1024}
+            width={1440}
+            sizes="100vw"
+          />
         )}
       </motion.div>
       <div className="absolute inset-0 bg-black/20" />

@@ -61,7 +61,8 @@ function SectionWrapper({
         (type === "iconMarquee" ||
           type === "imageMarquee" ||
           type === "awardsAccordion" ||
-          type === "process") &&
+          type === "process" ||
+          type === "cta") &&
           "overflow-hidden",
         hideOnPath && "hidden",
         className,
