@@ -1,6 +1,6 @@
 "use client";
 
-import YouTube from "react-youtube";
+import ReactPlayer from "react-player";
 
 export function YoutubeEmbed({ url }: { url: string }) {
   var regExp =
@@ -8,10 +8,12 @@ export function YoutubeEmbed({ url }: { url: string }) {
   var match = url.match(regExp);
   const videoId = match && match[7].length == 11 ? match[7] : false;
   return (
-    <YouTube
-      videoId={videoId}
-      iframeClassName="w-full aspect-video"
-      className="max-w-[640px] mx-auto my-fluid"
+    <ReactPlayer
+      src={videoId ? `https://www.youtube.com/watch?v=${videoId}` : url}
+      width="100%"
+      className="max-w-4xl mx-auto aspect-video"
+      height="100%"
+      controls
     />
   );
 }

@@ -1,22 +1,29 @@
-import { Video } from "lucide-react";
+import { Play } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { VideoSectionProps } from "@/lib/sanity/queries/sections";
-import { useScroll, motion, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useScroll, motion, useTransform, AnimatePresence } from "motion/react";
+import { useRef, useState } from "react";
+import SanityImage from "../sanity-image";
+import ReactPlayer from "react-player";
 
 export default function VideoSection({
   video,
   vimeoUrl,
+  image,
   contain,
   smallWrapper,
 }: VideoSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "0.9 end"],
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+
+  if (!image && (!video || !vimeoUrl)) return null;
 
   return (
     <div
@@ -27,21 +34,58 @@ export default function VideoSection({
         contain && "wrapper",
       )}
     >
-      {vimeoUrl ? (
-        <motion.div style={{ scale }}></motion.div>
-      ) : (
-        video && (
-          <motion.video
-            style={{ scale }}
-            src={video}
-            autoPlay
-            muted
-            loop
+      <motion.div
+        style={{ scale }}
+        className="aspect-video relative inset-0 w-full h-full overflow-hidden rounded-lg"
+      >
+        <AnimatePresence>
+          {image && !isPlaying && (
+            <motion.button
+              className="absolute inset-0 w-full h-full z-10 flex items-center justify-center"
+              onClick={() => {
+                setIsPlaying(true);
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+              <SanityImage
+                src={image}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="relative bg-background w-12 h-12 rounded-full flex items-center justify-center z-1">
+                <Play fill="currentColor" className="w-6 h-6 object-cover" />
+              </div>
+            </motion.button>
+          )}
+        </AnimatePresence>
+        {vimeoUrl ? (
+          <ReactPlayer
+            src={vimeoUrl}
+            width="100%"
+            height="100%"
             controls
-            className="w-full h-full object-cover"
+            playing={isPlaying}
+            onPause={() => {
+              setIsPlaying(false);
+            }}
           />
-        )
-      )}
+        ) : (
+          video && (
+            <ReactPlayer
+              src={video}
+              width="100%"
+              height="100%"
+              controls
+              playing={isPlaying}
+              onPause={() => {
+                setIsPlaying(false);
+              }}
+            />
+          )
+        )}
+      </motion.div>
     </div>
   );
 }

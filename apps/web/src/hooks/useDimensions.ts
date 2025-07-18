@@ -5,14 +5,12 @@ export const useDimensions = () => {
     width: number;
     height: number;
   }>({
-    width: 0,
-    height: 0,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
 
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window === "undefined") return;
-
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
 
