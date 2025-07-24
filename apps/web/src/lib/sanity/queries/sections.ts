@@ -50,6 +50,10 @@ const HERO_FRAGMENT = {
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
   vimeoUrl: q.string().nullable(),
+  vimeo: q("vimeo").grab({
+    type: q.literal("page").or(q.literal("asset")),
+    url: q.string(),
+  }),
   mediaType: q.literal("image").or(q.literal("video")),
   ...SECTION_SETTINGS_FRAGMENT,
 } satisfies Selection;
@@ -184,6 +188,10 @@ const CTA_FRAGMENT = {
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
   vimeoUrl: q.string().nullable(),
+  vimeo: q("vimeo").grab({
+    type: q.literal("page").or(q.literal("asset")),
+    url: q.string(),
+  }),
   mediaType: q.literal("image").or(q.literal("video")),
   buttons: q(`buttons[]`, { isArray: true }).grab(BUTTON_FRAGMENT).nullable(),
   ...SECTION_SETTINGS_FRAGMENT,

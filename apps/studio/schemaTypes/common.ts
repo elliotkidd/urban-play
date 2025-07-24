@@ -161,18 +161,53 @@ export const imageField = defineField({
 });
 
 export const vimeoField = defineField({
-  name: "vimeoUrl",
-  type: "url",
-  title: "Vimeo URL",
+  name: "vimeo",
+  type: "object",
+  title: "Vimeo",
   group: GROUP.MAIN_CONTENT,
-  validation: (Rule) =>
-    Rule.uri({
-      scheme: ["http", "https"],
-      allowRelative: false,
-    }).custom((value) => {
-      if (!value) return true; // Allow empty values
-      const vimeoRegex =
-        /^(https?:\/\/)?(www\.)?(vimeo\.com\/)(\d{1,10})(\/[a-zA-Z0-9\-_]+)?(\?.*)?$/;
-      return vimeoRegex.test(value) || "Please enter a valid Vimeo URL";
+  fields: [
+    {
+      name: "type",
+      type: "string",
+      title: "URL Type",
+      options: {
+        list: [
+          { title: "Vimeo Page", value: "page" },
+          { title: "Vimeo Asset", value: "asset" },
+        ],
+      },
+      initialValue: "page",
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "url",
+      type: "url",
+      title: "Vimeo URL",
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+          allowRelative: false,
+        }).custom((value, context) => {
+          if (!value) return true; // Allow empty values
+          
+          // Only validate Vimeo page URLs if type is "page"
+          const urlType = (context.document as any)?.vimeo?.type;
+          if (urlType !== "page") return true;
+          
+          const vimeoPageRegex =
+            /^(https?:\/\/)?(www\.)?(vimeo\.com\/)(\d{1,10})(\/[a-zA-Z0-9\-_]+)?(\?.*)?$/;
+          return vimeoPageRegex.test(value as string) || "Please enter a valid Vimeo page URL";
+        }),
+    },
+  ],
+  preview: {
+    select: {
+      type: "type",
+      url: "url",
+    },
+    prepare: ({ type, url }) => ({
+      title: `Vimeo ${type === "page" ? "Page" : "Asset"}`,
+      subtitle: url || "No URL provided",
     }),
+  },
 });

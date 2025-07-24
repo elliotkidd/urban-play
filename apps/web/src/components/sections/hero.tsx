@@ -20,6 +20,7 @@ export function HeroBlock({
   richText,
   video,
   vimeoUrl,
+  vimeo,
   mediaType,
 }: HeroProps) {
   return (
@@ -30,8 +31,17 @@ export function HeroBlock({
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
-      {mediaType === "video" && vimeoUrl ? (
-        <VimeoVideo videoId={extractVimeoId(vimeoUrl) || ""} />
+      {mediaType === "video" && vimeo?.type === "page" ? (
+        <VimeoVideo videoId={extractVimeoId(vimeo.url) || ""} />
+      ) : mediaType === "video" && vimeo?.type === "asset" ? (
+        <video
+          src={vimeo.url}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       ) : (
         video && (
           <video
