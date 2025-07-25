@@ -14,6 +14,7 @@ export default function PageHeader({
   image,
   video,
   vimeoUrl,
+  vimeo,
   mediaType,
 }: PageHeaderProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export default function PageHeader({
         style={{ y }}
         className="h-[calc(100vh+200px)] w-full object-cover absolute inset-0"
       >
-        {mediaType === "image" && image && (
+        {image && (
           <SanityImage
             src={image}
             className="absolute inset-0 w-full h-full object-cover"
@@ -42,27 +43,17 @@ export default function PageHeader({
             sizes="100vw"
           />
         )}
-        {mediaType === "video" && vimeoUrl ? (
-          <VimeoVideo videoId={extractVimeoId(vimeoUrl) || ""} />
-        ) : (
-          video && (
-            <video
-              src={video}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          )
+        {mediaType === "video" && vimeo?.type === "page" && (
+          <VimeoVideo videoId={extractVimeoId(vimeo.url) || ""} />
         )}
-        {image && (
-          <SanityImage
-            src={image}
+        {mediaType === "video" && vimeo?.type === "asset" && video && (
+          <video
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
             className="absolute inset-0 w-full h-full object-cover"
-            height={1024}
-            width={1440}
-            sizes="100vw"
           />
         )}
       </motion.div>
