@@ -470,7 +470,7 @@ export const VIDEO_FRAGMENT = {
   _type: q.literal("video"),
   _key: q.string(),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
-  vimeoUrl: q.string().nullable(),
+  videoURL: q.string().nullable(),
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
   contain: q.boolean(),
   ...SECTION_SETTINGS_FRAGMENT,

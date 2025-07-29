@@ -182,21 +182,24 @@ export const vimeoField = defineField({
     {
       name: "url",
       type: "url",
-      title: "Vimeo URL",
+      title: "URL",
       validation: (Rule) =>
         Rule.uri({
           scheme: ["http", "https"],
           allowRelative: false,
         }).custom((value, context) => {
           if (!value) return true; // Allow empty values
-          
+
           // Only validate Vimeo page URLs if type is "page"
           const urlType = (context.document as any)?.vimeo?.type;
           if (urlType !== "page") return true;
-          
+
           const vimeoPageRegex =
             /^(https?:\/\/)?(www\.)?(vimeo\.com\/)(\d{1,10})(\/[a-zA-Z0-9\-_]+)?(\?.*)?$/;
-          return vimeoPageRegex.test(value as string) || "Please enter a valid Vimeo page URL";
+          return (
+            vimeoPageRegex.test(value as string) ||
+            "Please enter a valid Vimeo page URL"
+          );
         }),
     },
   ],

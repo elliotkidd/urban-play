@@ -8,7 +8,7 @@ import ReactPlayer from "react-player";
 
 export default function VideoSection({
   video,
-  vimeoUrl,
+  videoURL,
   image,
   contain,
   smallWrapper,
@@ -23,7 +23,9 @@ export default function VideoSection({
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
 
-  if (!image && (!video || !vimeoUrl)) return null;
+  if (!image && (!video || !videoURL)) return null;
+
+  console.log(videoURL);
 
   return (
     <div
@@ -60,9 +62,9 @@ export default function VideoSection({
             </motion.button>
           )}
         </AnimatePresence>
-        {vimeoUrl ? (
+        {(videoURL || video) && (
           <ReactPlayer
-            src={vimeoUrl}
+            src={videoURL || video || ""}
             width="100%"
             height="100%"
             controls
@@ -71,19 +73,6 @@ export default function VideoSection({
               setIsPlaying(false);
             }}
           />
-        ) : (
-          video && (
-            <ReactPlayer
-              src={video}
-              width="100%"
-              height="100%"
-              controls
-              playing={isPlaying}
-              onPause={() => {
-                setIsPlaying(false);
-              }}
-            />
-          )
         )}
       </motion.div>
     </div>
