@@ -46,9 +46,9 @@ export default function PageHeader({
         {mediaType === "video" && vimeo?.type === "page" && (
           <VimeoVideo videoId={extractVimeoId(vimeo.url) || ""} />
         )}
-        {mediaType === "video" && vimeo?.type === "asset" && video && (
+        {mediaType === "video" && vimeo?.type === "asset" && vimeo.url && (
           <video
-            src={video}
+            src={vimeo.url}
             autoPlay
             muted
             loop
