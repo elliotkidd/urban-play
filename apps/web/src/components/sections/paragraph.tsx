@@ -205,13 +205,14 @@ export default function ParagraphSection({
                       <li className="leading-none grid grid-cols-3 gap-2">
                         <span className="block text-body-copy">{top}</span>
                         <span className="block col-span-2 text-text">
-                          {bottom.split(",").map((word, i) => {
-                            return (
-                              <span key={i} className="block">
-                                {word.trim()}
-                              </span>
-                            );
-                          })}
+                          {(typeof bottom === "string"
+                            ? bottom.split(",")
+                            : []
+                          ).map((word, i) => (
+                            <span key={i} className="block">
+                              {word.trim()}
+                            </span>
+                          ))}
                         </span>
                       </li>
                     ) : (
