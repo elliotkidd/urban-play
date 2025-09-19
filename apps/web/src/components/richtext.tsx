@@ -81,7 +81,6 @@ const components: Partial<PortableTextReactComponents> = {
       const openInNewTab = nested ? nested.openInNewTab : value?.openInNewTab;
 
       if (!resolvedHref || resolvedHref === "#") {
-        console.warn("🚀 link is not set", value);
         return (
           <span className="underline decoration-dotted underline-offset-2">
             Link Broken
