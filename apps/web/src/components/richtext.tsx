@@ -72,7 +72,15 @@ const components: Partial<PortableTextReactComponents> = {
       </code>
     ),
     customLink: ({ children, value }) => {
-      if (!value.href || value.href === "#") {
+      const nested = value?.customLink;
+      const resolvedHref = nested
+        ? nested.linkType === "external"
+          ? nested.external
+          : value?.href
+        : value?.href;
+      const openInNewTab = nested ? nested.openInNewTab : value?.openInNewTab;
+
+      if (!resolvedHref || resolvedHref === "#") {
         console.warn("🚀 link is not set", value);
         return (
           <span className="underline decoration-dotted underline-offset-2">
@@ -80,13 +88,14 @@ const components: Partial<PortableTextReactComponents> = {
           </span>
         );
       }
+
       return (
         <Link
           className="underline decoration-dotted underline-offset-2"
-          href={value.href}
+          href={resolvedHref}
           prefetch={false}
-          aria-label={`Link to ${value?.href}`}
-          target={value.openInNewTab ? "_blank" : "_self"}
+          aria-label={`Link to ${resolvedHref}`}
+          target={openInNewTab ? "_blank" : "_self"}
         >
           {children}
         </Link>
