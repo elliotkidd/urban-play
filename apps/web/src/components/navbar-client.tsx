@@ -373,8 +373,6 @@ function NavbarColumn({
 
   const { title, links, url } = column as NavBarColumnType;
 
-  console.log(pathname, url?.href);
-
   return (
     <NavigationMenuList>
       <NavigationMenuItem className="">

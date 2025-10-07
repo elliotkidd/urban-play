@@ -18,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
+import Newsletter from "./Newsletter";
+
 type SocialLinksProps = {
   data: any;
 };
@@ -163,44 +165,8 @@ function NewsletterSignup({
   };
 
   return (
-    <div className="lg:col-span-3">
-      <h4 className="text-sm mb-fluid-xs font-semibold">Join our newsletter</h4>
-      <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex w-full rounded-lg overflow-hidden border border-white/10">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="space-y-0 flex-1">
-                  <FormLabel htmlFor="email" className="sr-only">
-                    Email
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="Email"
-                      className="rounded-none bg-transparent placeholder:opacity-60 text-white placeholder:text-white"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <button
-              type="submit"
-              className="bg-text text-background h-[57px] w-[57px] flex items-center justify-center aspect-square"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                <ArrowRight />
-              )}
-            </button>
-          </div>
-        </form>
-      </Form>
+    <div className="lg:col-span-4">
+      <Newsletter />
     </div>
   );
 }
@@ -226,7 +192,7 @@ export function FooterSection({ data }: { data: FooterType }) {
             <ContactDetails data={contactDetails} />
             <SocialLinks data={socialLinks} />
           </div>
-          <div className="grid lg:grid-cols-9 gap-fluid-sm">
+          <div className="grid lg:grid-cols-9 gap-fluid-sm items-end">
             <NewsletterSignup recipients={recipients} />
             <div className="lg:col-span-3 lg:col-start-7 prose">
               <p className="lead">{subtitle}</p>

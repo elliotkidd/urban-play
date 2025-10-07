@@ -59,49 +59,78 @@ function SignupForDownload({
       return;
     }
 
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("email", data.email);
-
-    const lastPathSegment = getLastPathSegment(pathname);
-    formDataToSend.append("page", lastPathSegment);
-
-    const recaptchaToken = await executeRecaptcha(
-      lastPathSegment.replace("-", "_"),
-    );
-    formDataToSend.append("recaptchaToken", recaptchaToken);
-    formDataToSend.append("recipients", JSON.stringify(recipients || []));
-
     try {
-      const response = await fetch(`/api/email-submission`, {
+      // Submit to Mailchimp
+      const mailchimpResponse = await fetch("/api/mailchimp", {
         method: "POST",
-        body: formDataToSend,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: data.email,
+          name: "", // This form doesn't collect name
+        }),
       });
 
-      if (!response.ok) {
-        toast({
-          title: "Error",
-          description: "Failed to submit form",
-        });
-        return;
-      } else {
-        // Trigger file download after successful submission
-        if (downloadableFile && downloadableFile.url) {
-          const link = document.createElement("a");
-          link.href = downloadableFile.url;
-          link.download = "download";
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
+      if (!mailchimpResponse.ok) {
+        const errorData = await mailchimpResponse.json();
 
-        toast({
-          title: "Success",
-          description: "Email sent successfully",
-        });
+        // Check if the error is because the email is already subscribed
+        const isAlreadySubscribed =
+          errorData.error?.detail?.includes("already a list member") ||
+          errorData.error?.detail?.includes("already subscribed") ||
+          errorData.error?.detail?.includes("Member Exists");
+
+        if (isAlreadySubscribed) {
+          console.log("Email already subscribed to newsletter:", data.email);
+          // Don't throw error, continue with success flow
+        } else {
+          throw new Error(
+            errorData.error || "Failed to subscribe to newsletter",
+          );
+        }
       }
+
+      // Also send to the original email system if recipients are provided
+      if (recipients && recipients.length > 0) {
+        const formDataToSend = new FormData();
+        formDataToSend.append("email", data.email);
+
+        const lastPathSegment = getLastPathSegment(pathname);
+        formDataToSend.append("page", lastPathSegment);
+
+        const recaptchaToken = await executeRecaptcha(
+          lastPathSegment.replace("-", "_"),
+        );
+        formDataToSend.append("recaptchaToken", recaptchaToken);
+        formDataToSend.append("recipients", JSON.stringify(recipients || []));
+
+        const emailResponse = await fetch(`/api/email-submission`, {
+          method: "POST",
+          body: formDataToSend,
+        });
+
+        if (!emailResponse.ok) {
+          console.warn(
+            "Failed to send email notification, but newsletter subscription succeeded",
+          );
+        }
+      }
+
+      // Trigger file download after successful submission
+      if (downloadableFile && downloadableFile.url) {
+        const link = document.createElement("a");
+        link.href = downloadableFile.url;
+        link.download = "download";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      toast({
+        title: "Success",
+        description: "Successfully subscribed and downloaded!",
+      });
     } catch (error) {
       toast({
         title: "Error",
