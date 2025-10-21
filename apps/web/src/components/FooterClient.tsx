@@ -102,71 +102,31 @@ function SocialLinks({ data }: SocialLinksProps) {
   );
 }
 
-function NewsletterSignup({
-  recipients,
-}: {
-  recipients: { email: string; name: string }[];
-}) {
-  const form = useForm({
-    defaultValues: {
-      email: "",
-    },
-  });
-
-  const { toast } = useToast();
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = form;
-
-  const onSubmit = async (data: any, e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!executeRecaptcha) {
-      console.log("Recaptcha not ready");
-      return;
-    }
-
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("email", data.email);
-
-    const recaptchaToken = await executeRecaptcha("footer_Submission");
-    formDataToSend.append("recaptchaToken", recaptchaToken);
-    formDataToSend.append("recipients", JSON.stringify(recipients || []));
-
-    try {
-      const response = await fetch(`/api/email-submission`, {
-        method: "POST",
-        body: formDataToSend,
-      });
-
-      if (!response.ok) {
-        toast({
-          title: "Error",
-          description: "Failed to submit form",
-        });
-        return;
-      } else {
-        toast({
-          title: "Success",
-          description: "Email sent successfully",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-      });
-    }
-    form.reset();
-  };
-
+function NewsletterSignup({}: {}) {
   return (
-    <div className="lg:col-span-4">
+    <div className="lg:col-span-4 space-y-4">
       <Newsletter />
+      <p className="text-xs opacity-50">
+        This site is protected by reCAPTCHA and the Google{" "}
+        <Link
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-dotted"
+        >
+          Privacy Policy
+        </Link>{" "}
+        and{" "}
+        <Link
+          href="https://policies.google.com/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-dotted"
+        >
+          Terms of Service
+        </Link>{" "}
+        apply.
+      </p>
     </div>
   );
 }
@@ -193,7 +153,7 @@ export function FooterSection({ data }: { data: FooterType }) {
             <SocialLinks data={socialLinks} />
           </div>
           <div className="grid lg:grid-cols-9 gap-fluid-sm items-end">
-            <NewsletterSignup recipients={recipients} />
+            <NewsletterSignup />
             <div className="lg:col-span-3 lg:col-start-7 prose">
               <p className="lead">{subtitle}</p>
             </div>

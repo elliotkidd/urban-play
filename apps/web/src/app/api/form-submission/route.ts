@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { sendEmail } from "@/lib/email";
-import { verifyRecaptcha } from "@/lib/recaptcha";
 import { processFormData } from "@/lib/processFormData";
-
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 export async function POST(request: NextRequest) {
   try {
@@ -102,24 +99,42 @@ export async function POST(request: NextRequest) {
     //console.log("📨 Notification Recipients:", recipients);
 
     // Verify reCAPTCHA if enabled
-    if (RECAPTCHA_SECRET_KEY) {
+    if (process.env.RECAPTCHA_SECRET_KEY) {
       if (!recaptchaToken) {
-        //console.log("⚠️ reCAPTCHA token missing");
+        console.log("⚠️ reCAPTCHA token missing");
         return NextResponse.json(
           { success: false, error: "reCAPTCHA verification required" },
           { status: 400 },
         );
       }
 
-      const isValid = await verifyRecaptcha(recaptchaToken);
-      if (!isValid) {
-        //console.log('❌ reCAPTCHA verification failed');
-        return NextResponse.json(
-          { success: false, error: "reCAPTCHA verification failed" },
-          { status: 400 },
-        );
+      // Verify reCAPTCHA token
+      console.log('Verifying reCAPTCHA token:', recaptchaToken)
+      
+      const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: process.env.RECAPTCHA_SECRET_KEY,
+          response: recaptchaToken,
+          remoteip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
+        })
+      })
+
+      const recaptchaData = await recaptchaResponse.json()
+      console.log('reCAPTCHA verification response:', recaptchaData)
+      
+      if (!recaptchaData.success) {
+        console.log('reCAPTCHA verification failed:', recaptchaData)
+        return NextResponse.json({ 
+          error: 'reCAPTCHA verification failed', 
+          details: recaptchaData['error-codes'] || 'Unknown error',
+          recaptchaResponse: recaptchaData 
+        }, { status: 400 })
       }
-      //console.log('✅ reCAPTCHA verified');
+      console.log('✅ reCAPTCHA verified');
     }
 
     if (recipients?.length > 0) {

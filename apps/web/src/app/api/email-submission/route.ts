@@ -1,19 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyRecaptcha } from "@/lib/recaptcha";
 import { sendEmail } from "@/lib/email";
 import { processFormData } from "@/lib/processFormData";
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
 
+  // Check if environment variables are set
+  if (!process.env.RECAPTCHA_SECRET_KEY) {
+    console.log('ERROR: RECAPTCHA_SECRET_KEY not configured');
+    return NextResponse.json({ error: 'reCAPTCHA secret key not configured' }, { status: 400 })
+  }
+
   try {
     const recaptchaToken = formData.get("recaptchaToken") as string;
-    const isValid = await verifyRecaptcha(recaptchaToken);
-    if (!isValid) {
-      return NextResponse.json(
-        { success: false, error: "reCAPTCHA verification failed" },
-        { status: 400 },
-      );
+    
+    if (!recaptchaToken) {
+      console.log('reCAPTCHA token validation failed');
+      return NextResponse.json({ error: 'reCAPTCHA token is required' }, { status: 400 })
+    }
+
+    // Verify reCAPTCHA token
+    console.log('Verifying reCAPTCHA token:', recaptchaToken)
+    
+    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: process.env.RECAPTCHA_SECRET_KEY,
+        response: recaptchaToken,
+        remoteip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
+      })
+    })
+
+    const recaptchaData = await recaptchaResponse.json()
+    console.log('reCAPTCHA verification response:', recaptchaData)
+    
+    if (!recaptchaData.success) {
+      console.log('reCAPTCHA verification failed:', recaptchaData)
+      return NextResponse.json({ 
+        error: 'reCAPTCHA verification failed', 
+        details: recaptchaData['error-codes'] || 'Unknown error',
+        recaptchaResponse: recaptchaData 
+      }, { status: 400 })
     }
   } catch (error) {
     console.error("❌ reCAPTCHA verification failed:", error);

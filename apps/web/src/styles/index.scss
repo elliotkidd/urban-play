@@ -52,3 +52,7 @@ main {
 .aspect-process {
   aspect-ratio: 2 / 1;
 }
+
+.grecaptcha-badge {
+  visibility: hidden !important;
+}

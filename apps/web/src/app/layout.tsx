@@ -18,9 +18,11 @@ import { NavbarSkeletonResponsive } from "@/components/navbar-client";
 import { Suspense } from "react";
 import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "@/components/ui/toaster";
+import Script from "next/script";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || false;
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || false;
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || false;
 
 export default async function RootLayout({
   children,
@@ -35,6 +37,12 @@ export default async function RootLayout({
         <body
           className={`${fonts} font-body bg-black text-text transition-colors duration-500`}
         >
+          {RECAPTCHA_SITE_KEY && (
+            <Script
+              src={`https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`}
+              strategy="beforeInteractive"
+            />
+          )}
           {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
           {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
           <Lenis root />

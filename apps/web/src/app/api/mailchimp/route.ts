@@ -25,6 +25,10 @@ export async function POST(request: NextRequest) {
       console.log('ERROR: MAILCHIMP_AUDIENCE_ID not configured');
       return NextResponse.json({ error: 'Mailchimp audience ID not configured' }, { status: 400 })
     }
+    if (!process.env.RECAPTCHA_SECRET_KEY) {
+      console.log('ERROR: RECAPTCHA_SECRET_KEY not configured');
+      return NextResponse.json({ error: 'reCAPTCHA secret key not configured' }, { status: 400 })
+    }
 
     const body = await request.json()
     console.log('Received request body:', body)
@@ -32,6 +36,39 @@ export async function POST(request: NextRequest) {
     if (!body.email) {
       console.log('Email validation failed - body:', body)
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
+    }
+
+    // Validate reCAPTCHA token
+    if (!body.recaptchaToken) {
+      console.log('reCAPTCHA token validation failed - body:', body)
+      return NextResponse.json({ error: 'reCAPTCHA token is required' }, { status: 400 })
+    }
+
+    // Verify reCAPTCHA token
+    console.log('Verifying reCAPTCHA token:', body.recaptchaToken)
+    
+    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: process.env.RECAPTCHA_SECRET_KEY,
+        response: body.recaptchaToken,
+        remoteip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
+      })
+    })
+
+    const recaptchaData = await recaptchaResponse.json()
+    console.log('reCAPTCHA verification response:', recaptchaData)
+    
+    if (!recaptchaData.success) {
+      console.log('reCAPTCHA verification failed:', recaptchaData)
+      return NextResponse.json({ 
+        error: 'reCAPTCHA verification failed', 
+        details: recaptchaData['error-codes'] || 'Unknown error',
+        recaptchaResponse: recaptchaData 
+      }, { status: 400 })
     }
 
     // Only include merge fields that have values

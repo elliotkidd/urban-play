@@ -10,6 +10,7 @@ const Newsletter = ({ data = {} }) => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -27,65 +28,137 @@ const Newsletter = ({ data = {} }) => {
   };
 
   // handle form submission
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Form data being submitted:", data);
     setSubmitting(true);
     setError(false);
     setSuccess(false);
 
-    fetch("/api/mailchimp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...data,
-      }),
-    })
-      .then(async (res) => {
-        console.log("Response status:", res.status);
-        console.log("Response ok:", res.ok);
+    // Check if reCAPTCHA Enterprise is available, wait if not ready
+    if (
+      typeof window === "undefined" ||
+      !window.grecaptcha ||
+      !window.grecaptcha.enterprise
+    ) {
+      console.log("reCAPTCHA Enterprise not available, waiting...");
 
-        const responseData = await res.json();
-        console.log("Response data:", responseData);
+      // Wait for reCAPTCHA to load
+      let attempts = 0;
+      const maxAttempts = 20; // 10 seconds total
 
-        if (!res.ok) {
-          const errorData = responseData.error;
-
-          // Check if the error is because the email is already subscribed
-          const isAlreadySubscribed =
-            (typeof errorData === "string" &&
-              errorData.includes("already a list member")) ||
-            (typeof errorData === "object" &&
-              (errorData.detail?.includes("already a list member") ||
-                errorData.detail?.includes("already subscribed") ||
-                errorData.detail?.includes("Member Exists")));
-
-          if (isAlreadySubscribed) {
-            console.log("Email already subscribed to newsletter:", data.email);
-            // Return success response instead of throwing error
-            return { success: true, message: "Already subscribed" };
-          } else {
-            const errorMessage =
-              typeof errorData === "string"
-                ? errorData
-                : errorData?.message || JSON.stringify(errorData);
-            throw new Error(errorMessage);
-          }
+      const waitForRecaptcha = () => {
+        if (
+          typeof window !== "undefined" &&
+          window.grecaptcha &&
+          window.grecaptcha.enterprise
+        ) {
+          console.log("reCAPTCHA Enterprise is now ready");
+          onSubmit(data);
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          console.log(
+            `Waiting for reCAPTCHA Enterprise... attempt ${attempts}`,
+          );
+          setTimeout(waitForRecaptcha, 500);
+        } else {
+          console.log(
+            "reCAPTCHA Enterprise failed to load after multiple attempts",
+          );
+          setSubmitting(false);
+          setError(true);
         }
+      };
 
-        return responseData;
-      })
-      .then((res) => {
-        setSubmitting(false);
-        setSuccess(true);
-        reset();
-      })
-      .catch((error) => {
-        setSubmitting(false);
-        setError(true);
-        console.error("Newsletter submission error:", error);
-        console.error("Error message:", error.message);
-        console.error("Full error object:", JSON.stringify(error, null, 2));
+      waitForRecaptcha();
+      return;
+    }
+
+    try {
+      // Use reCAPTCHA Enterprise API directly
+      const recaptchaToken = await new Promise((resolve, reject) => {
+        if (
+          typeof window !== "undefined" &&
+          window.grecaptcha &&
+          window.grecaptcha.enterprise
+        ) {
+          window.grecaptcha.enterprise.ready(async () => {
+            try {
+              const token = await window.grecaptcha.enterprise.execute(
+                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                { action: "newsletter_subscription" },
+              );
+              resolve(token);
+            } catch (error) {
+              reject(error);
+            }
+          });
+        } else {
+          reject(new Error("reCAPTCHA Enterprise not available"));
+        }
       });
+
+      fetch("/api/mailchimp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          recaptchaToken,
+        }),
+      })
+        .then(async (res) => {
+          console.log("Response status:", res.status);
+          console.log("Response ok:", res.ok);
+
+          const responseData = await res.json();
+          console.log("Response data:", responseData);
+
+          if (!res.ok) {
+            const errorData = responseData.error;
+
+            // Check if the error is because the email is already subscribed
+            const isAlreadySubscribed =
+              (typeof errorData === "string" &&
+                errorData.includes("already a list member")) ||
+              (typeof errorData === "object" &&
+                (errorData.detail?.includes("already a list member") ||
+                  errorData.detail?.includes("already subscribed") ||
+                  errorData.detail?.includes("Member Exists")));
+
+            if (isAlreadySubscribed) {
+              console.log(
+                "Email already subscribed to newsletter:",
+                data.email,
+              );
+              // Return success response instead of throwing error
+              return { success: true, message: "Already subscribed" };
+            } else {
+              const errorMessage =
+                typeof errorData === "string"
+                  ? errorData
+                  : errorData?.message || JSON.stringify(errorData);
+              throw new Error(errorMessage);
+            }
+          }
+
+          return responseData;
+        })
+        .then((res) => {
+          setSubmitting(false);
+          setSuccess(true);
+          reset();
+        })
+        .catch((error) => {
+          setSubmitting(false);
+          setError(true);
+          console.error("Newsletter submission error:", error);
+          console.error("Error message:", error.message);
+          console.error("Full error object:", JSON.stringify(error, null, 2));
+        });
+    } catch (error) {
+      setSubmitting(false);
+      setError(true);
+      console.error("reCAPTCHA error:", error);
+    }
   };
 
   return (
