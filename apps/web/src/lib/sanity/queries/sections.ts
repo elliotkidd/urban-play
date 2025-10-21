@@ -469,6 +469,11 @@ export type ContactProps = TypeFromSelection<typeof CONTACT_FRAGMENT>;
 export const VIDEO_FRAGMENT = {
   _type: q.literal("video"),
   _key: q.string(),
+  sectionHeader: q("sectionHeader").grab(SECTION_HEADER_FRAGMENT),
+  vimeo: q("vimeo").grab({
+    type: q.literal("page").or(q.literal("asset")),
+    url: q.string(),
+  }),
   video: q("video.asset").deref().grabOne("url", q.string()).nullable(),
   videoURL: q.string().nullable(),
   image: q("image").grab(IMAGE_FRAGMENT).nullable(),
