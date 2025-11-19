@@ -210,7 +210,7 @@ export default function ParagraphSection({
           <RichText
             richText={topText}
             className={cn(
-              "max-w-[770px] mb-fluid-sm lg:mb-0",
+              "max-w-[770px] lg:mb-0",
               !buttons && !annotations && "max-w-p-xl",
             )}
           />

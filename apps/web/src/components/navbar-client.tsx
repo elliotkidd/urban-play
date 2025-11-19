@@ -289,7 +289,7 @@ function MobileNavbar({
               variants={menuContentVariants}
               className="flex-1 flex flex-col overflow-hidden relative"
             >
-              <div className="flex-1 flex flex-col justify-center p-2.5 overflow-hidden relative">
+              <div className="flex-1 flex flex-col justify-center p-fluid-xs overflow-hidden relative">
                 <AnimatePresence mode="wait" custom={direction}>
                   {!activeColumn ? (
                     <motion.div
