@@ -4,3 +4,35 @@
     overflow: visible;
   }
 }
+
+.swiper-pagination-bullets {
+  position: relative !important;
+
+  margin-top: 240px !important;
+
+  --swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.2);
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  --swiper-theme-color: #23261c;
+
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+.swiper-pagination-bullet {
+  --swiper-pagination-bullet-width: 45px !important;
+  --swiper-pagination-bullet-height: 2.5px !important;
+  --swiper-pagination-bullet-horizontal-gap: 7px !important;
+  --swiper-pagination-bullet-inactive-color: #23261c80 !important;
+  --swiper-pagination-bullet-opacity: 1 !important;
+  --swiper-pagination-bullet-border-radius: none !important;
+  --swiper-pagination-bullet-box-shadow: none !important;
+  --swiper-pagination-bullet-active-color: #23261c !important;
+}
+
+.grid-swiper {
+  @media (width >= 1024px) {
+    display: none !important;
+  }
+}

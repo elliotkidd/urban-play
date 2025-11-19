@@ -137,9 +137,93 @@ export const hideOnField = defineField({
   group: GROUP.SETTINGS,
 });
 
+const roundBottomField = defineField({
+  name: "roundBottom",
+  title: "Round Bottom on Mobile?",
+  type: "boolean",
+  initialValue: false,
+  group: GROUP.SETTINGS,
+});
+
 export const sectionSettings = [
   ...marginSettingsFields,
-  paddingField,
+  defineField({
+    name: "paddingTopMobile",
+    title: "Padding Top Mobile",
+    type: "string",
+    initialValue: "sm",
+    options: {
+      list: [
+        { title: "None", value: "none" },
+        { title: "X-Small", value: "xs" },
+        { title: "Small", value: "sm" },
+        { title: "Medium", value: "md" },
+        { title: "Large", value: "lg" },
+        { title: "X-Large", value: "xl" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+    group: GROUP.SETTINGS,
+  }),
+  defineField({
+    name: "paddingBottomMobile",
+    title: "Padding Bottom Mobile",
+    type: "string",
+    initialValue: "xs",
+    options: {
+      list: [
+        { title: "None", value: "none" },
+        { title: "X-Small", value: "xs" },
+        { title: "Small", value: "sm" },
+        { title: "Medium", value: "md" },
+        { title: "Large", value: "lg" },
+        { title: "X-Large", value: "xl" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+    group: GROUP.SETTINGS,
+  }),
+  defineField({
+    name: "paddingTopDesktop",
+    title: "Padding Top Desktop",
+    type: "string",
+    initialValue: "md",
+    options: {
+      list: [
+        { title: "None", value: "none" },
+        { title: "X-Small", value: "xs" },
+        { title: "Small", value: "sm" },
+        { title: "Medium", value: "md" },
+        { title: "Large", value: "lg" },
+        { title: "X-Large", value: "xl" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+    group: GROUP.SETTINGS,
+  }),
+  defineField({
+    name: "paddingBottomDesktop",
+    title: "Padding Bottom Desktop",
+    type: "string",
+    initialValue: "md",
+    options: {
+      list: [
+        { title: "None", value: "none" },
+        { title: "X-Small", value: "xs" },
+        { title: "Small", value: "sm" },
+        { title: "Medium", value: "md" },
+        { title: "Large", value: "lg" },
+        { title: "X-Large", value: "xl" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+    group: GROUP.SETTINGS,
+  }),
+  roundBottomField,
   defineField({
     name: "smallWrapper",
     title: "Small Wrapper?",
@@ -214,3 +298,20 @@ export const vimeoField = defineField({
     }),
   },
 });
+
+const hideOnDesktopField = defineField({
+  name: "hideOnDesktop",
+  title: "Hide On Desktop",
+  type: "boolean",
+  initialValue: false,
+  group: GROUP.SETTINGS,
+});
+const hideOnMobileField = defineField({
+  name: "hideOnMobile",
+  title: "Hide On Mobile",
+  type: "boolean",
+  initialValue: false,
+  group: GROUP.SETTINGS,
+});
+
+export const hideOnFields = [hideOnDesktopField, hideOnMobileField];

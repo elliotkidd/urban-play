@@ -47,32 +47,34 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
         type="single"
         collapsible
         className={cn(
-          "w-full bg-[#F3F3F3] rounded-lg overflow-hidden",
+          "lg:w-full bg-[#F3F3F3] rounded-lg overflow-hidden -mx-fluid-xs w-screen lg:mx-0",
           title && "mt-fluid-sm",
         )}
         style={{ maxWidth: "577px" }}
       >
         {items?.map((item, index) => {
           return (
-            <AccordionItem
-              value={item._key}
-              key={`AccordionItem-${item._key}-${index}`}
-              className={twMerge(
-                "accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-text data-[state=open]:bg-text",
+            <>
+              <AccordionItem
+                value={item._key}
+                key={`AccordionItem-${item._key}-${index}`}
+              >
+                <AccordionTrigger className="">{item.heading}</AccordionTrigger>
+                <AccordionContent className="">
+                  {item.content && (
+                    <RichText
+                      richText={item.content}
+                      className="prose-white mt-4 lg:mt-fluid-lg"
+                    />
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+              {index !== items.length - 1 && (
+                <div className="px-4 lg:hidden opacity-10">
+                  <div className="h-px bg-text w-full" />
+                </div>
               )}
-            >
-              <AccordionTrigger className="text-lg leading-none no-underline group font-bold h3">
-                {item.heading}
-              </AccordionTrigger>
-              <AccordionContent className="">
-                {item.content && (
-                  <RichText
-                    richText={item.content}
-                    className="prose-white mt-4 lg:mt-fluid-lg"
-                  />
-                )}
-              </AccordionContent>
-            </AccordionItem>
+            </>
           );
         })}
       </Accordion>
@@ -140,7 +142,6 @@ export default function TwoColumnContentSection({
   smallWrapper,
   columnRatio,
   alignCentre,
-  padding,
   gap,
 }: TwoColumnContentProps) {
   return (
@@ -158,9 +159,6 @@ export default function TwoColumnContentSection({
         (columnRatio === "2575" || columnRatio === "7525") &&
           "grid-cols-1 lg:grid-cols-3",
         alignCentre && "items-center",
-        padding === "md" && "py-fluid-md",
-        padding === "lg" && "py-fluid-lg",
-        padding !== "md" && padding !== "lg" && "py-fluid-xs",
       )}
     >
       {left &&

@@ -1,5 +1,6 @@
 import { cta } from "./cta";
 import { awardsAccordion } from "./awards-accordion";
+import { divider } from "./divider";
 import { featuredPosts } from "./featured-post";
 import { featuredProjects } from "./featured-projects";
 import { hero } from "./hero";
@@ -25,6 +26,7 @@ import { hotspotImageCarousel } from "./hotspot-image-carousel";
 import { grid } from "./grid";
 
 export const pageBuilderBlocks = [
+  divider,
   hero,
   cta,
   awardsAccordion,

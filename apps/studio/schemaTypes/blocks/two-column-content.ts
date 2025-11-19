@@ -2,7 +2,7 @@ import { Columns2 as icon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 import { GROUP, SECTION_GROUPS } from "../../utils/constant";
-import { colorPickerField, sectionSettings } from "../common";
+import { colorPickerField, hideOnFields, sectionSettings } from "../common";
 
 export const twoColumnContent = defineType({
   name: "twoColumnContent",
@@ -12,6 +12,7 @@ export const twoColumnContent = defineType({
   groups: SECTION_GROUPS,
   fields: [
     colorPickerField,
+    ...hideOnFields,
     defineField({
       name: "columnRatio",
       title: "Column Ratio",

@@ -56,13 +56,13 @@
     @apply w-full text-left;
   }
 }
-
 .accordion-item {
   .accordion-trigger {
     .accordion-trigger-icon {
       position: relative;
-      height: 20px;
-      width: 20px;
+      flex-shrink: 0;
+
+      @apply h-[14px] w-[14px] lg:h-[20px] lg:w-[20px];
 
       &-line {
         @apply absolute w-full h-0.5 transform bg-text transition-[background-color,transform];
@@ -85,7 +85,7 @@
 
     &[data-state="open"] {
       .accordion-trigger-icon-line {
-        @apply bg-white;
+        @apply lg:bg-white;
         &:nth-child(1) {
           transform: rotate(0deg);
         }
@@ -99,7 +99,7 @@
 
   &:hover {
     .accordion-trigger-icon-line {
-      @apply bg-white;
+      @apply lg:bg-white;
     }
   }
 }

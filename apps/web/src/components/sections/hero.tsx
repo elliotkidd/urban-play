@@ -19,12 +19,11 @@ export function HeroBlock({
   image,
   richText,
   video,
-  vimeoUrl,
   vimeo,
   mediaType,
 }: HeroProps) {
   return (
-    <div id="hero" className="h-screen relative overflow-hidden">
+    <>
       {mediaType === "image" && image && (
         <SanityImage
           src={image}
@@ -55,7 +54,7 @@ export function HeroBlock({
         )
       )}
       <div className="absolute inset-0 bg-black/20" />
-      <div className="wrapper py-fluid-xs h-full flex flex-col justify-end relative z-[1]">
+      <div className="wrapper pt-fluid-xl pb-fluid-xs h-full flex flex-col justify-end relative z-[1]">
         <RichText
           richText={richText}
           className="max-w-p prose-white mb-fluid-xs"
@@ -63,6 +62,6 @@ export function HeroBlock({
         <h2 className={twMerge("sr-only")}>{title}</h2>
         {heroSVG}
       </div>
-    </div>
+    </>
   );
 }

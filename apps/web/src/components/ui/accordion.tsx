@@ -14,7 +14,10 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("group", className)}
+    className={cn(
+      "accordion-item transition-colors duration-500 lg:hover:text-white lg:data-[state=open]:text-white lg:hover:bg-bottle-green lg:data-[state=open]:bg-bottle-green group",
+      className,
+    )}
     {...props}
   />
 ));
@@ -28,15 +31,23 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "accordion-trigger flex gap-4 flex-1 items-center p-4 justify-between text-sm font-medium transition-all text-left [&[data-state=open]>svg]:rotate-180 prose data-[state=open]:prose-white group-hover:prose-white",
+        "accordion-trigger group group/trigger flex gap-4 flex-1 p-4 justify-between transition-all text-left [&[data-state=open]>svg]:rotate-180 text-[18px] not-prose font-normal leading-none hover:no-underline group items-start lg:items-center",
         className,
       )}
       {...props}
     >
-      <h3 className="h3 mb-0 transition-colors duration-500">{children}</h3>
-      <span className="accordion-trigger-icon">
-        <span className="accordion-trigger-icon-line"></span>
-        <span className="accordion-trigger-icon-line"></span>
+      <h3 className="mb-0 transition-colors duration-500 text-text">
+        {children}
+      </h3>
+      <span className="relative flex-shrink-0 h-[14px] w-[14px] lg:h-[20px] lg:w-[20px]">
+        <span
+          className="absolute w-full h-0.5 bg-text transition-[background-color,transform] duration-500 top-1/2 -translate-x-1/2 rotate-180 group-data-[state=open]/trigger:rotate-0 lg:group-data-[state=open]/trigger:bg-white lg:group-hover:bg-white"
+          style={{ transition: "background-color 0.5s, transform 0.5s" }}
+        ></span>
+        <span
+          className="absolute w-full h-0.5 bg-text transition-[background-color,transform] duration-500 top-1/2 -translate-x-1/2 rotate-[270deg] group-data-[state=open]/trigger:rotate-0 lg:group-data-[state=open]/trigger:bg-white lg:group-hover:bg-white"
+          style={{ transition: "background-color 0.5s, transform 0.5s" }}
+        ></span>
       </span>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
@@ -49,13 +60,13 @@ const AccordionContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down  "
     style={{
       transition: "height 0.3s ease-in-out",
     }}
     {...props}
   >
-    <div className={cn("p-4 pt-0", className)}>{children}</div>
+    <div className={cn("px-4 pb-fluid-sm lg:pb-4", className)}>{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

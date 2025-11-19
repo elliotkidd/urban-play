@@ -15,13 +15,13 @@ export default function FeaturedPostsSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid-lg overflow-hidden",
+        "wrapper space-y-fluid-md",
         smallWrapper && "wrapper--small",
       )}
     >
       <SectionHeader {...sectionHeader} />
       {posts && posts.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-fluid-md md:grid-cols-2 lg:grid-cols-4 lg:gap-fluid-xs">
           {posts.map((post: PostTileType, i: number) => {
             return (
               <PostTile

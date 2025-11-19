@@ -46,10 +46,10 @@ export default function ProjectTile({
 
   return (
     <motion.div variants={childVars} className={className}>
-      <Link href={slug} className={twMerge("block group")}>
+      <Link href={slug} className={twMerge("block group space-y-fluid-xs")}>
         <div
           className={twMerge(
-            "relative mb-4 rounded-xl overflow-hidden aspect-square flex items-start justify-start p-3",
+            "relative rounded-xl overflow-hidden aspect-square flex items-start justify-start p-3",
             imageAspectRatioClass,
           )}
         >
@@ -87,7 +87,7 @@ export default function ProjectTile({
         </div>
         <motion.h3
           variants={titleVariants(index * staggerDelay + 0.25)}
-          className="text-lg leading-[120%] font-bold mb-4"
+          className="text-lg leading-[120%] font-bold"
         >
           {title}
         </motion.h3>

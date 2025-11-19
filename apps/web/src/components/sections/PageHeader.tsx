@@ -12,8 +12,6 @@ export default function PageHeader({
   title,
   richText,
   image,
-  video,
-  vimeoUrl,
   vimeo,
   mediaType,
 }: PageHeaderProps) {
@@ -28,7 +26,7 @@ export default function PageHeader({
   return (
     <div
       ref={ref}
-      className="relative h-screen w-full flex items-center overflow-hidden"
+      className="relative h-screen w-full flex items-center overflow-hidden rounded-b-xl lg:rounded-none"
     >
       <motion.div
         style={{ y }}
@@ -58,7 +56,8 @@ export default function PageHeader({
         )}
       </motion.div>
       <div className="absolute inset-0 bg-black/20" />
-      <div className="wrapper grid lg:grid-cols-2 gap-fluid-sm relative z-[1] prose">
+      <div className="wrapper flex py-fluid-sm flex-col justify-between h-full lg:h-auto lg:grid lg:grid-cols-2 lg:gap-fluid-sm relative z-[1] prose">
+        <div className="lg:hidden"></div>
         <h2 className="">{title}</h2>
         <RichText richText={richText} />
       </div>

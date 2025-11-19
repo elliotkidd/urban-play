@@ -146,8 +146,8 @@
     calc(var(--text-5xl-max) / 16) * 1rem
   );
 
-  --space-xs-min: 16;
-  --space-xs-max: 24;
+  --space-xs-min: 20;
+  --space-xs-max: 20;
   --space-xs: clamp(
     calc(var(--space-xs-min) / 16) * 1rem,
     calc(
@@ -157,8 +157,8 @@
     calc(var(--space-xs-max) / 16) * 1rem
   );
 
-  --space-sm-min: 24;
-  --space-sm-max: 45;
+  --space-sm-min: 40;
+  --space-sm-max: 40;
   --space-sm: clamp(
     calc(var(--space-sm-min) / 16) * 1rem,
     calc(
@@ -179,8 +179,8 @@
     calc(var(--space-max) / 16) * 1rem
   );
 
-  --space-md-min: 64;
-  --space-md-max: 90;
+  --space-md-min: 60;
+  --space-md-max: 60;
   --space-md: clamp(
     calc(var(--space-md-min) / 16) * 1rem,
     calc(
@@ -190,8 +190,8 @@
     calc(var(--space-md-max) / 16) * 1rem
   );
 
-  --space-lg-min: 96;
-  --space-lg-max: 120;
+  --space-lg-min: 80;
+  --space-lg-max: 80;
   --space-lg: clamp(
     calc(var(--space-lg-min) / 16) * 1rem,
     calc(
@@ -201,8 +201,8 @@
     calc(var(--space-lg-max) / 16) * 1rem
   );
 
-  --space-xl-min: 128;
-  --space-xl-max: 180;
+  --space-xl-min: 120;
+  --space-xl-max: 120;
   --space-xl: clamp(
     calc(var(--space-xl-min) / 16) * 1rem,
     calc(

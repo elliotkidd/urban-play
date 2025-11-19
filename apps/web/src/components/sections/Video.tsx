@@ -8,6 +8,7 @@ import ReactPlayer from "react-player";
 import SectionHeader from "../section-header";
 import { VimeoVideo } from "../VimeoVideo";
 import { extractVimeoId } from "@/utils/utils";
+import { SanityButtons } from "../sanity-buttons";
 
 export default function VideoSection({
   video,
@@ -30,7 +31,7 @@ export default function VideoSection({
 
   if (!image && (!video || !videoURL) && !vimeo) return null;
 
-  console.log(videoURL);
+  const { title, buttons } = sectionHeader;
 
   return (
     <div
@@ -41,7 +42,25 @@ export default function VideoSection({
         contain && "wrapper",
       )}
     >
-      <SectionHeader {...sectionHeader} />
+      <div
+        className={twMerge(
+          "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-xs",
+        )}
+      >
+        {title && (
+          <h2
+            className="text-balance"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        )}
+        {buttons && (
+          <SanityButtons
+            buttons={buttons}
+            buttonSize="default"
+            className="hidden lg:flex items-center gap-2"
+          />
+        )}
+      </div>
       <motion.div
         style={{ scale }}
         className="aspect-video relative inset-0 w-full h-full overflow-hidden rounded-lg"

@@ -32,9 +32,11 @@ import PageHeader from "./sections/PageHeader";
 import PartnersRollover from "./sections/PartnersRollover";
 import HotspotImageCarousel from "./sections/HotspotImageCarousel";
 import Grid from "./sections/Grid";
+import { Divider } from "./sections/Divider";
 
 const SECTION_COMPONENTS: Record<string, FC<any>> = {
   cta: CTABlock,
+  divider: Divider,
   awardsAccordion: AwardsSection,
   hero: HeroBlock,
   imageLinkCards: ImageLinkCards,
@@ -114,12 +116,7 @@ export function PageBuilder({
         return (
           <SectionWrapper
             key={`${block._type}-${block._key}`}
-            type={block._type}
-            _key={block._key}
-            removeMarginTop={block.removeMarginTop}
-            removeMarginBottom={block.removeMarginBottom}
-            colorScheme={block.colorScheme}
-            hideOn={block.hideOn}
+            {...block}
             dataSanity={createDataAttribute({
               id: id,
               baseUrl: studioUrl,

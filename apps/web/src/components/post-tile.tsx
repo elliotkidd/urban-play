@@ -41,11 +41,11 @@ export default function PostTile({
   return (
     <Link
       href={processUrl(post)}
-      className={twMerge("block not-prose group", className)}
+      className={twMerge("block not-prose group space-y-fluid-xs", className)}
     >
       <div
         className={twMerge(
-          "relative mb-2 rounded-xl overflow-hidden aspect-square",
+          "relative rounded-xl overflow-hidden aspect-square",
           image_aspect === "square" && "lg:aspect-square",
           image_aspect === "portrait" && "lg:aspect-portrait",
           image_aspect === "landscape" && "lg:aspect-landscape",
@@ -76,7 +76,7 @@ export default function PostTile({
           </span>
         )}
       </div>
-      <h3 className="text-lg font-bold mb-4 leading-[120%]">{title}</h3>
+      <h3 className="text-lg font-bold leading-[120%]">{title}</h3>
     </Link>
   );
 }

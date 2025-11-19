@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@workspace/ui/components/accordion";
-import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -31,6 +25,7 @@ import { useTransitionRouter } from "next-view-transitions";
 import PageAnimation from "./PageAnimation";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { ChevronLeftIcon } from "lucide-react";
 
 const DURATION = 0.35;
 const DELAY = 0.15;
@@ -151,8 +146,8 @@ function MenuItemLink({
   return (
     <Link
       className={cn(
-        "select-none leading-none outline-none items-center text-center text-nowrap hover:opacity-100 transition-all duration-500",
-        pathname !== item.href && "opacity-60",
+        "select-none leading-none outline-none items-center text-center text-nowrap transition-all duration-500 lg:hover:opacity-100",
+        pathname !== item.href && "lg:opacity-60",
         className,
       )}
       aria-label={`Link to ${item.title ?? item.href}`}
@@ -170,47 +165,25 @@ function MenuItemLink({
   );
 }
 
-function MobileNavbarAccordionColumn({
-  column,
-  setIsOpen,
-}: {
-  column: any;
-  setIsOpen: (isOpen: boolean) => void;
-}) {
-  if (column._type !== "navbarColumn") return null;
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+};
 
-  const router = useTransitionRouter();
-
-  return (
-    <AccordionItem value={column.title ?? column._key} className="border-b-0">
-      <AccordionTrigger className="py-0 font-bold text-xl hover:no-underline hover:bg-accent hover:text-accent-foreground pr-2 rounded-md">
-        <Link
-          href={column.url?.href ?? "#"}
-          onClick={(e) => {
-            e.preventDefault();
-            router.push((column.url?.href as string) ?? "/", {
-              onTransitionReady: PageAnimation,
-            });
-          }}
-        >
-          {column.title}
-        </Link>
-      </AccordionTrigger>
-      <AccordionContent className="mt-2 pb-0 space-y-2">
-        {column.links?.map((item: any) => (
-          <MenuItemLink
-            key={item._key}
-            item={{
-              href: item.href ?? "",
-              title: item.name ?? "",
-            }}
-            className="text-xl px-4 font-bold leading-[120%] block text-left"
-          />
-        ))}
-      </AccordionContent>
-    </AccordionItem>
-  );
-}
+const slideTransition = {
+  x: { type: "spring", stiffness: 300, damping: 30 },
+  opacity: { duration: 0.2 },
+};
 
 const menuVariants = {
   open: {
@@ -257,13 +230,42 @@ function MobileNavbar({
 }) {
   const { columns, buttons } = navbarData ?? {};
   const [isOpen, setIsOpen] = useState(false);
+  const [activeColumn, setActiveColumn] = useState<string | null>(null);
+  const [direction, setDirection] = useState(0);
 
   const path = usePathname();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: This is intentional
   useEffect(() => {
     setIsOpen(false);
+    setActiveColumn(null);
+    setDirection(0);
   }, [path]);
+
+  // Reset drill-down state when menu closes
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveColumn(null);
+      setDirection(0);
+    }
+  }, [isOpen]);
+
+  const handleColumnClick = (columnKey: string) => {
+    setDirection(1);
+    setActiveColumn(columnKey);
+  };
+
+  const handleBackClick = () => {
+    setDirection(-1);
+    setActiveColumn(null);
+  };
+
+  const activeColumnData = Array.isArray(columns)
+    ? columns.find(
+        (col: NavBarColumnType | NavBarLinkType) =>
+          col._type === "navbarColumn" && col._key === activeColumn,
+      )
+    : null;
 
   return (
     <header id="mobile-navbar" style={headerStyle}>
@@ -285,36 +287,109 @@ function MobileNavbar({
               animate="open"
               exit="closed"
               variants={menuContentVariants}
-              className="flex-1 flex flex-col overflow-hidden"
+              className="flex-1 flex flex-col overflow-hidden relative"
             >
-              <Accordion
-                type="single"
-                collapsible
-                className="gap-[10px] flex-1 flex flex-col justify-center p-2.5"
-              >
-                {Array.isArray(columns) &&
-                  columns?.map(
-                    (
-                      column: NavBarLinkType | NavBarColumnType,
-                      index: number,
-                    ) => {
-                      const { name, _key, url } = column as NavBarLinkType;
-                      return column._type === "navbarColumn" ? (
-                        <MobileNavbarAccordionColumn
-                          key={`column-${column._key}`}
-                          column={column}
-                          setIsOpen={setIsOpen}
-                        />
-                      ) : (
-                        <NavbarColumnLink
-                          key={`column-link-${name}-${_key}`}
-                          column={column}
-                          className="text-xl font-bold leading-[120%] block"
-                        />
-                      );
-                    },
+              <div className="flex-1 flex flex-col justify-center p-2.5 overflow-hidden relative">
+                <AnimatePresence mode="wait" custom={direction}>
+                  {!activeColumn ? (
+                    <motion.div
+                      key="main-menu"
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={slideTransition}
+                      className="flex flex-col gap-fluid-xs"
+                    >
+                      {Array.isArray(columns) &&
+                        columns?.map(
+                          (
+                            column: NavBarLinkType | NavBarColumnType,
+                            index: number,
+                          ) => {
+                            if (column._type === "navbarColumn") {
+                              const columnData = column as NavBarColumnType;
+                              return (
+                                <button
+                                  key={`column-${column._key}`}
+                                  onClick={() => handleColumnClick(column._key)}
+                                  className="font-bold text-left hover:bg-accent hover:text-accent-foreground rounded-md transition-colors flex items-center justify-between text-[35px] leading-[95%] font-heading uppercase"
+                                >
+                                  <span>{columnData.title}</span>
+                                  <span className="relative flex-shrink-0 h-[20px] w-[20px]">
+                                    <span
+                                      className="absolute w-full h-0.5 bg-text transition-[background-color,transform] duration-500 top-1/2 -translate-x-1/2 rotate-180 group-data-[state=open]/trigger:rotate-0 lg:group-data-[state=open]/trigger:bg-white lg:group-hover:bg-white"
+                                      style={{
+                                        transition:
+                                          "background-color 0.5s, transform 0.5s",
+                                      }}
+                                    ></span>
+                                    <span
+                                      className="absolute w-full h-0.5 bg-text transition-[background-color,transform] duration-500 top-1/2 -translate-x-1/2 rotate-[270deg] group-data-[state=open]/trigger:rotate-0 lg:group-data-[state=open]/trigger:bg-white lg:group-hover:bg-white"
+                                      style={{
+                                        transition:
+                                          "background-color 0.5s, transform 0.5s",
+                                      }}
+                                    ></span>
+                                  </span>
+                                </button>
+                              );
+                            }
+                            const { name, _key } = column as NavBarLinkType;
+                            return (
+                              <NavbarColumnLink
+                                key={`column-link-${name}-${_key}`}
+                                column={column}
+                                className="text-[35px] leading-[95%] font-heading uppercase"
+                              />
+                            );
+                          },
+                        )}
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key={`submenu-${activeColumn}`}
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={slideTransition}
+                      className="flex flex-col items-start gap-[18px] h-full text-left"
+                    >
+                      <button
+                        onClick={handleBackClick}
+                        className="text-[18px] font-semibold leading-none text-left my-fluid-sm transition-colors flex items-center gap-1.5"
+                      >
+                        <ChevronLeftIcon className="w-5 h-5" />
+                        <span>Back</span>
+                      </button>
+                      {activeColumnData &&
+                        activeColumnData._type === "navbarColumn" && (
+                          <>
+                            {activeColumnData.url?.href && (
+                              <NavbarColumnLink
+                                column={activeColumnData}
+                                className="text-[30px]"
+                              />
+                            )}
+                            {activeColumnData.links?.map((item: any) => (
+                              <MenuItemLink
+                                key={item._key}
+                                item={{
+                                  href: item.url?.href ?? item.href ?? "",
+                                  title: item.name ?? "",
+                                }}
+                                className="text-[30px] font-bold leading-none"
+                              />
+                            ))}
+                          </>
+                        )}
+                    </motion.div>
                   )}
-              </Accordion>
+                </AnimatePresence>
+              </div>
               <SanityButtons
                 buttons={buttons}
                 className="flex flex-col gap-4 p-2.5"
@@ -352,8 +427,8 @@ function NavbarColumnLink({
       }}
       target={url?.openInNewTab ? "_blank" : "_self"}
       className={cn(
-        "text-nowrap font-medium hover:opacity-100 transition-opacity duration-500",
-        pathname !== url?.href && "opacity-60",
+        "text-nowrap font-medium transition-opacity duration-500 lg:hover:opacity-100",
+        pathname !== url?.href && "lg:opacity-60",
         className,
       )}
     >

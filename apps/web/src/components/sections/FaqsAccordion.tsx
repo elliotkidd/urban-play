@@ -18,10 +18,7 @@ export function FAQsAccordion({
   return (
     <motion.div
       {...sectionAnimationConfig}
-      className={twMerge(
-        "wrapper py-fluid-sm",
-        smallWrapper && "wrapper--small",
-      )}
+      className={twMerge("wrapper", smallWrapper && "wrapper--small")}
     >
       <div className="flex justify-between prose mb-fluid-sm">
         <h2 className="h2">{title}</h2>
@@ -29,29 +26,31 @@ export function FAQsAccordion({
       <Accordion
         type="single"
         collapsible
-        className="w-full bg-[#F3F3F3] rounded-lg overflow-hidden"
+        className="lg:w-full bg-[#F3F3F3] rounded-lg overflow-hidden -mx-fluid-xs w-screen lg:mx-0"
       >
         {faqs?.map((faq, index: number) => {
           return (
-            <AccordionItem
-              value={faq._id}
-              key={`AccordionItem-${faq._id}-${index}`}
-              className={twMerge(
-                "accordion-item transition-colors duration-500 hover:text-white data-[state=open]:text-white hover:bg-bottle-green data-[state=open]:bg-bottle-green",
+            <>
+              <AccordionItem
+                value={faq._id}
+                key={`AccordionItem-${faq._id}-${index}`}
+              >
+                <AccordionTrigger className="">{faq.title}</AccordionTrigger>
+                <AccordionContent className="">
+                  {faq.answer && (
+                    <RichText
+                      richText={faq.answer}
+                      className="prose-white mt-fluid-xs lg:mt-fluid-md max-w-2xl"
+                    />
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+              {index !== faqs.length - 1 && (
+                <div className="px-4 lg:hidden opacity-10">
+                  <div className="h-px bg-text w-full" />
+                </div>
               )}
-            >
-              <AccordionTrigger className="text-[15px] leading-none hover:no-underline group">
-                {faq.title}
-              </AccordionTrigger>
-              <AccordionContent className="">
-                {faq.answer && (
-                  <RichText
-                    richText={faq.answer}
-                    className="prose-white mt-fluid max-w-2xl"
-                  />
-                )}
-              </AccordionContent>
-            </AccordionItem>
+            </>
           );
         })}
       </Accordion>

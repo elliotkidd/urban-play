@@ -10,13 +10,13 @@ export default function SectionHeader({
   return (
     <div
       className={twMerge(
-        "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-xs",
+        "flex flex-col w-full lg:flex-row lg:justify-between items-start prose gap-fluid-sm",
         className,
       )}
     >
       {title && (
         <h2
-          className="text-balance"
+          className="text-balance mb-0"
           dangerouslySetInnerHTML={{ __html: title }}
         />
       )}

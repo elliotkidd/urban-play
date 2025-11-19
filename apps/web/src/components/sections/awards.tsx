@@ -2,9 +2,7 @@
 
 import { AwardsAccordionProps } from "@/lib/sanity/queries/sections";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Button } from "@/components/ui/Button";
 
 const itemVariants = {
   hidden: {
@@ -29,12 +27,7 @@ export function AwardsSection({
   smallWrapper,
 }: AwardsAccordionProps) {
   return (
-    <div
-      className={twMerge(
-        "wrapper py-fluid-sm",
-        smallWrapper && "wrapper--small",
-      )}
-    >
+    <div className={twMerge("wrapper", smallWrapper && "wrapper--small")}>
       <div className="flex flex-col lg:flex-row justify-between prose mb-fluid-sm">
         <h2 className="">{title}</h2>
         {awards && awards.length > 0 && (

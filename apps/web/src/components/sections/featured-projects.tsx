@@ -21,14 +21,14 @@ export default function FeaturedProjectsSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid lg:space-y-fluid-lg overflow-hidden",
+        "wrapper space-y-fluid-md lg:space-y-fluid-lg",
         smallWrapper && "wrapper--small",
       )}
     >
       <SectionHeader {...sectionHeader} />
       <motion.ul
         {...opacityStaggerChildrenConfig}
-        className="grid grid-cols-1 gap-x-4 gap-y-fluid lg:grid-cols-3"
+        className="grid grid-cols-1 gap-x-4 gap-y-fluid-md lg:grid-cols-3"
       >
         {projects[0] && (
           <ProjectTile

@@ -194,31 +194,32 @@ export default function ParagraphSection({
     <motion.div
       {...sectionAnimationConfig}
       className={cn(
-        "wrapper py-fluid-xs",
+        "wrapper",
         smallWrapper && "wrapper--small",
-        largeSpacing ? "space-y-fluid-xl" : "space-y-fluid-md",
+        largeSpacing
+          ? " space-y-fluid-sm lg:space-y-fluid-xl"
+          : "lg:space-y-fluid-md",
       )}
     >
       <div
         className={cn(
-          "flex md:flex-row w-full justify-between gap-fluid-sm prose",
-          !(buttons && buttons.length === 1 && !annotations)
-            ? "flex-col"
-            : "flex-row",
+          "flex flex-col md:flex-row w-full justify-between gap-fluid-sm prose",
         )}
       >
         {topText && (
           <RichText
             richText={topText}
             className={cn(
-              "max-w-[770px]",
+              "max-w-[770px] mb-fluid-sm lg:mb-0",
               !buttons && !annotations && "max-w-p-xl",
             )}
           />
         )}
-        {buttons && !annotations && <SanityButtons buttons={buttons} />}
+        {buttons && !annotations && (
+          <SanityButtons buttons={buttons} className="hidden lg:flex" />
+        )}
         {annotations && !buttons && (
-          <div className="w-80 flex-none space-y-fluid-sm">
+          <div className="w-80 flex-none space-y-fluid-xs lg:space-y-fluid-sm hidden lg:block">
             <ul
               className={cn(
                 "list-none not-prose text-xs",
@@ -227,7 +228,7 @@ export default function ParagraphSection({
                   : "space-y-1",
               )}
             >
-              {annotations.map(({ top, bottom, _key }, index) => {
+              {annotations.map(({ top, bottom, _key }) => {
                 return (
                   <Fragment key={_key}>
                     {annotationDirection === "horizontal" ? (
@@ -267,7 +268,41 @@ export default function ParagraphSection({
           </div>
         )}
       </div>
-      {richText && <RichText richText={richText} className="max-w-[770px]" />}
+      {richText && (
+        <RichText
+          richText={richText}
+          className="max-w-[770px] mb-fluid-lg lg:mb-0"
+        />
+      )}
+      {buttons && !annotations && (
+        <SanityButtons buttons={buttons} className="flex lg:hidden" />
+      )}
+      {annotations && !buttons && (
+        <div className="space-y-fluid-xs lg:space-y-fluid-sm lg:hidden uppercase">
+          <ul className={cn("list-none not-prose text-xs space-y-fluid-xs")}>
+            {annotations.map(({ top, bottom, _key }) => {
+              return (
+                <li key={_key} className="leading-none space-y-2.5 text-text">
+                  <span className="block">{top}</span>
+                  <span className="block font-heading text-[35px]">
+                    {bottom}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+          {downloadableFile && recipients && (
+            <GoogleReCaptchaProvider
+              reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}
+            >
+              <SignupForDownload
+                downloadableFile={downloadableFile}
+                recipients={recipients}
+              />
+            </GoogleReCaptchaProvider>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }

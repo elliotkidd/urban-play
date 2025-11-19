@@ -32,8 +32,12 @@ export type SectionHeaderProps = TypeFromSelection<
 const SECTION_SETTINGS_FRAGMENT = {
   ...REMOVE_MARGIN_FRAGMENTS,
   colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
-  padding: q.string(),
+  paddingTopMobile: q.string(),
+  paddingBottomMobile: q.string(),
+  paddingTopDesktop: q.string(),
+  paddingBottomDesktop: q.string(),
   smallWrapper: q.boolean(),
+  roundBottom: q.boolean(),
   hideOn: q("hideOn[]", { isArray: true })
     .deref()
     .grab(LINK_REFERENCE_FRAGMENT)
@@ -59,6 +63,16 @@ const HERO_FRAGMENT = {
 } satisfies Selection;
 
 export type HeroProps = TypeFromSelection<typeof HERO_FRAGMENT>;
+
+const dividerFragment = {
+  _type: z.literal("divider"),
+  _key: q.string(),
+  hideOnDesktop: q.boolean(),
+  hideOnMobile: q.boolean(),
+  ...SECTION_SETTINGS_FRAGMENT,
+} satisfies Selection;
+
+export type DividerProps = TypeFromSelection<typeof dividerFragment>;
 
 export const PAGE_HEADER_FRAGMENT = {
   _type: q.literal("pageHeader"),
@@ -334,6 +348,8 @@ const TWO_COLUMN_CONTENT_FRAGMENT = {
       _type: q.string(),
     },
   }),
+  hideOnDesktop: q.boolean(),
+  hideOnMobile: q.boolean(),
   alignCentre: q.boolean(),
   columnRatio: q.literal("5050").or(q.literal("2575")).or(q.literal("7525")),
   gap: q.string(),
@@ -578,6 +594,7 @@ const SECTIONS_LIST_SELECTION = {
   "_type == 'partnersRollover'": PARTNERS_ROLLOVER_FRAGMENT,
   "_type == 'hotspotImageCarousel'": IMAGE_WITH_PRODUCT_HOTSPOTS_FRAGMENT,
   "_type == 'grid'": GRID_FRAGMENT,
+  "_type == 'divider'": dividerFragment,
 };
 
 export const SECTIONS_FRAGMENT = q("pageBuilder[]", {

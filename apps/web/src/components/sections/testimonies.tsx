@@ -22,11 +22,11 @@ export default function TestimoniesSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs space-y-fluid overflow-hidden",
+        "wrapper overflow-hidden space-y-fluid-sm",
         smallWrapper && "wrapper--small",
       )}
     >
-      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start mb-12 gap-fluid">
+      <div className="flex flex-col w-full lg:flex-row lg:justify-between items-start gap-fluid">
         {title && (
           <h2 className="max-w-section-heading text-balance text-lg font-bold normal-case">
             {title}
@@ -35,7 +35,7 @@ export default function TestimoniesSection({
         {buttons && (
           <SanityButtons
             buttons={buttons}
-            className="flex items-center gap-2"
+            className="hidden lg:flex items-center gap-2"
           />
         )}
       </div>
@@ -53,7 +53,7 @@ export default function TestimoniesSection({
           onAfterInit={(swiper) => {
             swiperRef.current = swiper;
           }}
-          className="overflow-visible featured-projects-swiper mb-fluid-lg"
+          className="overflow-visible featured-projects-swiper"
         >
           {testimonies.map((testimony: any, i: number) => {
             const {
@@ -64,7 +64,7 @@ export default function TestimoniesSection({
             return (
               <SwiperSlide
                 key={_id + i}
-                className="space-y-fluid bg-background flex flex-col items-start justify-between"
+                className="space-y-fluid-sm bg-background flex flex-col items-start justify-between"
                 style={{ height: "auto", display: "flex" }}
               >
                 <blockquote className="max-w-section-heading text-balance font-bold text-lg leading-none">

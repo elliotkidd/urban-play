@@ -15,13 +15,11 @@ export default function IconMarqueeSection({
     <motion.div
       {...sectionAnimationConfig}
       className={twMerge(
-        "wrapper py-fluid-xs",
+        "wrapper space-y-fluid-md",
         smallWrapper && "wrapper--small",
       )}
     >
-      {sectionHeader && (
-        <SectionHeader {...sectionHeader} className="mb-fluid" />
-      )}
+      {sectionHeader && <SectionHeader {...sectionHeader} className="" />}
       <Marquee autoFill className="!overflow-visible">
         {icons &&
           icons.length > 0 &&
