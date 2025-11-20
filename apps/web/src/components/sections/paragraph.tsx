@@ -194,11 +194,9 @@ export default function ParagraphSection({
     <motion.div
       {...sectionAnimationConfig}
       className={cn(
-        "wrapper",
+        "wrapper space-y-fluid-sm",
         smallWrapper && "wrapper--small",
-        largeSpacing
-          ? " space-y-fluid-sm lg:space-y-fluid-xl"
-          : "lg:space-y-fluid-md",
+        largeSpacing ? "lg:space-y-fluid-xl" : "lg:space-y-fluid-md",
       )}
     >
       <div
@@ -284,7 +282,7 @@ export default function ParagraphSection({
               return (
                 <li key={_key} className="leading-none space-y-2.5 text-text">
                   <span className="block">{top}</span>
-                  <span className="block font-heading text-[35px]">
+                  <span className="block font-heading text-[25px]">
                     {bottom}
                   </span>
                 </li>

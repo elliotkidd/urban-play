@@ -19,6 +19,9 @@ export const author = defineType({
       name: "image",
       type: "image",
       title: "Image",
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
       name: "yearsExperience",

@@ -31,7 +31,7 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "accordion-trigger group group/trigger flex gap-4 flex-1 px-fluid-xs py-fluid-md lg:p-4 justify-between transition-all text-left [&[data-state=open]>svg]:rotate-180 lg:[&[data-state=open]>h3]:text-white text-[18px] not-prose font-normal leading-none hover:no-underline group items-start lg:items-center",
+        "accordion-trigger group group/trigger flex gap-4 flex-1 px-fluid-xs py-fluid-sm lg:p-4 justify-between transition-all text-left [&[data-state=open]>svg]:rotate-180 lg:[&[data-state=open]>h3]:text-white text-[18px] not-prose font-normal leading-none hover:no-underline group items-start lg:items-center",
         className,
       )}
       {...props}

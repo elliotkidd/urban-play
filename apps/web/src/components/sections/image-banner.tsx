@@ -25,8 +25,8 @@ export function ImageBannerSection({
       )}
       <div
         className={twMerge(
-          "wrapper py-fluid-xs relative",
-          !containImage && "flex h-full items-start",
+          "wrapper py-fluid-xs relative hidden",
+          !containImage && "lg:flex h-full items-start",
           smallWrapper && "wrapper--small",
         )}
       >

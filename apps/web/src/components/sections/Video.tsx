@@ -37,7 +37,7 @@ export default function VideoSection({
     <div
       ref={ref}
       className={twMerge(
-        "relative",
+        "relative space-y-fluid-sm",
         smallWrapper && "wrapper--small",
         contain && "wrapper",
       )}
@@ -49,7 +49,7 @@ export default function VideoSection({
       >
         {title && (
           <h2
-            className="text-balance"
+            className="text-balance mb-0"
             dangerouslySetInnerHTML={{ __html: title }}
           />
         )}
