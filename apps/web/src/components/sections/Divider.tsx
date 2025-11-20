@@ -1,13 +1,7 @@
-import { cn } from "@workspace/ui/lib/utils";
-import React from "react";
-
-import type { DividerProps } from "@/lib/sanity/queries/sections";
-
-export function Divider(sectionSettings: DividerProps) {
-  const { colorScheme } = sectionSettings;
+export function Divider() {
   return (
-    <div className={cn(colorScheme && `color-scheme-${colorScheme}`)}>
-      <hr className="h-px bg-border" />
+    <div className="wrapper opacity-50">
+      <hr className="h-px bg-foreground" />
     </div>
   );
 }
