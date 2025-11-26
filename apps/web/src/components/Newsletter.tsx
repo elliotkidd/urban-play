@@ -163,7 +163,7 @@ const Newsletter = ({ data = {} }) => {
 
   return (
     <div className="w-full">
-      <h4 className="text-sm mb-fluid-xs font-semibold">Join our newsletter</h4>
+      <h4 className="text-sm mb-2">Join our newsletter</h4>
       {!error && !success && (
         <form
           className="form text-left"

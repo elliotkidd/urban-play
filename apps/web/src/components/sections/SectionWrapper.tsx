@@ -166,7 +166,7 @@ function SectionWrapper({
         hideOnPath && "hidden",
         hideOnMobile && "hidden lg:block",
         hideOnDesktop && "lg:hidden",
-        _type === "hero" && "h-auto lg:h-screen relative overflow-hidden",
+        _type === "hero" && "h-screen relative overflow-hidden",
         _type === "imageBanner" && !containImage && "lg:h-screen",
         className,
       )}

@@ -137,14 +137,14 @@ export function FooterSection({ data }: { data: FooterType }) {
 
   return (
     <footer
-      className="h-screen lg:h-[60dvh]"
+      className="lg:h-[60dvh]"
       style={{
         clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0)",
         ...getColorSchemeStyle(colorScheme),
       }}
     >
-      <div className="h-screen lg:h-[60dvh] w-full bottom-0 fixed bg-background text-text flex">
-        <div className="wrapper py-fluid-xs flex flex-col justify-between flex-1 mt-fluid-lg lg:mt-0">
+      <div className="lg:h-[60dvh] w-full bottom-0 lg:fixed bg-background text-text flex">
+        <div className="wrapper py-fluid-xs gap-fluid-sm flex flex-col justify-between flex-1 mt-fluid-lg lg:mt-0">
           <div className="grid lg:grid-cols-9 gap-fluid-sm">
             <div className="lg:col-span-2">
               <FooterLogo className="w-[190px] lg:w-[224px]" />

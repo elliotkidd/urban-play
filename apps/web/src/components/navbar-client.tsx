@@ -136,9 +136,11 @@ interface MenuItem {
 function MenuItemLink({
   item,
   className,
+  onNavigate,
 }: {
   item: MenuItem;
   className?: string;
+  onNavigate?: () => void;
 }) {
   const pathname = usePathname();
   const router = useTransitionRouter();
@@ -154,6 +156,7 @@ function MenuItemLink({
       scroll={false}
       onClick={(e) => {
         e.preventDefault();
+        onNavigate?.();
         router.push((item.href as string) ?? "/", {
           onTransitionReady: PageAnimation,
         });
@@ -185,7 +188,7 @@ const slideTransition = {
   opacity: { duration: 0.2 },
 };
 
-const menuVariants = {
+const menuVariants = (isNavigating: boolean) => ({
   open: {
     height: "calc(100vh - 8rem)",
     transition: {
@@ -196,16 +199,18 @@ const menuVariants = {
   },
   closed: {
     height: "0",
-    transition: {
-      duration: 0.5,
-      delay: 0.5,
-      type: "tween",
-      ease: "easeOut",
-    },
+    transition: isNavigating
+      ? { duration: 0 }
+      : {
+          duration: 0.5,
+          delay: 0.5,
+          type: "tween",
+          ease: "easeOut",
+        },
   },
-};
+});
 
-const menuContentVariants = {
+const menuContentVariants = (isNavigating: boolean) => ({
   open: {
     opacity: 1,
     transition: {
@@ -215,11 +220,9 @@ const menuContentVariants = {
   },
   closed: {
     opacity: 0,
-    transition: {
-      duration: 0.5,
-    },
+    transition: isNavigating ? { duration: 0 } : { duration: 0.5 },
   },
-};
+});
 
 function MobileNavbar({
   navbarData,
@@ -232,6 +235,7 @@ function MobileNavbar({
   const [isOpen, setIsOpen] = useState(false);
   const [activeColumn, setActiveColumn] = useState<string | null>(null);
   const [direction, setDirection] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const path = usePathname();
 
@@ -240,6 +244,7 @@ function MobileNavbar({
     setIsOpen(false);
     setActiveColumn(null);
     setDirection(0);
+    setIsNavigating(false);
   }, [path]);
 
   // Reset drill-down state when menu closes
@@ -279,14 +284,14 @@ function MobileNavbar({
             initial="closed"
             animate="open"
             exit="closed"
-            variants={menuVariants}
+            variants={menuVariants(isNavigating)}
             className="flex"
           >
             <motion.div
               initial="closed"
               animate="open"
               exit="closed"
-              variants={menuContentVariants}
+              variants={menuContentVariants(isNavigating)}
               className="flex-1 flex flex-col overflow-hidden relative"
             >
               <div className="flex-1 flex flex-col justify-center p-fluid-xs overflow-hidden relative">
@@ -342,6 +347,7 @@ function MobileNavbar({
                                 key={`column-link-${name}-${_key}`}
                                 column={column}
                                 className="text-[35px] leading-[95%] font-heading uppercase"
+                                onNavigate={() => setIsNavigating(true)}
                               />
                             );
                           },
@@ -372,6 +378,7 @@ function MobileNavbar({
                               <NavbarColumnLink
                                 column={activeColumnData}
                                 className="text-[30px]"
+                                onNavigate={() => setIsNavigating(true)}
                               />
                             )}
                             {activeColumnData.links?.map((item: any) => (
@@ -382,6 +389,7 @@ function MobileNavbar({
                                   title: item.name ?? "",
                                 }}
                                 className="text-[30px] font-bold leading-none"
+                                onNavigate={() => setIsNavigating(true)}
                               />
                             ))}
                           </>
@@ -406,9 +414,11 @@ function MobileNavbar({
 function NavbarColumnLink({
   column,
   className,
+  onNavigate,
 }: {
   column: NavBarLinkType | NavBarColumnType;
   className?: string;
+  onNavigate?: () => void;
 }) {
   if (column._type !== "navbarLink") return null;
 
@@ -421,6 +431,7 @@ function NavbarColumnLink({
       href={url?.href ?? "#"}
       onClick={(e) => {
         e.preventDefault();
+        onNavigate?.();
         router.push((url?.href as string) ?? "/", {
           onTransitionReady: PageAnimation,
         });
