@@ -158,46 +158,40 @@ export default function TwoColumnContentSection({
         alignCentre && "items-center",
       )}
     >
-      {left &&
-        left.map((block) => {
-          const Component = BLOCK_COMPONENTS[block._type] as ComponentType<any>;
+      <div
+        className={twMerge(
+          `space-y-fluid-sm`,
+          columnRatio === "7525" && "lg:col-span-2",
+        )}
+      >
+        {left &&
+          left.map((block) => {
+            const Component = BLOCK_COMPONENTS[
+              block._type
+            ] as ComponentType<any>;
 
-          if (!Component)
-            return (
-              <MissingBlock
-                block={block}
-                className={twMerge(columnRatio === "7525" && "lg:col-span-2")}
-              />
-            );
+            if (!Component) return <MissingBlock block={block} />;
 
-          return (
-            <Component
-              key={block._key}
-              {...block}
-              className={twMerge(columnRatio === "7525" && "lg:col-span-2")}
-            />
-          );
-        })}
-      {right &&
-        right.map((block) => {
-          const Component = BLOCK_COMPONENTS[block._type] as ComponentType<any>;
+            return <Component key={block._key} {...block} />;
+          })}
+      </div>
+      <div
+        className={twMerge(
+          `space-y-fluid-sm`,
+          columnRatio === "2575" && "lg:col-span-2",
+        )}
+      >
+        {right &&
+          right.map((block) => {
+            const Component = BLOCK_COMPONENTS[
+              block._type
+            ] as ComponentType<any>;
 
-          if (!Component)
-            return (
-              <MissingBlock
-                block={block}
-                className={twMerge(columnRatio === "2575" && "lg:col-span-2")}
-              />
-            );
+            if (!Component) return <MissingBlock block={block} />;
 
-          return (
-            <Component
-              key={block._key}
-              {...block}
-              className={twMerge(columnRatio === "2575" && "lg:col-span-2")}
-            />
-          );
-        })}
+            return <Component key={block._key} {...block} />;
+          })}
+      </div>
     </motion.div>
   );
 }
