@@ -12,7 +12,6 @@ import { PreviewBar } from "@/components/preview-bar";
 import { SanityLive } from "@/lib/sanity/live";
 import { Providers } from "../components/providers";
 import { Lenis } from "@/lib/lenis";
-import { LenisScrollReset } from "@/components/LenisScrollReset";
 import { fonts } from "./fonts";
 import { NavbarServer } from "@/components/navbar";
 import { NavbarSkeletonResponsive } from "@/components/navbar-client";
@@ -47,7 +46,6 @@ export default async function RootLayout({
           {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
           {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
           <Lenis root />
-          <LenisScrollReset />
           <Providers>
             <div className="bg-background">
               <Suspense fallback={<NavbarSkeletonResponsive />}>

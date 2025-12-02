@@ -5,6 +5,7 @@ import { Button } from "./ui/Button";
 import Link from "next/link";
 import PageAnimation from "./PageAnimation";
 import { useTransitionRouter } from "next-view-transitions";
+import { useLenisNavigation } from "@/hooks/use-lenis-navigation";
 
 type SanityButtonsProps = {
   buttons: SanityButtonProps[] | null;
@@ -24,6 +25,7 @@ export function SanityButtons({
   if (!buttons?.length) return null;
 
   const router = useTransitionRouter();
+  const { handleNavigation } = useLenisNavigation();
 
   return (
     <div className={twMerge("flex flex-col sm:flex-row gap-4", className)}>
@@ -33,6 +35,7 @@ export function SanityButtons({
             key={_key}
             onClick={(e) => {
               e.preventDefault();
+              handleNavigation();
               router.push((url?.href as string) ?? "/", {
                 onTransitionReady: PageAnimation,
               });
