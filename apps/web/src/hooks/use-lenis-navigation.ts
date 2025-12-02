@@ -26,18 +26,37 @@ export function useLenisNavigation() {
         window.scrollTo(0, 0);
       });
 
-      // Restart Lenis after a short delay to ensure DOM is ready
-      const timeoutId = setTimeout(() => {
-        if (lenis && isStoppedRef.current) {
+      // Restart Lenis - use multiple attempts for mobile reliability
+      // Always try to restart after route change (we stop it on navigation)
+      const restartLenis = () => {
+        if (!lenis) return;
+        
+        try {
           lenis.start();
           isStoppedRef.current = false;
+        } catch (e) {
+          // If start fails, it might already be running - that's okay
         }
-      }, 100);
+      };
+
+      // Try restarting after a short delay
+      const timeoutId1 = setTimeout(restartLenis, 150);
+      
+      // Also try after a longer delay for mobile (view transitions can be slower)
+      const timeoutId2 = setTimeout(restartLenis, 500);
+
+      // Also try on next frame as fallback
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          restartLenis();
+        });
+      });
 
       previousPathname.current = pathname;
 
       return () => {
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId1);
+        clearTimeout(timeoutId2);
       };
     }
   }, [pathname, lenis]);
