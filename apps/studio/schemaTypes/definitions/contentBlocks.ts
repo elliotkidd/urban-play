@@ -7,7 +7,7 @@ export const contentBlock = defineField({
   name: "contentBlock",
   title: "Content Block",
   type: "array",
-  validation: (rule) => rule.min(1).max(1),
+  // validation: (rule) => rule.min(1).max(1),
   of: [
     defineArrayMember({
       type: "object",
