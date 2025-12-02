@@ -8,7 +8,7 @@ import {
 
 import SanityImage from "../sanity-image";
 import { RichText } from "../richtext";
-import { ComponentType, FC } from "react";
+import { ComponentType, FC, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Accordion,
@@ -54,11 +54,8 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
       >
         {items?.map((item, index) => {
           return (
-            <>
-              <AccordionItem
-                value={item._key}
-                key={`AccordionItem-${item._key}-${index}`}
-              >
+            <Fragment key={`AccordionItem-${item._key}-${index}`}>
+              <AccordionItem value={item._key}>
                 <AccordionTrigger className="">{item.heading}</AccordionTrigger>
                 <AccordionContent className="">
                   {item.content && (
@@ -74,7 +71,7 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
                   <div className="h-px bg-text w-full" />
                 </div>
               )}
-            </>
+            </Fragment>
           );
         })}
       </Accordion>

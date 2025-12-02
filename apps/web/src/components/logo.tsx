@@ -4,15 +4,18 @@ import { useTransitionRouter } from "next-view-transitions";
 import Link from "next/link";
 import PageAnimation from "./PageAnimation";
 import { cn } from "@/lib/utils";
+import { useLenisNavigation } from "@/hooks/use-lenis-navigation";
 
 export function Logo({ className }: { className?: string }) {
   const router = useTransitionRouter();
+  const { handleNavigation } = useLenisNavigation();
   return (
     <Link
       href="/"
       className={cn("w-10 h-7", className)}
       onClick={(e) => {
         e.preventDefault();
+        handleNavigation();
         router.push("/", {
           onTransitionReady: PageAnimation,
         });

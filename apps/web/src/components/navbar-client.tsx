@@ -26,6 +26,7 @@ import PageAnimation from "./PageAnimation";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ChevronLeftIcon } from "lucide-react";
+import { useLenisNavigation } from "@/hooks/use-lenis-navigation";
 
 const DURATION = 0.35;
 const DELAY = 0.15;
@@ -144,6 +145,7 @@ function MenuItemLink({
 }) {
   const pathname = usePathname();
   const router = useTransitionRouter();
+  const { handleNavigation } = useLenisNavigation();
 
   return (
     <Link
@@ -156,6 +158,7 @@ function MenuItemLink({
       scroll={false}
       onClick={(e) => {
         e.preventDefault();
+        handleNavigation();
         onNavigate?.();
         router.push((item.href as string) ?? "/", {
           onTransitionReady: PageAnimation,
@@ -425,12 +428,14 @@ function NavbarColumnLink({
   const { url, name } = column as NavBarLinkType;
   const router = useTransitionRouter();
   const pathname = usePathname();
+  const { handleNavigation } = useLenisNavigation();
 
   return (
     <Link
       href={url?.href ?? "#"}
       onClick={(e) => {
         e.preventDefault();
+        handleNavigation();
         onNavigate?.();
         router.push((url?.href as string) ?? "/", {
           onTransitionReady: PageAnimation,
@@ -456,6 +461,7 @@ function NavbarColumn({
   if (column._type !== "navbarColumn") return null;
   const router = useTransitionRouter();
   const pathname = usePathname();
+  const { handleNavigation } = useLenisNavigation();
 
   const { title, links, url } = column as NavBarColumnType;
 
@@ -469,6 +475,7 @@ function NavbarColumn({
             href={url?.href ?? "#"}
             onClick={(e) => {
               e.preventDefault();
+              handleNavigation();
               router.push((url?.href as string) ?? "/", {
                 onTransitionReady: PageAnimation,
               });

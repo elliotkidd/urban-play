@@ -9,6 +9,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
+import { Fragment } from "react";
 
 export function FAQsAccordion({
   title,
@@ -30,11 +31,8 @@ export function FAQsAccordion({
       >
         {faqs?.map((faq, index: number) => {
           return (
-            <>
-              <AccordionItem
-                value={faq._id}
-                key={`AccordionItem-${faq._id}-${index}`}
-              >
+            <Fragment key={`AccordionItem-${faq._id}-${index}`}>
+              <AccordionItem value={faq._id}>
                 <AccordionTrigger className="">{faq.title}</AccordionTrigger>
                 <AccordionContent className="">
                   {faq.answer && (
@@ -50,7 +48,7 @@ export function FAQsAccordion({
                   <div className="h-px bg-text w-full" />
                 </div>
               )}
-            </>
+            </Fragment>
           );
         })}
       </Accordion>
