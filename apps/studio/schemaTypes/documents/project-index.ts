@@ -30,9 +30,9 @@ export const projectIndex = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "hero",
-      title: "Hero",
-      type: "hero",
+      name: "header",
+      title: "Header",
+      type: "pageHeader",
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({

@@ -41,6 +41,7 @@ export default async function ProjectsPage({
   const {
     colorScheme,
     header,
+    hero,
     description,
     solutions,
     pageBuilder,

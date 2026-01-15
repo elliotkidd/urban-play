@@ -44,7 +44,7 @@ const SECTION_SETTINGS_FRAGMENT = {
     .nullable(),
 } satisfies Selection;
 
-const HERO_FRAGMENT = {
+export const HERO_FRAGMENT = {
   _type: q.literal("heroSection"),
   _key: q.string(),
   title: q.string(),
