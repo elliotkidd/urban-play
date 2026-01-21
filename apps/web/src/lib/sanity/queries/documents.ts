@@ -230,8 +230,8 @@ export const projectsQuery = `{
       title,
     },
     "slug": slug.current,
-    seoImage {
-      "_ref": seoImage.asset._ref,
+    image {
+      "_ref": image.asset._ref,
       "_type": "image",
       "alt": asset->altText,
       asset-> {

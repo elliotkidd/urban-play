@@ -11,7 +11,10 @@
     "lint": "eslint . --fix",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "type": "sanity schema extract && sanity typegen generate --enforce-required-fields"
+    "type": "sanity schema extract && sanity typegen generate --enforce-required-fields",
+    "migrate:project-images": "sanity migration run copy-seoimage-to-image",
+    "migrate:project-images:dry-run": "sanity migration run copy-seoimage-to-image",
+    "migrate:project-images:execute": "sanity migration run copy-seoimage-to-image --no-dry-run"
   },
   "keywords": [
     "sanity"
