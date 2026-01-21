@@ -51,6 +51,15 @@ export const project = defineType({
       ],
     }),
     defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      group: GROUP.MAIN_CONTENT,
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: "solutions",
       type: "array",
       of: [{ type: "reference", to: [{ type: "solution" }] }],
@@ -75,14 +84,17 @@ export const project = defineType({
   preview: {
     select: {
       title: "title",
-      media: "seoImage",
+      media: "image",
       solutions: "solutions",
+      shortDescription: "shortDescription",
     },
-    prepare: ({ title, media, solutions }) => {
+    prepare: ({ title, media, solutions, shortDescription }) => {
+      const subtitle = shortDescription;
+
       return {
         title,
         media,
-        subtitle: solutions?.map((solution: any) => solution.title).join(", "),
+        subtitle,
       };
     },
   },
