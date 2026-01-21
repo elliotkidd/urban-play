@@ -310,7 +310,7 @@ export const projectsBySolutionQuery = `{
       title,
     },
     image {
-      "_ref": images.asset._ref,
+      "_ref": image.asset._ref,
       "_type": "image",
       "alt": asset->altText,
       asset-> {
