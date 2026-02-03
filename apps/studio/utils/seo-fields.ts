@@ -37,6 +37,14 @@ export const seoFields = [
     },
   }),
   defineField({
+    name: "seoCanonicalUrl",
+    title: "SEO canonical URL override",
+    description:
+      "This will override the canonical URL. If left blank it will inherit the URL from the page.",
+    type: "url",
+    group: GROUP.SEO,
+  }),
+  defineField({
     name: "seoNoIndex",
     title: "Do not index this page",
     description: "If checked, this content won't be indexed by search engines.",

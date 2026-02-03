@@ -54,11 +54,14 @@ export const SOCIALS_FRAGMENT: any = {
 };
 
 export const SEO_FRAGMENT: any = {
-  metaTitle: q.string(),
-  metaDesc: q.string(),
-  ogImage: q("ogImage.asset").deref().grabOne("url", q.string()),
-  noIndex: q.boolean(),
-  noFollow: q.boolean(),
+  seoTitle: q.string(),
+  seoDescription: q.string(),
+  ogTitle: q.string(),
+  ogDescription: q.string(),
+  seoImage: q("seoImage.asset").deref().grabOne("url", q.string()),
+  seoCanonicalUrl: q.string(),
+  seoNoIndex: q.boolean(),
+  seoNoFollow: q.boolean(),
 };
 
 export const TILE_FRAGMENT = {

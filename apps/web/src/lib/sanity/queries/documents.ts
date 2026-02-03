@@ -5,6 +5,7 @@ import {
   IMAGE_FRAGMENT,
   POST_TILE_FRAGMENT,
   TILE_FRAGMENT,
+  SEO_FRAGMENT,
 } from "./fragments";
 import { RICHTEXT_BLOCKS } from "./richText";
 import {
@@ -22,6 +23,7 @@ export const homePageQuery = q("*")
     _type: q.literal("homePage"),
     title: q.string(),
     pageBuilder: SECTIONS_FRAGMENT,
+    ...SEO_FRAGMENT,
   });
 
 export const pageQuery = q("*")
@@ -34,6 +36,7 @@ export const pageQuery = q("*")
     title: q.string(),
     slug: q.slug("slug"),
     pageBuilder: SECTIONS_FRAGMENT,
+    ...SEO_FRAGMENT,
   });
 
 export const projectIndexPageQuery = q("*")
@@ -54,6 +57,7 @@ export const projectIndexPageQuery = q("*")
     header: q("header").grab(PAGE_HEADER_FRAGMENT),
     pageBuilder: SECTIONS_FRAGMENT,
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+    ...SEO_FRAGMENT,
   });
 
 export const projectsQueryBySolution = q("*")
@@ -85,6 +89,7 @@ export const projectPageQuery = q("*")
     relatedProjects: q("*", { isArray: true })
       .filterByType("project")
       .grab(TILE_FRAGMENT),
+    ...SEO_FRAGMENT,
   });
 
 export type ProjectPage = InferType<typeof projectPageQuery>;
@@ -178,6 +183,7 @@ export const blogIndexPageQuery = q("*")
       }),
     pageBuilder: SECTIONS_FRAGMENT,
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
+    ...SEO_FRAGMENT,
   });
 
 export type BlogIndexPage = InferType<typeof blogIndexPageQuery>;

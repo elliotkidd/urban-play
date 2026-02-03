@@ -27,7 +27,7 @@ function getOgImage({ type, id }: OgImageOptions = {}): string {
 // }
 
 export function getMetaData(data: any): Metadata {
-  const { _type, seoDescription, seoTitle, slug, title, description, _id } =
+  const { _type,ogTitle, ogDescription, seoDescription, seoTitle, seoCanonicalUrl, seoNoIndex, seoNoFollow, slug, title, description, _id } =
     data ?? {};
 
   const baseUrl = getBaseUrl();
@@ -37,6 +37,8 @@ export function getMetaData(data: any): Metadata {
   const meta = {
     title: seoTitle ?? title ?? "",
     description: seoDescription ?? description ?? "",
+    ogTitle: ogTitle ?? seoTitle ?? title ?? "",
+    ogDescription: ogDescription ?? seoDescription ?? description ?? "",
   };
 
   const ogImage = getOgImage({
@@ -57,11 +59,15 @@ export function getMetaData(data: any): Metadata {
       card: "summary_large_image",
       images: [ogImage],
       creator: "@urbanplay",
-      title: meta.title,
-      description: meta.description,
+      title: meta.ogTitle,
+      description: meta.ogDescription,
     },
     alternates: {
-      canonical: pageUrl,
+      canonical: seoCanonicalUrl ?? pageUrl,
+    },
+    robots: {
+      index: !seoNoIndex,
+      follow: !seoNoFollow,
     },
     openGraph: {
       type: "website",
