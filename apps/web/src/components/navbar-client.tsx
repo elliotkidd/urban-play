@@ -191,6 +191,26 @@ const slideTransition = {
   opacity: { duration: 0.2 },
 };
 
+const columnContentVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+};
+
+const columnContentTransition = {
+  x: { type: "spring", stiffness: 300, damping: 30 },
+  opacity: { duration: 0.2 },
+};
+
 const menuVariants = (isNavigating: boolean) => ({
   open: {
     height: "calc(100vh - 8rem)",
@@ -277,6 +297,7 @@ function MobileNavbar({
 
   return (
     <header id="mobile-navbar" style={headerStyle}>
+      <div className="navbar-backdrop-mobile" />
       <nav className="flex w-full items-center justify-between gap-5">
         <Logo className="w-[50px]" />
         <MobileMenuTrigger isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -295,34 +316,37 @@ function MobileNavbar({
               animate="open"
               exit="closed"
               variants={menuContentVariants(isNavigating)}
-              className="flex-1 flex flex-col overflow-hidden relative"
+              className="flex-1 flex flex-col relative"
             >
-              <div className="flex-1 flex flex-col justify-center p-fluid-xs overflow-hidden relative">
+              <div
+                className="flex-1 overflow-hidden relative text-left"
+                data-lenis-prevent
+              >
                 <AnimatePresence mode="wait" custom={direction}>
                   {!activeColumn ? (
                     <motion.div
                       key="main-menu"
                       custom={direction}
-                      variants={slideVariants}
                       initial="enter"
                       animate="center"
                       exit="exit"
-                      transition={slideTransition}
-                      className="flex flex-col gap-fluid-xs"
+                      variants={columnContentVariants}
+                      transition={columnContentTransition}
+                      className={cn(
+                        "absolute inset-0 p-fluid-xs overflow-y-scroll",
+                        "space-y-fluid-xs",
+                      )}
                     >
                       {Array.isArray(columns) &&
                         columns?.map(
-                          (
-                            column: NavBarLinkType | NavBarColumnType,
-                            index: number,
-                          ) => {
+                          (column: NavBarLinkType | NavBarColumnType) => {
                             if (column._type === "navbarColumn") {
                               const columnData = column as NavBarColumnType;
                               return (
                                 <button
                                   key={`column-${column._key}`}
                                   onClick={() => handleColumnClick(column._key)}
-                                  className="font-bold text-left hover:bg-accent hover:text-accent-foreground rounded-md transition-colors flex items-center justify-between text-[35px] leading-[95%] font-heading uppercase"
+                                  className="font-bold text-left hover:bg-accent hover:text-accent-foreground rounded-md transition-colors flex items-center w-full justify-between text-[35px] leading-[95%] font-heading uppercase"
                                 >
                                   <span>{columnData.title}</span>
                                   <span className="relative flex-shrink-0 h-[20px] w-[20px]">
@@ -349,7 +373,7 @@ function MobileNavbar({
                               <NavbarColumnLink
                                 key={`column-link-${name}-${_key}`}
                                 column={column}
-                                className="text-[35px] leading-[95%] font-heading uppercase"
+                                className="text-[35px] leading-[95%] font-heading uppercase block"
                                 onNavigate={() => setIsNavigating(true)}
                               />
                             );
@@ -358,22 +382,26 @@ function MobileNavbar({
                     </motion.div>
                   ) : (
                     <motion.div
-                      key={`submenu-${activeColumn}`}
+                      key={`column-${activeColumn}`}
                       custom={direction}
-                      variants={slideVariants}
                       initial="enter"
                       animate="center"
                       exit="exit"
-                      transition={slideTransition}
-                      className="flex flex-col items-start gap-[18px] h-full text-left"
+                      variants={columnContentVariants}
+                      transition={columnContentTransition}
+                      className={cn(
+                        "absolute inset-0 p-fluid-xs overflow-y-scroll",
+                        "space-y-4",
+                      )}
                     >
                       <button
                         onClick={handleBackClick}
-                        className="text-[18px] font-semibold leading-none text-left my-fluid-sm transition-colors flex items-center gap-1.5"
+                        className="text-[18px] font-semibold leading-none text-left transition-colors flex items-center gap-1.5"
                       >
                         <ChevronLeftIcon className="w-5 h-5" />
                         <span>Back</span>
                       </button>
+                      <hr />
                       {activeColumnData &&
                         activeColumnData._type === "navbarColumn" && (
                           <>
@@ -391,7 +419,7 @@ function MobileNavbar({
                                   href: item.url?.href ?? item.href ?? "",
                                   title: item.name ?? "",
                                 }}
-                                className="text-[30px] font-bold leading-none"
+                                className="text-[30px] font-bold leading-none text-left block"
                                 onNavigate={() => setIsNavigating(true)}
                               />
                             ))}
@@ -554,7 +582,7 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
         <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
       ) : (
         <header id="navbar" style={headerStyle}>
-          <div className="absolute inset-0 bg-nav-bar-background/20 backdrop-blur-lg rounded-[10px]" />
+          <div className="navbar-backdrop-desktop" />
           <Logo className="w-[36px] flex items-center mr-5 z-10" />
           <DesktopNavbar navbarData={navbarData} />
         </header>

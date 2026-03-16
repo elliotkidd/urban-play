@@ -196,7 +196,7 @@ export default function ParagraphSection({
       className={cn(
         "wrapper space-y-fluid-sm",
         smallWrapper && "wrapper--small",
-        largeSpacing ? "lg:space-y-fluid-xl" : "lg:space-y-fluid-md",
+        largeSpacing ? "lg:space-y-fluid-xl" : "lg:space-y-fluid-sm",
       )}
     >
       <div
@@ -277,14 +277,12 @@ export default function ParagraphSection({
       )}
       {annotations && !buttons && (
         <div className="space-y-fluid-xs lg:space-y-fluid-sm lg:hidden uppercase">
-          <ul className={cn("list-none not-prose text-xs space-y-fluid-xs")}>
+          <ul className="list-none not-prose text-xs space-y-fluid-xs">
             {annotations.map(({ top, bottom, _key }) => {
               return (
                 <li key={_key} className="leading-none space-y-2.5 text-text">
-                  <span className="block">{top}</span>
-                  <span className="block font-heading text-[25px]">
-                    {bottom}
-                  </span>
+                  <span className="block text-body-copy">{top}</span>
+                  <span className="block text-text">{bottom}</span>
                 </li>
               );
             })}

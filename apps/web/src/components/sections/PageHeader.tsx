@@ -57,9 +57,9 @@ export default function PageHeader({
         )}
       </motion.div>
       <div className="absolute inset-0 bg-black/20" />
-      <div className="wrapper flex py-fluid-sm flex-col justify-between h-full lg:h-auto lg:grid lg:grid-cols-2 lg:gap-fluid-sm relative z-[1] prose">
+      <div className="wrapper flex py-fluid-sm flex-col justify-between h-full lg:h-auto lg:grid lg:grid-cols-2 lg:gap-fluid-sm relative z-[1] prose items-start">
         <div className="lg:hidden"></div>
-        <h2 className="text-[60px]">{title}</h2>
+        <h2 className="text-[60px] leading-none m-0">{title}</h2>
         <RichText richText={richText} />
       </div>
     </div>
