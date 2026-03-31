@@ -7,11 +7,13 @@ import { AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
 function MobileFilters({
-  solutions,
+  items,
+  basePath,
   loading = false,
   setLoading,
 }: {
-  solutions: LinkReferenceType[];
+  items: LinkReferenceType[];
+  basePath: string;
   loading?: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -21,20 +23,13 @@ function MobileFilters({
   const params = new URLSearchParams(searchParams);
   const router = useRouter();
 
-  const handleClearTags = () => {
+  const handleClick = (item: LinkReferenceType) => {
     setLoading(true);
-    params.delete("tags");
-    router.push(`/projects?${params.toString()}`, { scroll: false });
-    setLoading(false);
-  };
-
-  const handleClick = (solution: LinkReferenceType) => {
-    setLoading(true);
-    params.has("tags", solution.slug)
-      ? params.delete("tags", solution.slug)
-      : params.append("tags", solution.slug);
+    params.has("tags", item.slug)
+      ? params.delete("tags", item.slug)
+      : params.append("tags", item.slug);
     params.delete("page");
-    router.push(`/projects?${params.toString()}`, { scroll: false });
+    router.push(`${basePath}?${params.toString()}`, { scroll: false });
     setLoading(false);
   };
 
@@ -50,20 +45,18 @@ function MobileFilters({
       </Button>
       {isOpen && (
         <Fragment>
-          {solutions &&
-            solutions.map((solution: LinkReferenceType) => {
-              const { title, _id } = solution;
+          {items &&
+            items.map((item: LinkReferenceType) => {
+              const { title, _id } = item;
               return (
                 <Button
                   key={_id}
-                  onClick={() => handleClick(solution)}
+                  onClick={() => handleClick(item)}
                   disabled={loading}
                   className={cn(
                     "text-xs bg-nav-bar-background/20 p-4 rounded-lg text-text hover:bg-nav-bar-background/50",
-                    params.has("tags", solution.slug) &&
-                      "bg-nav-bar-background/50",
-                    params.get("tags") === solution.slug &&
-                      "bg-nav-bar-background/50",
+                    params.has("tags", item.slug) && "bg-nav-bar-background/50",
+                    params.get("tags") === item.slug && "bg-nav-bar-background/50",
                     loading && "animate-pulse",
                   )}
                 >
@@ -88,11 +81,13 @@ function MobileFilters({
 }
 
 function DesktopFilters({
-  solutions,
+  items,
+  basePath,
   loading = false,
   setLoading,
 }: {
-  solutions: LinkReferenceType[];
+  items: LinkReferenceType[];
+  basePath: string;
   loading?: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -100,37 +95,29 @@ function DesktopFilters({
   const params = new URLSearchParams(searchParams);
   const router = useRouter();
 
-  const handleClearTags = () => {
+  const handleClick = (item: LinkReferenceType) => {
     setLoading(true);
-    params.delete("tags");
-    router.push(`/projects?${params.toString()}`, { scroll: false });
-    setLoading(false);
-  };
-
-  const handleClick = (solution: LinkReferenceType) => {
-    setLoading(true);
-    params.has("tags", solution.slug)
-      ? params.delete("tags", solution.slug)
-      : params.append("tags", solution.slug);
+    params.has("tags", item.slug)
+      ? params.delete("tags", item.slug)
+      : params.append("tags", item.slug);
     params.delete("page");
-    router.push(`/projects?${params.toString()}`, { scroll: false });
+    router.push(`${basePath}?${params.toString()}`, { scroll: false });
     setLoading(false);
   };
   return (
     <div className="flex gap-2 max-w-xl flex-wrap lg:justify-end">
-      {solutions &&
-        solutions.map((solution: LinkReferenceType) => {
-          const { title, _id } = solution;
+      {items &&
+        items.map((item: LinkReferenceType) => {
+          const { title, _id } = item;
           return (
             <Button
               key={_id}
-              onClick={() => handleClick(solution)}
+              onClick={() => handleClick(item)}
               disabled={loading}
               className={cn(
                 "text-xs bg-nav-bar-background/20 p-4 rounded-lg text-text hover:bg-nav-bar-background/50",
-                params.has("tags", solution.slug) && "bg-nav-bar-background/50",
-                params.get("tags") === solution.slug &&
-                  "bg-nav-bar-background/50",
+                params.has("tags", item.slug) && "bg-nav-bar-background/50",
+                params.get("tags") === item.slug && "bg-nav-bar-background/50",
                 loading && "animate-pulse",
               )}
             >
@@ -143,9 +130,11 @@ function DesktopFilters({
 }
 
 export default function FilterTags({
-  solutions,
+  items,
+  basePath = "/projects",
 }: {
-  solutions: LinkReferenceType[];
+  items: LinkReferenceType[];
+  basePath?: string;
   loading?: boolean;
 }) {
   const isMobile = useIsMobile();
@@ -155,13 +144,15 @@ export default function FilterTags({
     <Fragment>
       {isMobile ? (
         <MobileFilters
-          solutions={solutions}
+          items={items}
+          basePath={basePath}
           loading={loading}
           setLoading={setLoading}
         />
       ) : (
         <DesktopFilters
-          solutions={solutions}
+          items={items}
+          basePath={basePath}
           loading={loading}
           setLoading={setLoading}
         />

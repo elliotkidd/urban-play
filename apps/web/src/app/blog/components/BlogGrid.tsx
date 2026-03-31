@@ -4,13 +4,13 @@ import Pagination from "@/components/Pagination";
 import PostTile, { PostTileSkeleton } from "@/components/post-tile";
 import { sanityFetch } from "@/lib/sanity/live";
 import {
-  blogBySolutionQuery,
+  blogByCategoryQuery,
   blogsQuery,
 } from "@/lib/sanity/queries/documents";
 import { PostTileType } from "@/lib/sanity/queries/fragments";
 import { BLOG_GRID_COL_SPANS } from "@/utils/utils";
 
-type SolutionType = {
+type CategoryType = {
   _type: string;
   _id: string;
   _key: string;
@@ -50,7 +50,7 @@ async function fetchBlogPostsByTags(
   tags = Array.isArray(tags) ? tags : [tags];
 
   return await sanityFetch({
-    query: blogBySolutionQuery,
+    query: blogByCategoryQuery,
     params: {
       tags,
       indexFrom,
@@ -61,14 +61,14 @@ async function fetchBlogPostsByTags(
 
 export function BlogGridSkeleton({
   title,
-  solutions,
+  categories,
 }: {
   title: string;
-  solutions: SolutionType[];
+  categories: CategoryType[];
 }) {
   return (
     <>
-      <BlogHeader title={title} solutions={solutions} loading />
+      <BlogHeader title={title} categories={categories} />
       <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid">
         {Array.from({ length: 12 }).map((_, index) => (
           <PostTileSkeleton
@@ -82,14 +82,14 @@ export function BlogGridSkeleton({
   );
 }
 async function BlogGrid({
-  solutions,
+  categories,
   title,
   tags,
   indexFrom,
   indexTo,
   perPage,
 }: {
-  solutions: SolutionType[];
+  categories: CategoryType[];
   title: string;
   tags: string[];
   indexTo: number;
@@ -109,7 +109,7 @@ async function BlogGrid({
 
   return (
     <>
-      <BlogHeader title={title} solutions={solutions} />
+      <BlogHeader title={title} categories={categories} />
       {blogs && blogs.length ? (
         <>
           <ul

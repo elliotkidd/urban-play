@@ -172,8 +172,8 @@ export const blogIndexPageQuery = q("*")
     _id: q.string(),
     _type: q.literal("blogIndex"),
     title: q.string(),
-    solutions: q("*", { isArray: true })
-      .filterByType("solution")
+    categories: q("*", { isArray: true })
+      .filterByType("category")
       .grab(LINK_REFERENCE_FRAGMENT),
     featuredBlog: q("featured")
       .deref()
@@ -268,8 +268,8 @@ export const projectsQuery = `{
   "total": count(*[_type == "project"])
 }`;
 
-export const blogBySolutionQuery = `{
-  "blogs": *[_type == "blog" && count((solutions[]->slug.current)[@ in $tags]) > 0][$indexFrom...$indexTo] {
+export const blogByCategoryQuery = `{
+  "blogs": *[_type == "blog" && count((categories[]->slug.current)[@ in $tags]) > 0][$indexFrom...$indexTo] {
    _id,
     title,
     "slug": slug.current,
@@ -303,7 +303,7 @@ export const blogBySolutionQuery = `{
     description,
     publishedAt
   },
-  "total": count(*[_type == "blog" && count((solutions[]->slug.current)[@ in $tags]) > 0])
+  "total": count(*[_type == "blog" && count((categories[]->slug.current)[@ in $tags]) > 0])
 }`;
 
 export const projectsBySolutionQuery = `{
@@ -359,7 +359,7 @@ export const blogSlugPageQuery = q("*")
     slug: q.slug("slug"),
     image: q("image").grab(IMAGE_FRAGMENT),
     richText: q("richText[]").select(RICHTEXT_BLOCKS),
-    solutions: q("solutions[]", { isArray: true })
+    categories: q("categories[]", { isArray: true })
       .deref()
       .grab(LINK_REFERENCE_FRAGMENT),
     description: q.string(),
@@ -374,7 +374,7 @@ export const blogSlugPageQuery = q("*")
     relatedBlogs: q("*", { isArray: true })
       .filterByType("blog")
       .filter(`!(slug.current == $slug)`)
-      .filter("count((solutions[].ref)[@ in ^.solutions[].ref]) > 0")
+      .filter("count(categories[]._ref[@ in ^.categories[]._ref]) > 0")
       .grab(POST_TILE_FRAGMENT),
   });
 

@@ -15,7 +15,7 @@ export function ProjectsHeader({
     <section className="lg:min-h-p-section mb-fluid-lg">
       <div className="wrapper flex flex-col lg:flex-row gap-fluid-sm justify-between py-fluid-xs">
         <RichText richText={description} className="max-w-p" />
-        <FilterTags solutions={solutions} />
+        <FilterTags items={solutions} />
       </div>
     </section>
   );
