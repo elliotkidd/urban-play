@@ -162,7 +162,7 @@ function SectionWrapper({
           _type === "process" ||
           _type === "featuredProjects" ||
           _type === "cta") &&
-          "overflow-hidden",
+          "overflow-x-hidden",
         hideOnPath && "hidden",
         hideOnMobile && "hidden lg:block",
         hideOnDesktop && "lg:hidden",
