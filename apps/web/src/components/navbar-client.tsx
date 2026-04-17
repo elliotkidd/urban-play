@@ -408,7 +408,7 @@ function MobileNavbar({
                             {activeColumnData.url?.href && (
                               <NavbarColumnLink
                                 column={activeColumnData}
-                                className="text-[30px]"
+                                className="text-[20px]"
                                 onNavigate={() => setIsNavigating(true)}
                               />
                             )}
@@ -419,7 +419,7 @@ function MobileNavbar({
                                   href: item.url?.href ?? item.href ?? "",
                                   title: item.name ?? "",
                                 }}
-                                className="text-[30px] font-bold leading-none text-left block"
+                                className="text-[20px] font-bold leading-none text-left block"
                                 onNavigate={() => setIsNavigating(true)}
                               />
                             ))}
