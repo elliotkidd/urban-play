@@ -276,11 +276,11 @@ export default function ParagraphSection({
         <SanityButtons buttons={buttons} className="flex lg:hidden" />
       )}
       {annotations && !buttons && (
-        <div className="space-y-fluid-xs lg:space-y-fluid-sm lg:hidden uppercase">
+        <div className="space-y-fluid-xs lg:space-y-fluid-sm lg:hidden">
           <ul className="list-none not-prose text-xs space-y-fluid-xs">
             {annotations.map(({ top, bottom, _key }) => {
               return (
-                <li key={_key} className="leading-none space-y-2.5 text-text">
+                <li key={_key} className="leading-none space-y-1 text-text">
                   <span className="block text-body-copy">{top}</span>
                   <span className="block text-text">{bottom}</span>
                 </li>
