@@ -2,6 +2,7 @@ import { author } from "./author";
 import { award } from "./award";
 import { blog } from "./blog";
 import { blogIndex } from "./blog-index";
+import { category } from "./category";
 import { colorScheme } from "./colorScheme";
 import { form } from "./form";
 import { faq } from "./faq";
@@ -31,6 +32,7 @@ export const documents = [
   faq,
   author,
   colorScheme,
+  category,
   solution,
   project,
   testimony,

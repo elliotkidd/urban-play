@@ -9,6 +9,7 @@ import { useLenisNavigation } from "@/hooks/use-lenis-navigation";
 export function Logo({ className }: { className?: string }) {
   const router = useTransitionRouter();
   const { handleNavigation } = useLenisNavigation();
+  
   return (
     <Link
       href="/"

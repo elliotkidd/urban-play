@@ -174,6 +174,7 @@ export const structure = (
         list: { type: "blog", title: "Blogs", icon: FileText },
         context,
       }),
+      createList({ S, type: "category", title: "Categories", icon: Lightbulb }),
       createList({ S, type: "author", title: "Authors", icon: User }),
       S.divider(),
       S.listItem()

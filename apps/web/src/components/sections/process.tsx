@@ -87,7 +87,7 @@ function Process({
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col lg:h-full lg:justify-between max-w-lg space-y-fluid-sm lg:space-y-fluid lg:pr-fluid-sm lg:py-fluid-sm">
+            <div className="flex-1 flex flex-col lg:h-full lg:justify-center max-w-lg space-y-fluid-xs lg:pr-fluid-sm lg:py-fluid-sm">
               <h3 className="text-lg font-bold">
                 {showIndex && (
                   <span className="opacity-30 mr-1">

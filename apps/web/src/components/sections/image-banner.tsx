@@ -45,7 +45,7 @@ export function ImageBannerSection({
         {!containImage && (title || richText) && (
           <motion.div
             {...sectionAnimationConfig}
-            className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-fluid sticky top-24 hidden lg:block"
+            className="bg-primary-button rounded-xl p-fluid-xs w-full max-w-[560px] space-y-4 sticky top-24 hidden lg:block"
           >
             <p className="lead">{title}</p>
             <RichText richText={richText} />

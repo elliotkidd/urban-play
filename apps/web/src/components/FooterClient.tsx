@@ -49,7 +49,7 @@ function ContactDetails({ data }: ContactDetailsProps) {
         {phone}
       </Link>
       <Link
-        href={`https://maps.app.goo.gl/${address}`}
+        href={`/contact`}
         className="block opacity-50 hover:opacity-100 transition-opacity"
       >
         {address}

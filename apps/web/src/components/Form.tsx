@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import SubmitButton from "./SubmitButton";
 import { Button } from "./ui/Button";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import Link from "next/link";
 
 interface Props {
   formData: FormProps;
@@ -158,6 +159,27 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
         {formData.fields.map((field, index: number) => (
           <DefaultField key={field._key} field={field} index={index} />
         ))}
+        <p className="text-xs opacity-50 lg:col-span-2">
+          This site is protected by reCAPTCHA and the Google{" "}
+          <Link
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-dotted"
+          >
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="https://policies.google.com/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-dotted"
+          >
+            Terms of Service
+          </Link>{" "}
+          apply.
+        </p>
         <SubmitButton
           submitButtonText={formData?.submitButtonText ?? "Submit"}
         />

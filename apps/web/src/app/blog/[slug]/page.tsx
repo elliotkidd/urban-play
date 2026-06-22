@@ -51,7 +51,7 @@ export default async function BlogSlugPage({
     description,
     image,
     richText,
-    solutions,
+    categories,
     pageBuilder,
     indexData: { colorScheme },
     relatedBlogs,
@@ -85,11 +85,11 @@ export default async function BlogSlugPage({
               </span>
             </p>
             <div className="flex flex-wrap gap-2">
-              {solutions &&
-                solutions.length > 0 &&
-                solutions.map(({ title, _id }) => (
+              {categories &&
+                categories.length > 0 &&
+                categories.map(({ title, _id }) => (
                   <div
-                    key={`solution-tag-${_id}`}
+                    key={`category-tag-${_id}`}
                     className="bg-nav-bar-background/20 text-text p-[15px] rounded-lg text-xs"
                   >
                     {title}

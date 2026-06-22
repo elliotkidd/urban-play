@@ -36,7 +36,7 @@ export default async function BlogPage({
   const {
     title,
     featuredBlog,
-    solutions,
+    categories,
     colorScheme,
     pageBuilder,
     _id,
@@ -103,11 +103,11 @@ export default async function BlogPage({
       )}
       <Suspense
         fallback={
-          <BlogGridSkeleton title={title ?? ""} solutions={solutions ?? []} />
+          <BlogGridSkeleton title={title ?? ""} categories={categories ?? []} />
         }
       >
         <BlogGrid
-          solutions={solutions}
+          categories={categories}
           title={title}
           tags={tags}
           indexFrom={indexFrom}

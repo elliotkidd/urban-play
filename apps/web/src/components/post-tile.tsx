@@ -36,7 +36,7 @@ export default function PostTile({
   image_aspect: "square" | "portrait" | "landscape";
   className?: string;
 }) {
-  const { image, title, solutions } = post;
+  const { image, title, categories } = post;
 
   return (
     <Link
@@ -70,9 +70,9 @@ export default function PostTile({
           }
           sizes="(max-width: 768px) 100vw, 33vw"
         />
-        {solutions && solutions.length > 0 && (
+        {categories && categories.length > 0 && (
           <span className="absolute bg-nav-bar-background/20 backdrop-blur text-white top-3 left-3 text-xs font-medium p-[15px] tracking-[0.005em] rounded-lg">
-            {solutions[0].title}
+            {categories[0].title}
           </span>
         )}
       </div>

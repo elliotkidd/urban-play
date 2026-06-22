@@ -50,12 +50,10 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                   </span>
                 )}
               </div>
-              <h3 className="no-underline text-[25px] lg:text-lg leading-[95%] lg:leading-[120%] text-white font-heading uppercase lg:!normal-case lg:font-body mb-[7px] lg:mb-0">
+              <h3 className="no-underline text-[25px] leading-[95%] text-white font-heading uppercase lg:mb-0">
                 {name}
               </h3>
-              <p className=" font-normal lg:font-bold text-[11px] uppercase lg:normal-case lg:text-lg leading-[120%]">
-                {position}
-              </p>
+              <p className="font-body font-bold text-sm">{position}</p>
             </motion.li>
           ),
         )}

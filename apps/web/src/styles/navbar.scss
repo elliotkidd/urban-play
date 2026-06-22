@@ -18,7 +18,7 @@
 }
 
 #mobile-navbar {
-  @apply bg-nav-bar-background/20 text-nav-bar-text text-xs backdrop-blur-lg;
+  @apply text-nav-bar-text text-xs;
 
   nav {
     height: 66px;
@@ -34,6 +34,26 @@
   border-radius: 10px;
   font-weight: 500;
   width: calc(100% - 2rem);
+}
+
+.navbar-backdrop-mobile {
+  @apply bg-nav-bar-background/20 backdrop-blur-lg;
+
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.navbar-backdrop-desktop {
+  @apply bg-nav-bar-background/20 backdrop-blur-lg;
+
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 10px;
+
+  pointer-events: none;
 }
 
 .menu-trigger-btn {
