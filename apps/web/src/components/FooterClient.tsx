@@ -31,29 +31,36 @@ type ContactDetailsProps = {
 function ContactDetails({ data }: ContactDetailsProps) {
   if (!data) return null;
 
-  const { name, email, phone, address } = data;
+  const { email, phone, address } = data;
 
   return (
     <div className="lg:col-start-7 lg:col-span-2">
       <h4 className="text-sm mb-1">Contact</h4>
-      <Link
-        href={`mailto:${email}`}
-        className="block opacity-50 hover:opacity-100 transition-opacity duration-500"
-      >
-        {name}
-      </Link>
-      <Link
-        href={`tel:${phone}`}
-        className="block opacity-50 hover:opacity-100 transition-opacity duration-500"
-      >
-        {phone}
-      </Link>
-      <Link
-        href={`/contact`}
-        className="block opacity-50 hover:opacity-100 transition-opacity"
-      >
-        {address}
-      </Link>
+
+      {email && (
+        <Link
+          href={`mailto:${email}`}
+          className="block opacity-50 hover:opacity-100 transition-opacity duration-500"
+        >
+          {email}
+        </Link>
+      )}
+      {phone && (
+        <Link
+          href={`tel:${phone}`}
+          className="block opacity-50 hover:opacity-100 transition-opacity duration-500"
+        >
+          {phone}
+        </Link>
+      )}
+      {address && (
+        <Link
+          href={`/contact`}
+          className="block opacity-50 hover:opacity-100 transition-opacity"
+        >
+          {address}
+        </Link>
+      )}
     </div>
   );
 }
