@@ -182,6 +182,14 @@ export function FooterSection({ data }: { data: FooterType }) {
                     Terms and Conditions
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/child-safety-policy"
+                    className="opacity-50 hover:opacity-100 transition-opacity duration-500"
+                  >
+                    Child Safety Policy
+                  </Link>
+                </li>
               </ul>
               <a
                 className="opacity-60 hover:opacity-100 transition-opacity duration-500"
