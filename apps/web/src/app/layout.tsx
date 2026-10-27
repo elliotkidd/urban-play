@@ -34,6 +34,11 @@ export default async function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
+        <meta
+          name="google-site-verification"
+          content="rrupQRzlSh1m0Zdwf1_Nuwfs5_pVvXugLiMo-LOoMwQ"
+        />
+
         <body
           className={`${fonts} font-body bg-black text-text transition-colors duration-500`}
         >
