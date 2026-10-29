@@ -11,6 +11,7 @@ export async function processFormData(formData: FormData) {
     "formTitle",
     "responseEmail",
     "form",
+    "fullname",
   ];
 
   // Get the form data to access field labels and rich text content

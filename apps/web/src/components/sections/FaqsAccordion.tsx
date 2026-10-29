@@ -38,13 +38,13 @@ export function FAQsAccordion({
                   {faq.answer && (
                     <RichText
                       richText={faq.answer}
-                      className="prose-white lg:mt-fluid-md max-w-2xl"
+                      className="prose-white max-w-2xl"
                     />
                   )}
                 </AccordionContent>
               </AccordionItem>
               {index !== faqs.length - 1 && (
-                <div className="px-fluid-xs lg:hidden opacity-10">
+                <div className="px-fluid-xs lg:px-4 opacity-10">
                   <div className="h-px bg-text w-full" />
                 </div>
               )}

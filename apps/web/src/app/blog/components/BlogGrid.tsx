@@ -8,7 +8,6 @@ import {
   blogsQuery,
 } from "@/lib/sanity/queries/documents";
 import { PostTileType } from "@/lib/sanity/queries/fragments";
-import { BLOG_GRID_COL_SPANS } from "@/utils/utils";
 
 type CategoryType = {
   _type: string;
@@ -17,17 +16,6 @@ type CategoryType = {
   title: string;
   slug: string;
 };
-
-const IMAGE_ASPECTS: ("portrait" | "square" | "landscape")[] = [
-  "portrait",
-  "portrait",
-  "square",
-  "portrait",
-  "portrait",
-  "portrait",
-  "landscape",
-  "square",
-];
 
 async function fetchBlogPosts(
   indexFrom: number,
@@ -69,13 +57,9 @@ export function BlogGridSkeleton({
   return (
     <>
       <BlogHeader title={title} categories={categories} />
-      <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid">
-        {Array.from({ length: 12 }).map((_, index) => (
-          <PostTileSkeleton
-            key={index}
-            imageAspect={IMAGE_ASPECTS[index % 11]}
-            className={BLOG_GRID_COL_SPANS[index % 11]}
-          />
+      <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid">
+        {Array.from({ length: 9 }).map((_, index) => (
+          <PostTileSkeleton key={index} imageAspect="square" />
         ))}
       </div>
     </>
@@ -114,20 +98,13 @@ async function BlogGrid({
         <>
           <ul
             id="blog-grid"
-            className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid"
+            className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 lg:gap-y-fluid-lg mb-fluid"
           >
             {blogs &&
               blogs.length > 0 &&
-              blogs.map((post: PostTileType, index: number) => (
-                <li
-                  key={post._id}
-                  className={BLOG_GRID_COL_SPANS[index % perPage]}
-                >
-                  <PostTile
-                    key={post._id}
-                    post={post}
-                    image_aspect={IMAGE_ASPECTS[index % perPage]}
-                  />
+              blogs.map((post: PostTileType) => (
+                <li key={post._id}>
+                  <PostTile key={post._id} post={post} image_aspect="square" />
                 </li>
               ))}
           </ul>

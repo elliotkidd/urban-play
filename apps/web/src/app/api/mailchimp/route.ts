@@ -1,5 +1,6 @@
 import mailchimp from '@mailchimp/mailchimp_marketing'
 import { NextRequest, NextResponse } from 'next/server'
+import { isLowRecaptchaScore } from '@/lib/recaptcha'
 
 mailchimp.setConfig({
   apiKey: process.env.MAILCHIMP_API_KEY,
@@ -33,6 +34,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     console.log('Received request body:', body)
     
+    // Honeypot: hidden field only bots fill in. Pretend it worked so they don't retry.
+    if (body.fullname) {
+      console.log('Honeypot filled, dropping submission')
+      return NextResponse.json({ success: true })
+    }
+
     if (!body.email) {
       console.log('Email validation failed - body:', body)
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
@@ -68,6 +75,14 @@ export async function POST(request: NextRequest) {
         error: 'reCAPTCHA verification failed', 
         details: recaptchaData['error-codes'] || 'Unknown error',
         recaptchaResponse: recaptchaData 
+      }, { status: 400 })
+    }
+
+    if (isLowRecaptchaScore(recaptchaData.score)) {
+      console.log('reCAPTCHA score too low:', recaptchaData.score)
+      return NextResponse.json({
+        error: 'reCAPTCHA verification failed',
+        details: 'low-score',
       }, { status: 400 })
     }
 

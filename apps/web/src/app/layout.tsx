@@ -50,6 +50,11 @@ export default async function RootLayout({
           )}
           {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
           {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
+          <Script
+            id="mcjs"
+            src="https://chimpstatic.com/mcjs-connected/js/users/ed2b28164c6aee6b8e81ba26f/a4404ed37633e6edde777269e.js"
+            strategy="afterInteractive"
+          />
           <Lenis root />
           <Providers>
             <div className="bg-background">

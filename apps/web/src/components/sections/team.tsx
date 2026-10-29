@@ -50,7 +50,7 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
                   </span>
                 )}
               </div>
-              <h3 className="no-underline text-[25px] leading-[95%] text-white font-heading uppercase lg:mb-0">
+              <h3 className="no-underline text-[25px] leading-[95%] text-white font-body lg:mb-0">
                 {name}
               </h3>
               <p className="font-body font-bold text-sm">{position}</p>

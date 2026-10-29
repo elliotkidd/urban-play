@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sendEmail } from "@/lib/email";
 import { processFormData } from "@/lib/processFormData";
+import { isLowRecaptchaScore } from "@/lib/recaptcha";
+import { subscribeOptedInEnquiry } from "@/lib/mailchimp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -98,6 +100,13 @@ export async function POST(request: NextRequest) {
 
     //console.log("📨 Notification Recipients:", recipients);
 
+    // Honeypot: hidden field only bots fill in. Pretend it worked so they don't retry.
+    const honeypot = formData ? formData.get("fullname") : body?.fullname;
+    if (honeypot) {
+      console.log("🍯 Honeypot filled, dropping submission");
+      return NextResponse.json({ success: true });
+    }
+
     // Verify reCAPTCHA if enabled
     if (process.env.RECAPTCHA_SECRET_KEY) {
       if (!recaptchaToken) {
@@ -134,6 +143,14 @@ export async function POST(request: NextRequest) {
           recaptchaResponse: recaptchaData 
         }, { status: 400 })
       }
+
+      if (isLowRecaptchaScore(recaptchaData.score)) {
+        console.log('reCAPTCHA score too low:', recaptchaData.score)
+        return NextResponse.json({
+          error: 'reCAPTCHA verification failed',
+          details: 'low-score',
+        }, { status: 400 })
+      }
       console.log('✅ reCAPTCHA verified');
     }
 
@@ -168,6 +185,13 @@ export async function POST(request: NextRequest) {
           //console.error('❌ Notification email failed:', emailError);
         }
       }
+    }
+
+    // A Mailchimp failure shouldn't fail the enquiry, which has already been emailed
+    try {
+      await subscribeOptedInEnquiry(formId, fields);
+    } catch (mailchimpError) {
+      console.error("❌ Mailchimp opt-in failed:", mailchimpError);
     }
 
     return NextResponse.json({ success: true });

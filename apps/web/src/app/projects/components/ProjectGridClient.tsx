@@ -2,7 +2,6 @@
 
 import ProjectTile from "@/components/project-tile";
 import { ImageType, TileType } from "@/lib/sanity/queries/fragments";
-import { PROJECT_GRID_COL_SPANS } from "@/utils/utils";
 
 export default function ProjectGridClient({
   projects,
@@ -10,25 +9,16 @@ export default function ProjectGridClient({
   projects: (TileType & { seoImage: ImageType })[];
 }) {
   return (
-    <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid mb-fluid">
+    <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-fluid mb-fluid">
       {projects.length > 0 &&
         projects.map((project, index) => (
           <ProjectTile
             key={`${project._id}-${index}-project-tile`}
             project={project}
-            className={
-              PROJECT_GRID_COL_SPANS[index % PROJECT_GRID_COL_SPANS.length]
-            }
             index={index}
             showDescription
             staggerDelay={0}
-            imageAspectRatio={
-              index % 11 === 0
-                ? "square"
-                : index % 11 === 1
-                  ? "landscape"
-                  : "portrait"
-            }
+            imageAspectRatio="square"
           />
         ))}
     </div>

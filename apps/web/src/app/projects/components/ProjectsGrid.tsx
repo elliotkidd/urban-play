@@ -5,7 +5,6 @@ import {
 } from "@/lib/sanity/queries/documents";
 import { sanityFetch } from "@/lib/sanity/live";
 import { PostTileSkeleton } from "@/components/post-tile";
-import { PROJECT_GRID_COL_SPANS } from "@/utils/utils";
 
 type SolutionType = {
   _type: string;
@@ -34,19 +33,9 @@ async function fetchProjectsBySolution(tags: string[] | string) {
 
 export function ProjectsGridSkeleton() {
   return (
-    <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-fluid mb-fluid">
-      {Array.from({ length: 12 }).map((_, index) => (
-        <PostTileSkeleton
-          key={index}
-          imageAspect={
-            index % 11 === 0
-              ? "square"
-              : index % 11 === 1
-                ? "landscape"
-                : "portrait"
-          }
-          className={PROJECT_GRID_COL_SPANS[index % 11]}
-        />
+    <div className="wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-fluid mb-fluid">
+      {Array.from({ length: 9 }).map((_, index) => (
+        <PostTileSkeleton key={index} imageAspect="square" />
       ))}
     </div>
   );

@@ -30,6 +30,7 @@ export const validationTypesByFieldType = {
   name: ["custom"],
   address: ["custom"],
   richText: ["custom"],
+  mailchimpOptIn: ["custom"],
 };
 export const formFieldType = defineType({
   name: "formField",
@@ -51,6 +52,8 @@ export const formFieldType = defineType({
                 return "Text Area";
               case "tel":
                 return "Phone Number";
+              case "mailchimpOptIn":
+                return "Mailchimp Opt-in";
               default:
                 return fieldType.charAt(0).toUpperCase() + fieldType.slice(1);
             }
@@ -122,6 +125,8 @@ export const formFieldType = defineType({
       title: "Required",
       type: "boolean",
       initialValue: false,
+      // Marketing consent has to be optional
+      hidden: ({ parent }) => parent?.type === "mailchimpOptIn",
     }),
     // defineField({
     //   name: 'validation',
@@ -187,9 +192,13 @@ export const formFieldType = defineType({
       title: "Field Options",
       type: "object",
       hidden: ({ parent }) => {
-        return ["select", "radio", "checkbox", "signature"].includes(
-          parent?.type,
-        );
+        return [
+          "select",
+          "radio",
+          "checkbox",
+          "signature",
+          "mailchimpOptIn",
+        ].includes(parent?.type);
       },
       fields: [
         defineField({
@@ -222,6 +231,31 @@ export const formFieldType = defineType({
           title: "Maximum File Size (MB)",
           type: "number",
           validation: (Rule) => Rule.min(0),
+        }),
+      ],
+    }),
+    defineField({
+      name: "mailchimp",
+      title: "Mailchimp",
+      type: "object",
+      description:
+        "Shown as an unticked checkbox using the Field Label as its text. People who tick it are added to this audience.",
+      hidden: ({ parent }) => parent?.type !== "mailchimpOptIn",
+      validation: (Rule) =>
+        Rule.custom((value: { audienceId?: string } | undefined, context) => {
+          const parent = context.parent as { type?: string } | undefined;
+          if (parent?.type === "mailchimpOptIn" && !value?.audienceId) {
+            return "An audience ID is required";
+          }
+          return true;
+        }),
+      fields: [
+        defineField({
+          name: "audienceId",
+          title: "Audience ID",
+          type: "string",
+          description:
+            "In Mailchimp: Audience → Settings → Audience name and defaults.",
         }),
       ],
     }),

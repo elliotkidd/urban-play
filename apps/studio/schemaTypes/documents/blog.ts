@@ -17,7 +17,7 @@ export const blog = defineType({
   groups: GROUPS,
   orderings: [orderRankOrdering],
   fields: [
-    orderRankField({ type: "blog" }),
+    orderRankField({ type: "blog", newItemPosition: "before" }),
     defineField({
       name: "title",
       type: "string",

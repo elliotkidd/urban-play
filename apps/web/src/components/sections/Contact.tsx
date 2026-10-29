@@ -10,7 +10,7 @@ const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 function Contact({ title, globalSettings, form }: ContactProps) {
   const { contactDetails, socialLinks } = globalSettings;
   const { instagram, facebook, twitter, linkedin, youtube } = socialLinks ?? {};
-  const { phone, address } = contactDetails;
+  const { phone, address, email } = contactDetails;
   const formattedAddress = address.split(",", 2).map((line, index) => (
     <span key={index} className="block">
       {line}
@@ -82,7 +82,7 @@ function Contact({ title, globalSettings, form }: ContactProps) {
       <GoogleReCaptchaProvider
         reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}
       >
-        <Form formData={form} className="lg:col-span-2" />
+        <Form formData={form} className="lg:col-span-2" contactEmail={email} />
       </GoogleReCaptchaProvider>
     </motion.div>
   );

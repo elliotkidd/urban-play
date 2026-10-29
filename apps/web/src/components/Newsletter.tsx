@@ -5,11 +5,41 @@ import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+const ERROR_MESSAGES = {
+  recaptchaUnavailable:
+    "Our spam protection didn't load. Please refresh the page and try again.",
+  verificationFailed: "We couldn't verify your sign-up. Please try again.",
+  invalidEmail:
+    "That email address couldn't be added. Please check it and try again.",
+  unsubscribed:
+    "This email has unsubscribed before, so it can't be re-added here. Please get in touch and we'll sort it out.",
+  generic: "Sorry, something went wrong. Please try again in a moment.",
+};
+
+// Maps an /api/mailchimp error to a message the subscriber can act on
+function getErrorMessage(errorData) {
+  if (typeof errorData === "string") {
+    return errorData.includes("reCAPTCHA")
+      ? ERROR_MESSAGES.verificationFailed
+      : ERROR_MESSAGES.generic;
+  }
+
+  switch (errorData?.title) {
+    case "Invalid Resource":
+      return ERROR_MESSAGES.invalidEmail;
+    case "Forgotten Email Not Subscribed":
+    case "Member In Compliance State":
+      return ERROR_MESSAGES.unsubscribed;
+    default:
+      return ERROR_MESSAGES.generic;
+  }
+}
+
 const Newsletter = ({ data = {} }) => {
   // Extract our module data
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     handleSubmit,
@@ -22,7 +52,7 @@ const Newsletter = ({ data = {} }) => {
   const resetForm = (e) => {
     e.preventDefault();
     reset();
-    setError(false);
+    setError(null);
     setSuccess(false);
     setSubmitting(false);
   };
@@ -31,7 +61,7 @@ const Newsletter = ({ data = {} }) => {
   const onSubmit = async (data) => {
     console.log("Form data being submitted:", data);
     setSubmitting(true);
-    setError(false);
+    setError(null);
     setSuccess(false);
 
     // Check if reCAPTCHA Enterprise is available, wait if not ready
@@ -65,7 +95,7 @@ const Newsletter = ({ data = {} }) => {
             "reCAPTCHA Enterprise failed to load after multiple attempts",
           );
           setSubmitting(false);
-          setError(true);
+          setError(ERROR_MESSAGES.recaptchaUnavailable);
         }
       };
 
@@ -136,7 +166,9 @@ const Newsletter = ({ data = {} }) => {
                 typeof errorData === "string"
                   ? errorData
                   : errorData?.message || JSON.stringify(errorData);
-              throw new Error(errorMessage);
+              throw Object.assign(new Error(errorMessage), {
+                userMessage: getErrorMessage(errorData),
+              });
             }
           }
 
@@ -149,14 +181,14 @@ const Newsletter = ({ data = {} }) => {
         })
         .catch((error) => {
           setSubmitting(false);
-          setError(true);
+          setError(error.userMessage ?? ERROR_MESSAGES.generic);
           console.error("Newsletter submission error:", error);
           console.error("Error message:", error.message);
           console.error("Full error object:", JSON.stringify(error, null, 2));
         });
     } catch (error) {
       setSubmitting(false);
-      setError(true);
+      setError(ERROR_MESSAGES.recaptchaUnavailable);
       console.error("reCAPTCHA error:", error);
     }
   };
@@ -233,7 +265,7 @@ const Newsletter = ({ data = {} }) => {
       {error && (
         <div key="error" className="form--error mt-5">
           <div className="form--error-content">
-            <p>Sorry, there was an error!</p>
+            <p role="alert">{error}</p>
             <p className="form--error-reset">
               <button
                 className="label px-4 py-2 rounded-full border border-primary/50 hover:border-primary/100 duration-500"

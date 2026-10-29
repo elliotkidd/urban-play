@@ -61,13 +61,13 @@ function AccordionBlock({ title, items }: AccordionBlockProps) {
                   {item.content && (
                     <RichText
                       richText={item.content}
-                      className="prose-white mt-4 lg:mt-fluid-lg"
+                      className="prose-white mt-4"
                     />
                   )}
                 </AccordionContent>
               </AccordionItem>
               {index !== items.length - 1 && (
-                <div className="px-4 lg:hidden opacity-10">
+                <div className="px-4 opacity-10">
                   <div className="h-px bg-text w-full" />
                 </div>
               )}

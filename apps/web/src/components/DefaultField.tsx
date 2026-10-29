@@ -127,6 +127,19 @@ export const DefaultField: FC<FieldComponentProps> = ({
           </div>
         );
 
+      case "mailchimpOptIn":
+        return (
+          <label className="flex items-start gap-3 p-4 rounded bg-nav-bar-background/20 text-text text-base md:text-sm cursor-pointer">
+            <input
+              type="checkbox"
+              {...rest}
+              ref={ref as LegacyRef<HTMLInputElement>}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-current"
+            />
+            <span>{label}</span>
+          </label>
+        );
+
       case "checkbox":
         return (
           <div className="space-y-2">

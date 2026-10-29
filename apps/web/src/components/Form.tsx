@@ -18,22 +18,45 @@ interface Props {
   formData: FormProps;
   onSubmit?: (data: any) => void;
   className?: string;
+  contactEmail?: string;
 }
 
-export function Form({ formData, onSubmit = console.log, className }: Props) {
+const ERROR_MESSAGES = {
+  recaptchaUnavailable:
+    "Our spam protection didn't load. Please refresh the page and try again.",
+  verificationFailed:
+    "We couldn't verify your submission, so it wasn't sent. Please try again.",
+  generic:
+    "Something went wrong and your message wasn't sent. Please try again in a moment.",
+};
+
+export function Form({
+  formData,
+  onSubmit = console.log,
+  className,
+  contactEmail,
+}: Props) {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm();
 
-  const { handleSubmit, reset } = form;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = form;
 
   const handleFormSubmit = async (data: any) => {
+    setError(null);
+
     try {
       if (!executeRecaptcha) {
         console.log("Recaptcha not ready");
+        setError(ERROR_MESSAGES.recaptchaUnavailable);
         return;
       }
 
@@ -59,6 +82,7 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
       if (recaptchaToken) {
         formDataToSend.append("recaptchaToken", recaptchaToken);
       }
+      formDataToSend.append("fullname", data.fullname || "");
 
       for (const field of formData.fields || []) {
         if (!field.name) continue;
@@ -91,6 +115,12 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
           continue;
         }
 
+        // Opt-in is a boolean; send Yes/No so the enquiry email reads clearly
+        if (field.type === "mailchimpOptIn") {
+          formDataToSend.append(field.name, value ? "Yes" : "No");
+          continue;
+        }
+
         // Handle regular fields
         if (value && typeof value === "object") {
           value = Object.values(value).filter(Boolean).join(", ");
@@ -110,7 +140,13 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit form");
+        // 400s are reCAPTCHA rejections; anything else is a server/email failure
+        setError(
+          response.status === 400
+            ? ERROR_MESSAGES.verificationFailed
+            : ERROR_MESSAGES.generic,
+        );
+        return;
       }
 
       const result = await response.json();
@@ -126,6 +162,7 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      setError(ERROR_MESSAGES.generic);
     }
   };
 
@@ -156,6 +193,14 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
         onSubmit={handleSubmit(handleFormSubmit)}
         className={cn("grid lg:grid-cols-2 gap-2", className)}
       >
+        <input
+          type="text"
+          autoComplete="off"
+          tabIndex={-1}
+          className="hidden control--pot"
+          aria-hidden="true"
+          {...form.register("fullname")}
+        />
         {formData.fields.map((field, index: number) => (
           <DefaultField key={field._key} field={field} index={index} />
         ))}
@@ -180,8 +225,24 @@ export function Form({ formData, onSubmit = console.log, className }: Props) {
           </Link>{" "}
           apply.
         </p>
+        {error && (
+          <p role="alert" className="text-sm text-red-500 lg:col-span-2">
+            {error}
+            {contactEmail && (
+              <>
+                {" "}
+                You can also email us at{" "}
+                <Link href={`mailto:${contactEmail}`} className="underline">
+                  {contactEmail}
+                </Link>
+                .
+              </>
+            )}
+          </p>
+        )}
         <SubmitButton
           submitButtonText={formData?.submitButtonText ?? "Submit"}
+          isSubmitting={isSubmitting}
         />
       </form>
     </ShadForm>

@@ -189,7 +189,7 @@ export const blogIndexPageQuery = q("*")
 export type BlogIndexPage = InferType<typeof blogIndexPageQuery>;
 
 export const blogsQuery = `{
-  "blogs": *[_type == "blog"][$indexFrom...$indexTo] {
+  "blogs": *[_type == "blog"] | order(orderRank) [$indexFrom...$indexTo] {
     _id,
     title,
     "slug": slug.current,
@@ -269,7 +269,7 @@ export const projectsQuery = `{
 }`;
 
 export const blogByCategoryQuery = `{
-  "blogs": *[_type == "blog" && count((categories[]->slug.current)[@ in $tags]) > 0][$indexFrom...$indexTo] {
+  "blogs": *[_type == "blog" && count((categories[]->slug.current)[@ in $tags]) > 0] | order(orderRank) [$indexFrom...$indexTo] {
    _id,
     title,
     "slug": slug.current,
@@ -375,6 +375,7 @@ export const blogSlugPageQuery = q("*")
       .filterByType("blog")
       .filter(`!(slug.current == $slug)`)
       .filter("count(categories[]._ref[@ in ^.categories[]._ref]) > 0")
+      .order("orderRank")
       .grab(POST_TILE_FRAGMENT),
   });
 

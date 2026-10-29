@@ -6,6 +6,7 @@ import {
   CogIcon,
   File,
   FileText,
+  FormInput,
   Grid2x2,
   Hammer,
   Lightbulb,
@@ -167,6 +168,7 @@ export const structure = (
         icon: MessageCircleQuestion,
       }),
       createList({ S, type: "testimony", title: "Testimonies", icon: Quote }),
+      createList({ S, type: "form", title: "Forms", icon: FormInput }),
       S.divider(),
       createIndexListWithOrderableItems({
         S,

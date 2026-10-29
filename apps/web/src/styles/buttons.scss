@@ -85,7 +85,6 @@
 
     &[data-state="open"] {
       .accordion-trigger-icon-line {
-        @apply lg:bg-white;
         &:nth-child(1) {
           transform: rotate(0deg);
         }
@@ -94,12 +93,6 @@
           transform: rotate(-0deg);
         }
       }
-    }
-  }
-
-  &:hover {
-    .accordion-trigger-icon-line {
-      @apply lg:bg-white;
     }
   }
 }
