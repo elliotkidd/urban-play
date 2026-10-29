@@ -13,6 +13,8 @@ type Props = {
   height?: number;
   width?: number;
   style?: React.CSSProperties;
+  // Set on the first image on screen (page headers) so it isn't lazy-loaded
+  priority?: boolean;
 };
 
 export default function SanityImage({
@@ -23,6 +25,7 @@ export default function SanityImage({
   height,
   width,
   style,
+  priority,
 }: Props) {
   const imageProps: any = useNextSanityImage(client, src, {
     imageBuilder: (imageUrlBuilder, options) => {
@@ -51,6 +54,7 @@ export default function SanityImage({
       className={className}
       blurDataURL={src?.lqip || undefined}
       sizes={sizes}
+      priority={priority}
     />
   );
 }

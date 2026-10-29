@@ -3,6 +3,7 @@ import { SanityButtons } from "../sanity-buttons";
 import { CTAProps } from "@/lib/sanity/queries/sections";
 import SanityImage from "../sanity-image";
 import { VimeoVideo } from "../VimeoVideo";
+import { LazyVideo } from "../LazyVideo";
 import { extractVimeoId } from "@/utils/utils";
 
 export function CTABlock({
@@ -25,22 +26,14 @@ export function CTABlock({
       {mediaType === "video" && vimeo?.type === "page" ? (
         <VimeoVideo videoId={extractVimeoId(vimeo.url) || ""} />
       ) : mediaType === "video" && vimeo?.type === "asset" ? (
-        <video
+        <LazyVideo
           src={vimeo.url}
-          autoPlay
-          muted
-          loop
-          playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
       ) : (
         video && (
-          <video
+          <LazyVideo
             src={video}
-            autoPlay
-            muted
-            loop
-            playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
         )

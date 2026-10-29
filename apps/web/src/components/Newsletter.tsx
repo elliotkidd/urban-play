@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { getRecaptchaToken, loadRecaptcha } from "@/lib/recaptcha-client";
 
 const ERROR_MESSAGES = {
   recaptchaUnavailable:
@@ -64,68 +65,10 @@ const Newsletter = ({ data = {} }) => {
     setError(null);
     setSuccess(false);
 
-    // Check if reCAPTCHA Enterprise is available, wait if not ready
-    if (
-      typeof window === "undefined" ||
-      !window.grecaptcha ||
-      !window.grecaptcha.enterprise
-    ) {
-      console.log("reCAPTCHA Enterprise not available, waiting...");
-
-      // Wait for reCAPTCHA to load
-      let attempts = 0;
-      const maxAttempts = 20; // 10 seconds total
-
-      const waitForRecaptcha = () => {
-        if (
-          typeof window !== "undefined" &&
-          window.grecaptcha &&
-          window.grecaptcha.enterprise
-        ) {
-          console.log("reCAPTCHA Enterprise is now ready");
-          onSubmit(data);
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          console.log(
-            `Waiting for reCAPTCHA Enterprise... attempt ${attempts}`,
-          );
-          setTimeout(waitForRecaptcha, 500);
-        } else {
-          console.log(
-            "reCAPTCHA Enterprise failed to load after multiple attempts",
-          );
-          setSubmitting(false);
-          setError(ERROR_MESSAGES.recaptchaUnavailable);
-        }
-      };
-
-      waitForRecaptcha();
-      return;
-    }
-
     try {
-      // Use reCAPTCHA Enterprise API directly
-      const recaptchaToken = await new Promise((resolve, reject) => {
-        if (
-          typeof window !== "undefined" &&
-          window.grecaptcha &&
-          window.grecaptcha.enterprise
-        ) {
-          window.grecaptcha.enterprise.ready(async () => {
-            try {
-              const token = await window.grecaptcha.enterprise.execute(
-                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-                { action: "newsletter_subscription" },
-              );
-              resolve(token);
-            } catch (error) {
-              reject(error);
-            }
-          });
-        } else {
-          reject(new Error("reCAPTCHA Enterprise not available"));
-        }
-      });
+      const recaptchaToken = await getRecaptchaToken(
+        "newsletter_subscription",
+      );
 
       fetch("/api/mailchimp", {
         method: "POST",
@@ -199,6 +142,8 @@ const Newsletter = ({ data = {} }) => {
       {!error && !success && (
         <form
           className="form text-left"
+          // Start fetching reCAPTCHA as soon as someone heads for the form
+          onFocus={() => loadRecaptcha().catch(() => {})}
           onSubmit={(e) => {
             console.log("Form submitted, calling handleSubmit");
             console.log("Current form errors:", errors);

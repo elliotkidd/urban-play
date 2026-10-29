@@ -12,6 +12,7 @@ export const VimeoVideo = ({ videoId }: { videoId: string }) => {
       src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&muted=1&byline=0&title=0`}
       allow="autoplay; fullscreen"
       allowFullScreen
+      loading="lazy"
       style={{
         position: "absolute",
         top: "50%",

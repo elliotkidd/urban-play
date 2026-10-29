@@ -28,6 +28,8 @@ export function HeroBlock({
         <SanityImage
           src={image}
           className="absolute inset-0 w-full h-full object-cover"
+          sizes="100vw"
+          priority
         />
       )}
       {mediaType === "video" && vimeo?.type === "page" ? (

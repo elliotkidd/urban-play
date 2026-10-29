@@ -29,6 +29,8 @@ export default function Header({
           src={image}
           className="w-full absolute inset-0 object-cover h-full"
           alt={title}
+          sizes="100vw"
+          priority
         />
       )}
       <div className="absolute inset-0 bg-black/20 h-full w-full" />

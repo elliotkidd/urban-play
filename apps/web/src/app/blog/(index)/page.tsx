@@ -68,6 +68,7 @@ export default async function BlogPage({
                   height={1024}
                   width={1440}
                   sizes="100vw"
+                  priority
                 />
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="relative z-10 wrapper flex w-full justify-between items-end">

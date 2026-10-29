@@ -40,6 +40,7 @@ export default function PageHeader({
             height={1024}
             width={1440}
             sizes="100vw"
+            priority
           />
         )}
         {mediaType === "video" && vimeo?.type === "page" && (

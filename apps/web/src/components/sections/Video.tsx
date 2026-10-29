@@ -7,6 +7,7 @@ import SanityImage from "../sanity-image";
 import ReactPlayer from "react-player";
 import SectionHeader from "../section-header";
 import { VimeoVideo } from "../VimeoVideo";
+import { LazyVideo } from "../LazyVideo";
 import { extractVimeoId } from "@/utils/utils";
 import { SanityButtons } from "../sanity-buttons";
 
@@ -70,12 +71,8 @@ export default function VideoSection({
           <VimeoVideo videoId={extractVimeoId(vimeo.url) || ""} />
         )}
         {vimeo?.type === "asset" && vimeo.url && (
-          <video
+          <LazyVideo
             src={vimeo.url}
-            autoPlay
-            muted
-            loop
-            playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}

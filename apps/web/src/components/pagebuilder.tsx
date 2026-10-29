@@ -2,66 +2,56 @@
 
 import { useOptimistic } from "@sanity/visual-editing/react";
 import { createDataAttribute } from "next-sanity";
-import { type ComponentType, type FC } from "react";
+import dynamic from "next/dynamic";
+import { type ComponentType } from "react";
 
 import { dataset, projectId, studioUrl } from "@/lib/sanity/api";
 
-import { CTABlock } from "./sections/cta";
-import { AwardsSection } from "./sections/awards";
 import { HeroBlock } from "./sections/hero";
-import { ImageLinkCards } from "./sections/image-link-cards";
-import ParagraphSection from "./sections/paragraph";
-import FeaturedProjectsSection from "./sections/featured-projects";
-import IconMarqueeSection from "./sections/icon-marquee";
-import TestimoniesSection from "./sections/testimonies";
-import FeaturedPostsSection from "./sections/featured-posts";
-import { ImageBannerSection } from "./sections/image-banner";
-import Team from "./sections/team";
-import TwoColumnContentSection from "./sections/two-column-content";
-import ImageMarqueeSection from "./sections/image-marquee";
-import Process from "./sections/process";
-import SolutionsGridSection from "./sections/solutions-grid";
-import VerticalProcess from "./sections/VerticalProcess";
-import { FAQsAccordion } from "./sections/FaqsAccordion";
-import Quote from "./sections/Quote";
 import SectionWrapper from "./sections/SectionWrapper";
-import SocialMedia from "./sections/SocialMedia";
-import Contact from "./sections/Contact";
-import VideoSection from "./sections/Video";
 import PageHeader from "./sections/PageHeader";
-import PartnersRollover from "./sections/PartnersRollover";
-import HotspotImageCarousel from "./sections/HotspotImageCarousel";
-import Grid from "./sections/Grid";
-import { Divider } from "./sections/Divider";
 
-const SECTION_COMPONENTS: Record<string, FC<any>> = {
-  cta: CTABlock,
-  divider: Divider,
-  awardsAccordion: AwardsSection,
+// Hero and PageHeader open almost every page, so they stay in the main bundle.
+// Every other section is its own chunk and only downloads on pages that use it
+// (Swiper, the forms and reCAPTCHA, video players etc. are heavy).
+const SECTION_COMPONENTS: Record<string, ComponentType<any>> = {
+  cta: dynamic(() => import("./sections/cta").then((m) => m.CTABlock)),
+  divider: dynamic(() => import("./sections/Divider").then((m) => m.Divider)),
+  awardsAccordion: dynamic(() =>
+    import("./sections/awards").then((m) => m.AwardsSection),
+  ),
   hero: HeroBlock,
-  imageLinkCards: ImageLinkCards,
-  paragraph: ParagraphSection,
-  featuredProjects: FeaturedProjectsSection,
-  iconMarquee: IconMarqueeSection,
-  testimonies: TestimoniesSection,
-  featuredPosts: FeaturedPostsSection,
-  imageBanner: ImageBannerSection,
-  team: Team,
-  twoColumnContent: TwoColumnContentSection,
-  imageMarquee: ImageMarqueeSection,
-  process: Process,
-  solutionsGrid: SolutionsGridSection,
-  verticalProcess: VerticalProcess,
-  faqsAccordion: FAQsAccordion,
-  quote: Quote,
-  socialMedia: SocialMedia,
-  contact: Contact,
-  video: VideoSection,
+  imageLinkCards: dynamic(() =>
+    import("./sections/image-link-cards").then((m) => m.ImageLinkCards),
+  ),
+  paragraph: dynamic(() => import("./sections/paragraph")),
+  featuredProjects: dynamic(() => import("./sections/featured-projects")),
+  iconMarquee: dynamic(() => import("./sections/icon-marquee")),
+  testimonies: dynamic(() => import("./sections/testimonies")),
+  featuredPosts: dynamic(() => import("./sections/featured-posts")),
+  imageBanner: dynamic(() =>
+    import("./sections/image-banner").then((m) => m.ImageBannerSection),
+  ),
+  team: dynamic(() => import("./sections/team")),
+  twoColumnContent: dynamic(() => import("./sections/two-column-content")),
+  imageMarquee: dynamic(() => import("./sections/image-marquee")),
+  process: dynamic(() => import("./sections/process")),
+  solutionsGrid: dynamic(() => import("./sections/solutions-grid")),
+  verticalProcess: dynamic(() => import("./sections/VerticalProcess")),
+  faqsAccordion: dynamic(() =>
+    import("./sections/FaqsAccordion").then((m) => m.FAQsAccordion),
+  ),
+  quote: dynamic(() => import("./sections/Quote")),
+  socialMedia: dynamic(() => import("./sections/SocialMedia")),
+  contact: dynamic(() => import("./sections/Contact")),
+  video: dynamic(() => import("./sections/Video")),
   pageHeader: PageHeader,
-  partnersRollover: PartnersRollover,
-  hotspotImageCarousel: HotspotImageCarousel,
-  grid: Grid,
-} as const;
+  partnersRollover: dynamic(() => import("./sections/PartnersRollover")),
+  hotspotImageCarousel: dynamic(
+    () => import("./sections/HotspotImageCarousel"),
+  ),
+  grid: dynamic(() => import("./sections/Grid")),
+};
 
 type SectionType = keyof typeof SECTION_COMPONENTS;
 
