@@ -18,12 +18,21 @@ async function fetchBlogPage(): Promise<{ data: BlogIndexPage }> {
   });
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { data } = await fetchBlogPage();
   if (!data) {
     return getMetaData({});
   }
-  return getMetaData(data);
+
+  // Paginated pages list different posts, so each is its own canonical
+  const page = parseInt((await searchParams).page ?? "", 10);
+  return getMetaData(
+    page > 1 ? { ...data, slug: `${data.slug}?page=${page}` } : data,
+  );
 }
 
 export default async function BlogPage({

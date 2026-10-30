@@ -7,12 +7,12 @@ import { querySitemapData } from "@/lib/sanity/query";
 const baseUrl = getBaseUrl();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { slugPages, blogPages, projectPages } =
+  const { homePageLastModified, slugPages, blogPages, projectPages } =
     await client.fetch(querySitemapData);
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: new Date(homePageLastModified ?? new Date()),
       changeFrequency: "weekly",
       priority: 1,
     },

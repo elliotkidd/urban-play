@@ -323,15 +323,16 @@ export const queryNavbarData = defineQuery(/* groq */ `
 `);
 
 export const querySitemapData = defineQuery(/* groq */ `{
-  "slugPages": *[_type == "page" && defined(slug.current)]{
+  "homePageLastModified": *[_type == "homePage"][0]._updatedAt,
+  "slugPages": *[_type in ["page", "blogIndex", "projectIndex"] && defined(slug.current) && seoNoIndex != true]{
     "slug": slug.current,
     "lastModified": _updatedAt
   },
-  "blogPages": *[_type == "blog" && defined(slug.current)]{
+  "blogPages": *[_type == "blog" && defined(slug.current) && seoNoIndex != true]{
     "slug": slug.current,
     "lastModified": _updatedAt
   },
-  "projectPages": *[_type == "project" && defined(slug.current)]{
+  "projectPages": *[_type == "project" && defined(slug.current) && seoNoIndex != true]{
     "slug": slug.current,
     "lastModified": _updatedAt
   }

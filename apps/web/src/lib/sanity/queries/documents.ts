@@ -46,6 +46,7 @@ export const projectIndexPageQuery = q("*")
     _id: q.string(),
     _type: q.literal("projectIndex"),
     title: q.string(),
+    slug: q.slug("slug"),
     description: q.string(),
     solutions: q("*", { isArray: true })
       .filterByType("solution")
@@ -172,6 +173,7 @@ export const blogIndexPageQuery = q("*")
     _id: q.string(),
     _type: q.literal("blogIndex"),
     title: q.string(),
+    slug: q.slug("slug"),
     categories: q("*", { isArray: true })
       .filterByType("category")
       .grab(LINK_REFERENCE_FRAGMENT),
