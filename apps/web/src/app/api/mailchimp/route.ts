@@ -99,6 +99,9 @@ export async function POST(request: NextRequest) {
         status: 'subscribed',
         merge_fields: mergeFields
       },
+      // The audience requires fields this form doesn't collect (company,
+      // sector), which would otherwise reject every sign-up
+      { skipMergeValidation: true },
     )
 
     return NextResponse.json({ success: true, data: response })

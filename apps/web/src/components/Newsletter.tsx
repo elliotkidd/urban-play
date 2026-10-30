@@ -27,7 +27,11 @@ function getErrorMessage(errorData) {
 
   switch (errorData?.title) {
     case "Invalid Resource":
-      return ERROR_MESSAGES.invalidEmail;
+      // Mailchimp also uses this for bad merge fields, which aren't the
+      // subscriber's fault, so only blame the email when that's the detail
+      return /fake|email/i.test(errorData.detail ?? "")
+        ? ERROR_MESSAGES.invalidEmail
+        : ERROR_MESSAGES.generic;
     case "Forgotten Email Not Subscribed":
     case "Member In Compliance State":
       return ERROR_MESSAGES.unsubscribed;

@@ -92,10 +92,16 @@ async function upsertAudienceMember({
   if (firstName) mergeFields.FNAME = firstName;
   if (lastName) mergeFields.LNAME = lastName;
 
-  await mailchimp.lists.setListMember(audienceId, subscriberHash, {
-    email_address: email,
-    // Only applies to new contacts, so anyone who unsubscribed stays unsubscribed
-    status_if_new: "subscribed",
-    merge_fields: mergeFields,
-  });
+  await mailchimp.lists.setListMember(
+    audienceId,
+    subscriberHash,
+    {
+      email_address: email,
+      // Only applies to new contacts, so anyone who unsubscribed stays unsubscribed
+      status_if_new: "subscribed",
+      merge_fields: mergeFields,
+    },
+    // Audiences can require fields the form doesn't map (e.g. company, sector)
+    { skipMergeValidation: true },
+  );
 }
