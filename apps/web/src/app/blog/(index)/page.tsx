@@ -73,6 +73,7 @@ export default async function BlogPage({
               <div className="relative h-[80dvh] w-full overflow-hidden py-fluid-xs flex items-end">
                 <SanityImage
                   src={featuredBlog.image}
+                  alt={featuredBlog.title}
                   className="object-cover absolute inset-0 w-full h-full"
                   height={1024}
                   width={1440}

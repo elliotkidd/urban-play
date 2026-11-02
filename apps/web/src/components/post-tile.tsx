@@ -53,6 +53,7 @@ export default function PostTile({
       >
         <SanityImage
           src={image}
+          alt={title}
           className="object-cover inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
           width={
             image_aspect === "landscape"

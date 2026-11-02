@@ -28,6 +28,7 @@ export function ImageLinkCard({
         {image && (
           <SanityImage
             src={image}
+            alt={title}
             className="object-cover pointer-events-none group-hover:scale-105 duration-500"
           />
         )}

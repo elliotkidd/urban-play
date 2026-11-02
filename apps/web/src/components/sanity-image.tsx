@@ -8,6 +8,7 @@ import Image from "next/image";
 type Props = {
   src: ImageType;
   className?: string;
+  // Fallback only: alt text set on the asset in Studio's Media tool wins
   alt?: string;
   sizes?: string;
   height?: number;
@@ -46,7 +47,7 @@ export default function SanityImage({
     <Image
       {...imageProps}
       loader={loader}
-      alt={alt ? alt : ""}
+      alt={src?.alt || alt || ""}
       placeholder="blur"
       style={{ maxWidth: "100%", ...style }}
       height={height ? height : src?.height || undefined}

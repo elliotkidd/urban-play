@@ -36,6 +36,7 @@ export default function PageHeader({
         {image && (
           <SanityImage
             src={image}
+            alt={title}
             className="absolute inset-0 w-full h-full object-cover"
             height={1024}
             width={1440}

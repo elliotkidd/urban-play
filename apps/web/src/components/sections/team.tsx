@@ -33,12 +33,14 @@ function Team({ title, teamMembers, smallWrapper }: TeamProps) {
               <div className="relative aspect-video rounded-lg lg:rounded-0 lg:aspect-portrait overflow-hidden mb-fluid-xs">
                 <SanityImage
                   src={image}
+                  alt={name}
                   className="object-cover absolute inset-0 h-full w-full lg:hidden"
                   width={400}
                   height={250}
                 />
                 <SanityImage
                   src={image}
+                  alt={name}
                   className="object-cover absolute inset-0 h-full w-full hidden lg:block"
                   sizes="(max-width: 768px) 100vw, 25vw"
                   width={600}

@@ -55,6 +55,7 @@ export default function ProjectTile({
         >
           <SanityImage
             src={image || seoImage}
+            alt={title}
             className="object-cover absolute inset-0 w-full h-full group-hover:scale-105 transition-all duration-500"
             width={
               imageAspectRatio === "landscape"

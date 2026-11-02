@@ -97,6 +97,7 @@ export default function PartnersRollover({ partners }: PartnersRolloverProps) {
             {partners[hoveredIndex].image && (
               <SanityImage
                 src={partners[hoveredIndex].image}
+                alt={partners[hoveredIndex].title}
                 width={600}
                 height={700}
                 className="w-full h-full object-cover"
