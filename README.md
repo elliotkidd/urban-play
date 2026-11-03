@@ -92,6 +92,8 @@ The template includes a GitHub Actions workflow [`deploy-sanity.yml`](https://ra
 > - `SANITY_STUDIO_DATASET`
 > - `SANITY_STUDIO_TITLE`
 > - `SANITY_STUDIO_PRESENTATION_URL`
+>
+> The monthly content backup also needs `SANITY_BACKUP_TOKEN` (see [Content backups](#content-backups)).
 
 Alternatively, you can manually deploy from your Studio directory (`/studio`) using:
 
@@ -113,3 +115,28 @@ You have the freedom to deploy your Next.js app to your hosting provider of choi
 Now that you’ve deployed your Next.js application and Sanity Studio, you can optionally invite a collaborator to your Studio. Open up [Manage](https://www.sanity.io/manage), select your project and click "Invite project members"
 
 They will be able to access the deployed Studio, where you can collaborate together on creating content.
+
+## Content backups
+
+The [`backup-sanity.yml`](.github/workflows/backup-sanity.yml) GitHub Actions workflow exports the Sanity dataset on the 1st of every month. Each backup is kept as a workflow artifact for 90 days, so the last three months are always available.
+
+Backups contain every document (published and drafts, including image references and the image records that hold alt text) but not the image and video files themselves. Those stay in Sanity, so a backup restores content that was edited or deleted, but not a file that was deleted from the Media tool.
+
+### Setup
+
+Add a `SANITY_BACKUP_TOKEN` repository secret: in [Manage](https://www.sanity.io/manage), open the project, go to API → Tokens and create a token with **Viewer** permissions. The workflow also uses the existing `SANITY_STUDIO_PROJECT_ID` and `SANITY_STUDIO_DATASET` secrets. (`SANITY_DEPLOY_TOKEN` can't be used here, as it has no read access to content.)
+
+To take a backup now, for example before a large content change, open the workflow in the repository's Actions tab and click **Run workflow**.
+
+### Restoring
+
+1. In the Actions tab, open a "Back Up Sanity Content" run and download its artifact. Unzip it to get `sanity-production-YYYY-MM-DD.tar.gz`.
+2. From `apps/studio`, logged in with `npx sanity login` as a project member with write access, run:
+
+   ```shell
+   pnpm exec sanity dataset import /path/to/sanity-production-YYYY-MM-DD.tar.gz production --replace
+   ```
+
+`--replace` overwrites every document in the backup with its backed-up version. Documents created after the backup was taken are left alone. If the import stops because an image file no longer exists, add `--allow-failing-assets` to skip that check.
+
+To recover a single document instead, look in `data.ndjson` inside the archive, or use the document's history in the Studio if the change was recent.

@@ -1,0 +1,62 @@
+name: Back Up Sanity Content
+on:
+  schedule:
+    # 1st of every month, 00:17 UTC (10:17am in Brisbane)
+    - cron: "17 0 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Export dataset
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Needs a token with read access (Viewer); the deploy token can't read content
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
+      SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+      SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+      PNPM_VERSION: 9.12.3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts --prefer-offline --filter studio...
+
+      # --raw keeps every document as-is, drafts and image references included,
+      # but skips downloading the image and video files themselves. Don't use
+      # --no-assets: it strips image references out of the documents.
+      - name: Export dataset
+        working-directory: ./apps/studio
+        run: |
+          BACKUP_NAME="sanity-${SANITY_STUDIO_DATASET}-$(date -u +%Y-%m-%d)"
+          echo "BACKUP_NAME=$BACKUP_NAME" >> "$GITHUB_ENV"
+          pnpm exec sanity dataset export "$SANITY_STUDIO_DATASET" "$RUNNER_TEMP/$BACKUP_NAME.tar.gz" --raw
+
+      - name: Upload backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_NAME }}
+          path: ${{ runner.temp }}/${{ env.BACKUP_NAME }}.tar.gz
+          # Rolling window: GitHub deletes each backup after 90 days, so the
+          # last three months are always available
+          retention-days: 90
+          if-no-files-found: error
