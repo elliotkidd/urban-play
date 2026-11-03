@@ -93,7 +93,7 @@ The template includes a GitHub Actions workflow [`deploy-sanity.yml`](https://ra
 > - `SANITY_STUDIO_TITLE`
 > - `SANITY_STUDIO_PRESENTATION_URL`
 >
-> The monthly content backup also needs `SANITY_BACKUP_TOKEN` (see [Content backups](#content-backups)).
+> The daily content backup also needs `SANITY_BACKUP_TOKEN` (see [Content backups](#content-backups)).
 
 Alternatively, you can manually deploy from your Studio directory (`/studio`) using:
 
@@ -118,7 +118,7 @@ They will be able to access the deployed Studio, where you can collaborate toget
 
 ## Content backups
 
-The [`backup-sanity.yml`](.github/workflows/backup-sanity.yml) GitHub Actions workflow exports the Sanity dataset on the 1st of every month. Each backup is kept as a workflow artifact for 90 days, so the last three months are always available.
+The [`backup-sanity.yml`](.github/workflows/backup-sanity.yml) GitHub Actions workflow exports the Sanity dataset every day. Each backup is kept as a workflow artifact for 90 days, so any day from the last three months can be restored.
 
 Backups contain every document (published and drafts, including image references and the image records that hold alt text) but not the image and video files themselves. Those stay in Sanity, so a backup restores content that was edited or deleted, but not a file that was deleted from the Media tool.
 
