@@ -73,6 +73,16 @@ export const project = defineType({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
+      name: "team",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "author" }] }],
+      title: "Team",
+      description:
+        "Play consultants who worked on this project. Shown under the client details.",
+      group: GROUP.MAIN_CONTENT,
+      validation: (Rule) => Rule.unique(),
+    }),
+    defineField({
       name: "pageBuilder",
       type: "pageBuilder",
       title: "Page Builder",

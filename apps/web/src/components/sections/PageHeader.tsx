@@ -21,7 +21,6 @@ export default function PageHeader({
     offset: ["start start", "end start"],
   });
 
-  console.log(title, richText, image, vimeo, mediaType);
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
   return (

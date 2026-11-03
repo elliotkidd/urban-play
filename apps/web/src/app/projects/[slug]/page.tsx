@@ -34,12 +34,17 @@ async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
 
   if (!data) notFound();
 
-  const { title, pageBuilder, relatedProjects, _id, _type } = data ?? {};
+  const { title, pageBuilder, relatedProjects, team, _id, _type } = data ?? {};
 
   return (
     <div className="bg-background text-text">
       <h1 className="sr-only">{title}</h1>
-      <PageBuilder pageBuilder={pageBuilder ?? []} id={_id} type={_type} />
+      <PageBuilder
+        pageBuilder={pageBuilder ?? []}
+        id={_id}
+        type={_type}
+        team={team}
+      />
 
       {relatedProjects && <RelatedProjects relatedProjects={relatedProjects} />}
     </div>

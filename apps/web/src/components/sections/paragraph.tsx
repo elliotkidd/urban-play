@@ -1,5 +1,7 @@
 import { RichText } from "../richtext";
 import { ParagraphProps } from "@/lib/sanity/queries/sections";
+import { type ProjectTeam as ProjectTeamProps } from "@/lib/sanity/queries/documents";
+import { ProjectTeam } from "../ProjectTeam";
 import { motion } from "motion/react";
 import { sectionAnimationConfig } from "@/lib/motion";
 import { SanityButtons } from "../sanity-buttons";
@@ -189,7 +191,8 @@ export default function ParagraphSection({
   annotationDirection,
   downloadableFile,
   recipients,
-}: ParagraphProps) {
+  team,
+}: ParagraphProps & { team?: ProjectTeamProps }) {
   return (
     <motion.div
       {...sectionAnimationConfig}
@@ -217,7 +220,7 @@ export default function ParagraphSection({
           <SanityButtons buttons={buttons} className="hidden lg:flex" />
         )}
         {annotations && !buttons && (
-          <div className="w-80 flex-none space-y-fluid-xs lg:space-y-fluid-sm hidden lg:block">
+          <div className="w-80 flex-none space-y-fluid-xs hidden lg:block">
             <ul
               className={cn(
                 "list-none not-prose text-xs",
@@ -253,6 +256,12 @@ export default function ParagraphSection({
                 );
               })}
             </ul>
+            <ProjectTeam
+              team={team}
+              direction={
+                annotationDirection === "vertical" ? "horizontal" : "vertical"
+              }
+            />
             {downloadableFile && recipients && (
               <GoogleReCaptchaProvider
                 reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}
@@ -287,6 +296,7 @@ export default function ParagraphSection({
               );
             })}
           </ul>
+          <ProjectTeam team={team} />
           {downloadableFile && recipients && (
             <GoogleReCaptchaProvider
               reCaptchaKey={RECAPTCHA_SITE_KEY ?? "NOT DEFINED"}

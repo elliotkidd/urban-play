@@ -30,6 +30,14 @@ export const author = defineType({
       validation: (Rule) => Rule.min(0).max(60),
     }),
     defineField({
+      name: "email",
+      type: "string",
+      title: "Email",
+      description:
+        "Optional. On project pages, this person's photo and name link to this address.",
+      validation: (Rule) => Rule.email(),
+    }),
+    defineField({
       name: "bio",
       type: "text",
       title: "Bio",

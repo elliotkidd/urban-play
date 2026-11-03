@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { type ComponentType } from "react";
 
 import { dataset, projectId, studioUrl } from "@/lib/sanity/api";
+import { type ProjectTeam } from "@/lib/sanity/queries/documents";
 
 import { HeroBlock } from "./sections/hero";
 import SectionWrapper from "./sections/SectionWrapper";
@@ -59,10 +60,12 @@ export function PageBuilder({
   pageBuilder: initialPageBuilder = [],
   id,
   type,
+  team,
 }: {
   pageBuilder: any[];
   id: string;
   type: string;
+  team?: ProjectTeam;
 }) {
   const pageBuilder = useOptimistic<any>(
     initialPageBuilder,
@@ -74,6 +77,15 @@ export function PageBuilder({
       return currentPageBuilder;
     },
   );
+
+  // A project's client details are the first paragraph with annotations,
+  // and its play consultants are listed under them
+  const teamIndex = team?.length
+    ? pageBuilder.findIndex(
+        (block: any) =>
+          block._type === "paragraph" && block.annotations?.length,
+      )
+    : -1;
 
   return (
     <main
@@ -87,7 +99,7 @@ export function PageBuilder({
         path: "pageBuilder",
       }).toString()}
     >
-      {pageBuilder.map((block: any) => {
+      {pageBuilder.map((block: any, i: number) => {
         const Component = SECTION_COMPONENTS[
           block._type
         ] as ComponentType<SectionType>;
@@ -116,7 +128,7 @@ export function PageBuilder({
               path: `pageBuilder[_key=="${block._key}"]`,
             }).toString()}
           >
-            <Component {...block} />
+            <Component {...(i === teamIndex ? { ...block, team } : block)} />
           </SectionWrapper>
         );
       })}

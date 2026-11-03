@@ -85,6 +85,16 @@ export const projectPageQuery = q("*")
     client: q.string(),
     construction: q.string(),
     status: q.string(),
+    team: q("team[]", { isArray: true })
+      .deref()
+      .grab({
+        _id: q.string(),
+        name: q.string(),
+        position: q.string().nullable(),
+        email: q.string().nullable(),
+        image: q("image").grab(IMAGE_FRAGMENT).nullable(),
+      })
+      .nullable(),
     pageBuilder: SECTIONS_FRAGMENT,
     colorScheme: q("colorScheme").deref().grab(COLOR_SCHEME_FRAGMENT),
     relatedProjects: q("*", { isArray: true })
@@ -94,6 +104,7 @@ export const projectPageQuery = q("*")
   });
 
 export type ProjectPage = InferType<typeof projectPageQuery>;
+export type ProjectTeam = NonNullable<ProjectPage>["team"];
 
 const FOOTER_LINK_FRAGMENT = {
   _key: q.string(),
