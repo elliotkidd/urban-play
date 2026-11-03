@@ -34,7 +34,7 @@ export const author = defineType({
       type: "string",
       title: "Email",
       description:
-        "Optional. On project pages, this person's photo and name link to this address.",
+        "Optional. On project pages, this person's photo and name link to this address, or to the contact page if left empty.",
       validation: (Rule) => Rule.email(),
     }),
     defineField({

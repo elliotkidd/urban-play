@@ -1,6 +1,10 @@
 import { type ProjectTeam as ProjectTeamProps } from "@/lib/sanity/queries/documents";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import SanityImage from "./sanity-image";
+
+const LINK_CLASS_NAME =
+  "flex items-center gap-3 hover:opacity-70 transition-opacity duration-500";
 
 export function ProjectTeam({
   team,
@@ -50,14 +54,13 @@ export function ProjectTeam({
           return (
             <li key={_id}>
               {email ? (
-                <a
-                  href={`mailto:${email}`}
-                  className="flex items-center gap-3 hover:opacity-70 transition-opacity duration-500"
-                >
+                <a href={`mailto:${email}`} className={LINK_CLASS_NAME}>
                   {content}
                 </a>
               ) : (
-                <div className="flex items-center gap-3">{content}</div>
+                <Link href="/contact" className={LINK_CLASS_NAME}>
+                  {content}
+                </Link>
               )}
             </li>
           );
