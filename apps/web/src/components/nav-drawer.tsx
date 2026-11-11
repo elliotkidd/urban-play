@@ -79,17 +79,26 @@ function DrawerLink({
   );
 }
 
-function PlusIcon({ isOpen }: { isOpen: boolean }) {
+const PLUS_MINUS_LINE_CLASS_NAME =
+  "absolute inset-x-0 top-1/2 -mt-px h-0.5 bg-current [transition:transform_0.5s]";
+
+// Turns from a plus into a minus the same way as the accordions
+// (ui/accordion.tsx): both lines spin round to lie flat
+function PlusMinusIcon({ isOpen }: { isOpen: boolean }) {
   return (
-    <span
-      aria-hidden
-      className={cn(
-        "relative size-[14px] flex-none transition-transform duration-500",
-        isOpen && "rotate-45",
-      )}
-    >
-      <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-current" />
-      <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-current" />
+    <span aria-hidden className="relative size-[14px] flex-none">
+      <span
+        className={cn(
+          PLUS_MINUS_LINE_CLASS_NAME,
+          isOpen ? "rotate-0" : "rotate-180",
+        )}
+      />
+      <span
+        className={cn(
+          PLUS_MINUS_LINE_CLASS_NAME,
+          isOpen ? "rotate-0" : "rotate-[270deg]",
+        )}
+      />
     </span>
   );
 }
@@ -120,7 +129,7 @@ function DrawerColumnItem({
         )}
       >
         <span>{column.title}</span>
-        <PlusIcon isOpen={isExpanded} />
+        <PlusMinusIcon isOpen={isExpanded} />
       </button>
       <AnimatePresence initial={false}>
         {isExpanded && (
