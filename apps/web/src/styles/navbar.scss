@@ -1,20 +1,99 @@
+:root {
+  --navbar-top: 26px;
+  --navbar-drawer-height: calc(100dvh - var(--navbar-top) - 20px);
+}
+
 #navbar,
 .header-skeleton {
   @apply text-nav-bar-text text-xs;
 
   position: fixed;
   z-index: 999;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: var(--navbar-top);
+  right: var(--space-xs);
   display: flex;
   align-items: center;
-  margin: 0 auto;
   padding: 5px 5px 5px 20px;
   border-radius: 10px;
   font-weight: 500;
 
   transition: all 0.5s ease-in-out;
+}
+
+.navbar-logo {
+  @apply text-nav-bar-text;
+
+  position: fixed;
+  z-index: 999;
+  top: var(--navbar-top);
+  left: var(--space-xs);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  transition: color 0.5s ease-in-out;
+}
+
+// Opening: the bar items fade out, the backdrop grows down into the drawer,
+// then the drawer items fade in (staggered in nav-drawer.tsx). Closing runs
+// the same steps in reverse.
+#navbar {
+  .navbar-bar-items {
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease 0.55s;
+  }
+
+  .navbar-backdrop-desktop {
+    bottom: auto;
+    height: 100%;
+    transition: height 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.15s;
+  }
+
+  &[data-state="open"] {
+    .navbar-bar-items {
+      opacity: 0;
+      transition-delay: 0s;
+    }
+
+    .navbar-backdrop-desktop {
+      height: var(--navbar-drawer-height);
+      transition-delay: 0.2s;
+    }
+  }
+
+  &[data-instant] {
+    .navbar-bar-items,
+    .navbar-backdrop-desktop {
+      transition: none;
+    }
+  }
+}
+
+.nav-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-drawer-height);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-drawer-items {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  // Clears the bar, and lines the plus icons up with the close button
+  padding: 51px 15px 20px 20px;
+}
+
+.nav-drawer-overlay {
+  position: fixed;
+  z-index: 998;
+  inset: 0;
 }
 
 #mobile-navbar {
@@ -77,5 +156,19 @@
     width: 30px;
     height: 1px;
     display: block;
+  }
+
+  &--desktop {
+    height: 35px;
+    width: 35px;
+
+    div {
+      width: 16px;
+      height: 9px;
+    }
+
+    .menu-trigger-btn-line {
+      width: 16px;
+    }
   }
 }

@@ -170,6 +170,24 @@ export const navBarQuery = q("*")
     _id: q.string(),
     columns: q("columns[]", { isArray: true }).select(NAVBAR_COLUMNS_SELECTION),
     buttons: q("buttons[]", { isArray: true }).grab(BUTTON_FRAGMENT),
+    drawerColumns: q("drawerColumns[]", { isArray: true })
+      .select(NAVBAR_COLUMNS_SELECTION)
+      .nullable(),
+    newsletterButtonText: q.string().nullable(),
+    settings: q("*")
+      .filterByType("settings")
+      .slice(0)
+      .grab({
+        socialLinks: q("socialLinks")
+          .grab({
+            linkedin: q.string().nullable(),
+            facebook: q.string().nullable(),
+            instagram: q.string().nullable(),
+            twitter: q.string().nullable(),
+            youtube: q.string().nullable(),
+          })
+          .nullable(),
+      }),
     defaultColorScheme: q("defaultColorScheme")
       .deref()
       .grab(COLOR_SCHEME_FRAGMENT),
