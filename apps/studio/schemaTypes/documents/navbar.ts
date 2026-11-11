@@ -158,6 +158,21 @@ export const navbar = defineType({
     }),
     buttonsField,
     defineField({
+      name: "drawerColumns",
+      type: "array",
+      title: "Drawer Menu",
+      description:
+        "The full menu that opens from the menu button on desktop. Columns expand to show their links. Leave empty to reuse the Navigation Structure.",
+      of: [navbarColumn, navbarLink],
+    }),
+    defineField({
+      name: "newsletterButtonText",
+      type: "string",
+      title: "Drawer Newsletter Button Text",
+      description:
+        "The button at the bottom of the drawer menu, next to the social links from Settings. It opens the pop-up form that's live in Mailchimp, or scrolls to the footer signup if there isn't one. Defaults to 'Join our newsletter'.",
+    }),
+    defineField({
       name: "defaultColorScheme",
       type: "reference",
       title: "Default Color Scheme",

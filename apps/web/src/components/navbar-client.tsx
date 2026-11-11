@@ -10,7 +10,13 @@ import {
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
@@ -27,6 +33,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ChevronLeftIcon } from "lucide-react";
 import { useLenisNavigation } from "@/hooks/use-lenis-navigation";
+import { useLenis } from "@/lib/lenis";
+import { NavDrawer } from "./nav-drawer";
 
 const DURATION = 0.35;
 const DELAY = 0.15;
@@ -46,10 +54,16 @@ const SPRING_TRANSITION = {
   visualDuration: 0.35,
 };
 
-const menuTriggerLineTopVariants = {
+// How far the outer lines travel to meet in the middle, for each trigger size
+const MENU_TRIGGER_LINE_OFFSET = {
+  mobile: 8,
+  desktop: 4,
+};
+
+const menuTriggerLineTopVariants = (offset: number) => ({
   open: {
     rotate: -45,
-    top: 8,
+    top: offset,
     transition: { ...TRANSITION_WITH_DELAY, ...SPRING_TRANSITION },
   },
   closed: {
@@ -57,7 +71,7 @@ const menuTriggerLineTopVariants = {
     top: 0,
     transition: { ...TRANSITION_WITHOUT_DELAY, ...SPRING_TRANSITION },
   },
-};
+});
 
 const menuTriggerLineMiddleVariants = {
   open: {
@@ -70,10 +84,10 @@ const menuTriggerLineMiddleVariants = {
   },
 };
 
-const menuTriggerLineBottomVariants = {
+const menuTriggerLineBottomVariants = (offset: number) => ({
   open: {
     rotate: 45,
-    bottom: 8,
+    bottom: offset,
     transition: { ...TRANSITION_WITH_DELAY, ...SPRING_TRANSITION },
   },
   closed: {
@@ -81,23 +95,34 @@ const menuTriggerLineBottomVariants = {
     bottom: 0,
     transition: { ...TRANSITION_WITHOUT_DELAY, ...SPRING_TRANSITION },
   },
-};
+});
 
-function MobileMenuTrigger({
+function MenuTrigger({
   isOpen,
   setIsOpen,
   disabled,
+  size = "mobile",
+  className,
   ...props
 }: {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   disabled?: boolean;
+  size?: keyof typeof MENU_TRIGGER_LINE_OFFSET;
 } & React.HTMLAttributes<HTMLButtonElement>) {
+  const offset = MENU_TRIGGER_LINE_OFFSET[size];
+
   return (
     <button
+      type="button"
       onClick={() => setIsOpen(!isOpen)}
-      className={cn("menu-trigger-btn", props.className)}
+      className={cn(
+        "menu-trigger-btn",
+        size === "desktop" && "menu-trigger-btn--desktop",
+        className,
+      )}
       disabled={disabled}
+      aria-expanded={isOpen}
       {...props}
     >
       <div className="relative flex gap-[7px] flex-col">
@@ -105,13 +130,14 @@ function MobileMenuTrigger({
           className="menu-trigger-btn-line"
           initial={{ rotate: 0, top: 0 }}
           animate={isOpen ? "open" : "closed"}
-          variants={menuTriggerLineTopVariants}
+          variants={menuTriggerLineTopVariants(offset)}
         ></motion.span>
         <motion.span
           className="menu-trigger-btn-line"
           style={{
             originX: "right",
-            top: "50%",
+            // Centre the 1px line on a whole pixel so it stays crisp
+            top: "calc(50% - 0.5px)",
           }}
           initial={{ scale: 0 }}
           animate={isOpen ? "open" : "closed"}
@@ -120,11 +146,11 @@ function MobileMenuTrigger({
         <motion.span
           initial={{ rotate: 0, bottom: 0 }}
           animate={isOpen ? "open" : "closed"}
-          variants={menuTriggerLineBottomVariants}
+          variants={menuTriggerLineBottomVariants(offset)}
           className="menu-trigger-btn-line relative"
         ></motion.span>
       </div>
-      <span className="sr-only">Open menu</span>
+      <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
     </button>
   );
 }
@@ -300,7 +326,7 @@ function MobileNavbar({
       <div className="navbar-backdrop-mobile" />
       <nav className="flex w-full items-center justify-between gap-5">
         <Logo className="w-[50px]" />
-        <MobileMenuTrigger isOpen={isOpen} setIsOpen={setIsOpen} />
+        <MenuTrigger isOpen={isOpen} setIsOpen={setIsOpen} />
       </nav>
       <AnimatePresence>
         {isOpen && (
@@ -563,6 +589,93 @@ export function DesktopNavbar({ navbarData }: { navbarData: NavBarType }) {
   );
 }
 
+function DesktopHeader({
+  navbarData,
+  headerStyle,
+}: {
+  navbarData: NavBarType;
+  headerStyle: React.CSSProperties;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  // Set when a drawer link is clicked, so the drawer closes without animating
+  const [instantClose, setInstantClose] = useState(false);
+  const isNavigatingRef = useRef(false);
+  const lenis = useLenis();
+  const path = usePathname();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: This is intentional
+  useEffect(() => {
+    setIsOpen(false);
+    isNavigatingRef.current = false;
+  }, [path]);
+
+  // Hold the page still and listen for Escape while the drawer is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    lenis?.stop();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      // Navigation restarts Lenis itself once the new page is in
+      if (!isNavigatingRef.current) lenis?.start();
+    };
+  }, [isOpen, lenis]);
+
+  const toggleMenu: Dispatch<SetStateAction<boolean>> = (value) => {
+    setInstantClose(false);
+    setIsOpen(value);
+  };
+
+  return (
+    <>
+      <div className="navbar-logo" style={headerStyle}>
+        <Logo className="w-[49px] h-auto" />
+      </div>
+      {isOpen && (
+        <div
+          className="nav-drawer-overlay"
+          onClick={() => setIsOpen(false)}
+          aria-hidden
+        />
+      )}
+      <header
+        id="navbar"
+        style={headerStyle}
+        data-state={isOpen ? "open" : "closed"}
+        data-instant={instantClose || undefined}
+      >
+        <div className="navbar-backdrop-desktop" />
+        <div className="navbar-bar-items" inert={isOpen}>
+          <DesktopNavbar navbarData={navbarData} />
+        </div>
+        <MenuTrigger
+          size="desktop"
+          isOpen={isOpen}
+          setIsOpen={toggleMenu}
+          aria-controls="nav-drawer"
+          className="ml-1 z-10"
+        />
+        <NavDrawer
+          navbarData={navbarData}
+          isOpen={isOpen}
+          instantClose={instantClose}
+          onClose={() => setIsOpen(false)}
+          onNavigate={() => {
+            isNavigatingRef.current = true;
+            setInstantClose(true);
+            setIsOpen(false);
+          }}
+        />
+      </header>
+    </>
+  );
+}
+
 const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
   const isMobile = useIsMobile();
   const colorScheme = useStore((state) => state.colorScheme);
@@ -581,11 +694,7 @@ const ClientSideNavbar = ({ navbarData }: { navbarData: NavBarType }) => {
       {isMobile ? (
         <MobileNavbar navbarData={navbarData} headerStyle={headerStyle} />
       ) : (
-        <header id="navbar" style={headerStyle}>
-          <div className="navbar-backdrop-desktop" />
-          <Logo className="w-[36px] flex items-center mr-5 z-10" />
-          <DesktopNavbar navbarData={navbarData} />
-        </header>
+        <DesktopHeader navbarData={navbarData} headerStyle={headerStyle} />
       )}
     </>
   );
@@ -596,7 +705,7 @@ function SkeletonMobileNavbar() {
     <header id="mobile-navbar" className="md:hidden animate-pulse">
       <nav className="flex w-full items-center justify-between gap-5">
         <Logo className="w-[50px]" />
-        <MobileMenuTrigger isOpen={false} setIsOpen={() => {}} disabled />
+        <MenuTrigger isOpen={false} setIsOpen={() => {}} disabled />
       </nav>
     </header>
   );
@@ -604,30 +713,23 @@ function SkeletonMobileNavbar() {
 
 function SkeletonDesktopNavbar() {
   return (
-    <header className="header-skeleton hidden md:block">
-      <div className="grid grid-cols-[1fr_auto] items-center gap-8 w-full">
-        <div className="justify-center flex max-w-max flex-1 items-center gap-2">
-          <Logo />
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={`nav-item-skeleton-${index.toString()}`}
-              className="h-[18px] w-24 rounded bg-text/20 animate-pulse"
-            />
-          ))}
-        </div>
-
-        <div className="justify-self-end">
-          <div className="flex items-center gap-4">
-            {Array.from({ length: 1 }).map((_, index) => (
-              <div
-                key={`nav-button-skeleton-${index.toString()}`}
-                className="h-10 w-32 rounded-[10px] bg-text/20 animate-pulse"
-              />
-            ))}
-          </div>
-        </div>
+    <div className="hidden md:block">
+      <div className="navbar-logo">
+        <Logo className="w-[49px] h-auto" />
       </div>
-    </header>
+      <header className="header-skeleton gap-5">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div
+            key={`nav-item-skeleton-${index.toString()}`}
+            className="h-[13px] w-14 rounded bg-text/20 animate-pulse"
+          />
+        ))}
+        <div className="flex items-center gap-1">
+          <div className="h-[35px] w-[89px] rounded-lg bg-text/20 animate-pulse" />
+          <div className="size-[35px]" />
+        </div>
+      </header>
+    </div>
   );
 }
 
